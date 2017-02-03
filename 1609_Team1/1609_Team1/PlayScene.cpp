@@ -4,6 +4,7 @@
 
 PlayScene::PlayScene()
 {
+	//OBJECT->CreatePlayer();
 }
 
 
