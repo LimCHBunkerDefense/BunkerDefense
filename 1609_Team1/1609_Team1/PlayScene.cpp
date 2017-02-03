@@ -24,7 +24,7 @@ void PlayScene::OnUpdate(float deltaTime)
 
 void PlayScene::OnExit()
 {
-	
+	//Exit	
 }
 
 void PlayScene::OnDraw()
