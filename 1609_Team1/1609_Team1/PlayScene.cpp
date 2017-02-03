@@ -14,7 +14,7 @@ PlayScene::~PlayScene()
 
 void PlayScene::OnEnter()
 {
-
+	//NULL
 }
 
 void PlayScene::OnUpdate(float deltaTime)
