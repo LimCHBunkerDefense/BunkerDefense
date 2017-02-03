@@ -92,5 +92,10 @@ public:
 	//}
 	//
 	//list<Object*> GetBulletList() { return m_bulletList; }
+
+	//02-04 02:52 이승문 수정
+	void CreatePlayer(Vector pos, Vector colSize, Vector anchor);
+	Object* GetPlayer() { return m_pPlayer; }
+	void Draw(Camera* pCamera);
 };
 

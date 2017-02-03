@@ -6,8 +6,8 @@
 
 class PlayScene : public IScene
 {
+	Sprite* m_pBg;
 	
-
 public:
 	PlayScene();
 	~PlayScene();

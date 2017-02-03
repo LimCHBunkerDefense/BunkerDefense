@@ -7,6 +7,11 @@ public:
 	Player();
 	~Player();
 
+	Player(int id) : Object(id)
+	{
+		
+	}
+
 	void Update(float deltaTime);
 	void Draw(Camera* pCamera);
 };
