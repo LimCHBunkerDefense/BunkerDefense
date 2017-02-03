@@ -29,5 +29,5 @@ void PlayScene::OnExit()
 
 void PlayScene::OnDraw()
 {
-	
+	//OnDraw
 }
