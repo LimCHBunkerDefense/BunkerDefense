@@ -19,7 +19,7 @@ void PlayScene::OnEnter()
 
 void PlayScene::OnUpdate(float deltaTime)
 {
-	//추가합니다'
+
 }
 
 void PlayScene::OnExit()
