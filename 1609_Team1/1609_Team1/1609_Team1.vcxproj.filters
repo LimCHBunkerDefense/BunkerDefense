@@ -49,6 +49,18 @@
     <Filter Include="Scene\ShopScene">
       <UniqueIdentifier>{6916681d-31b4-432b-946c-e93b23fc7600}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\Player">
+      <UniqueIdentifier>{1a9f1b63-0b66-4101-aeed-19215f375ec6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Creature">
+      <UniqueIdentifier>{2f7cb9ad-763a-473d-bb9c-53cd497a497b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Bunker">
+      <UniqueIdentifier>{7cd7686b-4c75-42bf-bb8c-16f77358d7eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Bullet">
+      <UniqueIdentifier>{902e043d-e981-4d06-af03-4ec3172b5fa1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
@@ -75,6 +87,12 @@
     </ClCompile>
     <ClCompile Include="PlayScene.cpp">
       <Filter>Scene\PlayScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Creature.cpp">
+      <Filter>Object\Creature</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -115,5 +133,11 @@
       <Filter>Scene\PlayScene</Filter>
     </ClInclude>
     <ClInclude Include="Note.h" />
+    <ClInclude Include="Player.h">
+      <Filter>Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Creature.h">
+      <Filter>Object\Creature</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
