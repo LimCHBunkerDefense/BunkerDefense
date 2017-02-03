@@ -65,7 +65,7 @@ void SoundManager::LoadFile(string key, string filename, bool bgm)
 	if (pSound != NULL) m_sounds[key] = pSound;
 }
 
-void SoundManager::Play(string key, float volume = 1.0f)
+void SoundManager::Play(string key, float volume)
 {
 	Sound* pSound = FindSound(key);
 	if (pSound == NULL) return;
