@@ -19,7 +19,7 @@ void PlayScene::OnEnter()
 
 void PlayScene::OnUpdate(float deltaTime)
 {
-	//123214123	
+	//123214123	12312
 }
 
 void PlayScene::OnExit()
