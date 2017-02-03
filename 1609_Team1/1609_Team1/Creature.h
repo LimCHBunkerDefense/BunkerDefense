@@ -1,11 +1,11 @@
 #pragma once
 #include "ObjectManager.h"
-class Player :
+class Creature :
 	public Object
 {
 public:
-	Player();
-	~Player();
+	Creature();
+	~Creature();
 
 	void Update(float deltaTime);
 	void Draw(Camera* pCamera);
