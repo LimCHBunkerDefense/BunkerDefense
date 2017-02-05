@@ -2,9 +2,6 @@
 #include "Player.h"
 #include "Creature.h"
 
-//02-04 02:52 이승문 수정
-#include "Common.h"
-
 //void ObjectManager::CreatePlayer(Vector pos, Vector colSize, Vector anchor)
 //{
 //	NEW_OBJECT(m_pPlayer, Player(OBJ_PLAYER));
