@@ -11,6 +11,7 @@ struct ItemData
 {
 	ITEM_TAG tag;
 	int itemID;
+	int money;
 	float attack;
 	float defense;
 	float bunkerLife;
@@ -19,7 +20,7 @@ struct ItemData
 	int quantity;
 	wstring name;
 
-	ItemData(ITEM_TAG tag, int itemID, float attack, float defense, float bunkerLife, int bulletCount, int addBullet, wstring name)
+	ItemData(ITEM_TAG tag, int itemID, float attack, float defense, float bunkerLife, int bulletCount, int addBullet, int money, wstring name)
 	{
 		this->tag = tag;
 		this->itemID = itemID;

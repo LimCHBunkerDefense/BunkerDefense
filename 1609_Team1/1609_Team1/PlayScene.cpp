@@ -14,7 +14,9 @@ PlayScene::PlayScene()
 	RENDER->LoadImageFiles(TEXT("EntRun"), TEXT("Image/Creature/Ent/Run/Run"), TEXT("png"), 9);
 
 	// 카메라 생성
-	RENDER->CreateCamera(CAM_MAIN, 3000, 1000, VIEW_WIDTH, VIEW_HEIGHT);
+	RENDER->CreateCamera(CAM_MAIN, 1920, 1200, VIEW_WIDTH, VIEW_HEIGHT);
+	RENDER->CreateCamera(CAM_MINIMAP, MINI_WIDTH, MINI_HEIGHT * 2, MINI_WIDTH, MINI_HEIGHT);
+
 }
 
 
@@ -31,8 +33,12 @@ void PlayScene::OnEnter()
 	// 테스트용 크리쳐 생성
 	OBJECT->CreateCreature(OBJ_ENT, Vector(500, 500), Vector(100, 100));
 
+	// 플레이어 생성
+	OBJECT->CreatePlayer(Vector(VIEW_WIDTH * 0.5F, VIEW_HEIGHT), Vector(10, 10), Vector(0.5f, 1.0f));
+
 	// 카메라 세팅
-	RENDER->GetCamera(CAM_MAIN)->SetScreenRect(100, 100, 600, 400);
+	RENDER->GetCamera(CAM_MAIN)->SetScreenRect(0, 0, VIEW_WIDTH, VIEW_HEIGHT);
+	RENDER->GetCamera(CAM_MINIMAP)->SetScreenRect(VIEW_WIDTH - MINI_WIDTH/2, VIEW_HEIGHT, MINI_WIDTH, MINI_HEIGHT);
 }
 
 void PlayScene::OnUpdate(float deltaTime)
@@ -54,7 +60,14 @@ void PlayScene::OnExit()
 void PlayScene::OnDraw()
 {
 	Camera* pMainCamera = RENDER->GetCamera(CAM_MAIN);
+	Camera* pMinimapCamera = RENDER->GetCamera(CAM_MINIMAP);
+
 	pMainCamera->Draw(m_pBg, Vector(0, 0));
+	pMainCamera->DrawFilledRect(OBJECT->GetPlayer()->Position() - Vector(50, 50), Vector(100, 100), ColorF::Aqua);
 	OBJECT->Draw(pMainCamera);
-	m_example.Render();
+}
+
+void PlayScene::Test()
+{
+
 }

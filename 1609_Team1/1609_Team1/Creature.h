@@ -10,6 +10,7 @@ class Creature :
 	wstring m_name;
 	Sprite* m_pSprite;
 
+	float m_scale;
 	CREATURE_STATE m_state;
 	DIRECTION_TAG m_dir;
 
