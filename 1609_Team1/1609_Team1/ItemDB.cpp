@@ -15,7 +15,7 @@ void ItemDB::Init()
 {
 	// 기본 무기
 	Add(new ItemData(ITEM_WEAPON, 1001, 10, 0, 0, 50, 0,   TEXT("권총")));
-
+	
 	// 상점 구매 무기
 	Add(new ItemData(ITEM_WEAPON, 1002, 30, 0, 0, 1000, 0, TEXT("기관총")));
 	Add(new ItemData(ITEM_WEAPON, 1003, 50, 0, 0, 700,  0, TEXT("화염 방사기")));
