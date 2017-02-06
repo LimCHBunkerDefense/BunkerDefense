@@ -5,7 +5,7 @@
 PlayScene::PlayScene()
 {
 	// 배경 이미지 맵으로 저장
-	RENDER->LoadImageFile(TEXT("ForestBG"), TEXT("Image/ForestBG.jpg"));
+	RENDER->LoadImageFile(TEXT("ForestBG"), TEXT("Image/BackGround/ForestBG.jpg")); //경로 루트 변경 배경이미지 폴더 생성.
 
 	// 크리쳐 데이터 생성
 	CREATURE->Init();
@@ -39,6 +39,11 @@ void PlayScene::OnUpdate(float deltaTime)
 {
 	OBJECT->Update(deltaTime);
 	m_example.Update(deltaTime);
+
+	if (INPUT->IsKeyDown(VK_F3))
+	{
+	}
+
 }
 
 void PlayScene::OnExit()

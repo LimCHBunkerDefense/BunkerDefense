@@ -68,10 +68,6 @@ public:
 			Vector result_dir = MATH->ToDirection(prev_angle + fTurnSpeed);
 			(*it)->SetEndPoint(m_player.center + result_dir * 600);
 		}
-
-		//ShopScene ÀÌµ¿
-		//if(INPUT->IsKeyDown(VK_DOWN))
-
 	}
 
 	void Render() {
