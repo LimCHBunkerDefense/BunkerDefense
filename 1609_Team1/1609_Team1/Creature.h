@@ -4,6 +4,7 @@ class Creature :
 	public Object
 {
 	CREATURE_STATE m_state;
+	DIRECTION_TAG m_dir;
 
 public:
 	Creature();
