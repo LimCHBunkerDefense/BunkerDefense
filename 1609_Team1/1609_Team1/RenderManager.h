@@ -505,10 +505,10 @@ public:
 		float fBunMo = MATH->Distance(MATH->ClosestPoint(CenterPoint, LineCamera), CenterPoint);
 		float X_3D;
 		if (isRight) {
-			X_3D = VIEW_WIDTH / 2 - VIEW_WIDTH / 2 * fBunJa / fBunMo;
+			X_3D = VIEW_WIDTH / 2 + VIEW_WIDTH / 2 * fBunJa / fBunMo;
 		}
 		else {
-			X_3D = VIEW_WIDTH / 2 + VIEW_WIDTH / 2 * fBunJa / fBunMo;
+			X_3D = VIEW_WIDTH / 2 - VIEW_WIDTH / 2 * fBunJa / fBunMo;
 		}
 
 		DrawLine(Vector(CHARACTER_X, CHARACTER_Y), Vector(X_3D, m_height), color, lineSize);
