@@ -12,7 +12,7 @@ PlayScene::PlayScene()
 	
 	// 크리처 이미지 맵으로 저장
 	RENDER->LoadImageFiles(TEXT("EntRun"), TEXT("Image/Creature/Ent/Run/Run"), TEXT("png"), 9);
-	
+
 	// 카메라 생성
 	RENDER->CreateCamera(CAM_MAIN, 3000, 1000, VIEW_WIDTH, VIEW_HEIGHT);
 }
@@ -29,7 +29,7 @@ void PlayScene::OnEnter()
 	NEW_OBJECT(m_pBg, Sprite(RENDER->GetImage(TEXT("ForestBG")), 1.0f, 0, 0));
 
 	// 테스트용 크리쳐 생성
-	OBJECT->CreateCreature(1001, Vector(200, 200), Vector(100, 100));
+	OBJECT->CreateCreature(OBJ_ENT, Vector(500, 500), Vector(100, 100));
 
 	// 카메라 세팅
 	RENDER->GetCamera(CAM_MAIN)->SetScreenRect(100, 100, 600, 400);

@@ -10,15 +10,15 @@
 
 struct CreatureData
 {
-	int creatureID;
+	OBJ_TAG tag;
 	float attack;
 	float defense;
 	wstring name;
 
 public:
-	CreatureData(int creatureID, float attack, float defense, wstring name)
+	CreatureData(OBJ_TAG tag, float attack, float defense, wstring name)
 	{
-		this->creatureID = creatureID;
+		this->tag = tag;
 		this->attack = attack;
 		this->defense = defense;
 		this->name = name;
@@ -36,6 +36,6 @@ public:
 
 	void Init();
 	void Add(CreatureData* pData);
-	CreatureData* GetData(int creatureID);
+	CreatureData* GetData(OBJ_TAG tag);
 };
 

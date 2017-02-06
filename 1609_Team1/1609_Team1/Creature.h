@@ -5,7 +5,6 @@
 class Creature :
 	public Object
 {
-	int m_creatureID;
 	float m_attack;
 	float m_defense;
 	wstring m_name;
@@ -16,7 +15,7 @@ class Creature :
 
 public:
 	Creature();
-	Creature(int creatureID);
+	Creature(OBJ_TAG tag);
 	~Creature();
 
 	void Update(float deltaTime);
