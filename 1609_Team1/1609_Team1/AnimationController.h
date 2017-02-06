@@ -86,7 +86,7 @@ public:
 	}
 
 	// 애니메이션 등록
-	void Register(int tag, Animation* pAnim)
+	void Register(int tag, Animation*	pAnim)
 	{
 		if (m_animations.find(tag) == m_animations.end())
 		{

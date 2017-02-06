@@ -13,7 +13,7 @@ class Example {
 	Line m_LineCamera, m_LineLeft, m_LineRight;//	1. 카메라 중심선, 왼쪽, 오른쪽 선
 
 	Line m_enemy1, m_enemy2, m_enemy3;
-
+	float m_height;
 	list<Line*> m_listLine;  //캐릭터에 관련된 것이 아닌 것들을 넣어놓음.
 
 
@@ -26,6 +26,7 @@ public:
 		m_enemy2(m_player.center, Vector(600, 400)),
 		m_enemy3(m_player.center, Vector(300, 200)) {
 		m_angle = 0;
+		m_height = GROUND_HEIGHT;
 		m_dir = Vector::Right();
 
 
@@ -54,6 +55,14 @@ public:
 			//m_angle += 10 * deltaTime;
 			fTurnSpeed = 2;
 		}
+		if (INPUT->IsKeyPress(VK_UP)) {
+			//m_angle -= 10 * deltaTime;
+			m_height = +0.2;
+		}
+		if (INPUT->IsKeyPress(VK_DOWN)) {
+			//m_angle += 10 * deltaTime;
+			m_height = -0.2;
+		}
 		FOR_LIST(Line*, m_listLine) {
 			float prev_angle = MATH->Angle(m_dir, (*it)->EndPoint() - (*it)->StartPoint());
 			Vector result_dir = MATH->ToDirection(prev_angle + fTurnSpeed);
@@ -75,8 +84,8 @@ public:
 			RENDER->DrawInMap(*(*it), ColorF::Red);
 			if (now_angle <= CAMERA_LEFT && now_angle >= CAMERA_RIGHT) {
 
-				if (now_angle <= 90)	RENDER->Draw3D(m_LineCamera, m_LineLeft, *(*it), ColorF::Red);
-				else				RENDER->Draw3D(m_LineCamera, m_LineRight, *(*it), ColorF::Red, false);
+				if (now_angle <= 90)	RENDER->Draw3D(m_LineCamera, m_LineLeft, *(*it), m_height, ColorF::Red);
+				else					RENDER->Draw3D(m_LineCamera, m_LineRight, *(*it), m_height, ColorF::Red, false);
 			}
 		}
 
