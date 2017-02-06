@@ -103,6 +103,7 @@ struct Triangle
 	}
 };
 
+//원래 가지고 있던 박스 Collider
 struct Box
 {
 	Vector pos;
@@ -119,6 +120,35 @@ struct Box
 
 	Vector LeftTop() { return pos - size * anchor; }
 	Vector RightBottom() { return LeftTop() + size; }
+};
+
+// 배울 때 사용하는 사각형
+struct Box2
+{
+	Vector center, size;
+	Vector dirX, dirY;
+
+	Box2(Vector center, Vector size, float angle = 0)
+	{
+		this->center = center;
+		this->size = size;
+		SetAngle(angle);
+	}
+
+	void SetAngle(float angle)
+	{
+		dirX = Vector(cosf(angle * ANGLE_TO_RADIAN), -sinf(angle * ANGLE_TO_RADIAN));
+		dirY = Vector(cosf((angle - 90) * ANGLE_TO_RADIAN), -sinf((angle - 90) * ANGLE_TO_RADIAN));
+	}
+
+	Vector Width() { return dirX * size.x; }
+	Vector Height() { return dirY * size.y; }
+
+	Vector Center() { return center; }
+	Vector LeftTop() { return center - Width() * 0.5f - Height() * 0.5f; }
+	Vector LeftBottom() { return LeftTop() + Height(); }
+	Vector RightTop() { return LeftTop() + Width(); }
+	Vector RightBottom() { return LeftTop() + Width() + Height(); }
 };
 
 class Math : public Singleton<Math>
@@ -176,8 +206,8 @@ public:
 	float Dot(Vector a, Vector b) { return (a.x * b.x) + (a.y * b.y); }
 	float CrossZ(Vector a, Vector b) { return (a.x * -b.y - -a.y * b.x); }
 
-	float Distance(Vector from, Vector to) { return (to - from).Magnitude(); }
-	float SqrDistance(Vector from, Vector to) { return (to - from).SqrMagnitude(); }
+	float Distance2(Vector from, Vector to) { return (to - from).Magnitude(); }
+	float SqrDistance2(Vector from, Vector to) { return (to - from).SqrMagnitude(); }
 	Vector ToDirection(float angle) { return Vector(Cos(angle), -Sin(angle)); }
 	Vector Project(Vector v, Vector dir) { return dir.Normalize() * ProjectLength(v, dir); }
 	float ProjectLength(Vector v, Vector dir) { return Dot(v, dir.Normalize()); }
@@ -275,12 +305,12 @@ public:
 	// 점과 원 충돌
 	bool IsCollided(Vector point, Circle circle)
 	{
-		float sqrDist = SqrDistance(point, circle.center);
+		float sqrDist = SqrDistance2(point, circle.center);
 		return sqrDist <= circle.radius * circle.radius;
 	}
 
 	// 점과 사각형 충돌
-	bool IsCollided(Vector point, Box box)
+	bool IsCollided(Vector point, Box2 box)
 	{
 		// AABB 충돌
 		//Vector leftTop = box.LeftTop();
@@ -321,18 +351,18 @@ public:
 	bool IsCollided(Circle circle, Line line)
 	{
 		Vector pos = ClosestPoint(circle.center, line);
-		return SqrDistance(pos, circle.center) <= circle.radius * circle.radius;
+		return SqrDistance2(pos, circle.center) <= circle.radius * circle.radius;
 	}
 
 	// 원과 원 충돌
 	bool IsCollided(Circle c0, Circle c1)
 	{
 		float totalRadius = c0.radius + c1.radius;
-		return SqrDistance(c0.center, c1.center) <= totalRadius * totalRadius;
+		return SqrDistance2(c0.center, c1.center) <= totalRadius * totalRadius;
 	}
 
 	// 원과 박스 충돌
-	bool IsCollided(Circle circle, Box box)
+	bool IsCollided(Circle circle, Box2 box)
 	{
 		if (IsCollided(circle.center, box)) return true;
 		if (IsCollided(circle, Line(box.LeftTop(), box.RightTop()))) return true;
@@ -387,7 +417,7 @@ public:
 	}
 
 	// 선과 박스 충돌
-	bool IsCollided(Line line, Box box)
+	bool IsCollided(Line line, Box2 box)
 	{
 		if (IsCollided(line.StartPoint(), box)) return true;
 		if (IsCollided(line.EndPoint(), box)) return true;
@@ -410,7 +440,7 @@ public:
 	}
 
 	// 박스와 박스 충돌
-	bool IsCollided(Box a, Box b)
+	bool IsCollided(Box2 a, Box2 b)
 	{
 		float distX = ProjectAbsLength(a.center - b.center, Vector::Right());
 		float aHalfWidth = ProjectAbsLength(a.Width() * 0.5f, Vector::Right())
