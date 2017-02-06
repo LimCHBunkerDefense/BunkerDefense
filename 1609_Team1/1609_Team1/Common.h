@@ -13,6 +13,9 @@
 #define NEW_OBJECT(p, type) p = new type
 #define DELETE_OBJECT(p) if ((p) != NULL) { delete (p); (p) = NULL; }
 #define DELETE_OBJECTS(p) if ((p) != NULL) { delete[] (p); (p) = NULL; }
+#define DpELETE_OBJECT()	if ((p) != NULL) { delete (p); (p) = NULL; }
+#define DELETE_OBJECTS(p)	if ((p) != NULL) { delete[] (p); (p) = NULL; }
+#define RELEASE_OBJECT(p)	if ((p) != NULL) { (p)->Release(); (p) = NULL; }
 #define FOR_LIST(type, li) for (list<type>::iterator it = li.begin(); it != li.end(); it++)
 
 
@@ -64,4 +67,10 @@ enum OBJ_TAG
 enum ITEM_TAG
 {
 	ITEM_NONE, ITEM_WEAPON,
+};
+
+//02-06 ÀÌ½Â¹®
+enum TEXT_ALIGN
+{
+	TEXT_ALIGN_LEFT = 0, TEXT_ALIGN_RIGHT = 1, TEXT_ALIGN_CENTER = 2,
 };
