@@ -44,10 +44,10 @@ void PlayScene::OnEnter()
 void PlayScene::OnUpdate(float deltaTime)
 {
 	OBJECT->Update(deltaTime);
-	m_example.Update(deltaTime);
 
 	if (INPUT->IsKeyDown(VK_F3))
 	{
+
 	}
 
 }
