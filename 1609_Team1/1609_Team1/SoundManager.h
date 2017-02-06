@@ -10,7 +10,6 @@ using namespace std;
 
 #define SOUND SoundManager::Instance()
 
-
 class SoundManager : public Singleton<SoundManager>
 {
 	System* m_pSystem;
