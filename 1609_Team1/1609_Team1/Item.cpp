@@ -21,6 +21,4 @@ Item::Item(int itemID)
 	m_defense = pData->defense;
 	m_quantity = pData->quantity;
 	m_name = pData->name;
-	m_pSprite = pData->pSprite;
-
 }
