@@ -10,12 +10,10 @@ class Player :
 	
 public:
 	Player();
+	Player(OBJ_TAG tag) : Object(tag);
 	~Player();
 
-	Player(int id) : Object(id)
-	{
-		
-	}
+	
 
 	void Update(float deltaTime);
 	void Draw(Camera* pCamera);

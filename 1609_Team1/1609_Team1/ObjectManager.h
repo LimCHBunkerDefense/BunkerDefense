@@ -11,16 +11,16 @@ using namespace std;
 class Object
 {
 	AnimationController* m_pAnim;
-	int m_id;
+	OBJ_TAG m_tag;
 	Vector m_pos;
 	Box m_collider;
 
 public:
 	Object() {}
-	Object(int id)
+	Object(OBJ_TAG tag)
 	{
 		m_pAnim = new AnimationController();
-		m_id = id;
+		m_tag = tag;
 	}
 
 	~Object()
@@ -29,7 +29,7 @@ public:
 	}
 
 	AnimationController* Animation() { return m_pAnim; }
-	int ID() { return m_id; }
+	OBJ_TAG Tag() { return m_tag; }
 	Vector Position() { return m_pos; }
 	Box Collider() { return m_collider; }
 
@@ -66,7 +66,7 @@ public:
 	Object* GetPlayer() { return m_pPlayer; }
 	void DestroyPlayer();
 	
-	void CreateCreature(int creatureID, Vector pos, Vector colSize, Vector anchor = Vector(0.5f, 1.0f));
+	void CreateCreature(OBJ_TAG tag, Vector pos, Vector colSize, Vector anchor = Vector(0.5f, 1.0f));
 	//void DestroyAllCreature();
 	//
 	//

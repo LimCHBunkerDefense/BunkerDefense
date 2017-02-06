@@ -12,7 +12,7 @@ PlayScene::PlayScene()
 	
 	// 크리처 이미지 맵으로 저장
 	RENDER->LoadImageFiles(TEXT("EntRun"), TEXT("Image/Creature/Ent/Run/Run"), TEXT("png"), 9);
-	
+
 	// 카메라 생성
 	RENDER->CreateCamera(CAM_MAIN, 3000, 1000, VIEW_WIDTH, VIEW_HEIGHT);
 }

@@ -6,6 +6,10 @@ Player::Player()
 {
 }
 
+Player::Player(OBJ_TAG tag) : Object(tag)
+{
+
+}
 
 Player::~Player()
 {
