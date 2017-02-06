@@ -430,7 +430,7 @@ public:
 		DrawCircle(circle.center, circle.radius, color, lineSize);
 	}
 
-	void Draw(Box box, ColorF color, float lineSize = 1)
+	void Draw(Box2 box, ColorF color, float lineSize = 1)
 	{
 		DrawLine(box.LeftTop(), box.RightTop(), color, lineSize);
 		DrawLine(box.LeftTop(), box.LeftBottom(), color, lineSize);
@@ -447,26 +447,26 @@ public:
 
 	void DrawLine(Vector startPos, Vector endPos, ColorF color = ColorF::White, float lineSize = 1)
 	{
-		m_queGraphics.push(new GLine(startPos, endPos, color, lineSize));
+		m_queIGraphics.push(new GLine(startPos, endPos, color, lineSize));
 	}
 
 	void FillRect(Vector center, Vector size, ColorF color = ColorF::White)
 	{
-		m_queGraphics.push(new GRect(center, size, color, 0));
+		m_queIGraphics.push(new GRect(center, size, color, 0));
 	}
 
 	void DrawRect(Vector center, Vector size, ColorF color = ColorF::White, float lineSize = 1)
 	{
-		m_queGraphics.push(new GRect(center, size, color, lineSize));
+		m_queIGraphics.push(new GRect(center, size, color, lineSize));
 	}
 
 	void FillCircle(Vector center, float radius, ColorF color = ColorF::White)
 	{
-		m_queGraphics.push(new GCircle(center, radius, color, 0));
+		m_queIGraphics.push(new GCircle(center, radius, color, 0));
 	}
 
 	void DrawCircle(Vector center, float radius, ColorF color = ColorF::White, float lineSize = 1)
 	{
-		m_queGraphics.push(new GCircle(center, radius, color, lineSize));
+		m_queIGraphics.push(new GCircle(center, radius, color, lineSize));
 	}
 };
