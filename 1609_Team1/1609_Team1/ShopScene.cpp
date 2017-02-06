@@ -36,9 +36,9 @@ void ShopScene::OnDraw()
 
 void ShopScene::ItemListWnd()
 {
-	RENDER->DrawRect(Vector(200,400),Vector(250,550),ColorF::Red);
+	RENDER->DrawRect(Vector(200,400),Vector(250,650),ColorF::Red);
 }
 void ShopScene::ItemStatWnd()
 {
-	RENDER->DrawRect(Vector(1000, 400), Vector(250, 550), ColorF::Yellow);
+	RENDER->DrawRect(Vector(1000, 400), Vector(250, 650), ColorF::Yellow);
 }
