@@ -13,17 +13,21 @@ struct ItemData
 	int itemID;
 	float attack;
 	float defense;
+	float bunkerLife;
+	int bulletCount;
+	int addBullet;
 	int quantity;
 	wstring name;
-	Sprite* pSprite;
 
-	ItemData(ITEM_TAG tag, int itemID, float attack, float defense, wstring name, Sprite* pSprite)
+	ItemData(ITEM_TAG tag, int itemID, float attack, float defense, float bunkerLife, int bulletCount, int addBullet, wstring name)
 	{
 		this->tag = tag;
 		this->itemID = itemID;
 		this->attack = attack;
 		this->defense = defense;
-		this->pSprite = pSprite;
+		this->bunkerLife = bunkerLife;
+		this->bulletCount = bulletCount;
+		this->addBullet = addBullet;
 	}
 
 
