@@ -27,6 +27,7 @@ void PlayScene::OnEnter()
 void PlayScene::OnUpdate(float deltaTime)
 {
 	RENDER->GetCamera(CAM_MAIN)->SetCenterPos(OBJECT->GetPlayer()->Position());
+	m_example.Update(deltaTime);
 }
 
 void PlayScene::OnExit()
@@ -39,4 +40,5 @@ void PlayScene::OnDraw()
 	Camera* pMainCamera = RENDER->GetCamera(CAM_MAIN);
 	pMainCamera->Draw(m_pBg, Vector(0, 0));
 	OBJECT->Draw(pMainCamera);
+	m_example.Render();
 }
