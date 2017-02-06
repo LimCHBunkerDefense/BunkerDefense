@@ -11,14 +11,16 @@
 struct CreatureData
 {
 	OBJ_TAG tag;
+	float life;
 	float attack;
 	float defense;
 	wstring name;
 
 public:
-	CreatureData(OBJ_TAG tag, float attack, float defense, wstring name)
+	CreatureData(OBJ_TAG tag, float life, float attack, float defense, wstring name)
 	{
 		this->tag = tag;
+		this->life = life;
 		this->attack = attack;
 		this->defense = defense;
 		this->name = name;

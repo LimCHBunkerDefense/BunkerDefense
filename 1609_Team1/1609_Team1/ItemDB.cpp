@@ -21,9 +21,9 @@ void ItemDB::Init()
 	Add(new ItemData(ITEM_WEAPON, 1003, 50, 0, 0, 700,  0, TEXT("화염 방사기")));
 
 	// 상점 구매 아이템
-	Add(new ItemData(ITEM_WEAPON, 1004, 100, 0, 0, 0, 0, TEXT("수류탄")));
-	Add(new ItemData(ITEM_WEAPON, 1005, 200, 0, 0, 0, 0, TEXT("공중 폭격")));
-	Add(new ItemData(ITEM_WEAPON, 1006,  30, 0, 0, 0, 0, TEXT("용암지대")));
+	Add(new ItemData(ITEM_WEAPON, 1004, 100, 0, 0, 0, 0,   TEXT("수류탄")));
+	Add(new ItemData(ITEM_WEAPON, 1005, 200, 0, 0, 0, 0,   TEXT("공중 폭격")));
+	Add(new ItemData(ITEM_WEAPON, 1006,  30, 0, 0, 0, 0,   TEXT("용암지대")));
 	Add(new ItemData(ITEM_HEAL,   1007,   0, 0, 100, 0, 0, TEXT("벙커 수리")));
 
 	Add(new ItemData(ITEM_BULLET, 1008, 0, 0, 0, 0, 10,  TEXT("권총 탄약")));
