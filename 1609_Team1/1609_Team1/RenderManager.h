@@ -15,6 +15,131 @@ using namespace D2D1;
 using namespace std;
 
 #define RENDER RenderManager::Instance()
+//02-06 ÀÌ½Â¹®
+class IGraphics
+{
+public:
+	virtual void Render(ID2D1RenderTarget* pRenderTarget) {}
+};
+
+class GText : public IGraphics
+{
+	IDWriteTextFormat* m_pFormat;
+	wstring m_text;
+	Vector m_pos;
+	ColorF m_color;
+	float m_size;
+
+public:
+	GText(IDWriteTextFormat* pFormat, wstring text, Vector pos
+		, float size, ColorF color) : m_color(color)
+	{
+		m_pFormat = pFormat;
+		m_text = text;
+		m_pos = pos;
+		m_size = size;
+	}
+
+	~GText() { RELEASE_OBJECT(m_pFormat); }
+
+	void Render(ID2D1RenderTarget* pRenderTarget)
+	{
+		D2D1_RECT_F rect = RectF(m_pos.x, m_pos.y, m_pos.x + 500, m_pos.y);
+
+		ID2D1SolidColorBrush* pBrush;
+		pRenderTarget->CreateSolidColorBrush(m_color, &pBrush);
+		pRenderTarget->DrawTextW(m_text.c_str(), m_text.length(), m_pFormat, rect, pBrush);
+		RELEASE_OBJECT(pBrush);
+	}
+};
+
+class GLine : public IGraphics
+{
+	Vector m_start, m_end;
+	ColorF m_color;
+	float m_lineSize;
+
+public:
+	GLine(Vector start, Vector end, ColorF color, float lineSize) : m_color(color)
+	{
+		m_start = start;
+		m_end = end;
+		m_lineSize = lineSize;
+	}
+
+	void Render(ID2D1RenderTarget* pRenderTarget)
+	{
+		ID2D1SolidColorBrush* pBrush;
+		pRenderTarget->CreateSolidColorBrush(m_color, &pBrush);
+
+		D2D1_POINT_2F startPos = Point2F(m_start.x, m_start.y);
+		D2D1_POINT_2F endPos = Point2F(m_end.x, m_end.y);
+		pRenderTarget->DrawLine(startPos, endPos, pBrush, m_lineSize);
+
+		RELEASE_OBJECT(pBrush);
+	}
+};
+
+class GRect : public IGraphics
+{
+	Vector m_center, m_size;
+	ColorF m_color;
+	float m_lineSize;
+
+public:
+	GRect(Vector center, Vector size, ColorF color, float lineSize) : m_color(color)
+	{
+		m_center = center;
+		m_size = size;
+		m_lineSize = lineSize;
+	}
+
+	void Render(ID2D1RenderTarget* pRenderTarget)
+	{
+		ID2D1SolidColorBrush* pBrush;
+		pRenderTarget->CreateSolidColorBrush(m_color, &pBrush);
+
+		Vector leftTop = m_center - m_size * 0.5f;
+		Vector rightBottom = m_center + m_size * 0.5f;
+		D2D1_RECT_F rect = RectF(leftTop.x, leftTop.y, rightBottom.x, rightBottom.y);
+
+		if (m_lineSize == 0) pRenderTarget->FillRectangle(rect, pBrush);
+		else pRenderTarget->DrawRectangle(rect, pBrush, m_lineSize);
+
+		RELEASE_OBJECT(pBrush);
+	}
+};
+
+class GCircle : public IGraphics
+{
+	Vector m_center;
+	float m_radius;
+	ColorF m_color;
+	float m_lineSize;
+
+public:
+	GCircle(Vector center, float radius, ColorF color, float lineSize) : m_color(color)
+	{
+		m_center = center;
+		m_radius = radius;
+		m_lineSize = lineSize;
+	}
+
+	void Render(ID2D1RenderTarget* pRenderTarget)
+	{
+		ID2D1SolidColorBrush* pBrush;
+		pRenderTarget->CreateSolidColorBrush(m_color, &pBrush);
+
+		D2D1_POINT_2F center = Point2F(m_center.x, m_center.y);
+		D2D1_ELLIPSE ellipse = Ellipse(center, m_radius, m_radius);
+
+		if (m_lineSize == 0) pRenderTarget->FillEllipse(ellipse, pBrush);
+		else pRenderTarget->DrawEllipse(ellipse, pBrush, m_lineSize);
+
+		RELEASE_OBJECT(pBrush);
+	}
+};
+
 
 struct Text
 {
@@ -258,7 +383,9 @@ class RenderManager : public Singleton<RenderManager>
 	map<int, Camera*> m_cameras;
 	queue<Sprite*> m_queSprite;
 	queue<Text> m_queText;
-	queue<GraphicsObject> m_queGraphics;
+	queue<GraphicsObject>	m_queGraphics;
+
+	queue<IGraphics*>		m_queIGraphics;
 
 public:
 	RenderManager();
@@ -278,4 +405,68 @@ public:
 	void DrawRect(float x, float y, float width, float height, ColorF color = ColorF::Black, float lineSize = 1);
 	void DrawCircle(float x, float y, float width, float height, ColorF color = ColorF::Black, float lineSize = 1);
 	void Render(HDC hdc);
+
+	void Draw(wstring text, Vector pos, float size = 10, ColorF color = ColorF::White,
+		TEXT_ALIGN align = TEXT_ALIGN_LEFT, wstring font = TEXT("Arial"))
+	{
+		IDWriteTextFormat* pFormat = NULL;
+		m_pDWriteFactory->CreateTextFormat(font.c_str(), 0,
+			DWRITE_FONT_WEIGHT_REGULAR,
+			DWRITE_FONT_STYLE_NORMAL,
+			DWRITE_FONT_STRETCH_NORMAL,
+			size, TEXT("ko"), &pFormat);
+
+		pFormat->SetTextAlignment((DWRITE_TEXT_ALIGNMENT)align);
+		m_queIGraphics.push(new GText(pFormat, text, pos, size, color));
+	}
+
+	void Draw(Line line, ColorF color, float lineSize = 1)
+	{
+		DrawLine(line.StartPoint(), line.EndPoint(), color, lineSize);
+	}
+
+	void Draw(Circle circle, ColorF color, float lineSize = 0)
+	{
+		DrawCircle(circle.center, circle.radius, color, lineSize);
+	}
+
+	void Draw(Box box, ColorF color, float lineSize = 1)
+	{
+		DrawLine(box.LeftTop(), box.RightTop(), color, lineSize);
+		DrawLine(box.LeftTop(), box.LeftBottom(), color, lineSize);
+		DrawLine(box.RightBottom(), box.RightTop(), color, lineSize);
+		DrawLine(box.RightBottom(), box.LeftBottom(), color, lineSize);
+	}
+
+	void Draw(Triangle triangle, ColorF color, float lineSize = 1)
+	{
+		DrawLine(triangle.p0, triangle.p1, color, lineSize);
+		DrawLine(triangle.p1, triangle.p2, color, lineSize);
+		DrawLine(triangle.p2, triangle.p0, color, lineSize);
+	}
+
+	void DrawLine(Vector startPos, Vector endPos, ColorF color = ColorF::White, float lineSize = 1)
+	{
+		m_queGraphics.push(new GLine(startPos, endPos, color, lineSize));
+	}
+
+	void FillRect(Vector center, Vector size, ColorF color = ColorF::White)
+	{
+		m_queGraphics.push(new GRect(center, size, color, 0));
+	}
+
+	void DrawRect(Vector center, Vector size, ColorF color = ColorF::White, float lineSize = 1)
+	{
+		m_queGraphics.push(new GRect(center, size, color, lineSize));
+	}
+
+	void FillCircle(Vector center, float radius, ColorF color = ColorF::White)
+	{
+		m_queGraphics.push(new GCircle(center, radius, color, 0));
+	}
+
+	void DrawCircle(Vector center, float radius, ColorF color = ColorF::White, float lineSize = 1)
+	{
+		m_queGraphics.push(new GCircle(center, radius, color, lineSize));
+	}
 };
