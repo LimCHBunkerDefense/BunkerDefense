@@ -14,9 +14,6 @@
 #define DELETE_OBJECT(p) if ((p) != NULL) { delete (p); (p) = NULL; }
 #define DELETE_OBJECTS(p) if ((p) != NULL) { delete[] (p); (p) = NULL; }
 #define FOR_LIST(type, li) for (list<type>::iterator it = li.begin(); it != li.end(); it++)
-#define DpELETE_OBJECT()	if ((p) != NULL) { delete (p); (p) = NULL; }
-#define DELETE_OBJECTS(p)	if ((p) != NULL) { delete[] (p); (p) = NULL; }
-#define RELEASE_OBJECT(p)	if ((p) != NULL) { (p)->Release(); (p) = NULL; }
 
 
 enum KEY_STATE
@@ -64,8 +61,7 @@ enum OBJ_TAG
 	OBJ_NONE, OBJ_PLAYER,
 };
 
-//02-06 ÀÌ½Â¹®
-enum TEXT_ALIGN
+enum ITEM_TAG
 {
-	TEXT_ALIGN_LEFT = 0, TEXT_ALIGN_RIGHT = 1, TEXT_ALIGN_CENTER = 2,
+	ITEM_NONE, ITEM_WEAPON,
 };

@@ -61,6 +61,15 @@
     <Filter Include="Object\Bullet">
       <UniqueIdentifier>{902e043d-e981-4d06-af03-4ec3172b5fa1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Database\ItemDB">
+      <UniqueIdentifier>{27d3fc69-5c63-4de7-8f4b-a2cfd8db482c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Database\CreatureDB">
+      <UniqueIdentifier>{df4566cd-fe5b-4e1d-ae42-95acc11948c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Item">
+      <UniqueIdentifier>{bf5198ca-baa8-4b67-8b32-939d22039856}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
@@ -94,6 +103,13 @@
     <ClCompile Include="Creature.cpp">
       <Filter>Object\Creature</Filter>
     </ClCompile>
+    <ClCompile Include="ShopScene.cpp">
+      <Filter>Scene\ShopScene</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemDB.cpp">
+      <Filter>Database\ItemDB</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Math.h">
@@ -139,5 +155,13 @@
     <ClInclude Include="Creature.h">
       <Filter>Object\Creature</Filter>
     </ClInclude>
+    <ClInclude Include="Monster.h" />
+    <ClInclude Include="ShopScene.h">
+      <Filter>Scene\ShopScene</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemDB.h">
+      <Filter>Database\ItemDB</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h" />
   </ItemGroup>
 </Project>
