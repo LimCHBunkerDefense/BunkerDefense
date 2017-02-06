@@ -60,3 +60,8 @@ enum OBJ_TAG
 {
 	OBJ_NONE, OBJ_PLAYER,
 };
+
+enum ITEM_TAG
+{
+	ITEM_NONE, ITEM_WEAPON,
+};
