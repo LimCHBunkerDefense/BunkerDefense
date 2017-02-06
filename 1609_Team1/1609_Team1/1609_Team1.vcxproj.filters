@@ -109,7 +109,12 @@
     <ClCompile Include="ItemDB.cpp">
       <Filter>Database\ItemDB</Filter>
     </ClCompile>
-    <ClCompile Include="Item.cpp" />
+    <ClCompile Include="CreatureDB.cpp">
+      <Filter>Database\CreatureDB</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Object\Item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Math.h">
@@ -162,6 +167,11 @@
     <ClInclude Include="ItemDB.h">
       <Filter>Database\ItemDB</Filter>
     </ClInclude>
-    <ClInclude Include="Item.h" />
+    <ClInclude Include="CreatureDB.h">
+      <Filter>Database\CreatureDB</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>Object\Item</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

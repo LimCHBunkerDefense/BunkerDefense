@@ -33,7 +33,7 @@ public:
 };
 
 
-class ItemDB
+class ItemDB : public Singleton<ItemDB>
 {
 	map<int, ItemData*> m_pItems;
 public:
