@@ -1,5 +1,6 @@
 #pragma once
 #include "SceneManager.h"
+#include "InputManager.h"
 #include "RenderManager.h"
 #include "ObjectManager.h"
 #include "Common.h"

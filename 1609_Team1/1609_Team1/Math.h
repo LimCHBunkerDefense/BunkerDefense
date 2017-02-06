@@ -14,7 +14,7 @@ struct Vector
 
 	Vector() { x = 0.0f; y = 0.0f; }
 	Vector(float x, float y) { this->x = x; this->y = y; }
-	Vector(POINT point) { x = point.x; y = point.y; }
+	//Vector(POINT point) { x = point.x; y = point.y; }
 
 	float Magnitude() { return sqrt(SqrMagnitude()); }
 	float SqrMagnitude() { return pow(x, 2) + pow(y, 2); }
