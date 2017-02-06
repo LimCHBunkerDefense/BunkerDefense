@@ -14,7 +14,7 @@ void ObjectManager::Update(float deltaTime)
 	//	(*it)->Update(deltaTime);
 	//}
 
-	m_pPlayer->Update(deltaTime);
+	//m_pPlayer->Update(deltaTime);
 }
 
 void ObjectManager::Draw(Camera* pCamera)
