@@ -14,6 +14,7 @@ Creature::Creature(OBJ_TAG tag) : Object(tag)
 	m_state = CREATURE_RUN;
 	m_dir = DIRECTION_CENTER;
 
+	m_scale = 0.5f;
 	m_attack = pData->attack;
 	m_defense = pData->defense;
 	m_name = pData->name;
@@ -34,6 +35,8 @@ void Creature::Update(float deltaTime)
 
 	}
 
+	m_scale = MATH->Clamp(m_scale + 0.01f, 0.5f, 1.5f);
+	SetScale(m_scale);
 	Animation()->Update(deltaTime);
 }
 

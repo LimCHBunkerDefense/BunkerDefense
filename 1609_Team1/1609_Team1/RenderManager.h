@@ -239,6 +239,7 @@ public:
 	void SetPosition(float x, float y) { m_x = x; m_y = y; }
 	void SetDirection(int dir) { m_dir = dir; }
 	void SetSize(float w, float h) { m_width = w; m_height = h; }
+	void SetScale(float scale) { m_scale = scale; }
 	float GetLeftX() { return m_x - GetWidth() * m_anchorX; }
 	float GetTopY() { return m_y - GetHeight() * m_anchorY; }
 	float GetWidth() { return m_width * m_scale; }

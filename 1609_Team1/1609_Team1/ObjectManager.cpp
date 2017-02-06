@@ -66,7 +66,7 @@ void ObjectManager::CreateCreature(OBJ_TAG tag, Vector pos, Vector colSize, Vect
 	switch (tag)
 	{
 	case OBJ_ENT:
-		pCreature->Animation()->Register(CREATURE_RUN, new Animation(TEXT("EntRun"), 9, 9, true, 1.0f, anchor.x, anchor.y));
+		pCreature->Animation()->Register(CREATURE_RUN, new Animation(TEXT("EntRun"), 9, 9, true, 0.5f, anchor.x, anchor.y));
 		// pCreture->Animation()->Register(CREATURE_ATTACK, new Animation(TEXT("EntAttack"), 2, 10, false, 2.0f, anchor.x, anchor.y));
 		// pCreture->Animation()->Register(CREATURE_DEAD, new Animation(TEXT("EntDead"), 2, 10, false, 2.0f, anchor.x, anchor.y));
 		break;

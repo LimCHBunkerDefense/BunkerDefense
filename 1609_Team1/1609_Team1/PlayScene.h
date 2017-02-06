@@ -96,10 +96,16 @@ public:
 		RENDER->Draw(m_player, ColorF::Aqua);
 	}
 };
+
 class PlayScene : public IScene
 {
 	Sprite* m_pBg;
-	Example m_example;
+	
+	// 크리쳐 생성 y좌표(높이 h)
+	float m_heightOfCreature;
+
+	// 화면 출력을 위한 시야의 각도
+	float m_angleToSee;
 	
 public:
 	PlayScene();
@@ -109,4 +115,6 @@ public:
 	void OnUpdate(float deltaTime);
 	void OnExit();
 	void OnDraw();
+
+	void Test();
 };

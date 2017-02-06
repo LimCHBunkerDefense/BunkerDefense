@@ -38,10 +38,16 @@ public:
 		m_pos = pos;
 		m_collider.pos = pos;
 	}
+
 	void SetCollider(Vector size, Vector anchor)
 	{
 		m_collider.size = size;
 		m_collider.anchor = anchor;
+	}
+
+	void SetScale(float scale)
+	{
+		m_pAnim->Current()->GetSprite()->SetScale(scale);
 	}
 
 	virtual void Update(float deltaTime) { }
