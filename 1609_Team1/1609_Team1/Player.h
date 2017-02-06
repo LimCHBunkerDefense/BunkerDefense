@@ -10,7 +10,7 @@ class Player :
 	
 public:
 	Player();
-	Player(OBJ_TAG tag) : Object(tag);
+	Player(OBJ_TAG tag);
 	~Player();
 
 	
