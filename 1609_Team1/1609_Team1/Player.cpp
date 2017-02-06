@@ -21,7 +21,6 @@ void Player::Update(float deltaTime)
 	{
 	case PLAYER_ATTACK: AttackState(deltaTime); break;
 	case PLAYER_SHOP: ShopState(); break;
-
 	}
 }
 

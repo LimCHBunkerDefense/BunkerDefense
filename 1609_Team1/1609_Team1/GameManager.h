@@ -7,6 +7,7 @@
 #include "InputManager.h"
 #include "Common.h"
 #include "PlayScene.h"
+#include "ShopScene.h"
 
 #define GAME GameManager::Instance()
 

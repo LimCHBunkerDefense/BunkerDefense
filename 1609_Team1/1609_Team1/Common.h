@@ -18,6 +18,7 @@
 #define GROUND_HEIGHT	400
 #define CHARACTER_X		VIEW_WIDTH*0.5F-30
 #define CHARACTER_Y		VIEW_HEIGHT-30
+#define ROTATE_SPEED	2
 
 
 #define NEW_OBJECT(p, type) p = new type

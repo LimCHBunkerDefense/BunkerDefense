@@ -49,26 +49,25 @@ public:
 		float fTurnSpeed = 0;
 		if (INPUT->IsKeyPress(VK_LEFT)) {
 			//m_angle -= 10 * deltaTime;
-			fTurnSpeed = -2;
+			fTurnSpeed = -ROTATE_SPEED;
 		}
 		if (INPUT->IsKeyPress(VK_RIGHT)) {
 			//m_angle += 10 * deltaTime;
-			fTurnSpeed = 2;
+			fTurnSpeed = ROTATE_SPEED;
 		}
 		if (INPUT->IsKeyPress(VK_UP)) {
 			//m_angle -= 10 * deltaTime;
-			m_height = +0.2;
+			m_height += ROTATE_SPEED * 5;
 		}
 		if (INPUT->IsKeyPress(VK_DOWN)) {
 			//m_angle += 10 * deltaTime;
-			m_height = -0.2;
+			m_height -= ROTATE_SPEED * 5;
 		}
 		FOR_LIST(Line*, m_listLine) {
 			float prev_angle = MATH->Angle(m_dir, (*it)->EndPoint() - (*it)->StartPoint());
 			Vector result_dir = MATH->ToDirection(prev_angle + fTurnSpeed);
 			(*it)->SetEndPoint(m_player.center + result_dir * 600);
 		}
-
 	}
 
 	void Render() {

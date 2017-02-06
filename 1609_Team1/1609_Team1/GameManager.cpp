@@ -24,7 +24,8 @@ void GameManager::Init()
 	INPUT->Init(WINDOW->GetHandle(WND_MAIN));
 
 	SCENE->Register(SCENE_PLAY, new PlayScene());
-	SCENE->ChangeScene(SCENE_PLAY);
+	SCENE->Register(SCENE_SHOP, new ShopScene()); // *김윤중 추가
+	SCENE->ChangeScene(SCENE_SHOP); // 빠른 확인을위해여 변경
 }
 
 void GameManager::Release()
@@ -52,7 +53,7 @@ void GameManager::Update()
 
 void GameManager::Render(HDC hdc)
 {
-	ShowMouseState();
+	//ShowMouseState(); // 필요없어서 지움
 
 	SCENE->Draw();
 
