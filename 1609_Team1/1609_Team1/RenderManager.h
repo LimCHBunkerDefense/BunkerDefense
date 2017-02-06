@@ -498,7 +498,7 @@ public:
 		DrawLine(SetVectorInMap(triangle.p2), SetVectorInMap(triangle.p0), color, lineSize);
 	}
 	//MATH->Closest(ClosestPoint);
-	void Draw3D(Line LineCenter, Line LineCamera, Line LineThis, ColorF color, BOOL isRight = true, float lineSize = 1)
+	void Draw3D(Line LineCenter, Line LineCamera, Line LineThis, float m_height, ColorF color, BOOL isRight = true, float lineSize = 1)
 	{
 		Vector CenterPoint = MATH->ClosestPoint(LineThis.EndPoint(), LineCenter);
 		float fBunJa = MATH->Distance(CenterPoint, LineThis.EndPoint());
@@ -511,7 +511,7 @@ public:
 			X_3D = VIEW_WIDTH / 2 + VIEW_WIDTH / 2 * fBunJa / fBunMo;
 		}
 
-		DrawLine(Vector(CHARACTER_X, CHARACTER_Y), Vector(X_3D, GROUND_HEIGHT), color, lineSize);
+		DrawLine(Vector(CHARACTER_X, CHARACTER_Y), Vector(X_3D, m_height), color, lineSize);
 	}
 
 	
