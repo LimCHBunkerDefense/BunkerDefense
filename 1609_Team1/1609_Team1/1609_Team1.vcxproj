@@ -172,7 +172,6 @@
     <ClInclude Include="Item.h" />
     <ClInclude Include="ItemDB.h" />
     <ClInclude Include="Math.h" />
-    <ClInclude Include="Monster.h" />
     <ClInclude Include="Note.h" />
     <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="Player.h" />

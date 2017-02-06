@@ -3,6 +3,7 @@
 #include "InputManager.h"
 #include "RenderManager.h"
 #include "ObjectManager.h"
+#include "CreatureDB.h"
 #include "Common.h"
 class Example {
 	Vector m_dir;

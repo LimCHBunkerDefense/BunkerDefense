@@ -6,28 +6,28 @@
 #include "RenderManager.h"
 #include <map>
 
+#define CREATURE CreatureDB::Instance()
+
 struct CreatureData
 {
 	int creatureID;
 	float attack;
 	float defense;
 	wstring name;
-	Sprite* pSprite;
 
 public:
-	CreatureData(int creatureID, float attack, float defense, wstring name, Sprite* pSprite)
+	CreatureData(int creatureID, float attack, float defense, wstring name)
 	{
 		this->creatureID = creatureID;
 		this->attack = attack;
 		this->defense = defense;
 		this->name = name;
-		this->pSprite = pSprite;
 
 	}
 
 };
 
-class CreatureDB
+class CreatureDB : public Singleton<CreatureDB>
 {
 	map<int, CreatureData*> m_pCreatures;
 public:

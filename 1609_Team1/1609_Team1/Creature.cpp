@@ -8,6 +8,18 @@ Creature::Creature()
 	m_dir = DIRECTION_CENTER;
 }
 
+Creature::Creature(int creatureID)
+{
+	CreatureData* pData = CREATURE->GetData(creatureID);
+	m_state = CREATURE_RUN;
+	m_dir = DIRECTION_CENTER;
+
+	m_creatureID = pData->creatureID;
+	m_attack = pData->attack;
+	m_defense = pData->defense;
+	m_name = pData->name;
+}
+
 
 Creature::~Creature()
 {

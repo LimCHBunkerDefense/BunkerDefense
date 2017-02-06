@@ -58,15 +58,19 @@ class ObjectManager : public Singleton<ObjectManager>
 	list<Object*> m_creatureList;
 	list<Object*> m_bulletList;
 
-public:
-	//void CreatePlayer(Vector pos, Vector colSize, Vector anchor);
-	//void DestroyPlayer();
-	//
-	//void CreateCreature(int id, Vector pos, Vector colSize, Vector anchor);
+public:	
+	void Update(float deltaTime);
+	void Draw(Camera* pCamera);
+
+	void CreatePlayer(Vector pos, Vector colSize, Vector anchor);
+	Object* GetPlayer() { return m_pPlayer; }
+	void DestroyPlayer();
+	
+	void CreateCreature(int creatureID, Vector pos, Vector colSize, Vector anchor = Vector(0.5f, 1.0f));
 	//void DestroyAllCreature();
 	//
-	//void Update(float deltaTime);
-	//void Draw(Camera* pCamera);
+	//
+	//
 	//
 	//Object* GetPlayer() { return m_pPlayer; }
 	//
@@ -92,10 +96,5 @@ public:
 	//}
 	//
 	//list<Object*> GetBulletList() { return m_bulletList; }
-
-	//02-04 02:52 ÀÌ½Â¹® ¼öÁ¤
-	void CreatePlayer(Vector pos, Vector colSize, Vector anchor);
-	Object* GetPlayer() { return m_pPlayer; }
-	void Draw(Camera* pCamera);
 };
 

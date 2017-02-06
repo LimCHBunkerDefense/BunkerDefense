@@ -160,7 +160,6 @@
     <ClInclude Include="Creature.h">
       <Filter>Object\Creature</Filter>
     </ClInclude>
-    <ClInclude Include="Monster.h" />
     <ClInclude Include="ShopScene.h">
       <Filter>Scene\ShopScene</Filter>
     </ClInclude>
