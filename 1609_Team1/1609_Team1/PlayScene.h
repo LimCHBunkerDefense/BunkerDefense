@@ -70,7 +70,7 @@ public:
 		}
 
 		//ShopScene ÀÌµ¿
-		if(INPUT->IsKeyDown(VK_DOWN))
+		//if(INPUT->IsKeyDown(VK_DOWN))
 
 	}
 
