@@ -42,6 +42,9 @@ void RenderManager::Init(HWND hWnd)
 
 void RenderManager::Release()
 {
+	RELEASE_OBJECT(m_pDWriteFactory);
+	RELEASE_OBJECT(m_pRenderTarget);
+	RELEASE_OBJECT(m_pFactory);
 }
 
 Camera* RenderManager::CreateCamera(int tag, float maxSizeX, float maxSizeY, float sizeX, float sizeY)
@@ -173,6 +176,15 @@ void RenderManager::Render(HDC hdc)
 	{
 		m_queGraphics.front().Render(m_pRenderTarget);
 		m_queGraphics.pop();
+	}
+
+	//도형 가져온 것 출력
+	// 도형 출력
+	while (m_queIGraphics.size() > 0)
+	{
+		m_queIGraphics.front()->Render(m_pRenderTarget);
+		delete m_queIGraphics.front();
+		m_queIGraphics.pop();
 	}
 
 	// 텍스트 출력
