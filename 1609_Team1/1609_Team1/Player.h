@@ -6,6 +6,7 @@ class Player :
 {
 	Item* m_pItem;
 
+	PLAYER_STATE m_state;
 	
 public:
 	Player();
