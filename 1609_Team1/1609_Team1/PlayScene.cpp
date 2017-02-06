@@ -44,10 +44,10 @@ void PlayScene::OnEnter()
 void PlayScene::OnUpdate(float deltaTime)
 {
 	OBJECT->Update(deltaTime);
-
+	// ¾À Ã¤ÀÎÁö Ãß°¡ (170207 ±èÀ±Áß)
 	if (INPUT->IsKeyDown(VK_F3))
 	{
-
+		SCENE->ChangeScene(SCENE_SHOP);
 	}
 
 }

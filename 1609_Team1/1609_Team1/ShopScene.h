@@ -2,6 +2,7 @@
 #include "SceneManager.h"
 #include "RenderManager.h"
 #include "ObjectManager.h"
+#include "InputManager.h"
 #include "Common.h"
 #include <list>
 #include "Item.h"

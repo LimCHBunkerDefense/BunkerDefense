@@ -19,6 +19,11 @@ void ShopScene::OnEnter()
 
 void ShopScene::OnUpdate(float deltaTime)
 {
+	// ¾À Ã¤ÀÎÁö Ãß°¡ (170207 ±èÀ±Áß)
+	if (INPUT->IsKeyDown(VK_F3))
+	{
+		SCENE->ChangeScene(SCENE_PLAY);
+	}
 	ItemListWnd();
 	ItemStatWnd();
 }
@@ -34,6 +39,8 @@ void ShopScene::OnDraw()
 	pMainCamera->Draw(m_pBg, Vector(0, 0));
 	RENDER->DrawRect(Vector(620, 50), Vector(150, 50), ColorF::Blue);
 	RENDER->DrawT(TEXT("SHOP"), 590, 35, ColorF::Red, 25);
+	RENDER->DrawRect(Vector(1100, 800), Vector(150, 50), ColorF::Blue);
+	RENDER->DrawT(TEXT("³ª°¡±â F3"), 1050, 785, ColorF::Red, 25);
 
 }
 

@@ -25,7 +25,7 @@ void GameManager::Init()
 
 	SCENE->Register(SCENE_PLAY, new PlayScene());
 	SCENE->Register(SCENE_SHOP, new ShopScene()); // *김윤중 추가
-	SCENE->ChangeScene(SCENE_SHOP); // 빠른 확인을위해여 변경
+	SCENE->ChangeScene(SCENE_PLAY); // 빠른 확인을위해여 변경
 }
 
 void GameManager::Release()
