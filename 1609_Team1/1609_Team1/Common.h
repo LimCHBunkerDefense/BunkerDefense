@@ -10,6 +10,16 @@
 
 #define SOUND_MAX_CHANNEL	10
 
+#define CAMERA_ANGLE	60
+#define MINI_WIDTH		160
+#define	MINI_HEIGHT		120
+#define CAMERA_LEFT		90+CAMERA_ANGLE/2
+#define CAMERA_RIGHT	90-CAMERA_ANGLE/2
+#define GROUND_HEIGHT	400
+#define CHARACTER_X		VIEW_WIDTH*0.5F-30
+#define CHARACTER_Y		VIEW_HEIGHT-30
+
+
 #define NEW_OBJECT(p, type) p = new type
 #define DELETE_OBJECT(p) if ((p) != NULL) { delete (p); (p) = NULL; }
 #define DELETE_OBJECTS(p) if ((p) != NULL) { delete[] (p); (p) = NULL; }

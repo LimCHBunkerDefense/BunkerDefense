@@ -64,18 +64,23 @@ public:
 
 	void Render() {
 		//ColorF lineColor = MATH->IsCollided(m_player, m_LeftLine) ? ColorF::DeepPink : ColorF::Green;
-		RENDER->Draw(m_LineCamera, ColorF::Red, 2);
-		RENDER->Draw(m_LineLeft, ColorF::Blue, 2);
-		RENDER->Draw(m_LineRight, ColorF::Blue, 2);
+		RENDER->DrawInMap(m_LineCamera, ColorF::Red, 2);
+		RENDER->DrawInMap(m_LineLeft, ColorF::Blue, 2);
+		RENDER->DrawInMap(m_LineRight, ColorF::Blue, 2);
 
 
 		//ภ๛ต้
 		FOR_LIST(Line*, m_listLine) {
 			float now_angle = MATH->Angle(m_dir, (*it)->EndPoint() - (*it)->StartPoint());
-			if (now_angle>75 && now_angle<105)	RENDER->Draw(*(*it), ColorF::Red);
+			RENDER->DrawInMap(*(*it), ColorF::Red);
+			if (now_angle <= CAMERA_LEFT && now_angle >= CAMERA_RIGHT) {
+
+				if (now_angle <= 90)	RENDER->Draw3D(m_LineCamera, m_LineLeft, *(*it), ColorF::Red);
+				else				RENDER->Draw3D(m_LineCamera, m_LineRight, *(*it), ColorF::Red, false);
+			}
 		}
 
-
+		RENDER->DrawInMap(m_player, ColorF::Aqua);
 		RENDER->Draw(m_player, ColorF::Aqua);
 	}
 };
