@@ -126,7 +126,8 @@ void RenderManager::Draw(Sprite* pSprite, float x, float y, int dir)
 	}
 }
 
-void RenderManager::Draw(wstring str, float x, float y, ColorF color, int size, ALIGN_TYPE align, wstring fontName)
+// 텍스트 Draw  함수명 변경
+void RenderManager::DrawT(wstring str, float x, float y, ColorF color, int size, ALIGN_TYPE align, wstring fontName) //TEXT DRAW 햇갈려서 함수명 변경
 {
 	Text text = { str, fontName, x, y, color, size, align };
 	m_queText.push(text);

@@ -66,15 +66,15 @@ void GameManager::ShowMouseState()
 
 	POINT mousePos = INPUT->GetMousePos();
 	wsprintf(text, TEXT("Mouse(%d, %d)"), mousePos.x, mousePos.y);
-	RENDER->Draw(text, 0, 0);
+	RENDER->DrawT(text, 0, 0);
 
 	switch (INPUT->GetMouseState(MOUSE_LEFT))
 	{
-	case MOUSE_NONE: RENDER->Draw(TEXT("Mouse(None)"), 0, 20); break;
-	case MOUSE_DOWN: RENDER->Draw(TEXT("Mouse(Down)"), 0, 20); break;
-	case MOUSE_UP: RENDER->Draw(TEXT("Mouse(Up)"), 0, 20); break;
-	case MOUSE_PRESS: RENDER->Draw(TEXT("Mouse(Press)"), 0, 20); break;
-	case MOUSE_DRAG: RENDER->Draw(TEXT("Mouse(Drag)"), 0, 20); break;
+	case MOUSE_NONE: RENDER->DrawT(TEXT("Mouse(None)"), 0, 20); break;
+	case MOUSE_DOWN: RENDER->DrawT(TEXT("Mouse(Down)"), 0, 20); break;
+	case MOUSE_UP: RENDER->DrawT(TEXT("Mouse(Up)"), 0, 20); break;
+	case MOUSE_PRESS: RENDER->DrawT(TEXT("Mouse(Press)"), 0, 20); break;
+	case MOUSE_DRAG: RENDER->DrawT(TEXT("Mouse(Drag)"), 0, 20); break;
 	}
 }
 

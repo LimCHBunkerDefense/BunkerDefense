@@ -400,7 +400,8 @@ public:
 	void LoadImageFiles(wstring key, wstring filename, wstring extension, int count);
 	ID2D1Bitmap* GetImage(wstring key);
 	void Draw(Sprite* pSprite, float x, float y, int dir = 1);
-	void Draw(wstring str, float x, float y, ColorF color = ColorF::Black, int size = 10, ALIGN_TYPE align = ALIGN_LEFT, wstring fontName = TEXT("Arial"));
+	// 텍스트 Draw  함수명 변경
+	void DrawT(wstring str, float x, float y, ColorF color = ColorF::Black, int size = 10, ALIGN_TYPE align = ALIGN_LEFT, wstring fontName = TEXT("Arial"));
 	void DrawLine(float startX, float startY, float endX, float endY, ColorF color = ColorF::Black, float lineSize = 1);
 	void DrawRect(float x, float y, float width, float height, ColorF color = ColorF::Black, float lineSize = 1);
 	void DrawCircle(float x, float y, float width, float height, ColorF color = ColorF::Black, float lineSize = 1);
