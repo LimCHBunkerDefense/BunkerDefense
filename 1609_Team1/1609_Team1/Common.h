@@ -1,7 +1,7 @@
 #pragma once
 
-#define VIEW_WIDTH		800
-#define VIEW_HEIGHT		600
+#define VIEW_WIDTH		1200
+#define VIEW_HEIGHT		900
 
 #define FPS				100		// 초당 프레임수
 
@@ -71,12 +71,15 @@ enum SCENE_TAG
 
 enum OBJ_TAG
 {
-	OBJ_NONE, OBJ_PLAYER,
+	OBJ_NONE, OBJ_PLAYER, 
+	OBJ_ENT, 
+	OBJ_BUNKER, 
+	OBJ_BULLET,
 };
 
 enum ITEM_TAG
 {
-	ITEM_NONE, ITEM_WEAPON,
+	ITEM_NONE, ITEM_WEAPON, 
 };
 
 enum PLAYER_STATE

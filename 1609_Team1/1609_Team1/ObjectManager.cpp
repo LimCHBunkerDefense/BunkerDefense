@@ -14,7 +14,7 @@ void ObjectManager::Update(float deltaTime)
 	//	(*it)->Update(deltaTime);
 	//}
 
-	m_pPlayer->Update(deltaTime);
+	//m_pPlayer->Update(deltaTime);
 }
 
 void ObjectManager::Draw(Camera* pCamera)
@@ -57,16 +57,16 @@ void ObjectManager::DestroyPlayer()
 
 
 
-void ObjectManager::CreateCreature(int creatureID, Vector pos, Vector colSize, Vector anchor)
+void ObjectManager::CreateCreature(OBJ_TAG tag, Vector pos, Vector colSize, Vector anchor)
 {
-	NEW_OBJECT(Object* pCreature, Creature(creatureID));
+	NEW_OBJECT(Object* pCreature, Creature(tag));
 	pCreature->SetPosition(pos);
 	pCreature->SetCollider(colSize, anchor);
 
-	switch (creatureID)
+	switch (tag)
 	{
-	case 1001:
-		pCreature->Animation()->Register(CREATURE_RUN, new Animation(TEXT("EntRun"), 9, 5, true, 1.0f, anchor.x, anchor.y));
+	case OBJ_ENT:
+		pCreature->Animation()->Register(CREATURE_RUN, new Animation(TEXT("EntRun"), 9, 9, true, 1.0f, anchor.x, anchor.y));
 		// pCreture->Animation()->Register(CREATURE_ATTACK, new Animation(TEXT("EntAttack"), 2, 10, false, 2.0f, anchor.x, anchor.y));
 		// pCreture->Animation()->Register(CREATURE_DEAD, new Animation(TEXT("EntDead"), 2, 10, false, 2.0f, anchor.x, anchor.y));
 		break;

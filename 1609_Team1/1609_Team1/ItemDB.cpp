@@ -14,7 +14,6 @@ ItemDB::~ItemDB()
 void ItemDB::Init()
 {
 	// 예시 Add(new ItemData(ITEM_WEAPON, 1001, 10, 0, TEXT("machinegun"), sprite태그));
-	
 }
 
 void ItemDB::Add(ItemData* pData)

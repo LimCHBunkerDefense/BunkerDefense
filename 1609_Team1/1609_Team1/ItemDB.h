@@ -24,7 +24,6 @@ struct ItemData
 		this->attack = attack;
 		this->defense = defense;
 		this->pSprite = pSprite;
-
 	}
 
 

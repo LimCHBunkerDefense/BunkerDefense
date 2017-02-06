@@ -14,22 +14,22 @@ CreatureDB::~CreatureDB()
 
 void CreatureDB::Init()
 {
-	Add(new CreatureData(1001, 100, 30, TEXT("Ent"))); // 예시
+	Add(new CreatureData(OBJ_ENT, 100, 30, TEXT("Ent"))); // 예시
 }
 
 void CreatureDB::Add(CreatureData* pData)
 {
-	if (GetData(pData->creatureID) == NULL)
+	if (GetData(pData->tag) == NULL)
 	{
-		m_pCreatures[pData->creatureID] = pData;
+		m_pCreatures[pData->tag] = pData;
 	}
 }
 
-CreatureData* CreatureDB::GetData(int creatureID)
+CreatureData* CreatureDB::GetData(OBJ_TAG tag)
 {
-	if (m_pCreatures.find(creatureID) != m_pCreatures.end())
+	if (m_pCreatures.find(tag) != m_pCreatures.end())
 	{
-		return m_pCreatures[creatureID];
+		return m_pCreatures[tag];
 	}
 	return NULL;
 }
