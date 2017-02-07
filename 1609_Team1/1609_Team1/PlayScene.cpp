@@ -71,6 +71,15 @@ void PlayScene::OnDraw()
 	pMainCamera->Draw(m_pBg, Vector(0, 0));
 	pMinimapCamera->DrawFilledRect(Vector(0,0), Vector(MINI_WIDTH,MINI_HEIGHT), ColorF::Green);
 
+	// 미니맵에 크리쳐 위치 표시
+	list<Object*> pList = OBJECT->GetCreatureList();
+	FOR_LIST(Object*, pList)
+	{
+		Vector pos = (*it)->Position();
+		pMinimapCamera->DrawFilledRect(pos - 10, Vector(20, 20), ColorF::Red);
+	}
+
+
 	OBJECT->Draw(pMainCamera);
 }
 
@@ -79,8 +88,10 @@ void PlayScene::SetCreature(float deltaTime)
 	int creatureLimit = m_gameTime / 3;
 	if (m_createdCretureCount < creatureLimit)
 	{
-		int x = rand() % 1200;
-		OBJECT->CreateCreature(OBJ_ENT, Vector(x, m_heightOfCreature));
+		int x = rand() % MINI_WIDTH - MINI_WIDTH * 0.5;
+		int y = sqrt(pow(MINI_WIDTH * 0.5, 2) - pow(x, 2));
+		if (rand() % 2 == 0) y *= -1;
+		OBJECT->CreateCreature(OBJ_ENT, Vector(x, y));
 		m_createdCretureCount++;
 	}
 
