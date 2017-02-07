@@ -67,6 +67,12 @@ void Player::AttackState(float deltaTime)
 		m_state = PLAYER_SHOP;
 	}
 
+	//윈도우 종료
+	if (INPUT->IsKeyDown(VK_F4))
+	{
+		PostQuitMessage(0);
+	}
+
 	// 충돌체 On/Off
 	if (INPUT->IsKeyDown('0'))
 	{

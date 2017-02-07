@@ -4,6 +4,7 @@
 #include "Math.h"
 #include <map>
 #include <list>
+
 using namespace std;
 
 #define SCENE SceneManager::Instance()
@@ -22,6 +23,7 @@ public:
 	virtual void OnDraw() = 0;
 
 	virtual Box GetButton() { return m_box; }
+	virtual Item* SelectItem(	) { return NULL; }
 };
 
 class SceneManager : public Singleton<SceneManager>
