@@ -514,7 +514,5 @@ public:
 		}
 
 		DrawLine(Vector(CHARACTER_X, CHARACTER_Y), Vector(X_3D, m_height), color, lineSize);
-	}
-
-	
+	}	
 };

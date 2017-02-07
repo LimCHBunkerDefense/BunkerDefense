@@ -19,6 +19,7 @@ m_LineRight(Vector(CHARACTER_X, CHARACTER_Y), MATH->ToDirection(CAMERA_RIGHT) * 
 	m_height = GROUND_HEIGHT;
 	PrevMousePos = INPUT->GetMousePos();
 	Sight = SIGHT;
+	m_angle = 0;
 }
 
 Player::~Player()
@@ -39,6 +40,25 @@ void Player::Update(float deltaTime)
 void Player::Draw(Camera* pCamera)
 {
 	RENDER->FillCircle(Position(), 100, ColorF::Aqua);
+	//ColorF lineColor = MATH->IsCollided(m_player, m_LeftLine) ? ColorF::DeepPink : ColorF::Green;
+	RENDER->DrawInMap(m_LineCamera, ColorF::Red, 2);
+	RENDER->DrawInMap(m_LineLeft, ColorF::Blue, 2);
+	RENDER->DrawInMap(m_LineRight, ColorF::Blue, 2);
+
+
+	//적들
+	/*FOR_LIST(Line*, m_listLine) {
+		float now_angle = MATH->Angle(m_dir, (*it)->EndPoint() - (*it)->StartPoint());
+		RENDER->DrawInMap(*(*it), ColorF::Red);
+		if (now_angle <= CAMERA_LEFT && now_angle >= CAMERA_RIGHT) {
+
+			if (now_angle <= 90)	RENDER->Draw3D(m_LineCamera, m_LineLeft, *(*it), m_height, ColorF::Red);
+			else					RENDER->Draw3D(m_LineCamera, m_LineRight, *(*it), m_height, ColorF::Red, false);
+		}
+	}
+
+	RENDER->DrawInMap(m_player, ColorF::Aqua);
+	RENDER->Draw(m_player, ColorF::Aqua);*/
 }
 
 void Player::AttackState(float deltaTime)
@@ -77,7 +97,10 @@ void Player::AttackState(float deltaTime)
 		//m_angle += 10 * deltaTime;
 		m_height -= ROTATE_SPEED * 5;
 	}
-	/*FOR_LIST(Line*, m_listLine) {
+	m_angle += fTurnSpeed;
+	
+	/* 크리쳐 리스트 벡터 Line으로 받아와서 회전시켜서 출력해야함
+	FOR_LIST(Line*, m_listLine) {
 		float prev_angle = MATH->Angle(m_dir, (*it)->EndPoint() - (*it)->StartPoint());
 		Vector result_dir = MATH->ToDirection(prev_angle + fTurnSpeed);
 		(*it)->SetEndPoint(m_player.center + result_dir * 600);
