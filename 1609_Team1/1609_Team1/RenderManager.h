@@ -352,7 +352,7 @@ public:
 		return Vector(VIEW_WIDTH - MINI_WIDTH + point.x*MINI_WIDTH / VIEW_WIDTH, VIEW_HEIGHT - MINI_HEIGHT + point.y*MINI_HEIGHT / VIEW_HEIGHT);
 	}
 
-	void Draw3D(Sprite* sprite, Vector pos, int dir = -1, float opacity = 1.0f) {
+	/*void Draw3D(Sprite* sprite, Vector pos, int dir = -1, float opacity = 1.0f) {
 		m_pBitmapTarget->BeginDraw();
 
 		Vector MapPos= SetVector3D(pos);
@@ -361,7 +361,7 @@ public:
 		sprite->Render(m_pBitmapTarget);
 
 		m_pBitmapTarget->EndDraw();
-	}
+	}*/
 	
 	/*void PosInMap(Line line, ColorF color, float lineSize = 1)
 	{
@@ -388,9 +388,8 @@ public:
 		DrawLine(SetVectorInMap(triangle.p2), SetVectorInMap(triangle.p0), color, lineSize);
 	}
 	//MATH->Closest(ClosestPoint);*/
-	Vector SetVector3D(Vector pos)
+	/*Vector SetVector3D(Vector pos)
 	{
-		/*
 		Vector NewPos=Vector(pos.x - VIEW_WIDTH + MINI_WIDTH, pos.y - VIEW_HEIGHT + MINI_HEIGHT);
 		Vector BigPos = Vector(NewPos.x / MINI_WIDTH * VIEW_WIDTH, NewPos.y / MINI_HEIGHT*VIEW_HEIGHT);
 		Vector CenterPoint = MATH->ClosestPoint(BigPos, m_LineCamera);
@@ -403,14 +402,14 @@ public:
 		else {
 			X_3D = VIEW_WIDTH / 2 - VIEW_WIDTH / 2 * fBunJa / fBunMo;
 		}
-		return Vector(X_3D, m_height);*/
-		Line ObjectLine=Line(Vector(pos.x, pos.y), Vector(VIEW_WIDTH - MINI_WIDTH / 2, VIEW_HEIGHT));
+		return Vector(X_3D, m_height);
+		Line ObjectLine=Line(Vector(pos.x, pos.y), Vector(MINI_WIDTH / 2, MINI_HEIGHT));
 		float smallX=MATH->SinAngle(Vector(VIEW_WIDTH - MINI_WIDTH / 2, VIEW_HEIGHT)-pos, LineCenter.StartPoint()-LineCenter.EndPoint());
 		return Vector(smallX / MINI_WIDTH * VIEW_WIDTH, m_height);
 
 		
 		
-	}	
+	}*/
 
 	void DrawRect(Vector leftTop, Vector size,
 		ColorF color = ColorF::Black, float lineSize = 1)
