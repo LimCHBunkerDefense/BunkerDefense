@@ -50,6 +50,7 @@ void Creature::Draw(Camera* pCamera)
 	SetScale(m_scale);
 
 	pCamera->Draw(Animation()->Current()->GetSprite(), Position(), m_dir);
+	pCamera->Draw3D(Animation()->Current()->GetSprite(), Position(), m_dir);
 }
 
 void Creature::IdleState(float deltaTime)
