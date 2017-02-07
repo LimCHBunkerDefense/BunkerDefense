@@ -29,8 +29,6 @@ class ShopScene :
 	Box m_bBunckerRepair;			// º¡Ä¿ ¼ö¸®
 
 	Item* m_selectedItem;
-
-
 public:
 	ShopScene();
 	~ShopScene();

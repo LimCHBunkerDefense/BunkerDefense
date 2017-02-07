@@ -13,13 +13,12 @@ ShopScene::~ShopScene()
 void ShopScene::OnEnter()
 {
 	NEW_OBJECT(m_pBg, Sprite(RENDER->GetImage(TEXT("shopBG")), 1.0f, 0, 0));
-	
+
 	m_bBuyButton = Box(Vector(1000, 500), Vector(100, 50));
 	m_bWeapon = Box(Vector(450, 450), Vector(200, 50));
 	m_bBullet = Box(Vector(450, 500), Vector(200, 50));
 	m_bItem = Box(Vector(450, 550), Vector(200, 50));
-
-
+	m_itemList.push_back(ITEM->GetData(1001));
 }
 
 void ShopScene::OnUpdate(float deltaTime)
