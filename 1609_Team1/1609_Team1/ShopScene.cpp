@@ -13,7 +13,7 @@ ShopScene::~ShopScene()
 void ShopScene::OnEnter()
 {
 	NEW_OBJECT(m_pBg, Sprite(RENDER->GetImage(TEXT("shopBG")), 1.0f, 0, 0));
-	
+
 	m_buyButton = Box(Vector(1000, 500), Vector(100, 50));
 	m_weapon1 = Box(Vector(600, 300), Vector(100, 50));
 	m_weapon2 = Box(Vector(600, 400), Vector(100, 50));
@@ -30,7 +30,7 @@ void ShopScene::OnUpdate(float deltaTime)
 
 void ShopScene::OnExit()
 {
-	
+
 }
 
 void ShopScene::OnDraw()
@@ -53,11 +53,13 @@ void ShopScene::OnDraw()
 
 void ShopScene::ItemListWnd()
 {
-	RENDER->DrawRect(Vector(400,450),Vector(400,650),ColorF::Red);
+	RENDER->DrawRect(Vector(400, 450), Vector(400, 650), ColorF::Red);
 	RENDER->DrawT(TEXT("ITEM LIST"), 350, 400, ColorF::Red, 25);
 }
 void ShopScene::ItemStatWnd()
 {
 	RENDER->DrawRect(Vector(800, 450), Vector(400, 650), ColorF::Yellow);
-	RENDER->DrawT(TEXT("ITEM INFO"), 750, 400, ColorF::Red, 25);
+	RENDER->DrawRect(Vector(800, 250), Vector(150, 150), ColorF::Aqua, 3);
+	RENDER->DrawT(TEXT("ITEM\nICON"), 775, 230, ColorF::Aqua, 20);
+	//RENDER->DrawT(TEXT("ITEM INFO"), 750, 400, ColorF::Red, 25);
 }
