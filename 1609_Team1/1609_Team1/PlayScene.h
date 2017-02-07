@@ -102,6 +102,9 @@ class PlayScene : public IScene
 
 	// 화면 출력을 위한 시야의 각도
 	float m_angleToSee;
+
+	// 크리쳐 생성을 위한 게임 시간
+	float m_gameTime;
 	
 public:
 	PlayScene();
@@ -112,5 +115,5 @@ public:
 	void OnExit();
 	void OnDraw();
 
-	void Test();
+	void SetCreature(float deltaTime);
 };

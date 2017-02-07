@@ -72,7 +72,7 @@ public:
 	Object* GetPlayer() { return m_pPlayer; }
 	void DestroyPlayer();
 	
-	void CreateCreature(OBJ_TAG tag, Vector pos, Vector colSize, Vector anchor = Vector(0.5f, 1.0f));
+	void CreateCreature(OBJ_TAG tag, Vector pos, Vector anchor = Vector(0.5f, 1.0f));
 	//void DestroyAllCreature();
 	//
 	//

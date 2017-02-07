@@ -57,21 +57,23 @@ void ObjectManager::DestroyPlayer()
 
 
 
-void ObjectManager::CreateCreature(OBJ_TAG tag, Vector pos, Vector colSize, Vector anchor)
+void ObjectManager::CreateCreature(OBJ_TAG tag, Vector pos, Vector anchor)
 {
 	NEW_OBJECT(Object* pCreature, Creature(tag));
-	pCreature->SetPosition(pos);
-	pCreature->SetCollider(colSize, anchor);
+	pCreature->SetPosition(pos);	
 
+	Vector colSize;
 	switch (tag)
 	{
 	case OBJ_ENT:
+		colSize = Vector(200, 550);
 		pCreature->Animation()->Register(CREATURE_RUN, new Animation(TEXT("EntRun"), 9, 9, true, 0.5f, anchor.x, anchor.y));
 		// pCreture->Animation()->Register(CREATURE_ATTACK, new Animation(TEXT("EntAttack"), 2, 10, false, 2.0f, anchor.x, anchor.y));
 		// pCreture->Animation()->Register(CREATURE_DEAD, new Animation(TEXT("EntDead"), 2, 10, false, 2.0f, anchor.x, anchor.y));
 		break;
 	}	
 
+	pCreature->SetCollider(colSize, anchor);
 	m_creatureList.push_back(pCreature);
 }
 //

@@ -35,13 +35,15 @@ void Creature::Update(float deltaTime)
 
 	}
 
-	m_scale = MATH->Clamp(m_scale + 0.01f, 0.5f, 1.5f);
-	SetScale(m_scale);
 	Animation()->Update(deltaTime);
 }
 
 void Creature::Draw(Camera* pCamera)
 {
+	// 크리처 스케일 변화되는 부분
+	m_scale = MATH->Clamp(m_scale + 0.01f, 0.5f, 1.5f);
+	SetScale(m_scale);
+
 	pCamera->Draw(Animation()->Current()->GetSprite(), Position(), m_dir);
 }
 
