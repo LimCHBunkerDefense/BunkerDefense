@@ -11,10 +11,12 @@ class Creature :
 	Sprite* m_pSprite;
 	float m_attackSpeed;
 	float m_attackCoolTime;
+	float m_moveSpeed;
 
 	float m_scale;
 	CREATURE_STATE m_state;
 	DIRECTION_TAG m_dir;
+	Vector m_moveDirection;
 
 public:
 	Creature();
@@ -28,6 +30,9 @@ public:
 	void RunState(float deltaTime);
 	void AttackState(float deltaTime);
 	void DeadState(float deltaTime);
+
+	void SetMoveDirection(Vector vector) { m_moveDirection = vector; }
+	Vector GetMoveDirection() { return m_moveDirection; }
 
 };
 
