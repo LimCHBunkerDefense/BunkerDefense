@@ -382,9 +382,9 @@ public:
 	Vector SetVector3D(Vector pos)
 	{
 		Vector NewPos=Vector(pos.x - VIEW_WIDTH + MINI_WIDTH, pos.y - VIEW_HEIGHT + MINI_HEIGHT);
-		NewPos = Vector(NewPos.x / MINI_WIDTH * VIEW_WIDTH, NewPos.y / MINI_HEIGHT*VIEW_HEIGHT);
-		Vector CenterPoint = MATH->ClosestPoint(NewPos, m_LineCamera);
-		float fBunJa = MATH->Distance(CenterPoint, NewPos);
+		Vector BigPos = Vector(NewPos.x / MINI_WIDTH * VIEW_WIDTH, NewPos.y / MINI_HEIGHT*VIEW_HEIGHT);
+		Vector CenterPoint = MATH->ClosestPoint(BigPos, m_LineCamera);
+		float fBunJa = MATH->Distance(CenterPoint, BigPos);
 		float fBunMo = MATH->Distance(m_LineLeft.EndPoint(), CenterPoint);
 		float X_3D;
 		if (NewPos.x>=VIEW_WIDTH/2) {
