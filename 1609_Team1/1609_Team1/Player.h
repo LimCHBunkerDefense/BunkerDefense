@@ -14,7 +14,16 @@ class Player :
 	list<Item*> m_itemList;
 
 	PLAYER_STATE m_state;
-	
+
+	Vector m_dir;//플레이어 보는 각도
+	float m_height;//플레이어 y축 높이
+
+	float m_angle;//회전 각도
+
+	Line m_LineCamera, m_LineLeft, m_LineRight;//	1. 카메라 중심선, 왼쪽, 오른쪽 선
+
+	Vector PrevMousePos;//이전 마우스 좌표값
+	float Sight;//시야 길이
 public:
 	Player();
 	Player(OBJ_TAG tag);

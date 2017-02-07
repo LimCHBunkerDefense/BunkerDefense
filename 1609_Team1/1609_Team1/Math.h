@@ -25,6 +25,7 @@ struct Vector
 		return *this / mag;
 	}
 
+	Vector(POINT point) { x = point.x; y = point.y; }
 	Vector operator + (Vector v) { return Vector(x + v.x, y + v.y); }
 	Vector operator - (Vector v) { return Vector(x - v.x, y - v.y); }
 	Vector operator * (Vector v) { return Vector(x * v.x, y * v.y); }
