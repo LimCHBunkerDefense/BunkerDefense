@@ -1,5 +1,7 @@
 #pragma once
 #include "ObjectManager.h"
+#include "InputManager.h"
+#include "SceneManager.h"
 #include "Item.h"
 class Player :
 	public Object
