@@ -276,9 +276,9 @@ class Camera
 
 public:
 	Camera(ID2D1BitmapRenderTarget* pBitmapTarget, float sizeX, float sizeY):
-		m_LineCamera(Vector(CHARACTER_X, CHARACTER_Y), MATH->ToDirection(90) * MINI_WIDTH),
-		m_LineLeft(Vector(CHARACTER_X, CHARACTER_Y), MATH->ToDirection(CAMERA_LEFT) * MINI_WIDTH),
-		m_LineRight(Vector(CHARACTER_X, CHARACTER_Y), MATH->ToDirection(CAMERA_RIGHT) * MINI_WIDTH)
+		m_LineCamera(Vector(CHARACTER_X, CHARACTER_Y), MATH->ToDirection(90) * MINI_WIDTH/2),
+		m_LineLeft(Vector(CHARACTER_X, CHARACTER_Y), MATH->ToDirection(CAMERA_LEFT) * MINI_WIDTH/2),
+		m_LineRight(Vector(CHARACTER_X, CHARACTER_Y), MATH->ToDirection(CAMERA_RIGHT) * MINI_WIDTH/2)
 	{
 		m_height = GROUND_HEIGHT;
 		m_pBitmapTarget = pBitmapTarget;
