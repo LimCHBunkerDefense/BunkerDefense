@@ -59,5 +59,7 @@ void ShopScene::ItemListWnd()
 void ShopScene::ItemStatWnd()
 {
 	RENDER->DrawRect(Vector(800, 450), Vector(400, 650), ColorF::Yellow);
-	RENDER->DrawT(TEXT("ITEM INFO"), 750, 400, ColorF::Red, 25);
+	RENDER->DrawRect(Vector(800, 250), Vector(150, 150), ColorF::Aqua, 3);
+	RENDER->DrawT(TEXT("ITEM\nICON"), 775, 230, ColorF::Aqua, 20);
+	//RENDER->DrawT(TEXT("ITEM INFO"), 750, 400, ColorF::Red, 25);
 }
