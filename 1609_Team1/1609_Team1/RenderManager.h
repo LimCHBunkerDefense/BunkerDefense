@@ -271,10 +271,25 @@ class Camera
 	Vector m_center;
 	float m_opacity;
 	D2D1_RECT_F m_screenRect;
+	float m_height;//카메라 y축 높이
+	Line m_LineCamera, m_LineLeft, m_LineRight;//	1. 카메라 중심선, 왼쪽, 오른쪽 선
+
+
+	//실제 미니맵에서의 플레이어 위치
+	Line LineCenter;
+	Line LineLeft;
+	Line LineRight;
 
 public:
-	Camera(ID2D1BitmapRenderTarget* pBitmapTarget, float sizeX, float sizeY)
+	Camera(ID2D1BitmapRenderTarget* pBitmapTarget, float sizeX, float sizeY):
+		m_LineCamera(Vector(CHARACTER_X, CHARACTER_Y), MATH->ToDirection(90) * SIGHT),
+		m_LineLeft(Vector(CHARACTER_X, CHARACTER_Y), MATH->ToDirection(CAMERA_LEFT) * SIGHT),
+		m_LineRight(Vector(CHARACTER_X, CHARACTER_Y), MATH->ToDirection(CAMERA_RIGHT) * SIGHT),
+		LineCenter(Vector(VIEW_WIDTH-MINI_WIDTH/2, VIEW_HEIGHT), MATH->ToDirection(90) * MINI_WIDTH),
+		LineLeft(Vector(VIEW_WIDTH - MINI_WIDTH / 2, VIEW_HEIGHT), MATH->ToDirection(CAMERA_LEFT) * MINI_WIDTH),
+		LineRight(Vector(VIEW_WIDTH - MINI_WIDTH / 2, VIEW_HEIGHT), MATH->ToDirection(CAMERA_RIGHT) * MINI_WIDTH)
 	{
+		m_height = GROUND_HEIGHT;
 		m_pBitmapTarget = pBitmapTarget;
 		m_pBitmapTarget->BeginDraw();
 		m_pBitmapTarget->Clear(ColorF(0, 0, 0, 0));
@@ -332,6 +347,69 @@ public:
 
 		m_pBitmapTarget->EndDraw();
 	}
+
+	Vector SetVectorInMap(Vector point) {
+		return Vector(VIEW_WIDTH - MINI_WIDTH + point.x*MINI_WIDTH / VIEW_WIDTH, VIEW_HEIGHT - MINI_HEIGHT + point.y*MINI_HEIGHT / VIEW_HEIGHT);
+	}
+
+	/*void Draw3D(Sprite* sprite, Vector pos, int dir = -1, float opacity = 1.0f) {
+		m_pBitmapTarget->BeginDraw();
+
+		Vector MapPos= SetVector3D(pos);
+		sprite->SetPosition(MapPos.x, MapPos.y);
+		sprite->SetDirection(dir);
+		sprite->Render(m_pBitmapTarget);
+
+		m_pBitmapTarget->EndDraw();
+	}*/
+	
+	/*void PosInMap(Line line, ColorF color, float lineSize = 1)
+	{
+		DrawLine(SetVectorInMap(line.StartPoint()), SetVectorInMap(line.EndPoint()), color, lineSize);
+	}
+
+	void DrawInMap(Circle circle, ColorF color, float lineSize = 0)
+	{
+		DrawCircle(SetVectorInMap(circle.center), circle.radius*MINI_WIDTH / VIEW_WIDTH, color, lineSize);
+	}
+
+	void DrawInMap(Box2 box, ColorF color, float lineSize = 1)
+	{
+		DrawLine(SetVectorInMap(box.LeftTop()), SetVectorInMap(box.RightTop()), color, lineSize);
+		DrawLine(SetVectorInMap(box.LeftTop()), SetVectorInMap(box.LeftBottom()), color, lineSize);
+		DrawLine(SetVectorInMap(box.RightBottom()), SetVectorInMap(box.RightTop()), color, lineSize);
+		DrawLine(SetVectorInMap(box.RightBottom()), SetVectorInMap(box.LeftBottom()), color, lineSize);
+	}
+
+	void DrawInMap(Triangle triangle, ColorF color, float lineSize = 1)
+	{
+		DrawLine(SetVectorInMap(triangle.p0), SetVectorInMap(triangle.p1), color, lineSize);
+		DrawLine(SetVectorInMap(triangle.p1), SetVectorInMap(triangle.p2), color, lineSize);
+		DrawLine(SetVectorInMap(triangle.p2), SetVectorInMap(triangle.p0), color, lineSize);
+	}
+	//MATH->Closest(ClosestPoint);*/
+	/*Vector SetVector3D(Vector pos)
+	{
+		Vector NewPos=Vector(pos.x - VIEW_WIDTH + MINI_WIDTH, pos.y - VIEW_HEIGHT + MINI_HEIGHT);
+		Vector BigPos = Vector(NewPos.x / MINI_WIDTH * VIEW_WIDTH, NewPos.y / MINI_HEIGHT*VIEW_HEIGHT);
+		Vector CenterPoint = MATH->ClosestPoint(BigPos, m_LineCamera);
+		float fBunJa = MATH->Distance(CenterPoint, BigPos);
+		float fBunMo = MATH->Distance(m_LineLeft.EndPoint(), CenterPoint);
+		float X_3D;
+		if (pos.x>=VIEW_WIDTH/2) {
+			X_3D = VIEW_WIDTH / 2 + VIEW_WIDTH / 2 * fBunJa / fBunMo;
+		}
+		else {
+			X_3D = VIEW_WIDTH / 2 - VIEW_WIDTH / 2 * fBunJa / fBunMo;
+		}
+		return Vector(X_3D, m_height);
+		Line ObjectLine=Line(Vector(pos.x, pos.y), Vector(MINI_WIDTH / 2, MINI_HEIGHT));
+		float smallX=MATH->SinAngle(Vector(VIEW_WIDTH - MINI_WIDTH / 2, VIEW_HEIGHT)-pos, LineCenter.StartPoint()-LineCenter.EndPoint());
+		return Vector(smallX / MINI_WIDTH * VIEW_WIDTH, m_height);
+
+		
+		
+	}*/
 
 	void DrawRect(Vector leftTop, Vector size,
 		ColorF color = ColorF::Black, float lineSize = 1)
@@ -476,44 +554,5 @@ public:
 	Vector SetVectorInMap(Vector point) {
 		return Vector(VIEW_WIDTH - MINI_WIDTH + point.x*MINI_WIDTH / VIEW_WIDTH, VIEW_HEIGHT - MINI_HEIGHT + point.y*MINI_HEIGHT / VIEW_HEIGHT);
 	}
-	void DrawInMap(Line line, ColorF color, float lineSize = 1)
-	{
-		DrawLine(SetVectorInMap(line.StartPoint()), SetVectorInMap(line.EndPoint()), color, lineSize);
-	}
-
-	void DrawInMap(Circle circle, ColorF color, float lineSize = 0)
-	{
-		DrawCircle(SetVectorInMap(circle.center), circle.radius*MINI_WIDTH / VIEW_WIDTH, color, lineSize);
-	}
-
-	void DrawInMap(Box2 box, ColorF color, float lineSize = 1)
-	{
-		DrawLine(SetVectorInMap(box.LeftTop()), SetVectorInMap(box.RightTop()), color, lineSize);
-		DrawLine(SetVectorInMap(box.LeftTop()), SetVectorInMap(box.LeftBottom()), color, lineSize);
-		DrawLine(SetVectorInMap(box.RightBottom()), SetVectorInMap(box.RightTop()), color, lineSize);
-		DrawLine(SetVectorInMap(box.RightBottom()), SetVectorInMap(box.LeftBottom()), color, lineSize);
-	}
-
-	void DrawInMap(Triangle triangle, ColorF color, float lineSize = 1)
-	{
-		DrawLine(SetVectorInMap(triangle.p0), SetVectorInMap(triangle.p1), color, lineSize);
-		DrawLine(SetVectorInMap(triangle.p1), SetVectorInMap(triangle.p2), color, lineSize);
-		DrawLine(SetVectorInMap(triangle.p2), SetVectorInMap(triangle.p0), color, lineSize);
-	}
-	//MATH->Closest(ClosestPoint);
-	void Draw3D(Line LineCenter, Line LineCamera, Line LineThis, float m_height, ColorF color, BOOL isRight = true, float lineSize = 1)
-	{
-		Vector CenterPoint = MATH->ClosestPoint(LineThis.EndPoint(), LineCenter);
-		float fBunJa = MATH->Distance(CenterPoint, LineThis.EndPoint());
-		float fBunMo = MATH->Distance(MATH->ClosestPoint(CenterPoint, LineCamera), CenterPoint);
-		float X_3D;
-		if (isRight) {
-			X_3D = VIEW_WIDTH / 2 + VIEW_WIDTH / 2 * fBunJa / fBunMo;
-		}
-		else {
-			X_3D = VIEW_WIDTH / 2 - VIEW_WIDTH / 2 * fBunJa / fBunMo;
-		}
-
-		DrawLine(Vector(CHARACTER_X, CHARACTER_Y), Vector(X_3D, m_height), color, lineSize);
-	}	
+	
 };
