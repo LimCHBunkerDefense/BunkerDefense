@@ -127,9 +127,9 @@ void Player::ShopState()
 	// 마우스 왼쪽 버튼 클릭
 	if (INPUT->IsMouseUp(MOUSE_LEFT))
 	{
-		// if (MATH->IsCollided(Vector(INPUT->GetMousePos().x, INPUT->GetMousePos().y), SCENE->GetScene(SCENE_SHOP)->GetButton()))
-		// {
-		// 	SCENE->SetColliderOnOff();
-		// }
+		if (MATH->IsCollided(Vector(INPUT->GetMousePos().x, INPUT->GetMousePos().y), SCENE->GetScene(SCENE_SHOP)->GetButton()))
+		{
+			SCENE->SetColliderOnOff();
+		}
 	}
 }

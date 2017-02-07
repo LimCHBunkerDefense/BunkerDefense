@@ -28,9 +28,7 @@ public:
 	Player();
 	Player(OBJ_TAG tag);
 	~Player();
-
 	
-
 	void Update(float deltaTime);
 	void Draw(Camera* pCamera);
 

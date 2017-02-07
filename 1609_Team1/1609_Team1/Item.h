@@ -9,11 +9,13 @@ class Item
 {
 	ITEM_TAG m_tag;
 	int m_itemID;
+	int m_money;
 	float m_attack;
 	float m_defense;
-	int m_quantity;
+	float m_bunkerLife;
+	int m_bulletCount;
+	int m_addBullet;
 	wstring m_name;
-	Sprite* m_pSprite;
 
 public:
 	Item();
