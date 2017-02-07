@@ -271,10 +271,16 @@ class Camera
 	Vector m_center;
 	float m_opacity;
 	D2D1_RECT_F m_screenRect;
+	float m_height;//카메라 y축 높이
+	Line m_LineCamera, m_LineLeft, m_LineRight;//	1. 카메라 중심선, 왼쪽, 오른쪽 선
 
 public:
-	Camera(ID2D1BitmapRenderTarget* pBitmapTarget, float sizeX, float sizeY)
+	Camera(ID2D1BitmapRenderTarget* pBitmapTarget, float sizeX, float sizeY):
+		m_LineCamera(Vector(CHARACTER_X, CHARACTER_Y), MATH->ToDirection(90) * MINI_WIDTH),
+		m_LineLeft(Vector(CHARACTER_X, CHARACTER_Y), MATH->ToDirection(CAMERA_LEFT) * MINI_WIDTH),
+		m_LineRight(Vector(CHARACTER_X, CHARACTER_Y), MATH->ToDirection(CAMERA_RIGHT) * MINI_WIDTH)
 	{
+		m_height = GROUND_HEIGHT;
 		m_pBitmapTarget = pBitmapTarget;
 		m_pBitmapTarget->BeginDraw();
 		m_pBitmapTarget->Clear(ColorF(0, 0, 0, 0));
@@ -337,10 +343,10 @@ public:
 		return Vector(VIEW_WIDTH - MINI_WIDTH + point.x*MINI_WIDTH / VIEW_WIDTH, VIEW_HEIGHT - MINI_HEIGHT + point.y*MINI_HEIGHT / VIEW_HEIGHT);
 	}
 
-	void DrawInMap(Sprite* sprite, Vector pos, int dir = -1, float opacity = 1.0f) {
+	void Draw3D(Sprite* sprite, Vector pos, int dir = -1, float opacity = 1.0f) {
 		m_pBitmapTarget->BeginDraw();
 
-		Vector MapPos= SetVectorInMap(pos);
+		Vector MapPos= SetVector3D(pos);
 		sprite->SetPosition(MapPos.x, MapPos.y);
 		sprite->SetDirection(dir);
 		sprite->Render(m_pBitmapTarget);
@@ -372,23 +378,22 @@ public:
 		DrawLine(SetVectorInMap(triangle.p1), SetVectorInMap(triangle.p2), color, lineSize);
 		DrawLine(SetVectorInMap(triangle.p2), SetVectorInMap(triangle.p0), color, lineSize);
 	}
-	//MATH->Closest(ClosestPoint);
-	void Draw3D(Line LineCenter, Line LineCamera, Line LineThis, float m_height, ColorF color, BOOL isRight = true, float lineSize = 1)
+	//MATH->Closest(ClosestPoint);*/
+	Vector SetVector3D(Vector pos, float lineSize = 1)
 	{
-		Vector CenterPoint = MATH->ClosestPoint(LineThis.EndPoint(), LineCenter);
-		float fBunJa = MATH->Distance(CenterPoint, LineThis.EndPoint());
-		float fBunMo = MATH->Distance(MATH->ClosestPoint(CenterPoint, LineCamera), CenterPoint);
+		Vector CenterPoint = MATH->ClosestPoint(pos, m_LineCamera);
+		float fBunJa = MATH->Distance(CenterPoint, pos);
+		float fBunMo = MATH->Distance(m_LineLeft.EndPoint(), CenterPoint);
 		float X_3D;
-		if (isRight) {
+		if (pos.x>=VIEW_WIDTH/2) {
 			X_3D = VIEW_WIDTH / 2 + VIEW_WIDTH / 2 * fBunJa / fBunMo;
 		}
 		else {
 			X_3D = VIEW_WIDTH / 2 - VIEW_WIDTH / 2 * fBunJa / fBunMo;
 		}
-
-		DrawLine(Vector(CHARACTER_X, CHARACTER_Y), Vector(X_3D, m_height), color, lineSize);
+		return Vector(X_3D, m_height);
+		//DrawLine(Vector(CHARACTER_X, CHARACTER_Y), Vector(X_3D, m_height), color, lineSize);
 	}	
-	*/
 
 	void DrawRect(Vector leftTop, Vector size,
 		ColorF color = ColorF::Black, float lineSize = 1)

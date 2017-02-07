@@ -2,21 +2,15 @@
 
 
 
-Player::Player():
-	m_LineCamera(Vector(CHARACTER_X, CHARACTER_Y), MATH->ToDirection(90) * 600),
-	m_LineLeft(Vector(CHARACTER_X, CHARACTER_Y), MATH->ToDirection(CAMERA_LEFT) * 600),
-	m_LineRight(Vector(CHARACTER_X, CHARACTER_Y), MATH->ToDirection(CAMERA_RIGHT) * 600)
+Player::Player()
 {
 }
 
-Player::Player(OBJ_TAG tag) : Object(tag),
-m_LineCamera(Vector(CHARACTER_X, CHARACTER_Y), MATH->ToDirection(90) * 600),
-m_LineLeft(Vector(CHARACTER_X, CHARACTER_Y), MATH->ToDirection(CAMERA_LEFT) * 600),
-m_LineRight(Vector(CHARACTER_X, CHARACTER_Y), MATH->ToDirection(CAMERA_RIGHT) * 600)
+Player::Player(OBJ_TAG tag) : Object(tag)
 {
 	m_state = PLAYER_ATTACK;
 	m_dir=Vector::Right();
-	m_height = GROUND_HEIGHT;
+	
 	PrevMousePos = Vector(INPUT->GetMousePos().x, INPUT->GetMousePos().y);
 	Sight = SIGHT;
 	m_angle = 0;
