@@ -55,9 +55,6 @@
     <Filter Include="Object\Creature">
       <UniqueIdentifier>{2f7cb9ad-763a-473d-bb9c-53cd497a497b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Object\Bunker">
-      <UniqueIdentifier>{7cd7686b-4c75-42bf-bb8c-16f77358d7eb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Object\Bullet">
       <UniqueIdentifier>{902e043d-e981-4d06-af03-4ec3172b5fa1}</UniqueIdentifier>
     </Filter>
@@ -69,6 +66,9 @@
     </Filter>
     <Filter Include="Object\Item">
       <UniqueIdentifier>{bf5198ca-baa8-4b67-8b32-939d22039856}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Creature\Bunker">
+      <UniqueIdentifier>{7cd7686b-4c75-42bf-bb8c-16f77358d7eb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
