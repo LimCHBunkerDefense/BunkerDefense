@@ -276,9 +276,9 @@ class Camera
 
 public:
 	Camera(ID2D1BitmapRenderTarget* pBitmapTarget, float sizeX, float sizeY):
-		m_LineCamera(Vector(CHARACTER_X, CHARACTER_Y), MATH->ToDirection(90) * MINI_WIDTH/2),
-		m_LineLeft(Vector(CHARACTER_X, CHARACTER_Y), MATH->ToDirection(CAMERA_LEFT) * MINI_WIDTH/2),
-		m_LineRight(Vector(CHARACTER_X, CHARACTER_Y), MATH->ToDirection(CAMERA_RIGHT) * MINI_WIDTH/2)
+		m_LineCamera(Vector(CHARACTER_X, CHARACTER_Y), MATH->ToDirection(90) * SIGHT),
+		m_LineLeft(Vector(CHARACTER_X, CHARACTER_Y), MATH->ToDirection(CAMERA_LEFT) * SIGHT),
+		m_LineRight(Vector(CHARACTER_X, CHARACTER_Y), MATH->ToDirection(CAMERA_RIGHT) * SIGHT)
 	{
 		m_height = GROUND_HEIGHT;
 		m_pBitmapTarget = pBitmapTarget;
@@ -381,11 +381,13 @@ public:
 	//MATH->Closest(ClosestPoint);*/
 	Vector SetVector3D(Vector pos, float lineSize = 1)
 	{
-		Vector CenterPoint = MATH->ClosestPoint(pos, m_LineCamera);
-		float fBunJa = MATH->Distance(CenterPoint, pos);
+		Vector NewPos=Vector(pos.x - VIEW_WIDTH + MINI_WIDTH, pos.y - VIEW_HEIGHT + MINI_HEIGHT);
+		NewPos = Vector(NewPos.x / MINI_WIDTH * VIEW_WIDTH, NewPos.y / MINI_HEIGHT*VIEW_HEIGHT);
+		Vector CenterPoint = MATH->ClosestPoint(NewPos, m_LineCamera);
+		float fBunJa = MATH->Distance(CenterPoint, NewPos);
 		float fBunMo = MATH->Distance(m_LineLeft.EndPoint(), CenterPoint);
 		float X_3D;
-		if (pos.x>=VIEW_WIDTH/2) {
+		if (NewPos.x>=VIEW_WIDTH/2) {
 			X_3D = VIEW_WIDTH / 2 + VIEW_WIDTH / 2 * fBunJa / fBunMo;
 		}
 		else {
