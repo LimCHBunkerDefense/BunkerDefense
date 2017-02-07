@@ -14,6 +14,8 @@ class Player :
 	list<Item*> m_itemList;
 
 	PLAYER_STATE m_state;
+
+	Vector m_dir;//플레이어 보는 각도
 	
 public:
 	Player();

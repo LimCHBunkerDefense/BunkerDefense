@@ -9,6 +9,7 @@ Player::Player()
 Player::Player(OBJ_TAG tag) : Object(tag)
 {
 	m_state = PLAYER_ATTACK;
+	m_dir=Vector::Right();
 }
 
 Player::~Player()
