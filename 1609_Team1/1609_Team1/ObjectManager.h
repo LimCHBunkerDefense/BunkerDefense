@@ -78,6 +78,9 @@ public:
 	void DestroyPlayer();
 	
 	void CreateCreature(OBJ_TAG tag, Vector pos);
+	list<Object*> GetCreatureList() {
+		return m_creatureList;
+	}
 	//void DestroyAllCreature();
 	//
 	//
