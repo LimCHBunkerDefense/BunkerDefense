@@ -38,6 +38,9 @@ void ObjectManager::CreatePlayer(Vector pos, Vector colSize, Vector anchor)
 	NEW_OBJECT(m_pPlayer, Player(OBJ_PLAYER));
 	m_pPlayer->SetPosition(pos);
 	m_pPlayer->SetCollider(colSize, anchor);
+	LineCenter=Line(pos, MATH->ToDirection(90) * MINI_WIDTH);
+	LineLeft = Line(pos, MATH->ToDirection(CAMERA_LEFT) * MINI_WIDTH);
+	LineRight = Line(pos, MATH->ToDirection(CAMERA_RIGHT) * MINI_WIDTH);
 	//m_pPlayer->Animation()->Register(CHARACTER_IDLE,
 	//	new Animation(TEXT("Idle"), 6, 10, true, 2.0f, anchor.x, anchor.y));
 	//m_pPlayer->Animation()->Register(CHARACTER_RUN,
