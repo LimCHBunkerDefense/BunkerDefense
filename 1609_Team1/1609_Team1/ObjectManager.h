@@ -69,6 +69,10 @@ class ObjectManager : public Singleton<ObjectManager>
 	list<Object*> m_creatureList;
 	list<Object*> m_bulletList;
 
+	Line LineCenter;
+	Line LineLeft;
+	Line LineRight;
+
 public:	
 	void Update(float deltaTime);
 	void Draw(Camera* pCamera);

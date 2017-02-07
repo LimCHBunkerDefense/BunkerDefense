@@ -379,7 +379,7 @@ public:
 		DrawLine(SetVectorInMap(triangle.p2), SetVectorInMap(triangle.p0), color, lineSize);
 	}
 	//MATH->Closest(ClosestPoint);*/
-	Vector SetVector3D(Vector pos, float lineSize = 1)
+	Vector SetVector3D(Vector pos)
 	{
 		Vector NewPos=Vector(pos.x - VIEW_WIDTH + MINI_WIDTH, pos.y - VIEW_HEIGHT + MINI_HEIGHT);
 		NewPos = Vector(NewPos.x / MINI_WIDTH * VIEW_WIDTH, NewPos.y / MINI_HEIGHT*VIEW_HEIGHT);
