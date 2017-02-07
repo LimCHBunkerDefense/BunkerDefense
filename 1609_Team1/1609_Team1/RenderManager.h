@@ -274,11 +274,20 @@ class Camera
 	float m_height;//카메라 y축 높이
 	Line m_LineCamera, m_LineLeft, m_LineRight;//	1. 카메라 중심선, 왼쪽, 오른쪽 선
 
+
+	//실제 미니맵에서의 플레이어 위치
+	Line LineCenter;
+	Line LineLeft;
+	Line LineRight;
+
 public:
 	Camera(ID2D1BitmapRenderTarget* pBitmapTarget, float sizeX, float sizeY):
 		m_LineCamera(Vector(CHARACTER_X, CHARACTER_Y), MATH->ToDirection(90) * SIGHT),
 		m_LineLeft(Vector(CHARACTER_X, CHARACTER_Y), MATH->ToDirection(CAMERA_LEFT) * SIGHT),
-		m_LineRight(Vector(CHARACTER_X, CHARACTER_Y), MATH->ToDirection(CAMERA_RIGHT) * SIGHT)
+		m_LineRight(Vector(CHARACTER_X, CHARACTER_Y), MATH->ToDirection(CAMERA_RIGHT) * SIGHT),
+		LineCenter(Vector(VIEW_WIDTH-MINI_WIDTH/2, VIEW_HEIGHT), MATH->ToDirection(90) * MINI_WIDTH),
+		LineLeft(Vector(VIEW_WIDTH - MINI_WIDTH / 2, VIEW_HEIGHT), MATH->ToDirection(CAMERA_LEFT) * MINI_WIDTH),
+		LineRight(Vector(VIEW_WIDTH - MINI_WIDTH / 2, VIEW_HEIGHT), MATH->ToDirection(CAMERA_RIGHT) * MINI_WIDTH)
 	{
 		m_height = GROUND_HEIGHT;
 		m_pBitmapTarget = pBitmapTarget;
@@ -381,6 +390,7 @@ public:
 	//MATH->Closest(ClosestPoint);*/
 	Vector SetVector3D(Vector pos)
 	{
+		/*
 		Vector NewPos=Vector(pos.x - VIEW_WIDTH + MINI_WIDTH, pos.y - VIEW_HEIGHT + MINI_HEIGHT);
 		Vector BigPos = Vector(NewPos.x / MINI_WIDTH * VIEW_WIDTH, NewPos.y / MINI_HEIGHT*VIEW_HEIGHT);
 		Vector CenterPoint = MATH->ClosestPoint(BigPos, m_LineCamera);
@@ -393,8 +403,13 @@ public:
 		else {
 			X_3D = VIEW_WIDTH / 2 - VIEW_WIDTH / 2 * fBunJa / fBunMo;
 		}
-		return Vector(X_3D, m_height);
-		//DrawLine(Vector(CHARACTER_X, CHARACTER_Y), Vector(X_3D, m_height), color, lineSize);
+		return Vector(X_3D, m_height);*/
+		Line ObjectLine=Line(Vector(pos.x, pos.y), Vector(VIEW_WIDTH - MINI_WIDTH / 2, VIEW_HEIGHT));
+		float smallX=MATH->SinAngle(Vector(VIEW_WIDTH - MINI_WIDTH / 2, VIEW_HEIGHT)-pos, LineCenter.StartPoint()-LineCenter.EndPoint());
+		return Vector(smallX / MINI_WIDTH * VIEW_WIDTH, m_height);
+
+		
+		
 	}	
 
 	void DrawRect(Vector leftTop, Vector size,
