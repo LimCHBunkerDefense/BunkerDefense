@@ -1,6 +1,7 @@
 #pragma once
 
 #include "RenderManager.h"
+#include "ObjectManager.h"
 #include "ItemDB.h"
 #include <list>
 
@@ -18,10 +19,5 @@ public:
 	Item();
 	Item(int itemID);
 	~Item();
-
-	// void CreateItem();
-	// void DestroyItem();
-	// void DestroyAllItem();
-	
 };
 

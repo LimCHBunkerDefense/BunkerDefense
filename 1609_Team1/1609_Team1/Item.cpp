@@ -22,3 +22,4 @@ Item::Item(int itemID)
 	m_quantity = pData->quantity;
 	m_name = pData->name;
 }
+

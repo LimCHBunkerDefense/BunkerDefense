@@ -53,7 +53,7 @@ void Player::AttackState(float deltaTime)
 void Player::ShopState()
 {
 	//Animation()->Play(PLAYER_SHOP);
-
+	
 	// 씬 채인지
 	if (INPUT->IsKeyDown(VK_F3))
 	{
@@ -65,5 +65,14 @@ void Player::ShopState()
 	if (INPUT->IsKeyDown('0'))
 	{
 		SCENE->SetColliderOnOff();
+	}
+
+	// 마우스 왼쪽 버튼 클릭
+	if (INPUT->IsMouseUp(MOUSE_LEFT))
+	{
+		// if (MATH->IsCollided(Vector(INPUT->GetMousePos().x, INPUT->GetMousePos().y), SCENE->GetScene(SCENE_SHOP)->GetButton()))
+		// {
+		// 	SCENE->SetColliderOnOff();
+		// }
 	}
 }

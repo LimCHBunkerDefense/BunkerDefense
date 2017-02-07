@@ -56,6 +56,7 @@ public:
 	{
 		pCamera->DrawRect(m_collider.LeftTop(), m_collider.size);
 	}
+
 };
 
 class ObjectManager : public Singleton<ObjectManager>
