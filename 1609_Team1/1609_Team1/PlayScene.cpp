@@ -88,8 +88,8 @@ void PlayScene::SetCreature(float deltaTime)
 	int creatureLimit = m_gameTime / 3;
 	if (m_createdCretureCount < creatureLimit)
 	{
-		int x = rand() % MINI_WIDTH - MINI_WIDTH * 0.5;
-		int y = sqrt(pow(MINI_WIDTH * 0.5, 2) - pow(x, 2));
+		int x = rand() % MINI_WIDTH;
+		int y = sqrt(pow(MINI_WIDTH * 0.5, 2) - pow(x - MINI_WIDTH * 0.5, 2));
 		if (rand() % 2 == 0) y *= -1;
 		OBJECT->CreateCreature(OBJ_ENT, Vector(x, y));
 		m_createdCretureCount++;

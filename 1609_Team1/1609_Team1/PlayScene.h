@@ -5,6 +5,8 @@
 #include "ObjectManager.h"
 #include "CreatureDB.h"
 #include "Common.h"
+#include "Math.h"
+
 class Example {
 	Vector m_dir;
 	Circle m_player;

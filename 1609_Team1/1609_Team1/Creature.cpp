@@ -49,7 +49,6 @@ void Creature::Draw(Camera* pCamera)
 	m_scale = changedScale;
 	SetScale(m_scale);
 
-	pCamera->Draw(Animation()->Current()->GetSprite(), Position(), m_dir);
 	pCamera->Draw3D(Animation()->Current()->GetSprite(), Position(), m_dir);
 }
 

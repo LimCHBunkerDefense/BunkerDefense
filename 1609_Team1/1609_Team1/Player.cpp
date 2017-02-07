@@ -75,22 +75,7 @@ void Player::AttackState(float deltaTime)
 
 	//마우스 누르면 각도 돌아가기
 	float fTurnSpeed = 0;
-	if (INPUT->IsKeyPress(VK_LEFT)) {
-		//m_angle -= 10 * deltaTime;
-		fTurnSpeed = -ROTATE_SPEED;
-	}
-	if (INPUT->IsKeyPress(VK_RIGHT)) {
-		//m_angle += 10 * deltaTime;
-		fTurnSpeed = ROTATE_SPEED;
-	}
-	if (INPUT->IsKeyPress(VK_UP)) {
-		//m_angle -= 10 * deltaTime;
-		m_height += ROTATE_SPEED * 5;
-	}
-	if (INPUT->IsKeyPress(VK_DOWN)) {
-		//m_angle += 10 * deltaTime;
-		m_height -= ROTATE_SPEED * 5;
-	}
+
 	m_angle += fTurnSpeed;
 	
 	/* 크리쳐 리스트 벡터 Line으로 받아와서 회전시켜서 출력해야함
