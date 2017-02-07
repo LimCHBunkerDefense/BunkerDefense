@@ -17,7 +17,7 @@ m_LineRight(Vector(CHARACTER_X, CHARACTER_Y), MATH->ToDirection(CAMERA_RIGHT) * 
 	m_state = PLAYER_ATTACK;
 	m_dir=Vector::Right();
 	m_height = GROUND_HEIGHT;
-	PrevMousePos = INPUT->GetMousePos();
+	PrevMousePos = Vector(INPUT->GetMousePos().x, INPUT->GetMousePos().y);
 	Sight = SIGHT;
 	m_angle = 0;
 }
