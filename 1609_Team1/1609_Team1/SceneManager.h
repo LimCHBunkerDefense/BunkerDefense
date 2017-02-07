@@ -53,5 +53,5 @@ public:
 		else m_colliderOn = true;
 	}
 	// 충돌체 On/Off값 불러오는 함수
-	bool GetSetColliderOnOff() { return m_colliderOn; }
+	bool GetColliderOnOff() { return m_colliderOn; }
 };

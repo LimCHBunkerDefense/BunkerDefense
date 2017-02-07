@@ -40,7 +40,7 @@ void ShopScene::OnDraw()
 	RENDER->DrawRect(Vector(1100, 800), Vector(150, 50), ColorF::Blue);
 	RENDER->DrawT(TEXT("³ª°¡±â F3"), 1050, 785, ColorF::Red, 25);
 
-	if (SCENE->GetSetColliderOnOff())
+	if (SCENE->GetColliderOnOff())
 	{
 		RENDER->DrawRect(m_buyButton.LeftTop() + m_buyButton.size * 0.5f, m_buyButton.size, ColorF::Yellow, 3.0f);
 		RENDER->DrawRect(m_weapon1.LeftTop() + m_weapon1.size * 0.5f, m_weapon1.size, ColorF::Yellow, 3.0f);

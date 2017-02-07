@@ -57,7 +57,7 @@ void Player::ShopState()
 	// ¾À Ã¤ÀÎÁö
 	if (INPUT->IsKeyDown(VK_F3))
 	{
-		SCENE->ChangeScene(SCENE_SHOP);
+		SCENE->ChangeScene(SCENE_PLAY);
 		m_state = PLAYER_ATTACK;
 	}
 

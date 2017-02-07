@@ -16,7 +16,7 @@ PlayScene::PlayScene()
 	
 	// 크리처 이미지 맵으로 저장
 	RENDER->LoadImageFiles(TEXT("EntRun"), TEXT("Image/Creature/Ent/Run/Run"), TEXT("png"), 9);
-	RENDER->LoadImageFiles(TEXT("EntRun"), TEXT("Image/Creature/Ent/Attack/Attack"), TEXT("png"), 6);
+	//RENDER->LoadImageFiles(TEXT("EntRun"), TEXT("Image/Creature/Ent/Attack/Attack"), TEXT("png"), 6);
 
 	// 카메라 생성
 	RENDER->CreateCamera(CAM_MAIN, 1920, 1200, VIEW_WIDTH, VIEW_HEIGHT);

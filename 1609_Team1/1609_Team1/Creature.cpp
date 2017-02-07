@@ -52,7 +52,7 @@ void Creature::Draw(Camera* pCamera)
 void Creature::RunState(float deltaTime)
 {
 	Animation()->Play(CREATURE_RUN);
-	if(Animation()->Current()->GetSprite()->)
+	//if(Animation()->Current()->GetSprite()->)
 }
 
 void Creature::AttackState(float deltaTime)
