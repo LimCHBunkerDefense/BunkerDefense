@@ -18,6 +18,8 @@ void ShopScene::OnEnter()
 	m_bWeapon = Box(Vector(450, 450), Vector(200, 50));
 	m_bBullet = Box(Vector(450, 500), Vector(200, 50));
 	m_bItem = Box(Vector(450, 550), Vector(200, 50));
+
+
 }
 
 void ShopScene::OnUpdate(float deltaTime)
@@ -26,6 +28,8 @@ void ShopScene::OnUpdate(float deltaTime)
 
 	ItemListWnd();
 	ItemStatWnd();
+
+	
 }
 
 void ShopScene::OnExit()

@@ -1,7 +1,5 @@
 #pragma once
-
 #include "RenderManager.h"
-#include "ObjectManager.h"
 #include "ItemDB.h"
 #include <list>
 

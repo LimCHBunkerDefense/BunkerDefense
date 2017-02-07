@@ -4,7 +4,6 @@
 #include "ObjectManager.h"
 #include "InputManager.h"
 #include "Common.h"
-#include <list>
 #include "Item.h"
 
 class ShopScene :
@@ -30,7 +29,6 @@ class ShopScene :
 	Box m_bBunckerRepair;			// º¡Ä¿ ¼ö¸®
 
 	Item* m_selectedItem;
-	list<Item*> m_itemList;
 
 
 public:
