@@ -16,9 +16,10 @@ struct CreatureData
 	float defense;
 	wstring name;
 	float attackSpeed;
+	float moveSpeed;
 
 public:
-	CreatureData(OBJ_TAG tag, float life, float attack, float defense, wstring name, float attackSpeed)
+	CreatureData(OBJ_TAG tag, float life, float attack, float defense, wstring name, float attackSpeed, float moveSpeed)
 	{
 		this->tag = tag;
 		this->life = life;
@@ -26,6 +27,7 @@ public:
 		this->defense = defense;
 		this->name = name;
 		this->attackSpeed = attackSpeed;
+		this->moveSpeed = moveSpeed;
 	}
 
 };

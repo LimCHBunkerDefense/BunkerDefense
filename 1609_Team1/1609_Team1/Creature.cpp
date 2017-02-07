@@ -20,6 +20,9 @@ Creature::Creature(OBJ_TAG tag) : Object(tag)
 	m_name = pData->name;
 	m_attackSpeed = pData->attackSpeed;
 	m_attackCoolTime = m_attackSpeed;
+	m_moveSpeed = pData->moveSpeed;
+
+	m_moveDirection = Vector(Position() * -1 + Vector(MINI_WIDTH * 0.5, MINI_HEIGHT)).Normalize();
 }
 
 
@@ -29,6 +32,9 @@ Creature::~Creature()
 
 void Creature::Update(float deltaTime)
 {
+	// 크리쳐 이동방향벡터 실시간 업데이트
+	m_moveDirection = Vector(Position() * -1 + Vector(MINI_WIDTH * 0.5, MINI_HEIGHT)).Normalize();
+
 	switch (m_state)
 	{
 	case CREATURE_IDLE: IdleState(deltaTime); break;
@@ -60,6 +66,8 @@ void Creature::IdleState(float deltaTime)
 void Creature::RunState(float deltaTime)
 {
 	if (Animation()->Current()->GetSprite()->GetScale() >= 0.9999) m_state = CREATURE_ATTACK;
+	Vector pos = Position() + m_moveDirection * m_moveSpeed * deltaTime;
+	SetPosition(pos);
 	Animation()->Play(CREATURE_RUN);
 }
 
