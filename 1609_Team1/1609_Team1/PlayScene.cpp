@@ -110,3 +110,13 @@ void PlayScene::SetCreature(float deltaTime)
 	}
 
 }
+
+void PlayScene::ShowCreatures()
+{
+	list<Object*> pCreatures = OBJECT->GetCreatureList();
+
+	FOR_LIST(Object*, pCreatures)
+	{
+		
+	}
+}

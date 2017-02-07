@@ -390,23 +390,24 @@ public:
 	//MATH->Closest(ClosestPoint);*/
 	Vector SetVector3D(Vector pos)
 	{
-		/*
-		Vector NewPos=Vector(pos.x - VIEW_WIDTH + MINI_WIDTH, pos.y - VIEW_HEIGHT + MINI_HEIGHT);
-		Vector BigPos = Vector(NewPos.x / MINI_WIDTH * VIEW_WIDTH, NewPos.y / MINI_HEIGHT*VIEW_HEIGHT);
+		
+		//Vector NewPos=Vector(pos.x - VIEW_WIDTH + MINI_WIDTH, pos.y - VIEW_HEIGHT + MINI_HEIGHT);
+		/*Vector BigPos = Vector(pos.x * 5, pos.y *5);
+		//Vector BigPos = Vector(NewPos.x / MINI_WIDTH * VIEW_WIDTH, NewPos.y / MINI_HEIGHT*VIEW_HEIGHT);
 		Vector CenterPoint = MATH->ClosestPoint(BigPos, m_LineCamera);
 		float fBunJa = MATH->Distance(CenterPoint, BigPos);
 		float fBunMo = MATH->Distance(m_LineLeft.EndPoint(), CenterPoint);
 		float X_3D;
-		if (NewPos.x>=VIEW_WIDTH/2) {
+		if (pos.x>=VIEW_WIDTH/2) {
 			X_3D = VIEW_WIDTH / 2 + VIEW_WIDTH / 2 * fBunJa / fBunMo;
 		}
 		else {
 			X_3D = VIEW_WIDTH / 2 - VIEW_WIDTH / 2 * fBunJa / fBunMo;
 		}
 		return Vector(X_3D, m_height);*/
-		Line ObjectLine=Line(Vector(pos.x, pos.y), Vector(VIEW_WIDTH - MINI_WIDTH / 2, VIEW_HEIGHT));
-		float smallX=MATH->SinAngle(Vector(VIEW_WIDTH - MINI_WIDTH / 2, VIEW_HEIGHT)-pos, LineCenter.StartPoint()-LineCenter.EndPoint());
-		return Vector(smallX / MINI_WIDTH * VIEW_WIDTH, m_height);
+		//Line ObjectLine=Line(Vector(pos.x, pos.y), Vector(120, VIEW_HEIGHT));
+		float smallX=MATH->SinAngle(Vector::Up(), pos-Vector(120, VIEW_HEIGHT));
+		return Vector(600+smallX *5, m_height);
 
 		
 		
