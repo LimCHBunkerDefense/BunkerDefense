@@ -3,11 +3,16 @@
 #include "InputManager.h"
 #include "SceneManager.h"
 #include "Item.h"
+#include "InputManager.h"
+#include "Math.h"
+
+
 class Player :
 	public Object
 {
 	Item* m_pItem;
-		
+	list<Item*> m_itemList;
+
 	PLAYER_STATE m_state;
 	
 public:
@@ -22,5 +27,7 @@ public:
 
 	void AttackState(float deltaTime);
 	void ShopState();
+
+	void AddItem(Item* pItem) { m_itemList.push_back(pItem); }
 };
 

@@ -1,5 +1,6 @@
 #pragma once
 #include "Singleton.h"
+#include "Math.h"
 #include <map>
 using namespace std;
 
@@ -7,11 +8,15 @@ using namespace std;
 
 class IScene
 {
+	Box m_box;
+
 public:
 	virtual void OnEnter() = 0;
 	virtual void OnUpdate(float deltaTime) = 0;
 	virtual void OnExit() = 0;
 	virtual void OnDraw() = 0;
+
+	virtual Box GetButton() { return m_box; }
 };
 
 class SceneManager : public Singleton<SceneManager>

@@ -94,9 +94,6 @@
     <ClCompile Include="ObjectManager.cpp">
       <Filter>Manager\ObjectManager</Filter>
     </ClCompile>
-    <ClCompile Include="PlayScene.cpp">
-      <Filter>Scene\PlayScene</Filter>
-    </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>Object\Player</Filter>
     </ClCompile>
@@ -106,14 +103,17 @@
     <ClCompile Include="ShopScene.cpp">
       <Filter>Scene\ShopScene</Filter>
     </ClCompile>
-    <ClCompile Include="ItemDB.cpp">
-      <Filter>Database\ItemDB</Filter>
-    </ClCompile>
     <ClCompile Include="CreatureDB.cpp">
       <Filter>Database\CreatureDB</Filter>
     </ClCompile>
     <ClCompile Include="Item.cpp">
       <Filter>Object\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayScene.cpp">
+      <Filter>Scene\PlayScene</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemDB.cpp">
+      <Filter>Database\ItemDB</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
