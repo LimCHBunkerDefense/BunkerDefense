@@ -19,11 +19,6 @@ void ShopScene::OnEnter()
 
 void ShopScene::OnUpdate(float deltaTime)
 {
-	// ¾À Ã¤ÀÎÁö Ãß°¡ (170207 ±èÀ±Áß)
-	if (INPUT->IsKeyDown(VK_F3))
-	{
-		SCENE->ChangeScene(SCENE_PLAY);
-	}
 	ItemListWnd();
 	ItemStatWnd();
 }

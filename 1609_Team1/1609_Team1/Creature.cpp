@@ -41,7 +41,9 @@ void Creature::Update(float deltaTime)
 void Creature::Draw(Camera* pCamera)
 {
 	// 크리처 스케일 변화되는 부분
-	m_scale = MATH->Clamp(m_scale + 0.003f, 0.5f, 1.0f);
+	float changedScale = MATH->Clamp(m_scale + 0.003f, 0.5f, 1.0f);
+	SetCollider(Collider().size * changedScale / m_scale, Collider().anchor);
+	m_scale = changedScale;
 	SetScale(m_scale);
 
 	pCamera->Draw(Animation()->Current()->GetSprite(), Position(), m_dir);
@@ -50,6 +52,7 @@ void Creature::Draw(Camera* pCamera)
 void Creature::RunState(float deltaTime)
 {
 	Animation()->Play(CREATURE_RUN);
+	if(Animation()->Current()->GetSprite()->)
 }
 
 void Creature::AttackState(float deltaTime)
