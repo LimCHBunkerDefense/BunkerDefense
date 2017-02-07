@@ -18,6 +18,8 @@ Creature::Creature(OBJ_TAG tag) : Object(tag)
 	m_attack = pData->attack;
 	m_defense = pData->defense;
 	m_name = pData->name;
+	m_attackSpeed = pData->attackSpeed;
+	m_attackCoolTime = m_attackSpeed;
 }
 
 
@@ -29,6 +31,7 @@ void Creature::Update(float deltaTime)
 {
 	switch (m_state)
 	{
+	case CREATURE_IDLE: IdleState(deltaTime); break;
 	case CREATURE_ATTACK: AttackState(deltaTime); break;
 	case CREATURE_RUN: RunState(deltaTime); break;
 	case CREATURE_DEAD: DeadState(deltaTime); break;
@@ -49,15 +52,26 @@ void Creature::Draw(Camera* pCamera)
 	pCamera->Draw(Animation()->Current()->GetSprite(), Position(), m_dir);
 }
 
+void Creature::IdleState(float deltaTime)
+{
+	Animation()->Play(CREATURE_IDLE);
+}
+
 void Creature::RunState(float deltaTime)
 {
+	if (Animation()->Current()->GetSprite()->GetScale() >= 0.9999) m_state = CREATURE_ATTACK;
 	Animation()->Play(CREATURE_RUN);
-	//if(Animation()->Current()->GetSprite()->)
 }
 
 void Creature::AttackState(float deltaTime)
 {
 	Animation()->Play(CREATURE_ATTACK);
+	m_attackCoolTime -= deltaTime;
+	if (m_attackCoolTime <= 0)
+	{
+		m_state = CREATURE_RUN;
+		m_attackCoolTime = m_attackSpeed;
+	}
 }
 
 void Creature::DeadState(float deltaTime)

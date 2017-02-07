@@ -51,6 +51,9 @@ public:
 		m_pAnim->Current()->GetSprite()->SetScale(scale);
 	}
 
+	// 테스트용 스케일 반환 함수
+	float GetScale() { return m_pAnim->Current()->GetSprite()->GetScale(); }
+
 	virtual void Update(float deltaTime) { }
 	virtual void Draw(Camera* pCamera)
 	{

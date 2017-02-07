@@ -39,8 +39,8 @@ void ShopScene::OnDraw()
 	pMainCamera->Draw(m_pBg, Vector(0, 0));
 	RENDER->DrawRect(Vector(620, 50), Vector(150, 50), ColorF::Blue);
 	RENDER->DrawT(TEXT("SHOP"), 590, 35, ColorF::Red, 25);
-	RENDER->DrawRect(Vector(1100, 800), Vector(150, 50), ColorF::Blue);
-	RENDER->DrawT(TEXT("나가기 F3"), 1050, 785, ColorF::Red, 25);
+	RENDER->DrawRect(Vector(1100, 850), Vector(150, 50), ColorF::Blue);
+	RENDER->DrawT(TEXT("나가기 F3"), 1050, 835, ColorF::Red, 25);
 
 	if (SCENE->GetColliderOnOff())
 	{
@@ -65,13 +65,17 @@ void ShopScene::OnDraw()
 
 void ShopScene::ItemListWnd()
 {
-	RENDER->DrawRect(Vector(400, 450),Vector(400, 650),ColorF::Red);
-	RENDER->DrawT(TEXT("ITEM LIST"), 350, 400, ColorF::Red, 25);
+	RENDER->DrawRect(Vector(500, 235), Vector(400, 220), ColorF::OrangeRed);
+	RENDER->DrawRect(Vector(500, 560),Vector(400, 430),ColorF::Red);
+	RENDER->DrawT(TEXT("ITEM LIST"), 430, 550, ColorF::Red, 25);
+	RENDER->DrawT(TEXT("NPC Talk"), 430, 240, ColorF::GreenYellow, 25);
 }
 void ShopScene::ItemStatWnd()
 {
-	RENDER->DrawRect(Vector(800, 450), Vector(400, 650), ColorF::Yellow);
-	RENDER->DrawRect(Vector(800, 250), Vector(150, 150), ColorF::Aqua, 3);
-	RENDER->DrawT(TEXT("ITEM\nICON"), 775, 230, ColorF::Aqua, 20);
+	RENDER->DrawRect(Vector(900, 450), Vector(400, 650), ColorF::Yellow);
+	RENDER->DrawRect(Vector(900, 250), Vector(150, 150), ColorF::Aqua, 3);
+	RENDER->DrawRect(Vector(900, 700), Vector(150, 35), ColorF::Aquamarine, 3);
+	RENDER->DrawT(TEXT("ITEM\nICON"), 880, 230, ColorF::Aqua, 20);
+	RENDER->DrawT(TEXT("BUY"), 880, 690, ColorF::Aquamarine, 20);
 	//RENDER->DrawT(TEXT("ITEM INFO"), 750, 400, ColorF::Red, 25);
 }

@@ -15,8 +15,9 @@ PlayScene::PlayScene()
 	CREATURE->Init();
 	
 	// 크리처 이미지 맵으로 저장
+	RENDER->LoadImageFiles(TEXT("EntIdle"), TEXT("Image/Creature/Ent/Idle/Idle"), TEXT("png"), 2);
 	RENDER->LoadImageFiles(TEXT("EntRun"), TEXT("Image/Creature/Ent/Run/Run"), TEXT("png"), 9);
-	//RENDER->LoadImageFiles(TEXT("EntRun"), TEXT("Image/Creature/Ent/Attack/Attack"), TEXT("png"), 6);
+	RENDER->LoadImageFiles(TEXT("EntAttack"), TEXT("Image/Creature/Ent/Attack/Attack"), TEXT("png"), 6);
 
 	// 카메라 생성
 	RENDER->CreateCamera(CAM_MAIN, 1920, 1200, VIEW_WIDTH, VIEW_HEIGHT);
@@ -40,7 +41,7 @@ void PlayScene::OnEnter()
 
 	// 카메라 세팅
 	RENDER->GetCamera(CAM_MAIN)->SetScreenRect(0, 0, VIEW_WIDTH, VIEW_HEIGHT);
-	RENDER->GetCamera(CAM_MINIMAP)->SetScreenRect(VIEW_WIDTH - MINI_WIDTH/2, VIEW_HEIGHT, MINI_WIDTH, MINI_HEIGHT);
+	RENDER->GetCamera(CAM_MINIMAP)->SetScreenRect(VIEW_WIDTH - MINI_WIDTH, VIEW_HEIGHT - MINI_HEIGHT, MINI_WIDTH, MINI_HEIGHT);
 
 	m_createdCretureCount = 0;
 }
@@ -68,10 +69,9 @@ void PlayScene::OnDraw()
 	Camera* pMinimapCamera = RENDER->GetCamera(CAM_MINIMAP);
 
 	pMainCamera->Draw(m_pBg, Vector(0, 0));
-	pMinimapCamera->DrawInMap(m_pBg, Vector(0, 0));
+	pMinimapCamera->DrawFilledRect(Vector(0,0), Vector(MINI_WIDTH,MINI_HEIGHT), ColorF::Green);
 
 	OBJECT->Draw(pMainCamera);
-	OBJECT->Draw(pMinimapCamera);
 }
 
 void PlayScene::SetCreature(float deltaTime)
