@@ -1,5 +1,6 @@
 #pragma once
 #include "Singleton.h"
+#include "Math.h"
 #include <map>
 using namespace std;
 
@@ -7,17 +8,24 @@ using namespace std;
 
 class IScene
 {
+	Box m_box;
+
 public:
 	virtual void OnEnter() = 0;
 	virtual void OnUpdate(float deltaTime) = 0;
 	virtual void OnExit() = 0;
 	virtual void OnDraw() = 0;
+
+	virtual Box GetButton() { return m_box; }
 };
 
 class SceneManager : public Singleton<SceneManager>
 {
 	map<int, IScene*> m_scenes;
 	int m_current;
+
+	// 오브젝트 충돌체 On/Off
+	bool m_colliderOn;
 
 public:
 	SceneManager();
@@ -37,4 +45,13 @@ public:
 
 	// 씬 드로우
 	void Draw();
+
+	// 충돌체 On/Off 설정 함수
+	void SetColliderOnOff()
+	{
+		if (m_colliderOn) m_colliderOn = false;
+		else m_colliderOn = true;
+	}
+	// 충돌체 On/Off값 불러오는 함수
+	bool GetColliderOnOff() { return m_colliderOn; }
 };

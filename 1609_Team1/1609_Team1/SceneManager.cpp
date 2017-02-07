@@ -5,6 +5,9 @@
 SceneManager::SceneManager()
 {
 	m_current = 0;
+
+	// �浹ü on/off 
+	m_colliderOn = false;
 }
 
 

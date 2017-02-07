@@ -14,7 +14,7 @@ void ObjectManager::Update(float deltaTime)
 	//	(*it)->Update(deltaTime);
 	//}
 
-	//m_pPlayer->Update(deltaTime);
+	m_pPlayer->Update(deltaTime);
 }
 
 void ObjectManager::Draw(Camera* pCamera)
@@ -22,6 +22,7 @@ void ObjectManager::Draw(Camera* pCamera)
 	FOR_LIST(Object*, m_creatureList)
 	{
 		(*it)->Draw(pCamera);
+		if(SCENE->GetColliderOnOff()) pCamera->DrawRect((*it)->Collider().LeftTop(), (*it)->Collider().size, ColorF::Yellow, 3);
 	}
 
 	//FOR_LIST(Object*, m_bulletList)
@@ -29,7 +30,7 @@ void ObjectManager::Draw(Camera* pCamera)
 	//	(*it)->Draw(pCamera);
 	//}
 
-	//m_pPlayer->Draw(pCamera);
+	m_pPlayer->Draw(pCamera);
 }
 
 void ObjectManager::CreatePlayer(Vector pos, Vector colSize, Vector anchor)
@@ -57,22 +58,26 @@ void ObjectManager::DestroyPlayer()
 
 
 
-void ObjectManager::CreateCreature(OBJ_TAG tag, Vector pos, Vector colSize, Vector anchor)
+void ObjectManager::CreateCreature(OBJ_TAG tag, Vector pos)
 {
 	NEW_OBJECT(Object* pCreature, Creature(tag));
-	pCreature->SetPosition(pos);
-	pCreature->SetCollider(colSize, anchor);
+	pCreature->SetPosition(pos);	
 
+	Vector colSize, anchor;
 	switch (tag)
 	{
 	case OBJ_ENT:
-		pCreature->Animation()->Register(CREATURE_RUN, new Animation(TEXT("EntRun"), 9, 9, true, 0.5f, anchor.x, anchor.y));
-		// pCreture->Animation()->Register(CREATURE_ATTACK, new Animation(TEXT("EntAttack"), 2, 10, false, 2.0f, anchor.x, anchor.y));
+		float scale = 0.5f;
+		colSize = Vector(200, 300) * scale;
+		anchor = Vector(0.5f, 0.95f);
+		pCreature->Animation()->Register(CREATURE_RUN, new Animation(TEXT("EntRun"), 9, 7, true, scale, anchor.x, anchor.y));
+		//pCreature->Animation()->Register(CREATURE_ATTACK, new Animation(TEXT("EntAttack"), 4, 6, false, scale, anchor.x, anchor.y));
 		// pCreture->Animation()->Register(CREATURE_DEAD, new Animation(TEXT("EntDead"), 2, 10, false, 2.0f, anchor.x, anchor.y));
 		break;
 	}	
 
-	m_creatureList.push_back(pCreature);
+	pCreature->SetCollider(colSize, anchor);
+	m_creatureList.push_front(pCreature);
 }
 //
 //void ObjectManager::DestroyAllCreature()

@@ -1,7 +1,9 @@
 #pragma once
 
 #include "RenderManager.h"
+#include "ObjectManager.h"
 #include "ItemDB.h"
+#include <list>
 
 class Item
 {
@@ -12,6 +14,7 @@ class Item
 	int m_quantity;
 	wstring m_name;
 	Sprite* m_pSprite;
+
 public:
 	Item();
 	Item(int itemID);
