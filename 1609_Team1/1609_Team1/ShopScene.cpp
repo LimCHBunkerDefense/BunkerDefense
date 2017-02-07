@@ -3,7 +3,6 @@
 ShopScene::ShopScene()
 {
 	RENDER->LoadImageFile(TEXT("shopBG"), TEXT("Image/BackGround/shopBG.png"));
-
 }
 
 
@@ -14,7 +13,6 @@ ShopScene::~ShopScene()
 void ShopScene::OnEnter()
 {
 	NEW_OBJECT(m_pBg, Sprite(RENDER->GetImage(TEXT("shopBG")), 1.0f, 0, 0));
-	
 }
 
 void ShopScene::OnUpdate(float deltaTime)
