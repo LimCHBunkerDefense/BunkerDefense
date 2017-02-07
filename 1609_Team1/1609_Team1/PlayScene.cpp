@@ -5,7 +5,7 @@
 PlayScene::PlayScene()
 {
 	// 크리쳐 생성되는 높이h값 생성. 추후 마우스에 따라 실시간 변화
-	m_heightOfCreature = 300;
+	m_heightOfCreature = 600;
 
 
 	// 배경 이미지 맵으로 저장
@@ -40,6 +40,8 @@ void PlayScene::OnEnter()
 	// 카메라 세팅
 	RENDER->GetCamera(CAM_MAIN)->SetScreenRect(0, 0, VIEW_WIDTH, VIEW_HEIGHT);
 	RENDER->GetCamera(CAM_MINIMAP)->SetScreenRect(VIEW_WIDTH - MINI_WIDTH/2, VIEW_HEIGHT, MINI_WIDTH, MINI_HEIGHT);
+
+	m_createdCretureCount = 0;
 }
 
 void PlayScene::OnUpdate(float deltaTime)
@@ -52,13 +54,6 @@ void PlayScene::OnUpdate(float deltaTime)
 	
 	// 오브젝트 전체 업데이트
 	OBJECT->Update(deltaTime);
-
-	// 씬 채인지 추가 (170207 김윤중)
-	if (INPUT->IsKeyDown(VK_F3))
-	{
-		SCENE->ChangeScene(SCENE_SHOP);
-	}
-
 }
 
 void PlayScene::OnExit()
@@ -72,13 +67,18 @@ void PlayScene::OnDraw()
 	Camera* pMinimapCamera = RENDER->GetCamera(CAM_MINIMAP);
 
 	pMainCamera->Draw(m_pBg, Vector(0, 0));
-	pMainCamera->DrawFilledRect(OBJECT->GetPlayer()->Position() - Vector(50, 50), Vector(100, 100), ColorF::Aqua);
+
 	OBJECT->Draw(pMainCamera);
 }
 
 void PlayScene::SetCreature(float deltaTime)
 {
-	
-	int x = rand() % 1200;
-	OBJECT->CreateCreature(OBJ_ENT, Vector(x, m_heightOfCreature));
+	int creatureLimit = m_gameTime / 3;
+	if (m_createdCretureCount < creatureLimit)
+	{
+		int x = rand() % 1200;
+		OBJECT->CreateCreature(OBJ_ENT, Vector(x, m_heightOfCreature));
+		m_createdCretureCount++;
+	}
+
 }

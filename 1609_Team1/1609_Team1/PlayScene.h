@@ -106,6 +106,9 @@ class PlayScene : public IScene
 	// 크리쳐 생성을 위한 게임 시간
 	float m_gameTime;
 	
+	// 크리쳐 총 생성된 수
+	int m_createdCretureCount;
+	
 public:
 	PlayScene();
 	~PlayScene();

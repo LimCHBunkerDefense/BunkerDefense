@@ -45,6 +45,7 @@ public:
 		m_collider.anchor = anchor;
 	}
 
+	// 크리쳐 스케일 조정 함수
 	void SetScale(float scale)
 	{
 		m_pAnim->Current()->GetSprite()->SetScale(scale);
@@ -72,7 +73,7 @@ public:
 	Object* GetPlayer() { return m_pPlayer; }
 	void DestroyPlayer();
 	
-	void CreateCreature(OBJ_TAG tag, Vector pos, Vector anchor = Vector(0.5f, 1.0f));
+	void CreateCreature(OBJ_TAG tag, Vector pos);
 	//void DestroyAllCreature();
 	//
 	//
