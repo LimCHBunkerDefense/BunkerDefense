@@ -68,8 +68,10 @@ void PlayScene::OnDraw()
 	Camera* pMinimapCamera = RENDER->GetCamera(CAM_MINIMAP);
 
 	pMainCamera->Draw(m_pBg, Vector(0, 0));
+	pMinimapCamera->DrawInMap(m_pBg, Vector(0, 0));
 
 	OBJECT->Draw(pMainCamera);
+	OBJECT->Draw(pMinimapCamera);
 }
 
 void PlayScene::SetCreature(float deltaTime)

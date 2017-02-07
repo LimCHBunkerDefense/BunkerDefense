@@ -41,9 +41,9 @@ void Player::Draw(Camera* pCamera)
 {
 	RENDER->FillCircle(Position(), 100, ColorF::Aqua);
 	//ColorF lineColor = MATH->IsCollided(m_player, m_LeftLine) ? ColorF::DeepPink : ColorF::Green;
-	RENDER->DrawInMap(m_LineCamera, ColorF::Red, 2);
+	/*RENDER->DrawInMap(m_LineCamera, ColorF::Red, 2);
 	RENDER->DrawInMap(m_LineLeft, ColorF::Blue, 2);
-	RENDER->DrawInMap(m_LineRight, ColorF::Blue, 2);
+	RENDER->DrawInMap(m_LineRight, ColorF::Blue, 2);*/
 
 
 	//ภ๛ต้
