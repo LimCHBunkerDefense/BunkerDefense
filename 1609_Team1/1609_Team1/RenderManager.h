@@ -244,6 +244,7 @@ public:
 	float GetTopY() { return m_y - GetHeight() * m_anchorY; }
 	float GetWidth() { return m_width * m_scale; }
 	float GetHeight() { return m_height * m_scale; }
+	float GetScale() { return m_scale; }
 
 	void Render(ID2D1RenderTarget* pRenderTarget, float opacity = 1.0f)
 	{

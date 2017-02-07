@@ -9,6 +9,8 @@ class Creature :
 	float m_defense;
 	wstring m_name;
 	Sprite* m_pSprite;
+	float m_attackSpeed;
+	float m_attackCoolTime;
 
 	float m_scale;
 	CREATURE_STATE m_state;
@@ -22,6 +24,7 @@ public:
 	void Update(float deltaTime);
 	void Draw(Camera* pCamera);
 
+	void IdleState(float deltaTime);
 	void RunState(float deltaTime);
 	void AttackState(float deltaTime);
 	void DeadState(float deltaTime);
