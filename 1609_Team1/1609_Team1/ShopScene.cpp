@@ -25,7 +25,7 @@ void ShopScene::OnEnter()
 void ShopScene::OnUpdate(float deltaTime)
 {
 	OBJECT->Update(deltaTime);
-
+		
 	ItemListWnd();
 	ItemStatWnd();
 
