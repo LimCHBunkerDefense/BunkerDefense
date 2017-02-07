@@ -36,5 +36,8 @@ void Player::AttackState(float deltaTime)
 
 void Player::ShopState()
 {
-
+	// if (INPUT->IsMouseUp(MOUSE_RIGHT))
+	// {
+	// 	if (IsCollided(Vector(INPUT->GetMousePos(), ))
+	// }
 }

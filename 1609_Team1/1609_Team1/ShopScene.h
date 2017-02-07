@@ -11,6 +11,8 @@ class ShopScene :
 	public IScene
 {
 	Sprite* m_pBg;
+	Box m_buyButton;
+	
 
 public:
 	ShopScene();
