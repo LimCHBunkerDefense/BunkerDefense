@@ -14,13 +14,15 @@ struct ItemData
 	int money;
 	float attack;
 	float defense;
+	float range;
 	float bunkerLife;
 	int bulletCount;
 	int addBullet;
 	int quantity;
 	wstring name;
+	wstring info;
 
-	ItemData(ITEM_TAG tag, int itemID, float attack, float defense, float bunkerLife, int bulletCount, int addBullet, int money, wstring name)
+	ItemData(ITEM_TAG tag, int itemID, float attack, float defense, float range, float bunkerLife, int bulletCount, int addBullet, int money, wstring name, wstring info)
 	{
 		this->tag = tag;
 		this->itemID = itemID;
@@ -29,6 +31,8 @@ struct ItemData
 		this->bunkerLife = bunkerLife;
 		this->bulletCount = bulletCount;
 		this->addBullet = addBullet;
+		this->name = name;
+		this->info = info;
 	}
 public:
 };

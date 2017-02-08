@@ -33,6 +33,9 @@ public:
 	Vector Position() { return m_pos; }
 	Box Collider() { return m_collider; }
 
+	
+
+
 	void SetPosition(Vector pos)
 	{
 		m_pos = pos;
@@ -44,6 +47,8 @@ public:
 		m_collider.size = size;
 		m_collider.anchor = anchor;
 	}
+
+
 
 	// 크리쳐 스케일 조정 함수
 	void SetScale(float scale)
@@ -63,6 +68,8 @@ public:
 	// 크리쳐용 함수
 	virtual void SetMoveDirection(Vector moveDirection) {}
 	virtual Vector GetMoveDirection() { return Vector::Zero(); }
+	virtual void SetStartPos(Vector pos) { }
+	virtual Vector GetStartPos() { return Vector::Zero(); }
 
 
 

@@ -21,7 +21,7 @@ PlayScene::PlayScene()
 
 	// 카메라 생성
 	RENDER->CreateCamera(CAM_MAIN, 1920, 1200, VIEW_WIDTH, VIEW_HEIGHT);
-	RENDER->CreateCamera(CAM_MINIMAP, MINI_WIDTH, MINI_HEIGHT * 2, MINI_WIDTH, MINI_HEIGHT);
+	RENDER->CreateCamera(CAM_MINIMAP, MINI_WIDTH, MINI_HEIGHT, MINI_WIDTH, MINI_HEIGHT);
 
 }
 
@@ -37,7 +37,7 @@ void PlayScene::OnEnter()
 	NEW_OBJECT(m_pBg, Sprite(RENDER->GetImage(TEXT("ForestBG")), 1.0f, 0, 0));
 
 	// 플레이어 생성
-	OBJECT->CreatePlayer(Vector(VIEW_WIDTH * 0.5F, VIEW_HEIGHT), Vector(10, 10), Vector(0.5f, 1.0f));
+	OBJECT->CreatePlayer(Vector(MINI_WIDTH * 0.5F, MINI_HEIGHT), Vector(10, 10), Vector(0.5f, 1.0f));
 
 	// 카메라 세팅
 	RENDER->GetCamera(CAM_MAIN)->SetScreenRect(0, 0, VIEW_WIDTH, VIEW_HEIGHT);
@@ -74,7 +74,7 @@ void PlayScene::OnDraw()
 		MINI_WIDTH * 0.5 - MINI_WIDTH * 0.5 * MATH->Sin(CAMERA_ANGLE * 0.5), MINI_HEIGHT - MINI_WIDTH * 0.5 * MATH->Cos(CAMERA_ANGLE * 0.5), ColorF::Blue, 2);
 	pMinimapCamera->DrawLine(MINI_WIDTH * 0.5, MINI_HEIGHT,
 		MINI_WIDTH * 0.5 + MINI_WIDTH * 0.5 * MATH->Sin(CAMERA_ANGLE * 0.5), MINI_HEIGHT - MINI_WIDTH * 0.5 * MATH->Cos(CAMERA_ANGLE * 0.5), ColorF::Blue, 2);
-	pMinimapCamera->DrawLine(MINI_WIDTH * 0.5, MINI_HEIGHT,	MINI_WIDTH * 0.5, 0, ColorF::Blue, 1);
+	pMinimapCamera->DrawLine(MINI_WIDTH * 0.5, MINI_HEIGHT, MINI_WIDTH * 0.5, MINI_HEIGHT - MINI_WIDTH * 0.5, ColorF::Blue, 1);
 	pMinimapCamera->DrawCircle(Vector(MINI_WIDTH * 0.5, MINI_HEIGHT), Vector(MINI_WIDTH, MINI_WIDTH), ColorF::Yellow);
 	pMinimapCamera->DrawFilledCircle(Vector(MINI_WIDTH * 0.5 , MINI_HEIGHT), Vector(8, 8), ColorF::Yellow);
 
@@ -84,6 +84,7 @@ void PlayScene::OnDraw()
 	{
 		Vector pos = (*it)->Position();
 		pMinimapCamera->DrawFilledCircle(pos - 4, Vector(8, 8), ColorF::Red);
+		pMinimapCamera->DrawLine((*it)->GetStartPos().x, (*it)->GetStartPos().y, OBJECT->GetPlayer()->Position().x, OBJECT->GetPlayer()->Position().y, ColorF::Red, 2);
 	}
 
 

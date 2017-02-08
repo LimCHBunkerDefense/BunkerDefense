@@ -61,7 +61,8 @@ void ObjectManager::DestroyPlayer()
 void ObjectManager::CreateCreature(OBJ_TAG tag, Vector pos)
 {
 	NEW_OBJECT(Object* pCreature, Creature(tag));
-	pCreature->SetPosition(pos);	
+	pCreature->SetPosition(pos);
+	pCreature->SetStartPos(pos);
 
 	Vector colSize, anchor;
 	switch (tag)
@@ -78,6 +79,7 @@ void ObjectManager::CreateCreature(OBJ_TAG tag, Vector pos)
 	}	
 
 	pCreature->SetCollider(colSize, anchor);
+	
 	m_creatureList.push_front(pCreature);
 }
 //

@@ -9,7 +9,7 @@ Player::Player()
 Player::Player(OBJ_TAG tag) : Object(tag)
 {
 	m_state = PLAYER_ATTACK;
-	m_dir=Vector::Right();
+	m_vAngle =Vector::Right();
 	
 	PrevMousePos = Vector(INPUT->GetMousePos().x, INPUT->GetMousePos().y);
 	Sight = SIGHT;
@@ -33,7 +33,7 @@ void Player::Update(float deltaTime)
 
 void Player::Draw(Camera* pCamera)
 {
-	RENDER->FillCircle(Position(), 100, ColorF::Aqua);
+	RENDER->FillCircle(Position() * 5, 100, ColorF::Aqua);
 	//ColorF lineColor = MATH->IsCollided(m_player, m_LeftLine) ? ColorF::DeepPink : ColorF::Green;
 	/*RENDER->DrawInMap(m_LineCamera, ColorF::Red, 2);
 	RENDER->DrawInMap(m_LineLeft, ColorF::Blue, 2);
@@ -81,21 +81,33 @@ void Player::AttackState(float deltaTime)
 
 	//마우스 누르면 각도 돌아가기
 	float fTurnSpeed = 0;
-
+	Vector NowMousePos = Vector(INPUT->GetMousePos().x, INPUT->GetMousePos().y);
+	if (NowMousePos.x < PrevMousePos.x) {
+		fTurnSpeed = -ROTATE_SPEED;
+	}
+	if (NowMousePos.x > PrevMousePos.x) {
+		fTurnSpeed = +ROTATE_SPEED;
+	}
+	if (NowMousePos.y < PrevMousePos.y) {
+		m_height += ROTATE_SPEED;
+	}
+	if (NowMousePos.x > PrevMousePos.x) {
+		m_height -= ROTATE_SPEED;
+	}
+	if (INPUT->IsKeyPress(VK_LEFT)) {
+		fTurnSpeed = -ROTATE_SPEED;
+	}
+	if (INPUT->IsKeyPress(VK_RIGHT)) {
+		fTurnSpeed = ROTATE_SPEED;
+	}
 	m_angle += fTurnSpeed;
 	
-	/* 크리쳐 리스트 벡터 Line으로 받아와서 회전시켜서 출력해야함
-	FOR_LIST(Line*, m_listLine) {
-		float prev_angle = MATH->Angle(m_dir, (*it)->EndPoint() - (*it)->StartPoint());
-		Vector result_dir = MATH->ToDirection(prev_angle + fTurnSpeed);
-		(*it)->SetEndPoint(m_player.center + result_dir * 600);
-	}*/
 }
 
 void Player::ShopState()
 {
 	//Animation()->Play(PLAYER_SHOP);
-	
+
 	// 씬 채인지
 	if (INPUT->IsKeyDown(VK_F3))
 	{
@@ -112,9 +124,45 @@ void Player::ShopState()
 	// 마우스 왼쪽 버튼 클릭
 	if (INPUT->IsMouseUp(MOUSE_LEFT))
 	{
-		if (MATH->IsCollided(Vector(INPUT->GetMousePos().x, INPUT->GetMousePos().y), SCENE->GetScene(SCENE_SHOP)->GetButton()))
+		list<Box*> boxList = SCENE->GetScene(SCENE_SHOP)->GetBoxList();
+		for (list<Box*>::iterator it_Box = boxList.begin(); it_Box != boxList.end(); it_Box++)
 		{
-			SCENE->SetColliderOnOff();
+			if (MATH->IsCollided(Vector(INPUT->GetMousePos().x, INPUT->GetMousePos().y), *(*it_Box)))
+			{
+				list<Item*> itemList = SCENE->GetScene(SCENE_SHOP)->GetItemList();
+				switch ((*it_Box)->itemTag)
+				{
+				case ITEM_WEAPON:
+					SCENE->GetScene(SCENE_SHOP)->SetCurrentButton(BUTTON_WEAPON);
+					SCENE->GetScene(SCENE_SHOP)->SetIsWeaponClicked(true);
+					SCENE->GetScene(SCENE_SHOP)->SetIsBulletClicked(false);
+					SCENE->GetScene(SCENE_SHOP)->SetIsUsingItemClicked(false); 
+					break;
+				case ITEM_BULLET:
+					SCENE->GetScene(SCENE_SHOP)->SetCurrentButton(BUTTON_BULLET);
+					SCENE->GetScene(SCENE_SHOP)->SetIsWeaponClicked(false);
+					SCENE->GetScene(SCENE_SHOP)->SetIsBulletClicked(true);
+					SCENE->GetScene(SCENE_SHOP)->SetIsUsingItemClicked(false);
+					break;
+				case ITEM_USINGITEM:
+					SCENE->GetScene(SCENE_SHOP)->SetCurrentButton(BUTTON_USINGITEM);
+					SCENE->GetScene(SCENE_SHOP)->SetIsWeaponClicked(false);
+					SCENE->GetScene(SCENE_SHOP)->SetIsBulletClicked(false);
+					SCENE->GetScene(SCENE_SHOP)->SetIsUsingItemClicked(true);
+					break;
+
+				case 4:
+				
+					break;
+
+				case 5:
+					break;
+
+				case 6:
+					break;
+				}
+			}
+
 		}
 	}
 }

@@ -23,6 +23,7 @@ Creature::Creature(OBJ_TAG tag) : Object(tag)
 	m_moveSpeed = pData->moveSpeed;
 
 	m_moveDirection = Vector(Position() * -1 + Vector(MINI_WIDTH * 0.5, MINI_HEIGHT)).Normalize();
+	
 }
 
 
@@ -50,12 +51,13 @@ void Creature::Update(float deltaTime)
 void Creature::Draw(Camera* pCamera)
 {
 	// 크리처 스케일 변화되는 부분
-	float changedScale = MATH->Clamp(m_scale + 0.003f, 0.5f, 1.0f);
+	float changedScale = MATH->Clamp(m_scale + 0.001f, 0.5f, 1.0f);
 	SetCollider(Collider().size * changedScale / m_scale, Collider().anchor);
 	m_scale = changedScale;
 	SetScale(m_scale);
 
-	pCamera->Draw3D(Animation()->Current()->GetSprite(), Position(), m_dir);
+	pCamera->Draw3D(Animation()->Current()->GetSprite(), Position(),m_dir);
+	//pCamera->Draw3DLine(Animation()->Current()->GetSprite(), m_moveLine, m_dir);
 }
 
 void Creature::IdleState(float deltaTime)
@@ -65,7 +67,8 @@ void Creature::IdleState(float deltaTime)
 
 void Creature::RunState(float deltaTime)
 {
-	if (Animation()->Current()->GetSprite()->GetScale() >= 0.9999) m_state = CREATURE_ATTACK;
+	//if (Animation()->Current()->GetSprite()->GetScale() >= 0.9999) 
+	//m_state = CREATURE_ATTACK;
 	Vector pos = Position() + m_moveDirection * m_moveSpeed * deltaTime;
 	SetPosition(pos);
 	Animation()->Play(CREATURE_RUN);

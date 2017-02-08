@@ -148,6 +148,7 @@
   <ItemGroup>
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Bunker.cpp" />
+    <ClCompile Include="Button.cpp" />
     <ClCompile Include="Creature.cpp" />
     <ClCompile Include="CreatureDB.cpp" />
     <ClCompile Include="GameManager.cpp" />
@@ -168,6 +169,7 @@
     <ClInclude Include="AnimationController.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Bunker.h" />
+    <ClInclude Include="Button.h" />
     <ClInclude Include="Common.h" />
     <ClInclude Include="Creature.h" />
     <ClInclude Include="CreatureDB.h" />

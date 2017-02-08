@@ -24,4 +24,5 @@ Item::Item(int itemID)
 	m_bulletCount = pData->bulletCount;
 	m_addBullet = pData->addBullet;
 	m_name = pData->name;
+	m_info = pData->info;
 }
