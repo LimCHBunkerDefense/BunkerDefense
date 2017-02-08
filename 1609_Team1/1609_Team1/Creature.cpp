@@ -56,7 +56,7 @@ void Creature::Draw(Camera* pCamera)
 	m_scale = changedScale;
 	SetScale(m_scale);
 
-	pCamera->Draw3D(Animation()->Current()->GetSprite(), Position(), GetMoveLine(),m_dir);
+	pCamera->Draw3D(Animation()->Current()->GetSprite(), Position(),m_dir);
 	//pCamera->Draw3DLine(Animation()->Current()->GetSprite(), m_moveLine, m_dir);
 }
 

@@ -33,7 +33,7 @@ void Player::Update(float deltaTime)
 
 void Player::Draw(Camera* pCamera)
 {
-	RENDER->FillCircle(Position(), 100, ColorF::Aqua);
+	RENDER->FillCircle(Position() * 5, 100, ColorF::Aqua);
 	//ColorF lineColor = MATH->IsCollided(m_player, m_LeftLine) ? ColorF::DeepPink : ColorF::Green;
 	/*RENDER->DrawInMap(m_LineCamera, ColorF::Red, 2);
 	RENDER->DrawInMap(m_LineLeft, ColorF::Blue, 2);
@@ -102,15 +102,6 @@ void Player::AttackState(float deltaTime)
 	}
 	m_angle += fTurnSpeed;
 	
-	/* 크리쳐 리스트 벡터 Line으로 받아와서 회전시켜서 출력해야함*/
-	list<Object*> CreatureList=OBJECT->GetCreatureList();
-	FOR_LIST(Object*, CreatureList) {
-		float prev_angle = MATH->Angle(Position()-(*it)->GetStartPos(), Vector::Up());
-		Vector result_dir = MATH->ToDirection(prev_angle + fTurnSpeed);
-		(*it)->SetStartPos(MATH->ToDirection(prev_angle + fTurnSpeed*MINI_WIDTH));
-		//(*it)->SetPosition(MATH->ToDirection(prev_angle + fTurnSpeed*MINI_WIDTH));
-		//(*it)->SetMoveDirection(Vector(CHARACTER_X, CHARACTER_Y) + result_dir * 600);
-	}
 }
 
 void Player::ShopState()
