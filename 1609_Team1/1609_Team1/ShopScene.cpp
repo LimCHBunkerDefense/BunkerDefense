@@ -68,6 +68,16 @@ void ShopScene::OnDraw()
 	pMainCamera->Draw(m_pBg, Vector(0, 0));
 	RENDER->DrawRect(Vector(620, 50), Vector(150, 50), ColorF::BlanchedAlmond);
 	RENDER->DrawT(TEXT("SHOP"), 590, 35, ColorF::BlanchedAlmond, 25);
+	RENDER->DrawRect(Vector(900, 420),Vector(320, 45),ColorF::AntiqueWhite, 3);
+
+
+	RENDER->DrawRect(Vector(135, 450), Vector(150, 150), ColorF::Aqua, 3);
+	RENDER->DrawCircle(Vector(135, 450), 50, ColorF::Aqua, 3);
+	RENDER->DrawT(TEXT(" NPC\nICON"), 110, 420, ColorF::Aqua, 20);
+
+	RENDER->DrawCircle(Vector(135, 250), 50, ColorF::Aqua, 3);
+	RENDER->DrawT(TEXT(" NPC\nTalk Box"), 110, 230, ColorF::Aqua, 16);
+
 	ItemListWnd();
 	ItemStatWnd();
 
@@ -75,6 +85,7 @@ void ShopScene::OnDraw()
 
 void ShopScene::ItemListWnd()
 {
+	//아이템 종류 목차
 	RENDER->DrawRect(Vector(500, 235), Vector(400, 220), ColorF::OrangeRed);
 	RENDER->DrawRect(Vector(368, 232), Vector(120, 180), ColorF::Tomato);
 	RENDER->DrawT(TEXT("    ITEM\nWEAPON"), 328, 215, ColorF::Tomato, 20);
@@ -86,6 +97,12 @@ void ShopScene::ItemListWnd()
 	RENDER->DrawT(TEXT("      ITEM\nUSINGITEM"), 575, 215, ColorF::HotPink, 20);
 
 	RENDER->DrawRect(Vector(500, 560),Vector(400, 430),ColorF::Red);
+	RENDER->DrawLine(Vector(300, 408), Vector(700, 408), ColorF::Red);
+	RENDER->DrawLine(Vector(300, 462), Vector(700, 462), ColorF::Red);
+	RENDER->DrawLine(Vector(300, 524), Vector(700, 524), ColorF::Red);
+	RENDER->DrawLine(Vector(300, 584), Vector(700, 584), ColorF::Red);
+	RENDER->DrawLine(Vector(300, 644), Vector(700, 644), ColorF::Red);
+	RENDER->DrawLine(Vector(300,704),Vector(700, 704),ColorF::Red);
 
 	if (SCENE->GetColliderOnOff())
 	{
@@ -112,7 +129,6 @@ void ShopScene::ItemListWnd()
 			if (pItem != NULL)
 			{
 				RENDER->DrawT(pItem->GetName(), 385, 300 + weaponIndex * 60, ColorF::Tomato, 20.0f, ALIGN_CENTER);
-			
 			}
 		}
 		break;
@@ -143,6 +159,7 @@ void ShopScene::ItemListWnd()
 }
 void ShopScene::ItemStatWnd()
 {
+	//선택 아이탬 정보
 	RENDER->DrawRect(Vector(900, 450), Vector(400, 650), ColorF::Yellow);
 	RENDER->DrawRect(Vector(900, 250), Vector(150, 150), ColorF::Aqua, 3);
 	RENDER->DrawT(TEXT("ITEM\nICON"), 880, 230, ColorF::Aqua, 20);

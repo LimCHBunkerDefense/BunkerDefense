@@ -161,11 +161,7 @@ void Player::ShopState()
 					break;
 
 				case 4:
-				/*	SCENE->GetScene(SCENE_SHOP)->SetCurrentButton(BUTTON_WEAPON)
-					if (SCENE->GetScene(SCENE_SHOP)->SetCurrentButton(BUTTON_WEAPON))
-					{
-					}*/
-
+				
 					break;
 
 				case 5:
