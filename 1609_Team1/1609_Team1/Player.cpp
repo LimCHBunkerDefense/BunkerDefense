@@ -142,7 +142,7 @@ void Player::ShopState()
 			if (MATH->IsCollided(Vector(INPUT->GetMousePos().x, INPUT->GetMousePos().y), *(*it_Box)))
 			{
 				list<Item*> itemList = SCENE->GetScene(SCENE_SHOP)->GetItemList();
-				switch ((*it_Box)->itemTag)
+				switch ((*it_Box)->index)
 				{
 				case ITEM_WEAPON:
 					SCENE->GetScene(SCENE_SHOP)->SetCurrentButton(BUTTON_WEAPON);
@@ -162,11 +162,7 @@ void Player::ShopState()
 					SCENE->GetScene(SCENE_SHOP)->SetIsBulletClicked(false);
 					SCENE->GetScene(SCENE_SHOP)->SetIsUsingItemClicked(true);
 					break;
-				}
-
-				switch ((*it_Box)->index)
-				{
-				case 1:
+				case 4:
 					if (SCENE->GetScene(SCENE_SHOP)->GetIsWeaponClicked() == true)
 					{
 						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(1001);
@@ -180,7 +176,7 @@ void Player::ShopState()
 						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(1009);
 					}
 					break;
-				case 2:
+				case 5:
 					if (SCENE->GetScene(SCENE_SHOP)->GetIsWeaponClicked() == true)
 					{
 						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(1002);
@@ -194,14 +190,40 @@ void Player::ShopState()
 						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(1010);
 					}
 					break;
-				case 3:
+				case 6:
+					if (SCENE->GetScene(SCENE_SHOP)->GetIsWeaponClicked() == true)
+					{
+						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(1003);
+					}
+					else if (SCENE->GetScene(SCENE_SHOP)->GetIsBulletClicked() == true)
+					{
+						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(1007);
+					}
+					else if (SCENE->GetScene(SCENE_SHOP)->GetIsUsingItemClicked() == true)
+					{
+						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(1011);
+					}
 					break;
-				case 4:// 샵씬에서 구매 선택하면 그 아이템이 아이템 가방에 저장됨
-					//	if (SCENE->GetScene(SCENE_SHOP)->GetIsWeaponClicked() == true)
-					//	{
-					//		Item* pItem = SCENE->GetScene(SCENE_SHOP)->GetSelectedItem();
-					//		AddItem(pItem);
-					//	}
+				case 7:
+					if (SCENE->GetScene(SCENE_SHOP)->GetIsWeaponClicked() == true)
+					{
+						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(1004);
+					}
+					else if (SCENE->GetScene(SCENE_SHOP)->GetIsBulletClicked() == true)
+					{
+						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(1008);
+					}
+					else if (SCENE->GetScene(SCENE_SHOP)->GetIsUsingItemClicked() == true)
+					{
+						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(1012);
+					}
+					break;
+				case 8:// 샵씬에서 구매 선택하면 그 아이템이 아이템 가방에 저장됨
+					   //	if (SCENE->GetScene(SCENE_SHOP)->GetIsWeaponClicked() == true)
+					   //	{
+					   //		Item* pItem = SCENE->GetScene(SCENE_SHOP)->GetSelectedItem();
+					   //		AddItem(pItem);
+					   //	}
 					break;
 				}
 			}

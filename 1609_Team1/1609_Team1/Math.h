@@ -108,7 +108,6 @@ struct Triangle
 //원래 가지고 있던 박스 Collider
 struct Box
 {
-	ITEM_TAG itemTag;
 	int index;
 	Vector pos;
 	Vector size;
@@ -126,15 +125,6 @@ struct Box
 	Box(int index, Vector pos, Vector size, Vector anchor = Vector(0.5f, 0.5f))
 	{
 		this->index = index;
-		this->pos = pos;
-		this->size = size;
-		this->anchor = anchor;
-	}
-
-	// itemTag로 박스 구분
-	Box(ITEM_TAG itemTag, Vector pos, Vector size, Vector anchor = Vector(0.5f, 0.5f))
-	{
-		this->itemTag = itemTag;
 		this->pos = pos;
 		this->size = size;
 		this->anchor = anchor;
