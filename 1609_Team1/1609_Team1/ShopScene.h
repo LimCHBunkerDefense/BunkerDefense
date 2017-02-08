@@ -37,8 +37,11 @@ public:
 	{
 		FOR_LIST(Item*, m_itemList)
 		{
-			if ((*it)->GetID() == itemID) m_selectedItem = (*it);
-			break;
+			if ((*it)->GetID() == itemID) 
+			{ 
+				m_selectedItem = (*it); 
+				break;
+			}
 		}
 	}
 	// Item* SetSelectedItem(int m_itemID) 

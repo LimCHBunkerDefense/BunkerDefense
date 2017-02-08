@@ -33,7 +33,7 @@ public:
 	virtual void SetSelectedItem(int itemID) {}
 	virtual void SetCurrentButton(BUTTON_TAG buttonTag) {}
 
-	virtual bool GetIsWeaponClicked() { return NULL; }								// 아이템 중분류 버튼이 눌러졌는가를 확인하는 GetSet함수
+	virtual bool GetIsWeaponClicked() { return NULL; }					// 아이템 중분류 버튼이 눌러졌는가를 확인하는 GetSet함수
 	virtual void SetIsWeaponClicked(bool ON){}
 	virtual bool GetIsBulletClicked() { return NULL; }
 	virtual void SetIsBulletClicked(bool ON){}
