@@ -26,6 +26,15 @@ ShopScene::ShopScene()
 	AddBoxList(new Box(ITEM_WEAPON, Vector(370, 235), Vector(120, 180)));
 	AddBoxList(new Box(ITEM_BULLET, Vector(500, 235), Vector(120, 180)));
 	AddBoxList(new Box(ITEM_USINGITEM, Vector(630, 235), Vector(120, 180)));
+
+	AddBoxList(new Box(Vector(500, 375), Vector(400, 60))); // 3
+	AddBoxList(new Box(Vector(500, 435), Vector(400, 60)));
+	AddBoxList(new Box(Vector(500, 495), Vector(400, 60)));
+	AddBoxList(new Box(Vector(500, 555), Vector(400, 60)));
+
+	IsWeaponClicked = false;
+	IsBulletClicked = false;
+	IsUsingItemClicked = false;	
 }
 
 
@@ -88,7 +97,9 @@ void ShopScene::ItemListWnd()
 	}
 
 	list<Item*> itemList = SCENE->GetScene(SCENE_SHOP)->GetItemList();
-	int index = 0;
+	int weaponIndex = 0;
+	int bulletIndex = -4;
+	int usingItemIndex = -8;
 	Item* pItem;
 
 	switch (m_currentButton)
@@ -96,33 +107,34 @@ void ShopScene::ItemListWnd()
 	case BUTTON_WEAPON:
 		FOR_LIST(Item*, itemList)
 		{
-			index++;
+			weaponIndex++;
 			pItem = ((*it)->GetTag() == ITEM_WEAPON) ? (*it) : NULL;
 			if (pItem != NULL)
 			{
-				RENDER->DrawT(pItem->GetName(), 400, 320 + index * 50, ColorF::Tomato, 20.0f);
+				RENDER->DrawT(pItem->GetName(), 385, 300 + weaponIndex * 60, ColorF::Tomato, 20.0f, ALIGN_CENTER);
+			
 			}
 		}
 		break;
 	case BUTTON_BULLET:
 		FOR_LIST(Item*, itemList)
 		{
-			index++;
+			bulletIndex++;
 			pItem = ((*it)->GetTag() == ITEM_BULLET) ? (*it) : NULL;
 			if (pItem != NULL)
 			{
-				RENDER->DrawT(pItem->GetName(), 365, -79 + index * 50, ColorF::Khaki, 20.0f);
+				RENDER->DrawT(pItem->GetName(), 385, 300 + bulletIndex * 60, ColorF::Khaki, 20.0f, ALIGN_CENTER);
 			}
 		}
 		break;
 	case BUTTON_USINGITEM:
 		FOR_LIST(Item*, itemList)
 		{
-			index++;
+			usingItemIndex++;
 			pItem = ((*it)->GetTag() == ITEM_USINGITEM) ? (*it) : NULL;
 			if (pItem != NULL)
 			{
-				RENDER->DrawT(pItem->GetName(), 400, 120 + index * 50, ColorF::HotPink, 20.0f);
+				RENDER->DrawT(pItem->GetName(), 385, 300 + usingItemIndex * 60, ColorF::HotPink, 20.0f, ALIGN_CENTER);
 			}
 		}
 		break;

@@ -1,5 +1,4 @@
 #pragma once
-#pragma comment(linker,"/entry:WinMainCRTStartup /subsystem:console")
 #include "SceneManager.h"
 #include "RenderManager.h"
 #include "ObjectManager.h"
@@ -32,5 +31,9 @@ public:
 
 	Item* GetSelectedItem() { return m_selectedItem; }
 	void SetCurrentButton(BUTTON_TAG buttonTag) { m_currentButton = buttonTag; }
+
+	void SetIsWeaponClicked(bool ON) { IsWeaponClicked = ON; }
+	void SetIsBulletClicked(bool ON) { IsBulletClicked = ON; }
+	void SetIsUsingItemClicked(bool ON) { IsUsingItemClicked = ON; }
 };
 
