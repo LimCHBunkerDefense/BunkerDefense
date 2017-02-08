@@ -12,7 +12,7 @@ using namespace std;
 class IScene
 {
 protected:
-	Item* m_selectedItem;			// 선택한 아이템
+	Item* m_selectedItem;			// 구매한 아이템
 
 	list<Box*> m_boxList;			// 박스 리스트
 	list<Item*> m_itemList;			// 아이템 리스트
@@ -29,36 +29,16 @@ public:
 
 	virtual list<Item*> GetItemList() { return m_itemList; }
 
+	virtual Item* GetSelectedItem() { return NULL; }					// 구매한 아이템에 대한 함수
+
 	virtual void SetCurrentButton(BUTTON_TAG buttonTag) {}
 
+	virtual void GetIsWeaponClicked() {}								// 아이템 중분류 버튼이 눌러졌는가를 확인하는 GetSet함수
 	virtual void SetIsWeaponClicked(bool ON){}
+	virtual void GetIsBulletClicked() {}
 	virtual void SetIsBulletClicked(bool ON){}
+	virtual void GetIsUsingItemClicked() {}
 	virtual void SetIsUsingItemClicked(bool ON){} 
-
-
-//	virtual Box GetBuyButton() { return m_bBuyButton; }					// 구매 버튼
-//	virtual Box GetExitButton() { return m_bExitButton; }				// 나가기 버튼
-//	
-//	virtual Box GetWeaponButton() { return m_bWeapon; }					// 중분류 : 무기류
-//	virtual Box GetBulletButton() { return m_bBullet; }					// 중분류 : 총알류
-//	virtual Box GetUsingItemButton() { return m_bUsingItem; }			// 중분류 : 아이템
-//	
-//	virtual Box GetMachineGunButton() { return m_bMachineGun; }			// 머신건
-//	virtual Box GetFireThrowerButton() { return m_bFireThrower; }		// 화염방사기
-//	virtual Box GetLaserGunButton() { return m_bLaserGun; }				// 레이저건
-//	
-//	virtual Box GetPSBulletButton() { return m_bPistolBullet; }			// 권총 탄약
-//	virtual Box GetMGBulletButton() { return m_bMachineGunBullet; }		// 머신건 탄약
-//	virtual Box GetFTBulletButton() { return m_bFireThrowerBullet; }	// 화염방사기 탄약
-//	virtual Box GetLGBulletButton() { return m_bLaserGunBullet; }		// 레이저건 탄약
-//	
-//	virtual Box GetGrenadeButton() { return m_bGrenade; }				// 수류탄
-//	virtual Box GetAirBombButton() { return m_bAirBomb; }				// 공중 폭격
-//	virtual Box GetRavaRegionButton() { return m_bRavaRegion; }			// 화염 지대
-//	virtual Box GetBunkerRepairButton() { return m_bBunckerRepair; }	// 벙커 수리
-//
-//	virtual Item* GetSelectedItem() { return m_selectedItem; }	// 선택된 아이템
-
 };
 
 class SceneManager : public Singleton<SceneManager>

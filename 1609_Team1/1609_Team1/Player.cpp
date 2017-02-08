@@ -148,7 +148,7 @@ void Player::ShopState()
 					SCENE->GetScene(SCENE_SHOP)->SetCurrentButton(BUTTON_WEAPON);
 					SCENE->GetScene(SCENE_SHOP)->SetIsWeaponClicked(true);
 					SCENE->GetScene(SCENE_SHOP)->SetIsBulletClicked(false);
-					SCENE->GetScene(SCENE_SHOP)->SetIsUsingItemClicked(false); 
+					SCENE->GetScene(SCENE_SHOP)->SetIsUsingItemClicked(false);
 					break;
 				case ITEM_BULLET:
 					SCENE->GetScene(SCENE_SHOP)->SetCurrentButton(BUTTON_BULLET);
@@ -164,7 +164,7 @@ void Player::ShopState()
 					break;
 
 				case 4:
-				
+					
 					break;
 
 				case 5:
@@ -172,9 +172,20 @@ void Player::ShopState()
 
 				case 6:
 					break;
+
+				case 7:
+					break;
+
+				case 8:		// 샵씬에서 구매 선택하면 그 아이템이 아이템 가방에 저장됨
+				//	if (SCENE->GetScene(SCENE_SHOP)->GetIsWeaponClicked() == true)
+				//	{
+				//		Item* pItem = SCENE->GetScene(SCENE_SHOP)->GetSelectedItem();
+				//		AddItem(pItem);
+				//	}
+					break;
+
 				}
 			}
-
 		}
 	}
 }

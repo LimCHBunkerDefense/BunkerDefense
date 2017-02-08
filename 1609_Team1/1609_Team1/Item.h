@@ -21,6 +21,7 @@ public:
 	Item(int itemID);
 	~Item();
 	
+	int GetID() { return m_itemID; }
 	wstring GetName() { return m_name; }
 	wstring GetInfo() { return m_info; }
 	ITEM_TAG GetTag() { return m_tag; }
