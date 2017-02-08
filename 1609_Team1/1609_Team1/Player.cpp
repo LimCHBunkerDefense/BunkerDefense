@@ -128,7 +128,7 @@ void Player::ShopState()
 	}
 
 	// �浹ü On/Off
-	if (INPUT->IsKeyDown(VK_NUMPAD0))
+	if (INPUT->IsKeyDown(VK_0))
 	{
 		SCENE->SetColliderOnOff();
 	}
