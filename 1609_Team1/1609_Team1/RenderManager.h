@@ -291,7 +291,6 @@ public:
 		LineLeft(Vector(VIEW_WIDTH - MINI_WIDTH / 2, VIEW_HEIGHT), MATH->ToDirection(CAMERA_LEFT) * MINI_WIDTH),
 		LineRight(Vector(VIEW_WIDTH - MINI_WIDTH / 2, VIEW_HEIGHT), MATH->ToDirection(CAMERA_RIGHT) * MINI_WIDTH)
 	{
-		m_height = GROUND_HEIGHT;
 		m_pBitmapTarget = pBitmapTarget;
 		m_pBitmapTarget->BeginDraw();
 		m_pBitmapTarget->Clear(ColorF(0, 0, 0, 0));
@@ -368,7 +367,7 @@ public:
 		m_pBitmapTarget->BeginDraw();
 
 		GraphicsObject line = { GRAPHICS_LINE, startX, startY,
-			endX - startX, endY - startY, color, lineSize };
+			endX, endY, color, lineSize };
 		line.Render(m_pBitmapTarget);
 
 		m_pBitmapTarget->EndDraw();
@@ -381,20 +380,41 @@ public:
 	// 크리쳐의 좌표 (미니맵 상의 좌표)를 전장 화면의 좌표로 바꿔주는 함수
 	Vector ChangePositionToView(Vector position)
 	{
-		return Vector(position.x * VIEW_WIDTH / MINI_WIDTH, m_height);
+		Vector  a = Vector(position.x * 5, position.y*5);
+		return a;
 	}
 
 	// 크리쳐가 플레이어의 시야에 들어왔을 경우, 미니맵 상의 크리쳐를 전장 화면으로 출력해주는 함수
-	void Draw3D(Sprite* sprite, Vector pos, int dir = -1, float opacity = 1.0f) 
+	void Draw3D(Sprite* sprite, Vector pos, Vector startPos, int dir = -1, float opacity = 1.0f) 
 	{
 		// 크리쳐가 플레이어의 시야 (미니맵 상의 두 파란선) 안에 들어왔는지 확인하는 단계. 플레이어의 시야는 CAMERA_ANGLE로 정의되어 있음
-		Vector moveDirOfCreature = Vector(MINI_WIDTH * 0.5, MINI_HEIGHT) - pos;
-		if (MATH->CosAngle(moveDirOfCreature, Vector::Up()) <= CAMERA_ANGLE * 0.5
-			|| MATH->CosAngle(Vector::Up(), moveDirOfCreature) <= CAMERA_ANGLE * 0.5)
+		DrawLine(startPos.x, startPos.y, CHARACTER_X, CHARACTER_Y, ColorF::Red, 1);
+		float Angle = MATH->Angle(Vector::Right(), pos - Vector(MINI_WIDTH * 0.5, MINI_HEIGHT));
+
+		if (Angle <= CAMERA_LEFT && Angle >= CAMERA_RIGHT)
 		{
 			m_pBitmapTarget->BeginDraw();
 
 			Vector posInMap = ChangePositionToView(pos);
+			sprite->SetPosition(posInMap.x, posInMap.y);
+			sprite->SetDirection(dir);
+			sprite->Render(m_pBitmapTarget);
+
+			m_pBitmapTarget->EndDraw();
+		}
+
+	}
+
+	void Draw3DLine(Sprite* sprite, Line line, int dir = -1, float opacity = 1.0f)
+	{
+		// 크리쳐가 플레이어의 시야 (미니맵 상의 두 파란선) 안에 들어왔는지 확인하는 단계. 플레이어의 시야는 CAMERA_ANGLE로 정의되어 있음
+		float Angle = MATH->Angle(Vector::Right(), line.StartPoint()- line.EndPoint());
+
+		if (Angle <= CAMERA_LEFT && Angle >= CAMERA_RIGHT)
+		{
+			m_pBitmapTarget->BeginDraw();
+
+			Vector posInMap = Vector(SetLine3D(line), m_height);
 			sprite->SetPosition(posInMap.x, posInMap.y);
 			sprite->SetDirection(dir);
 			sprite->Render(m_pBitmapTarget);
@@ -429,28 +449,39 @@ public:
 		DrawLine(SetVectorInMap(triangle.p2), SetVectorInMap(triangle.p0), color, lineSize);
 	}
 	//MATH->Closest(ClosestPoint);*/
-	/*Vector SetVector3D(Vector pos)
+	Vector SetVector3D(Vector pos)
 	{
-		Vector NewPos=Vector(pos.x - VIEW_WIDTH + MINI_WIDTH, pos.y - VIEW_HEIGHT + MINI_HEIGHT);
-		Vector BigPos = Vector(NewPos.x / MINI_WIDTH * VIEW_WIDTH, NewPos.y / MINI_HEIGHT*VIEW_HEIGHT);
+		Vector BigPos = Vector(pos.x *5, pos.y *5);
 		Vector CenterPoint = MATH->ClosestPoint(BigPos, m_LineCamera);
-		float fBunJa = MATH->Distance(CenterPoint, BigPos);
-		float fBunMo = MATH->Distance(m_LineLeft.EndPoint(), CenterPoint);
-		float X_3D;
-		if (pos.x>=VIEW_WIDTH/2) {
-			X_3D = VIEW_WIDTH / 2 + VIEW_WIDTH / 2 * fBunJa / fBunMo;
+		/*float fBunJa = MATH->Distance(CenterPoint, BigPos);
+		float fBunMo = MATH->Distance(MATH->ClosestPoint(CenterPoint, m_LineLeft), CenterPoint);*/
+		float fBunJa = MATH->Distance(BigPos, m_LineCamera.EndPoint());
+		float fBunMo = MATH->Distance(m_LineLeft.EndPoint(), m_LineCamera.EndPoint());
+
+		float X_3D=600.0f;
+		if (BigPos.x>=VIEW_WIDTH/2) {
+			X_3D += 600 * fBunJa / fBunMo;
 		}
 		else {
-			X_3D = VIEW_WIDTH / 2 - VIEW_WIDTH / 2 * fBunJa / fBunMo;
+			X_3D -= 600 * fBunJa / fBunMo;
 		}
-		return Vector(X_3D, m_height);
-		Line ObjectLine=Line(Vector(pos.x, pos.y), Vector(MINI_WIDTH / 2, MINI_HEIGHT));
-		float smallX=MATH->SinAngle(Vector(VIEW_WIDTH - MINI_WIDTH / 2, VIEW_HEIGHT)-pos, LineCenter.StartPoint()-LineCenter.EndPoint());
-		return Vector(smallX / MINI_WIDTH * VIEW_WIDTH, m_height);
+		return Vector(X_3D, m_height);	
+	}
 
-		
-		
-	}*/
+	float SetLine3D(Line line)
+	{
+		Vector CenterPoint = MATH->ClosestPoint(line.EndPoint(), m_LineCamera);
+		float fBunJa = MATH->Distance(CenterPoint, line.EndPoint());
+		float fBunMo = MATH->Distance(MATH->ClosestPoint(CenterPoint, m_LineLeft), CenterPoint);
+		float X_3D = 600.0f;
+		if (line.EndPoint().x >= VIEW_WIDTH / 2) {
+			X_3D += 600 * fBunJa / fBunMo;
+		}
+		else {
+			X_3D -= 600 * fBunJa / fBunMo;
+		}
+		return X_3D;
+	}
 
 	void DrawRect(Vector leftTop, Vector size,
 		ColorF color = ColorF::Black, float lineSize = 1)

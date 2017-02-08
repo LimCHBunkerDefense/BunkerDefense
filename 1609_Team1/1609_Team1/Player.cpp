@@ -9,7 +9,7 @@ Player::Player()
 Player::Player(OBJ_TAG tag) : Object(tag)
 {
 	m_state = PLAYER_ATTACK;
-	m_dir=Vector::Right();
+	m_vAngle =Vector::Right();
 	
 	PrevMousePos = Vector(INPUT->GetMousePos().x, INPUT->GetMousePos().y);
 	Sight = SIGHT;
@@ -81,15 +81,36 @@ void Player::AttackState(float deltaTime)
 
 	//마우스 누르면 각도 돌아가기
 	float fTurnSpeed = 0;
-
+	Vector NowMousePos = Vector(INPUT->GetMousePos().x, INPUT->GetMousePos().y);
+	if (NowMousePos.x < PrevMousePos.x) {
+		fTurnSpeed = -ROTATE_SPEED;
+	}
+	if (NowMousePos.x > PrevMousePos.x) {
+		fTurnSpeed = +ROTATE_SPEED;
+	}
+	if (NowMousePos.y < PrevMousePos.y) {
+		m_height += ROTATE_SPEED;
+	}
+	if (NowMousePos.x > PrevMousePos.x) {
+		m_height -= ROTATE_SPEED;
+	}
+	if (INPUT->IsKeyPress(VK_LEFT)) {
+		fTurnSpeed = -ROTATE_SPEED;
+	}
+	if (INPUT->IsKeyPress(VK_RIGHT)) {
+		fTurnSpeed = ROTATE_SPEED;
+	}
 	m_angle += fTurnSpeed;
 	
-	/* 크리쳐 리스트 벡터 Line으로 받아와서 회전시켜서 출력해야함
-	FOR_LIST(Line*, m_listLine) {
-		float prev_angle = MATH->Angle(m_dir, (*it)->EndPoint() - (*it)->StartPoint());
+	/* 크리쳐 리스트 벡터 Line으로 받아와서 회전시켜서 출력해야함*/
+	list<Object*> CreatureList=OBJECT->GetCreatureList();
+	FOR_LIST(Object*, CreatureList) {
+		float prev_angle = MATH->Angle(Position()-(*it)->GetStartPos(), Vector::Up());
 		Vector result_dir = MATH->ToDirection(prev_angle + fTurnSpeed);
-		(*it)->SetEndPoint(m_player.center + result_dir * 600);
-	}*/
+		(*it)->SetStartPos(MATH->ToDirection(prev_angle + fTurnSpeed*MINI_WIDTH));
+		//(*it)->SetPosition(MATH->ToDirection(prev_angle + fTurnSpeed*MINI_WIDTH));
+		//(*it)->SetMoveDirection(Vector(CHARACTER_X, CHARACTER_Y) + result_dir * 600);
+	}
 }
 
 void Player::ShopState()
