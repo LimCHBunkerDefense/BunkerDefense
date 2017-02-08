@@ -13,6 +13,7 @@ class Creature :
 	float m_attackCoolTime;
 	float m_moveSpeed;
 
+	Vector m_startPos;
 	float m_scale;
 	CREATURE_STATE m_state;
 	DIRECTION_TAG m_dir;
@@ -35,6 +36,9 @@ public:
 
 	void SetMoveDirection(Vector vector) { m_moveDirection = vector; }
 	Vector GetMoveDirection() { return m_moveDirection; }
+
+	virtual void SetStartPos(Vector pos) { m_startPos = pos; }
+	virtual Vector GetStartPos() { return m_startPos; }
 	
 
 };
