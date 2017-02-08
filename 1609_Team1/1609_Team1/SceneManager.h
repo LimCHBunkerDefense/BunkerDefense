@@ -33,7 +33,7 @@ public:
 
 	virtual void SetIsWeaponClicked(bool ON){}
 	virtual void SetIsBulletClicked(bool ON){}
-	virtual void SetIsUsingItemClicked(bool ON){}
+	virtual void SetIsUsingItemClicked(bool ON){} 
 
 
 //	virtual Box GetBuyButton() { return m_bBuyButton; }					// 구매 버튼
