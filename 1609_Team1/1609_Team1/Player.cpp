@@ -11,7 +11,7 @@ Player::Player(OBJ_TAG tag) : Object(tag)
 	m_state = PLAYER_ATTACK;
 	m_vAngle =Vector::Right();
 	
-	PrevMousePos = Vector(INPUT->GetMousePos().x, INPUT->GetMousePos().y);
+	m_prevMousePos = Vector(INPUT->GetMousePos().x, INPUT->GetMousePos().y);
 	Sight = SIGHT;
 	m_angle = 0;
 }
@@ -79,28 +79,40 @@ void Player::AttackState(float deltaTime)
 		SCENE->SetColliderOnOff();
 	}
 
-	//마우스 누르면 각도 돌아가기
+	// 마우스 움직이면 모든 오브젝트들이 플레이어 중심으로 회전하는 처리 시작---------------------------------------------------
+	// 이전 마우스좌표와 움직인 마우스 좌표를 비교하는 부분
 	float fTurnSpeed = 0;
 	Vector NowMousePos = Vector(INPUT->GetMousePos().x, INPUT->GetMousePos().y);
-	if (NowMousePos.x < PrevMousePos.x) {
+	if (NowMousePos.x < m_prevMousePos.x) {
 		fTurnSpeed = -ROTATE_SPEED;
 	}
-	if (NowMousePos.x > PrevMousePos.x) {
+	if (NowMousePos.x > m_prevMousePos.x) {
 		fTurnSpeed = +ROTATE_SPEED;
 	}
-	if (NowMousePos.y < PrevMousePos.y) {
+	if (NowMousePos.y < m_prevMousePos.y) {
 		m_height += ROTATE_SPEED;
 	}
-	if (NowMousePos.x > PrevMousePos.x) {
+	if (NowMousePos.x > m_prevMousePos.x) {
 		m_height -= ROTATE_SPEED;
 	}
-	if (INPUT->IsKeyPress(VK_LEFT)) {
-		fTurnSpeed = -ROTATE_SPEED;
-	}
-	if (INPUT->IsKeyPress(VK_RIGHT)) {
-		fTurnSpeed = ROTATE_SPEED;
-	}
 	m_angle += fTurnSpeed;
+
+	// 크리쳐 리스트 불러다가 미니맵 상의 pos 수정해주는 부분
+	list<Object*> creatureList = OBJECT->GetCreatureList();
+	FOR_LIST(Object*, creatureList)
+	{
+		float angle = MATH->Angle(Vector::Right(), (*it)->GetMoveDirection() * -1);
+		angle += fTurnSpeed;
+
+		// 점 p(0,0)를 기준으로 구해진 새로운 pos를 플레이어 위지 p'(MINI_WIDTH * 0.5, MINI_HEIGHT) 기준으로 (*it)의 좌표 보정
+		float x = MINI_WIDTH*0.5f + MATH->Cos(angle) * MINI_WIDTH * 0.5f;
+		float y = MINI_HEIGHT +  MATH->Sin(angle) * MINI_WIDTH * 0.5f;
+
+		(*it)->SetStartPos(Vector(x, y));
+	}
+	m_prevMousePos = NowMousePos;
+
+	// 마우스 움직이면 모든 오브젝트들이 플레이어 중심으로 회전하는 처리 끝---------------------------------------------------
 	
 }
 

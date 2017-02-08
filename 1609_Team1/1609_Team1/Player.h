@@ -19,7 +19,7 @@ class Player :
 
 	float m_angle;//회전 각도
 
-	Vector PrevMousePos;//이전 마우스 좌표값
+	Vector m_prevMousePos;//이전 마우스 좌표값
 	float Sight;//시야 길이
 
 
