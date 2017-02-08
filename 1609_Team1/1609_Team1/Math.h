@@ -121,7 +121,7 @@ struct Box
 		this->size = size;
 		this->anchor = anchor;
 	}
-
+	
 	// index로 박스 구분
 	Box(int index, Vector pos, Vector size, Vector anchor = Vector(0.5f, 0.5f))
 	{
