@@ -40,8 +40,8 @@ public:
 			if ((*it)->GetID() == itemID) 
 			{ 
 				m_selectedItem = (*it); 
-			}
 				break;
+			}
 		}
 	}
 	// Item* SetSelectedItem(int m_itemID) 
