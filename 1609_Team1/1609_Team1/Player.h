@@ -10,8 +10,8 @@
 class Player :
 	public Object
 {
-	Item* m_pItem;
-	list<Item*> m_itemList;
+	Item* m_pItem;								// 아이템
+	list<Item*> m_itemBag;						// 아이템 가방
 
 	PLAYER_STATE m_state;
 
@@ -19,7 +19,7 @@ class Player :
 
 	float m_angle;//회전 각도
 
-	Vector PrevMousePos;//이전 마우스 좌표값
+	Vector m_prevMousePos;//이전 마우스 좌표값
 	float Sight;//시야 길이
 
 
@@ -35,6 +35,6 @@ public:
 	void AttackState(float deltaTime);
 	void ShopState();
 
-	void AddItem(Item* pItem) { m_itemList.push_back(pItem); }
+	void AddItem(Item* pItem) { m_itemBag.push_back(new Item(pItem->GetID())); }
 };
 
