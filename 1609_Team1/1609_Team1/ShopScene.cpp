@@ -27,13 +27,14 @@ ShopScene::ShopScene()
 	AddBoxList(new Box(ITEM_BULLET, Vector(500, 235), Vector(120, 180)));
 	AddBoxList(new Box(ITEM_USINGITEM, Vector(630, 235), Vector(120, 180)));
 
-	AddBoxList(new Box(Vector(300, 300), Vector(200, 80)));
-	AddBoxList(new Box(Vector(300, 400), Vector(200, 80)));
-	AddBoxList(new Box(Vector(300, 500), Vector(200, 80)));
+	AddBoxList(new Box(Vector(500, 375), Vector(400, 60))); // 3
+	AddBoxList(new Box(Vector(500, 435), Vector(400, 60)));
+	AddBoxList(new Box(Vector(500, 495), Vector(400, 60)));
+	AddBoxList(new Box(Vector(500, 555), Vector(400, 60)));
 
 	IsWeaponClicked = false;
 	IsBulletClicked = false;
-	IsUsingItemClicked = false;
+	IsUsingItemClicked = false;	
 }
 
 
@@ -118,7 +119,7 @@ void ShopScene::ItemListWnd()
 	case BUTTON_BULLET:
 		FOR_LIST(Item*, itemList)
 		{
-			bulletIndex = bulletIndex +1;
+			bulletIndex++;
 			pItem = ((*it)->GetTag() == ITEM_BULLET) ? (*it) : NULL;
 			if (pItem != NULL)
 			{

@@ -1,5 +1,4 @@
 #pragma once
-#pragma comment(linker,"/entry:WinMainCRTStartup /subsystem:console")
 #include "SceneManager.h"
 #include "RenderManager.h"
 #include "ObjectManager.h"
