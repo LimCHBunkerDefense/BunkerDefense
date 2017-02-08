@@ -15,6 +15,9 @@ class Object
 	Vector m_pos;
 	Box m_collider;
 
+	Vector m_startPos;
+	Line m_moveLine;
+
 public:
 	Object() {}
 	Object(OBJ_TAG tag)
@@ -32,6 +35,11 @@ public:
 	OBJ_TAG Tag() { return m_tag; }
 	Vector Position() { return m_pos; }
 	Box Collider() { return m_collider; }
+
+	void SetLine(Vector pos) {
+		m_moveLine=Line(pos, Vector(VIEW_WIDTH*0.5, VIEW_HEIGHT));
+	}
+
 
 	void SetPosition(Vector pos)
 	{
@@ -63,7 +71,13 @@ public:
 	// 크리쳐용 함수
 	virtual void SetMoveDirection(Vector moveDirection) {}
 	virtual Vector GetMoveDirection() { return Vector::Zero(); }
-
+	Line GetMoveLine() { return m_moveLine; }
+	void SetStartPos(Vector pos) {
+		m_startPos = pos;
+	}
+	Vector GetStartPos() {
+		return m_startPos;
+	}
 
 
 };

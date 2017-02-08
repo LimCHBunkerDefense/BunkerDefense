@@ -3,6 +3,7 @@
 ShopScene::ShopScene()
 {
 	RENDER->LoadImageFile(TEXT("shopBG"), TEXT("Image/BackGround/shopBG.png"));
+	//m_itemList.push_back();
 
 	// itemDB »ý¼º
 	ITEM->Init();

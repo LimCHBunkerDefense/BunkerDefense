@@ -15,7 +15,6 @@
 #define	MINI_HEIGHT		VIEW_HEIGHT/5
 #define CAMERA_LEFT		90+CAMERA_ANGLE/2
 #define CAMERA_RIGHT	90-CAMERA_ANGLE/2
-#define GROUND_HEIGHT	400
 #define CHARACTER_X		VIEW_WIDTH*0.5F-30
 #define CHARACTER_Y		VIEW_HEIGHT-30
 #define ROTATE_SPEED	2
@@ -30,6 +29,7 @@
 #define RELEASE_OBJECT(p)	if ((p) != NULL) { (p)->Release(); (p) = NULL; }
 #define FOR_LIST(type, li) for (list<type>::iterator it = li.begin(); it != li.end(); it++)
 
+static float m_height=400;
 
 enum KEY_STATE
 {

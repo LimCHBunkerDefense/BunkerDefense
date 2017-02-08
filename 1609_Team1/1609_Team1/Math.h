@@ -61,7 +61,7 @@ struct Line
 	Vector point;
 	Vector dir;
 	float length;
-
+	Line(){}
 	Line(Vector startPos, Vector endPos)
 	{
 		point = startPos;
