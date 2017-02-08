@@ -30,14 +30,14 @@ public:
 	virtual list<Item*> GetItemList() { return m_itemList; }
 
 	virtual Item* GetSelectedItem() { return NULL; }					// 구매한 아이템에 대한 함수
-
+	virtual void SetSelectedItem(int itemID) {}
 	virtual void SetCurrentButton(BUTTON_TAG buttonTag) {}
 
-	virtual void GetIsWeaponClicked() {}								// 아이템 중분류 버튼이 눌러졌는가를 확인하는 GetSet함수
+	virtual bool GetIsWeaponClicked() { return NULL; }								// 아이템 중분류 버튼이 눌러졌는가를 확인하는 GetSet함수
 	virtual void SetIsWeaponClicked(bool ON){}
-	virtual void GetIsBulletClicked() {}
+	virtual bool GetIsBulletClicked() { return NULL; }
 	virtual void SetIsBulletClicked(bool ON){}
-	virtual void GetIsUsingItemClicked() {}
+	virtual bool GetIsUsingItemClicked() { return NULL; }
 	virtual void SetIsUsingItemClicked(bool ON){} 
 };
 

@@ -74,7 +74,7 @@ void Player::AttackState(float deltaTime)
 	}
 
 	// 충돌체 On/Off
-	if (INPUT->IsKeyDown('0'))
+	if (INPUT->IsKeyDown(VK_0))
 	{
 		SCENE->SetColliderOnOff();
 	}
@@ -128,7 +128,7 @@ void Player::ShopState()
 	}
 
 	// 충돌체 On/Off
-	if (INPUT->IsKeyDown('0'))
+	if (INPUT->IsKeyDown(VK_NUMPAD0))
 	{
 		SCENE->SetColliderOnOff();
 	}
@@ -164,7 +164,11 @@ void Player::ShopState()
 					break;
 
 				case 4:
-					
+					if (SCENE->GetScene(SCENE_SHOP)->GetIsWeaponClicked() == true)
+					{
+						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(1001);
+
+					}
 					break;
 
 				case 5:
