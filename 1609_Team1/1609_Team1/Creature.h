@@ -15,6 +15,7 @@ class Creature :
 
 	Vector m_startPos;
 	float m_scale;
+	float m_t;
 	CREATURE_STATE m_state;
 	DIRECTION_TAG m_dir;
 	Vector m_moveDirection;

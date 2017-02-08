@@ -15,6 +15,7 @@ Creature::Creature(OBJ_TAG tag) : Object(tag)
 	m_dir = DIRECTION_CENTER;
 
 	m_scale = 0.5f;
+	m_t = 0.0f;
 	m_attack = pData->attack;
 	m_defense = pData->defense;
 	m_name = pData->name;
@@ -36,6 +37,7 @@ void Creature::Update(float deltaTime)
 	// 크리쳐 이동방향벡터 실시간 업데이트
 	m_moveDirection = Vector(Position() * -1 + Vector(MINI_WIDTH * 0.5, MINI_HEIGHT)).Normalize();
 
+
 	switch (m_state)
 	{
 	case CREATURE_IDLE: IdleState(deltaTime); break;
@@ -50,13 +52,7 @@ void Creature::Update(float deltaTime)
 
 void Creature::Draw(Camera* pCamera)
 {
-	// 크리처 스케일 변화되는 부분
-	float changedScale = MATH->Clamp(m_scale + 0.001f, 0.5f, 1.0f);
-	SetCollider(Collider().size * changedScale / m_scale, Collider().anchor);
-	m_scale = changedScale;
-	SetScale(m_scale);
-
-	pCamera->Draw3D(Animation()->Current()->GetSprite(), Position(),m_dir);
+	pCamera->Draw3D(Animation()->Current()->GetSprite(), Position());
 	//pCamera->Draw3DLine(Animation()->Current()->GetSprite(), m_moveLine, m_dir);
 }
 
@@ -69,8 +65,18 @@ void Creature::RunState(float deltaTime)
 {
 	//if (Animation()->Current()->GetSprite()->GetScale() >= 0.9999) 
 	//m_state = CREATURE_ATTACK;
-	Vector pos = Position() + m_moveDirection * m_moveSpeed * deltaTime;
-	SetPosition(pos);
+
+	// 크리쳐 이동에 관계된 비욜 (시작점에서 플레이어까지 가는 거리를 1로 봤을 때, 현재 이동한 거리의 비율)
+	m_t = MATH->Clamp(m_t + m_moveSpeed * deltaTime, 0.0f, 1.0f);
+
+	// 크리처 스케일 변화되는 부분
+	SetCollider(Collider().size * (m_t + 0.5f) / m_scale, Collider().anchor);
+	SetScale(m_t + 0.5f);
+	m_scale = m_t + 0.5f;
+
+	// 크리쳐의 현재 위치를 미니맵 상에서 이동
+	Vector pos = m_startPos * (1 - m_t) + OBJECT->GetPlayer()->Position() * m_t;
+	SetPosition_Creature(pos, pos * 5);
 	Animation()->Play(CREATURE_RUN);
 }
 
