@@ -145,7 +145,7 @@ void ShopScene::ItemListWnd()
 		break;
 	case BUTTON_USINGITEM:
 		FOR_LIST(Item*, itemList)
-		{
+		{ 
 			usingItemIndex++;
 			pItem = ((*it)->GetTag() == ITEM_USINGITEM) ? (*it) : NULL;
 			if (pItem != NULL)
