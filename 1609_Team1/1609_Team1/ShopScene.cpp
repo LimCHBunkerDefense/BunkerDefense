@@ -27,12 +27,12 @@ ShopScene::ShopScene()
 	AddBoxList(new Box(ITEM_BULLET, Vector(500, 235), Vector(120, 180)));
 	AddBoxList(new Box(ITEM_USINGITEM, Vector(630, 235), Vector(120, 180)));
 
-	AddBoxList(new Box(1, Vector(500, 375), Vector(400, 60)));  // 소분류 아이템들 - index 3부터
-	AddBoxList(new Box(2, Vector(500, 435), Vector(400, 60)));
-	AddBoxList(new Box(3, Vector(500, 495), Vector(400, 60)));
-	AddBoxList(new Box(4, Vector(500, 555), Vector(400, 60)));
+	AddBoxList(new Box(4, Vector(500, 375), Vector(400, 60)));  // 소분류 아이템들 - index 3부터
+	AddBoxList(new Box(5, Vector(500, 435), Vector(400, 60)));
+	AddBoxList(new Box(6, Vector(500, 495), Vector(400, 60)));
+	AddBoxList(new Box(7, Vector(500, 555), Vector(400, 60)));
 
-	AddBoxList(new Box(5, Vector(835, 700), Vector(125, 35)));	// 구매 버튼 박스
+	AddBoxList(new Box(8, Vector(835, 700), Vector(125, 35)));	// 구매 버튼 박스
 
 	IsWeaponClicked = false;
 	IsBulletClicked = false;
