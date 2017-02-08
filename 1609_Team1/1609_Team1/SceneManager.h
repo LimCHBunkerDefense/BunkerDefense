@@ -31,6 +31,10 @@ public:
 
 	virtual void SetCurrentButton(BUTTON_TAG buttonTag) {}
 
+	virtual void SetIsWeaponClicked(bool ON){}
+	virtual void SetIsBulletClicked(bool ON){}
+	virtual void SetIsUsingItemClicked(bool ON){}
+
 
 //	virtual Box GetBuyButton() { return m_bBuyButton; }					// 구매 버튼
 //	virtual Box GetExitButton() { return m_bExitButton; }				// 나가기 버튼
