@@ -63,7 +63,7 @@ void ObjectManager::CreateCreature(OBJ_TAG tag, Vector pos)
 	NEW_OBJECT(Object* pCreature, Creature(tag));
 	pCreature->SetPosition(pos);
 	pCreature->SetStartPos(pos);
-	pCreature->SetLine(pos);
+	pCreature->SetMoveLine(pos);
 
 	Vector colSize, anchor;
 	switch (tag)

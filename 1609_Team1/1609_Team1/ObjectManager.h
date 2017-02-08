@@ -36,9 +36,10 @@ public:
 	Vector Position() { return m_pos; }
 	Box Collider() { return m_collider; }
 
-	void SetLine(Vector pos) {
-		m_moveLine=Line(pos, Vector(VIEW_WIDTH*0.5, VIEW_HEIGHT));
-	}
+	void SetMoveLine(Vector pos) {	m_moveLine=Line(pos, Vector(VIEW_WIDTH*0.5, VIEW_HEIGHT));	}
+	Line GetMoveLine() { return m_moveLine; }
+	void SetStartPos(Vector pos) { m_startPos = pos; }
+	Vector GetStartPos() { return m_startPos; }
 
 
 	void SetPosition(Vector pos)
@@ -52,6 +53,8 @@ public:
 		m_collider.size = size;
 		m_collider.anchor = anchor;
 	}
+
+
 
 	// 크리쳐 스케일 조정 함수
 	void SetScale(float scale)
@@ -71,13 +74,7 @@ public:
 	// 크리쳐용 함수
 	virtual void SetMoveDirection(Vector moveDirection) {}
 	virtual Vector GetMoveDirection() { return Vector::Zero(); }
-	Line GetMoveLine() { return m_moveLine; }
-	void SetStartPos(Vector pos) {
-		m_startPos = pos;
-	}
-	Vector GetStartPos() {
-		return m_startPos;
-	}
+
 
 
 };

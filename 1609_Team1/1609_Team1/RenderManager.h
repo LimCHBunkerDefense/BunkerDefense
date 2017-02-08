@@ -385,10 +385,10 @@ public:
 	}
 
 	// 크리쳐가 플레이어의 시야에 들어왔을 경우, 미니맵 상의 크리쳐를 전장 화면으로 출력해주는 함수
-	void Draw3D(Sprite* sprite, Vector pos, Vector startPos, int dir = -1, float opacity = 1.0f) 
+	void Draw3D(Sprite* sprite, Vector pos, Line moveLine, int dir = -1, float opacity = 1.0f) 
 	{
 		// 크리쳐가 플레이어의 시야 (미니맵 상의 두 파란선) 안에 들어왔는지 확인하는 단계. 플레이어의 시야는 CAMERA_ANGLE로 정의되어 있음
-		DrawLine(startPos.x, startPos.y, CHARACTER_X, CHARACTER_Y, ColorF::Red, 1);
+		DrawLine(moveLine.StartPoint().x*5, moveLine.StartPoint().y*5, CHARACTER_X, CHARACTER_Y, ColorF::Red, 1);
 		float Angle = MATH->Angle(Vector::Right(), pos - Vector(MINI_WIDTH * 0.5, MINI_HEIGHT));
 
 		if (Angle <= CAMERA_LEFT && Angle >= CAMERA_RIGHT)
