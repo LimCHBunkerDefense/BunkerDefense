@@ -27,12 +27,12 @@ ShopScene::ShopScene()
 	AddBoxList(new Box(ITEM_BULLET, Vector(500, 235), Vector(120, 180)));
 	AddBoxList(new Box(ITEM_USINGITEM, Vector(630, 235), Vector(120, 180)));
 
-	AddBoxList(new Box(Vector(500, 375), Vector(400, 60))); // 소분류 아이템들 - index 3부터
-	AddBoxList(new Box(Vector(500, 435), Vector(400, 60)));
-	AddBoxList(new Box(Vector(500, 495), Vector(400, 60)));
-	AddBoxList(new Box(Vector(500, 555), Vector(400, 60)));
+	AddBoxList(new Box(1, Vector(500, 375), Vector(400, 60)));  // 소분류 아이템들 - index 3부터
+	AddBoxList(new Box(2, Vector(500, 435), Vector(400, 60)));
+	AddBoxList(new Box(3, Vector(500, 495), Vector(400, 60)));
+	AddBoxList(new Box(4, Vector(500, 555), Vector(400, 60)));
 
-	AddBoxList(new Box(Vector(835, 700), Vector(125, 35)));	// 구매 버튼 박스
+	AddBoxList(new Box(5, Vector(835, 700), Vector(125, 35)));	// 구매 버튼 박스
 
 	IsWeaponClicked = false;
 	IsBulletClicked = false;
@@ -68,10 +68,15 @@ void ShopScene::OnDraw()
 {
 	Camera* pMainCamera = RENDER->GetCamera(CAM_MAIN);
 	pMainCamera->Draw(m_pBg, Vector(0, 0));
+
+	if (m_selectedItem != NULL)
+	{
+		pMainCamera->DrawT(m_selectedItem->GetInfo(), 740, 350, ColorF::Black, 20);
+	}
+
 	RENDER->DrawRect(Vector(620, 50), Vector(150, 50), ColorF::BlanchedAlmond);
 	RENDER->DrawT(TEXT("SHOP"), 590, 35, ColorF::BlanchedAlmond, 25);
 	RENDER->DrawRect(Vector(900, 420),Vector(320, 45),ColorF::AntiqueWhite, 3);
-
 
 	RENDER->DrawRect(Vector(135, 450), Vector(150, 150), ColorF::Aqua, 3);
 	RENDER->DrawCircle(Vector(135, 450), 50, ColorF::Aqua, 3);

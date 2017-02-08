@@ -128,7 +128,7 @@ void Player::ShopState()
 	}
 
 	// 충돌체 On/Off
-	if (INPUT->IsKeyDown(VK_NUMPAD0))
+	if (INPUT->IsKeyDown(VK_0))
 	{
 		SCENE->SetColliderOnOff();
 	}
@@ -162,32 +162,47 @@ void Player::ShopState()
 					SCENE->GetScene(SCENE_SHOP)->SetIsBulletClicked(false);
 					SCENE->GetScene(SCENE_SHOP)->SetIsUsingItemClicked(true);
 					break;
+				}
 
-				case 4:
+				switch ((*it_Box)->index)
+				{
+				case 1:
 					if (SCENE->GetScene(SCENE_SHOP)->GetIsWeaponClicked() == true)
 					{
 						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(1001);
-
+					}
+					else if (SCENE->GetScene(SCENE_SHOP)->GetIsBulletClicked() == true)
+					{
+						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(1005);
+					}
+					else if (SCENE->GetScene(SCENE_SHOP)->GetIsUsingItemClicked() == true)
+					{
+						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(1009);
 					}
 					break;
-
-				case 5:
+				case 2:
+					if (SCENE->GetScene(SCENE_SHOP)->GetIsWeaponClicked() == true)
+					{
+						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(1002);
+					}
+					else if (SCENE->GetScene(SCENE_SHOP)->GetIsBulletClicked() == true)
+					{
+						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(1006);
+					}
+					else if (SCENE->GetScene(SCENE_SHOP)->GetIsUsingItemClicked() == true)
+					{
+						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(1010);
+					}
 					break;
-
-				case 6:
+				case 3:
 					break;
-
-				case 7:
+				case 4:// 샵씬에서 구매 선택하면 그 아이템이 아이템 가방에 저장됨
+					//	if (SCENE->GetScene(SCENE_SHOP)->GetIsWeaponClicked() == true)
+					//	{
+					//		Item* pItem = SCENE->GetScene(SCENE_SHOP)->GetSelectedItem();
+					//		AddItem(pItem);
+					//	}
 					break;
-
-				case 8:		// 샵씬에서 구매 선택하면 그 아이템이 아이템 가방에 저장됨
-				//	if (SCENE->GetScene(SCENE_SHOP)->GetIsWeaponClicked() == true)
-				//	{
-				//		Item* pItem = SCENE->GetScene(SCENE_SHOP)->GetSelectedItem();
-				//		AddItem(pItem);
-				//	}
-					break;
-
 				}
 			}
 		}
