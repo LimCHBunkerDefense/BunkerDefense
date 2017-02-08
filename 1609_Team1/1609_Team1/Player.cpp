@@ -143,12 +143,21 @@ void Player::ShopState()
 				{
 				case ITEM_WEAPON:
 					SCENE->GetScene(SCENE_SHOP)->SetCurrentButton(BUTTON_WEAPON);
+					SCENE->GetScene(SCENE_SHOP)->SetIsWeaponClicked(true);
+					SCENE->GetScene(SCENE_SHOP)->SetIsBulletClicked(false);
+					SCENE->GetScene(SCENE_SHOP)->SetIsUsingItemClicked(false);
 					break;
 				case ITEM_BULLET:
 					SCENE->GetScene(SCENE_SHOP)->SetCurrentButton(BUTTON_BULLET);
+					SCENE->GetScene(SCENE_SHOP)->SetIsWeaponClicked(false);
+					SCENE->GetScene(SCENE_SHOP)->SetIsBulletClicked(true);
+					SCENE->GetScene(SCENE_SHOP)->SetIsUsingItemClicked(false);
 					break;
 				case ITEM_USINGITEM:
 					SCENE->GetScene(SCENE_SHOP)->SetCurrentButton(BUTTON_USINGITEM);
+					SCENE->GetScene(SCENE_SHOP)->SetIsWeaponClicked(false);
+					SCENE->GetScene(SCENE_SHOP)->SetIsBulletClicked(false);
+					SCENE->GetScene(SCENE_SHOP)->SetIsUsingItemClicked(true);
 					break;
 				}
 			}

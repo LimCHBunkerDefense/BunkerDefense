@@ -26,6 +26,14 @@ ShopScene::ShopScene()
 	AddBoxList(new Box(ITEM_WEAPON, Vector(370, 235), Vector(120, 180)));
 	AddBoxList(new Box(ITEM_BULLET, Vector(500, 235), Vector(120, 180)));
 	AddBoxList(new Box(ITEM_USINGITEM, Vector(630, 235), Vector(120, 180)));
+
+	AddBoxList(new Box(Vector(300, 300), Vector(200, 80)));
+	AddBoxList(new Box(Vector(300, 400), Vector(200, 80)));
+	AddBoxList(new Box(Vector(300, 500), Vector(200, 80)));
+
+	IsWeaponClicked = false;
+	IsBulletClicked = false;
+	IsUsingItemClicked = false;
 }
 
 

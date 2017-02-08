@@ -32,5 +32,9 @@ public:
 
 	Item* GetSelectedItem() { return m_selectedItem; }
 	void SetCurrentButton(BUTTON_TAG buttonTag) { m_currentButton = buttonTag; }
+
+	void SetIsWeaponClicked(bool ON) { IsWeaponClicked = ON; }
+	void SetIsBulletClicked(bool ON) { IsBulletClicked = ON; }
+	void SetIsUsingItemClicked(bool ON) { IsUsingItemClicked = ON; }
 };
 

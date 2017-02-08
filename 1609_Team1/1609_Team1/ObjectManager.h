@@ -78,8 +78,7 @@ public:
 	Vector GetStartPos() {
 		return m_startPos;
 	}
-
-
+	
 };
 
 class ObjectManager : public Singleton<ObjectManager>
