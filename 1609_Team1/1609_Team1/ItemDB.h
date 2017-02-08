@@ -47,6 +47,7 @@ public:
 
 	void Init();
 	void Add(ItemData* pData);
+	int GetItem(int itemID) { return itemID; }
 	ItemData* GetData(int itemID);
 };
 

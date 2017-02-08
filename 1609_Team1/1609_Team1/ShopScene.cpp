@@ -27,10 +27,12 @@ ShopScene::ShopScene()
 	AddBoxList(new Box(ITEM_BULLET, Vector(500, 235), Vector(120, 180)));
 	AddBoxList(new Box(ITEM_USINGITEM, Vector(630, 235), Vector(120, 180)));
 
-	AddBoxList(new Box(Vector(500, 375), Vector(400, 60))); // 3
+	AddBoxList(new Box(Vector(500, 375), Vector(400, 60))); // 소분류 아이템들 - index 3부터
 	AddBoxList(new Box(Vector(500, 435), Vector(400, 60)));
 	AddBoxList(new Box(Vector(500, 495), Vector(400, 60)));
 	AddBoxList(new Box(Vector(500, 555), Vector(400, 60)));
+
+	AddBoxList(new Box(Vector(835, 700), Vector(125, 35)));	// 구매 버튼 박스
 
 	IsWeaponClicked = false;
 	IsBulletClicked = false;
@@ -102,7 +104,7 @@ void ShopScene::ItemListWnd()
 	RENDER->DrawLine(Vector(300, 524), Vector(700, 524), ColorF::Red);
 	RENDER->DrawLine(Vector(300, 584), Vector(700, 584), ColorF::Red);
 	RENDER->DrawLine(Vector(300, 644), Vector(700, 644), ColorF::Red);
-	RENDER->DrawLine(Vector(300,704),Vector(700, 704),ColorF::Red);
+	RENDER->DrawLine(Vector(300, 704),Vector(700, 704),ColorF::Red);
 
 	if (SCENE->GetColliderOnOff())
 	{
@@ -145,7 +147,7 @@ void ShopScene::ItemListWnd()
 		break;
 	case BUTTON_USINGITEM:
 		FOR_LIST(Item*, itemList)
-		{
+		{ 
 			usingItemIndex++;
 			pItem = ((*it)->GetTag() == ITEM_USINGITEM) ? (*it) : NULL;
 			if (pItem != NULL)
@@ -164,7 +166,6 @@ void ShopScene::ItemStatWnd()
 	RENDER->DrawRect(Vector(900, 250), Vector(150, 150), ColorF::Aqua, 3);
 	RENDER->DrawT(TEXT("ITEM\nICON"), 880, 230, ColorF::Aqua, 20);
 
-	RENDER->DrawRect(Vector(835, 700), Vector(125, 35), ColorF::Aquamarine, 3);
 	RENDER->DrawT(TEXT("BUY"), 815, 688, ColorF::Aquamarine, 20);
 	RENDER->DrawRect(Vector(975, 700), Vector(125, 35), ColorF::Aquamarine, 3);
 	RENDER->DrawT(TEXT("나가기 F3"), 935, 686, ColorF::Aquamarine, 20);
