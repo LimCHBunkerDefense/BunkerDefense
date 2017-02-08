@@ -103,6 +103,7 @@ void ShopScene::ItemListWnd()
 			if (pItem != NULL)
 			{
 				RENDER->DrawT(pItem->GetName(), 385, 300 + weaponIndex * 60, ColorF::Tomato, 20.0f, ALIGN_CENTER);
+			
 			}
 		}
 		break;
