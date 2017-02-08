@@ -46,9 +46,6 @@ void ShopScene::OnEnter()
 void ShopScene::OnUpdate(float deltaTime)
 {
 	OBJECT->Update(deltaTime);
-		
-	ItemListWnd();
-	ItemStatWnd();
 }
 
 void ShopScene::OnExit()
@@ -60,10 +57,26 @@ void ShopScene::OnDraw()
 {
 	Camera* pMainCamera = RENDER->GetCamera(CAM_MAIN);
 	pMainCamera->Draw(m_pBg, Vector(0, 0));
-	RENDER->DrawRect(Vector(620, 50), Vector(150, 50), ColorF::Blue);
-	RENDER->DrawT(TEXT("SHOP"), 590, 35, ColorF::Red, 25);
-	RENDER->DrawRect(Vector(1100, 850), Vector(150, 50), ColorF::Blue);
-	RENDER->DrawT(TEXT("나가기 F3"), 1050, 835, ColorF::Red, 25);
+	RENDER->DrawRect(Vector(620, 50), Vector(150, 50), ColorF::BlanchedAlmond);
+	RENDER->DrawT(TEXT("SHOP"), 590, 35, ColorF::BlanchedAlmond, 25);
+	ItemListWnd();
+	ItemStatWnd();
+
+}
+
+void ShopScene::ItemListWnd()
+{
+	RENDER->DrawRect(Vector(500, 235), Vector(400, 220), ColorF::OrangeRed);
+	RENDER->DrawRect(Vector(368, 232), Vector(120, 180), ColorF::Tomato);
+	RENDER->DrawT(TEXT("    ITEM\nWEAPON"), 328, 215, ColorF::Tomato, 20);
+
+	RENDER->DrawRect(Vector(500, 232), Vector(120, 180), ColorF::Khaki);
+	RENDER->DrawT(TEXT("  ITEM\nBULLET"), 465, 215, ColorF::Khaki, 20);
+
+	RENDER->DrawRect(Vector(630, 232), Vector(120, 180), ColorF::HotPink);
+	RENDER->DrawT(TEXT("      ITEM\nUSINGITEM"), 575, 215, ColorF::HotPink, 20);
+
+	RENDER->DrawRect(Vector(500, 560),Vector(400, 430),ColorF::Red);
 
 	if (SCENE->GetColliderOnOff())
 	{
@@ -87,7 +100,7 @@ void ShopScene::OnDraw()
 			pItem = ((*it)->GetTag() == ITEM_WEAPON) ? (*it) : NULL;
 			if (pItem != NULL)
 			{
-				RENDER->DrawT(pItem->GetName(), 480, 350 + index * 50, ColorF::Yellow, 20.0f);
+				RENDER->DrawT(pItem->GetName(), 400, 320 + index * 50, ColorF::Tomato, 20.0f);
 			}
 		}
 		break;
@@ -98,7 +111,7 @@ void ShopScene::OnDraw()
 			pItem = ((*it)->GetTag() == ITEM_BULLET) ? (*it) : NULL;
 			if (pItem != NULL)
 			{
-				RENDER->DrawT(pItem->GetName(), 480, 350 + index * 50, ColorF::Yellow, 20.0f);
+				RENDER->DrawT(pItem->GetName(), 365, -79 + index * 50, ColorF::Khaki, 20.0f);
 			}
 		}
 		break;
@@ -109,26 +122,22 @@ void ShopScene::OnDraw()
 			pItem = ((*it)->GetTag() == ITEM_USINGITEM) ? (*it) : NULL;
 			if (pItem != NULL)
 			{
-				RENDER->DrawT(pItem->GetName(), 480, 350 + index * 50, ColorF::Yellow, 20.0f);
+				RENDER->DrawT(pItem->GetName(), 400, 120 + index * 50, ColorF::HotPink, 20.0f);
 			}
 		}
 		break;
 	}
-
-}
-
-void ShopScene::ItemListWnd()
-{
-	RENDER->DrawRect(Vector(500, 235), Vector(400, 220), ColorF::OrangeRed);
-	RENDER->DrawRect(Vector(500, 560),Vector(400, 430),ColorF::Red);
-	RENDER->DrawT(TEXT("ITEM LIST"), 430, 550, ColorF::Red, 25);
+	//RENDER->DrawT(TEXT("ITEM LIST"), 430, 550, ColorF::Red, 25);
 }
 void ShopScene::ItemStatWnd()
 {
 	RENDER->DrawRect(Vector(900, 450), Vector(400, 650), ColorF::Yellow);
 	RENDER->DrawRect(Vector(900, 250), Vector(150, 150), ColorF::Aqua, 3);
-	RENDER->DrawRect(Vector(900, 700), Vector(150, 35), ColorF::Aquamarine, 3);
 	RENDER->DrawT(TEXT("ITEM\nICON"), 880, 230, ColorF::Aqua, 20);
-	RENDER->DrawT(TEXT("BUY"), 880, 690, ColorF::Aquamarine, 20);
+
+	RENDER->DrawRect(Vector(835, 700), Vector(125, 35), ColorF::Aquamarine, 3);
+	RENDER->DrawT(TEXT("BUY"), 815, 688, ColorF::Aquamarine, 20);
+	RENDER->DrawRect(Vector(975, 700), Vector(125, 35), ColorF::Aquamarine, 3);
+	RENDER->DrawT(TEXT("나가기 F3"), 935, 686, ColorF::Aquamarine, 20);
 	//RENDER->DrawT(TEXT("ITEM INFO"), 750, 400, ColorF::Red, 25);
 }
