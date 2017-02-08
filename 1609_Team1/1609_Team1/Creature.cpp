@@ -70,9 +70,9 @@ void Creature::RunState(float deltaTime)
 	m_t = MATH->Clamp(m_t + m_moveSpeed * deltaTime, 0.0f, 1.0f);
 
 	// 크리처 스케일 변화되는 부분
-	SetCollider(Collider().size * (m_t + 0.5f) / m_scale, Collider().anchor);
-	SetScale(m_t + 0.5f);
-	m_scale = m_t + 0.5f;
+	SetCollider(Collider().size * (m_t *2.0f) / m_scale, Collider().anchor);
+	SetScale(m_t *2.0f);
+	m_scale = m_t *2.0f;
 
 	// 크리쳐의 현재 위치를 미니맵 상에서 이동
 	Vector pos = m_startPos * (1 - m_t) + OBJECT->GetPlayer()->Position() * m_t;
