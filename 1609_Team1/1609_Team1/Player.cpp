@@ -171,8 +171,28 @@ void Player::ShopState()
 					{
 						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(1001);
 					}
+					else if (SCENE->GetScene(SCENE_SHOP)->GetIsBulletClicked() == true)
+					{
+						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(1005);
+					}
+					else if (SCENE->GetScene(SCENE_SHOP)->GetIsUsingItemClicked() == true)
+					{
+						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(1009);
+					}
 					break;
 				case 2:
+					if (SCENE->GetScene(SCENE_SHOP)->GetIsWeaponClicked() == true)
+					{
+						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(1002);
+					}
+					else if (SCENE->GetScene(SCENE_SHOP)->GetIsBulletClicked() == true)
+					{
+						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(1006);
+					}
+					else if (SCENE->GetScene(SCENE_SHOP)->GetIsUsingItemClicked() == true)
+					{
+						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(1010);
+					}
 					break;
 				case 3:
 					break;
