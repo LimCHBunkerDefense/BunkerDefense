@@ -9,7 +9,8 @@ PlayScene::PlayScene()
 
 
 	// 배경 이미지 맵으로 저장
-	RENDER->LoadImageFile(TEXT("ForestBG"), TEXT("Image/BackGround/ForestBG.jpg")); //경로 루트 변경 배경이미지 폴더 생성.
+	RENDER->LoadImageFile(TEXT("ForestBG"), TEXT("Image/BackGround/ForestBG.jpg")); 
+	RENDER->LoadImageFile(TEXT("DroughtBG"), TEXT("Image/BackGround/DroughtBG.jpg"));
 
 	// 크리쳐 데이터 생성
 	CREATURE->Init();
@@ -34,7 +35,7 @@ PlayScene::~PlayScene()
 void PlayScene::OnEnter()
 {
 	// 배경 이미지 스프라이트로 생성
-	NEW_OBJECT(m_pBg, Sprite(RENDER->GetImage(TEXT("ForestBG")), 1.0f, 0, 0));
+	NEW_OBJECT(m_pBg, Sprite(RENDER->GetImage(TEXT("DroughtBG")), 1.0f, 0, 0));
 
 	// 플레이어 생성
 	OBJECT->CreatePlayer(Vector(MINI_WIDTH * 0.5F, MINI_HEIGHT), Vector(10, 10), Vector(0.5f, 1.0f));
@@ -68,7 +69,7 @@ void PlayScene::OnDraw()
 	Camera* pMainCamera = RENDER->GetCamera(CAM_MAIN);
 	Camera* pMinimapCamera = RENDER->GetCamera(CAM_MINIMAP);
 
-	pMainCamera->Draw(m_pBg, Vector(0, 0));
+	pMainCamera->Draw(m_pBg, Vector(0, -300));
 	pMinimapCamera->DrawFilledRect(Vector(0,0), Vector(MINI_WIDTH,MINI_HEIGHT), ColorF::Green);
 	pMinimapCamera->DrawLine(MINI_WIDTH * 0.5, MINI_HEIGHT, 
 		MINI_WIDTH * 0.5 - MINI_WIDTH * 0.5 * MATH->Sin(CAMERA_ANGLE * 0.5), MINI_HEIGHT - MINI_WIDTH * 0.5 * MATH->Cos(CAMERA_ANGLE * 0.5), ColorF::Blue, 2);
@@ -117,14 +118,4 @@ void PlayScene::SetCreature(float deltaTime)
 		m_createdCretureCount++;
 	}
 
-}
-
-void PlayScene::ShowCreatures()
-{
-	list<Object*> pCreatures = OBJECT->GetCreatureList();
-
-	FOR_LIST(Object*, pCreatures)
-	{
-		
-	}
 }

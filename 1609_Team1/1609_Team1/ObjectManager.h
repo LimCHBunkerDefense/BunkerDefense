@@ -42,6 +42,12 @@ public:
 		m_collider.pos = pos;
 	}
 
+	void SetPosition_Creature(Vector pos, Vector colPos)
+	{
+		m_pos = pos;
+		m_collider.pos = colPos;
+	}
+
 	void SetCollider(Vector size, Vector anchor)
 	{
 		m_collider.size = size;

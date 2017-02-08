@@ -10,6 +10,7 @@
 class PlayScene : public IScene
 {
 	Sprite* m_pBg;
+
 	
 	// 크리쳐 생성 y좌표(높이 h)
 	float m_heightOfCreature;
@@ -33,5 +34,4 @@ public:
 	void OnDraw();
 
 	void SetCreature(float deltaTime);
-	void ShowCreatures();
 };
