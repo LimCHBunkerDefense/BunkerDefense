@@ -50,8 +50,8 @@ public:
 
 	bool GetIsWeaponClicked() { return IsWeaponClicked; }
 	void SetIsWeaponClicked(bool ON) { IsWeaponClicked = ON; }
-	bool GetIsBulletClicked() { IsBulletClicked; }
+	bool GetIsBulletClicked() { return IsBulletClicked; }
 	void SetIsBulletClicked(bool ON) { IsBulletClicked = ON; }
-	bool GetIsUsingItemClicked() { IsUsingItemClicked; }
+	bool GetIsUsingItemClicked() { return IsUsingItemClicked; }
 	void SetIsUsingItemClicked(bool ON) { IsUsingItemClicked = ON; }
 };
