@@ -162,32 +162,27 @@ void Player::ShopState()
 					SCENE->GetScene(SCENE_SHOP)->SetIsBulletClicked(false);
 					SCENE->GetScene(SCENE_SHOP)->SetIsUsingItemClicked(true);
 					break;
+				}
 
-				case 4:
+				switch ((*it_Box)->index)
+				{
+				case 1:
 					if (SCENE->GetScene(SCENE_SHOP)->GetIsWeaponClicked() == true)
 					{
 						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(1001);
-
 					}
 					break;
-
-				case 5:
+				case 2:
 					break;
-
-				case 6:
+				case 3:
 					break;
-
-				case 7:
+				case 4:// 샵씬에서 구매 선택하면 그 아이템이 아이템 가방에 저장됨
+					//	if (SCENE->GetScene(SCENE_SHOP)->GetIsWeaponClicked() == true)
+					//	{
+					//		Item* pItem = SCENE->GetScene(SCENE_SHOP)->GetSelectedItem();
+					//		AddItem(pItem);
+					//	}
 					break;
-
-				case 8:		// 샵씬에서 구매 선택하면 그 아이템이 아이템 가방에 저장됨
-				//	if (SCENE->GetScene(SCENE_SHOP)->GetIsWeaponClicked() == true)
-				//	{
-				//		Item* pItem = SCENE->GetScene(SCENE_SHOP)->GetSelectedItem();
-				//		AddItem(pItem);
-				//	}
-					break;
-
 				}
 			}
 		}

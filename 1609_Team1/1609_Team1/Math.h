@@ -109,6 +109,7 @@ struct Triangle
 struct Box
 {
 	ITEM_TAG itemTag;
+	int index;
 	Vector pos;
 	Vector size;
 	Vector anchor;
@@ -121,6 +122,16 @@ struct Box
 		this->anchor = anchor;
 	}
 
+	// index로 박스 구분
+	Box(int index, Vector pos, Vector size, Vector anchor = Vector(0.5f, 0.5f))
+	{
+		this->index = index;
+		this->pos = pos;
+		this->size = size;
+		this->anchor = anchor;
+	}
+
+	// itemTag로 박스 구분
 	Box(ITEM_TAG itemTag, Vector pos, Vector size, Vector anchor = Vector(0.5f, 0.5f))
 	{
 		this->itemTag = itemTag;
