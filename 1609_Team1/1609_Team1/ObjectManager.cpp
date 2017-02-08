@@ -89,33 +89,3 @@ void ObjectManager::CreateCreature(OBJ_TAG tag, Vector pos)
 //	}
 //	m_creatureList.clear();
 //}
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//

@@ -4,7 +4,6 @@
 #include "ObjectManager.h"
 #include "InputManager.h"
 #include "Common.h"
-#include <list>
 #include "Item.h"
 
 class ShopScene :
@@ -30,9 +29,6 @@ class ShopScene :
 	Box m_bBunckerRepair;			// º¡Ä¿ ¼ö¸®
 
 	Item* m_selectedItem;
-	list<Item*> m_itemList;
-
-
 public:
 	ShopScene();
 	~ShopScene();
@@ -47,5 +43,6 @@ public:
 
 	Box GetButton() { return m_bBuyButton; }
 	Item* GetSelectedItem() { return m_selectedItem; }
+	void AddItem(Item* pItem) { m_itemList.push_back(pItem); }
 };
 

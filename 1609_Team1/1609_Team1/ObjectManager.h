@@ -60,6 +60,12 @@ public:
 		pCamera->DrawRect(m_collider.LeftTop(), m_collider.size);
 	}
 
+	// 크리쳐용 함수
+	virtual void SetMoveDirection(Vector moveDirection) {}
+	virtual Vector GetMoveDirection() { return Vector::Zero(); }
+
+
+
 };
 
 class ObjectManager : public Singleton<ObjectManager>
@@ -68,6 +74,7 @@ class ObjectManager : public Singleton<ObjectManager>
 	Object* m_bunker;
 	list<Object*> m_creatureList;
 	list<Object*> m_bulletList;
+
 
 public:	
 	void Update(float deltaTime);

@@ -1,7 +1,10 @@
 #pragma once
 #include "Singleton.h"
+#include "Item.h"
 #include "Math.h"
 #include <map>
+#include <list>
+
 using namespace std;
 
 #define SCENE SceneManager::Instance()
@@ -9,6 +12,9 @@ using namespace std;
 class IScene
 {
 	Box m_box;
+	//모든 Scene에서 item 정보 접근하기 위해 추가.
+protected:
+	list<Item*> m_itemList;
 
 public:
 	virtual void OnEnter() = 0;
@@ -17,6 +23,7 @@ public:
 	virtual void OnDraw() = 0;
 
 	virtual Box GetButton() { return m_box; }
+	virtual Item* SelectItem(	) { return NULL; }
 };
 
 class SceneManager : public Singleton<SceneManager>

@@ -25,4 +25,3 @@ Item::Item(int itemID)
 	m_addBullet = pData->addBullet;
 	m_name = pData->name;
 }
-

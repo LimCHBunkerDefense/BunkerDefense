@@ -30,10 +30,7 @@ struct ItemData
 		this->bulletCount = bulletCount;
 		this->addBullet = addBullet;
 	}
-
-
 public:
-
 };
 
 
