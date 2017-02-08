@@ -70,6 +70,9 @@
     <Filter Include="Object\Item">
       <UniqueIdentifier>{bf5198ca-baa8-4b67-8b32-939d22039856}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\Button">
+      <UniqueIdentifier>{d4317b8e-6984-408a-b1df-4273c3161d94}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
@@ -118,6 +121,9 @@
     <ClCompile Include="Bunker.cpp">
       <Filter>Object\Bunker</Filter>
     </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>Object\Button</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Math.h">
@@ -147,9 +153,6 @@
     <ClInclude Include="RenderManager.h">
       <Filter>Manager\RenderManager</Filter>
     </ClInclude>
-    <ClInclude Include="SceneManager.h">
-      <Filter>Manager\SceneManager</Filter>
-    </ClInclude>
     <ClInclude Include="ObjectManager.h">
       <Filter>Manager\ObjectManager</Filter>
     </ClInclude>
@@ -177,6 +180,12 @@
     </ClInclude>
     <ClInclude Include="Bunker.h">
       <Filter>Object\Bunker</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>Object\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>Manager\SceneManager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -116,7 +116,7 @@ void Player::AttackState(float deltaTime)
 void Player::ShopState()
 {
 	//Animation()->Play(PLAYER_SHOP);
-	
+
 	// 씬 채인지
 	if (INPUT->IsKeyDown(VK_F3))
 	{
@@ -133,9 +133,26 @@ void Player::ShopState()
 	// 마우스 왼쪽 버튼 클릭
 	if (INPUT->IsMouseUp(MOUSE_LEFT))
 	{
-		if (MATH->IsCollided(Vector(INPUT->GetMousePos().x, INPUT->GetMousePos().y), SCENE->GetScene(SCENE_SHOP)->GetButton()))
+		list<Box*> boxList = SCENE->GetScene(SCENE_SHOP)->GetBoxList();
+		for (list<Box*>::iterator it_Box = boxList.begin(); it_Box != boxList.end(); it_Box++)
 		{
-			SCENE->SetColliderOnOff();
+			if (MATH->IsCollided(Vector(INPUT->GetMousePos().x, INPUT->GetMousePos().y), *(*it_Box)))
+			{
+				list<Item*> itemList = SCENE->GetScene(SCENE_SHOP)->GetItemList();
+				switch ((*it_Box)->itemTag)
+				{
+				case ITEM_WEAPON:
+					SCENE->GetScene(SCENE_SHOP)->SetCurrentButton(BUTTON_WEAPON);
+					break;
+				case ITEM_BULLET:
+					SCENE->GetScene(SCENE_SHOP)->SetCurrentButton(BUTTON_BULLET);
+					break;
+				case ITEM_USINGITEM:
+					SCENE->GetScene(SCENE_SHOP)->SetCurrentButton(BUTTON_USINGITEM);
+					break;
+				}
+			}
+
 		}
 	}
 }

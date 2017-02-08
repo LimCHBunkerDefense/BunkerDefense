@@ -1,4 +1,5 @@
 #pragma once
+#pragma comment(linker,"/entry:WinMainCRTStartup /subsystem:console")
 #include "SceneManager.h"
 #include "RenderManager.h"
 #include "ObjectManager.h"
@@ -10,25 +11,13 @@ class ShopScene :
 	public IScene
 {
 	Sprite* m_pBg;
-	Box m_bBuyButton;
+	BUTTON_TAG m_currentButton;
 
-	Box m_bWeapon;
-	Box m_bBullet;
-	Box m_bItem;
+	// 상점의 중분류 버튼이 클릭되었나를 확인하는 bool 변수
+	bool IsWeaponClicked;
+	bool IsBulletClicked;
+	bool IsUsingItemClicked;
 
-	Box m_bMachineGun;				// 머신건
-	Box m_bFireThrower;				// 화염방사기
-
-	Box m_bPistolBullet;			// 권총 탄약
-	Box m_bMachineGunBullet;		// 머신건 탄약
-	Box m_bFireThrowerBullet;		// 화염방사기 탄약
-
-	Box m_bGrenade;					// 수류탄
-	Box m_bAirBomb;					// 공중 폭격
-	Box m_bRavaRegion;				// 화염 지대
-	Box m_bBunckerRepair;			// 벙커 수리
-
-	Item* m_selectedItem;
 public:
 	ShopScene();
 	~ShopScene();
@@ -38,11 +27,10 @@ public:
 	void OnExit();
 	void OnDraw();
 
-	void ItemListWnd(); // 아이템 리스트 창
-	void ItemStatWnd(); // 아이템 정보 창
+	void ItemListWnd();											// 아이템 리스트 창
+	void ItemStatWnd();											// 아이템 정보 창
 
-	Box GetButton() { return m_bBuyButton; }
 	Item* GetSelectedItem() { return m_selectedItem; }
-	void AddItem(Item* pItem) { m_itemList.push_back(pItem); }
+	void SetCurrentButton(BUTTON_TAG buttonTag) { m_currentButton = buttonTag; }
 };
 

@@ -21,6 +21,9 @@ class Player :
 
 	Vector PrevMousePos;//이전 마우스 좌표값
 	float Sight;//시야 길이
+
+
+
 public:
 	Player();
 	Player(OBJ_TAG tag);
