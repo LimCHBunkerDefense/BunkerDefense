@@ -46,9 +46,6 @@ void ShopScene::OnEnter()
 void ShopScene::OnUpdate(float deltaTime)
 {
 	OBJECT->Update(deltaTime);
-		
-	ItemListWnd();
-	ItemStatWnd();
 }
 
 void ShopScene::OnExit()
@@ -62,7 +59,25 @@ void ShopScene::OnDraw()
 	pMainCamera->Draw(m_pBg, Vector(0, 0));
 	RENDER->DrawRect(Vector(620, 50), Vector(150, 50), ColorF::BlanchedAlmond);
 	RENDER->DrawT(TEXT("SHOP"), 590, 35, ColorF::BlanchedAlmond, 25);
-	
+	ItemListWnd();
+	ItemStatWnd();
+
+}
+
+void ShopScene::ItemListWnd()
+{
+	RENDER->DrawRect(Vector(500, 235), Vector(400, 220), ColorF::OrangeRed);
+	RENDER->DrawRect(Vector(368, 232), Vector(120, 180), ColorF::Tomato);
+	RENDER->DrawT(TEXT("    ITEM\nWEAPON"), 328, 215, ColorF::Tomato, 20);
+
+	RENDER->DrawRect(Vector(500, 232), Vector(120, 180), ColorF::Khaki);
+	RENDER->DrawT(TEXT("  ITEM\nBULLET"), 465, 215, ColorF::Khaki, 20);
+
+	RENDER->DrawRect(Vector(630, 232), Vector(120, 180), ColorF::HotPink);
+	RENDER->DrawT(TEXT("      ITEM\nUSINGITEM"), 575, 215, ColorF::HotPink, 20);
+
+	RENDER->DrawRect(Vector(500, 560),Vector(400, 430),ColorF::Red);
+
 	if (SCENE->GetColliderOnOff())
 	{
 		list<Box*> boxList = GetBoxList();
@@ -85,7 +100,7 @@ void ShopScene::OnDraw()
 			pItem = ((*it)->GetTag() == ITEM_WEAPON) ? (*it) : NULL;
 			if (pItem != NULL)
 			{
-				RENDER->DrawT(pItem->GetName(), 480, 350 + index * 50, ColorF::Yellow, 20.0f);
+				RENDER->DrawT(pItem->GetName(), 400, 320 + index * 50, ColorF::Tomato, 20.0f);
 			}
 		}
 		break;
@@ -96,7 +111,7 @@ void ShopScene::OnDraw()
 			pItem = ((*it)->GetTag() == ITEM_BULLET) ? (*it) : NULL;
 			if (pItem != NULL)
 			{
-				RENDER->DrawT(pItem->GetName(), 480, 350 + index * 50, ColorF::Yellow, 20.0f);
+				RENDER->DrawT(pItem->GetName(), 365, -79 + index * 50, ColorF::Khaki, 20.0f);
 			}
 		}
 		break;
@@ -107,19 +122,12 @@ void ShopScene::OnDraw()
 			pItem = ((*it)->GetTag() == ITEM_USINGITEM) ? (*it) : NULL;
 			if (pItem != NULL)
 			{
-				RENDER->DrawT(pItem->GetName(), 480, 350 + index * 50, ColorF::Yellow, 20.0f);
+				RENDER->DrawT(pItem->GetName(), 400, 120 + index * 50, ColorF::HotPink, 20.0f);
 			}
 		}
 		break;
 	}
-
-}
-
-void ShopScene::ItemListWnd()
-{
-	RENDER->DrawRect(Vector(500, 235), Vector(400, 220), ColorF::OrangeRed);
-	RENDER->DrawRect(Vector(500, 560),Vector(400, 430),ColorF::Red);
-	RENDER->DrawT(TEXT("ITEM LIST"), 430, 550, ColorF::Red, 25);
+	//RENDER->DrawT(TEXT("ITEM LIST"), 430, 550, ColorF::Red, 25);
 }
 void ShopScene::ItemStatWnd()
 {

@@ -40,9 +40,9 @@ void ItemDB::Init()
 		TEXT("권총의 탄알집")));
 	Add(new ItemData(ITEM_BULLET, 1010, 0, 0, 0, 0, 0, 100, 200, TEXT("기관총 탄약(Machine Gun Bullet)"),
 		TEXT("기관총의 탄알집")));
-	Add(new ItemData(ITEM_BULLET, 1011, 0, 0, 0, 0, 0, 50,  150, TEXT("화염 방사기 기름(Fire Thrower Oil)"),
+	Add(new ItemData(ITEM_BULLET, 1011, 0, 0, 0, 0, 0, 50,  150, TEXT("화염 방사기 기름(Fire Thr' Oil)"),
 		TEXT("화염 방사기 기름")));
-	Add(new ItemData(ITEM_BULLET, 1012, 0, 0, 0, 0, 0, 100, 150, TEXT("레이저 건 충전(Laser Gun Charging)"),
+	Add(new ItemData(ITEM_BULLET, 1012, 0, 0, 0, 0, 0, 100, 150, TEXT("레이저 건 충전(Laser Gun char')"),
 		TEXT("레이저 건 충전")));
 }
 
