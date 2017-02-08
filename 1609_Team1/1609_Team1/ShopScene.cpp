@@ -91,20 +91,24 @@ void ShopScene::OnDraw()
 		}
 		break;
 	case BUTTON_BULLET:
-		for (int i = 0; i < itemList.size(); i++)
+		FOR_LIST(Item*, itemList)
 		{
-			FOR_LIST(Item*, itemList)
+			index++;
+			pItem = ((*it)->GetTag() == ITEM_BULLET) ? (*it) : NULL;
+			if (pItem != NULL)
 			{
-				RENDER->DrawT((*it)->GetName(), 480, 350 + i * 80, ColorF::Yellow, 20.0f);
+				RENDER->DrawT(pItem->GetName(), 480, 350 + index * 50, ColorF::Yellow, 20.0f);
 			}
 		}
 		break;
 	case BUTTON_USINGITEM:
-		for (int i = 0; i < itemList.size(); i++)
+		FOR_LIST(Item*, itemList)
 		{
-			FOR_LIST(Item*, itemList)
+			index++;
+			pItem = ((*it)->GetTag() == ITEM_USINGITEM) ? (*it) : NULL;
+			if (pItem != NULL)
 			{
-				RENDER->DrawT((*it)->GetName(), 480, 350 + i * 80, ColorF::Yellow, 20.0f);
+				RENDER->DrawT(pItem->GetName(), 480, 350 + index * 50, ColorF::Yellow, 20.0f);
 			}
 		}
 		break;
