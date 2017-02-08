@@ -29,6 +29,7 @@ struct ItemData
 		this->bunkerLife = bunkerLife;
 		this->bulletCount = bulletCount;
 		this->addBullet = addBullet;
+		this->name = name;
 	}
 public:
 };

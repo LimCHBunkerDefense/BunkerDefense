@@ -11,10 +11,11 @@ using namespace std;
 
 class IScene
 {
-	Box m_box;
-	//모든 Scene에서 item 정보 접근하기 위해 추가.
 protected:
-	list<Item*> m_itemList;
+	Item* m_selectedItem;			// 선택한 아이템
+
+	list<Box*> m_boxList;			// 박스 리스트
+	list<Item*> m_itemList;			// 아이템 리스트
 
 public:
 	virtual void OnEnter() = 0;
@@ -22,8 +23,38 @@ public:
 	virtual void OnExit() = 0;
 	virtual void OnDraw() = 0;
 
-	virtual Box GetButton() { return m_box; }
-	virtual Item* SelectItem(	) { return NULL; }
+	// ShopScene 용
+	virtual list<Box*> GetBoxList() { return m_boxList; }				// 박스 리스트 반환
+	virtual void AddBoxList(Box* box) { m_boxList.push_back(box); }		// 박스 리스트 안에 박스 추가
+
+	virtual list<Item*> GetItemList() { return m_itemList; }
+
+	virtual void SetCurrentButton(BUTTON_TAG buttonTag) {}
+
+
+//	virtual Box GetBuyButton() { return m_bBuyButton; }					// 구매 버튼
+//	virtual Box GetExitButton() { return m_bExitButton; }				// 나가기 버튼
+//	
+//	virtual Box GetWeaponButton() { return m_bWeapon; }					// 중분류 : 무기류
+//	virtual Box GetBulletButton() { return m_bBullet; }					// 중분류 : 총알류
+//	virtual Box GetUsingItemButton() { return m_bUsingItem; }			// 중분류 : 아이템
+//	
+//	virtual Box GetMachineGunButton() { return m_bMachineGun; }			// 머신건
+//	virtual Box GetFireThrowerButton() { return m_bFireThrower; }		// 화염방사기
+//	virtual Box GetLaserGunButton() { return m_bLaserGun; }				// 레이저건
+//	
+//	virtual Box GetPSBulletButton() { return m_bPistolBullet; }			// 권총 탄약
+//	virtual Box GetMGBulletButton() { return m_bMachineGunBullet; }		// 머신건 탄약
+//	virtual Box GetFTBulletButton() { return m_bFireThrowerBullet; }	// 화염방사기 탄약
+//	virtual Box GetLGBulletButton() { return m_bLaserGunBullet; }		// 레이저건 탄약
+//	
+//	virtual Box GetGrenadeButton() { return m_bGrenade; }				// 수류탄
+//	virtual Box GetAirBombButton() { return m_bAirBomb; }				// 공중 폭격
+//	virtual Box GetRavaRegionButton() { return m_bRavaRegion; }			// 화염 지대
+//	virtual Box GetBunkerRepairButton() { return m_bBunckerRepair; }	// 벙커 수리
+//
+//	virtual Item* GetSelectedItem() { return m_selectedItem; }	// 선택된 아이템
+
 };
 
 class SceneManager : public Singleton<SceneManager>

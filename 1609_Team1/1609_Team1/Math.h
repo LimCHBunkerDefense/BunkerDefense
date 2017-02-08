@@ -1,4 +1,5 @@
 #pragma once
+#include "Common.h"
 #include <ctime>
 #include <cmath>
 #include "Singleton.h"
@@ -107,6 +108,7 @@ struct Triangle
 //원래 가지고 있던 박스 Collider
 struct Box
 {
+	ITEM_TAG itemTag;
 	Vector pos;
 	Vector size;
 	Vector anchor;
@@ -114,6 +116,14 @@ struct Box
 	Box() {}
 	Box(Vector pos, Vector size, Vector anchor = Vector(0.5f, 0.5f))
 	{
+		this->pos = pos;
+		this->size = size;
+		this->anchor = anchor;
+	}
+
+	Box(ITEM_TAG itemTag, Vector pos, Vector size, Vector anchor = Vector(0.5f, 0.5f))
+	{
+		this->itemTag = itemTag;
 		this->pos = pos;
 		this->size = size;
 		this->anchor = anchor;
