@@ -70,6 +70,11 @@ void PlayScene::OnDraw()
 
 	pMainCamera->Draw(m_pBg, Vector(0, 0));
 	pMinimapCamera->DrawFilledRect(Vector(0,0), Vector(MINI_WIDTH,MINI_HEIGHT), ColorF::Green);
+	pMinimapCamera->DrawLine(MINI_WIDTH * 0.5, MINI_HEIGHT, 
+		MINI_WIDTH * 0.5 - MINI_WIDTH * 0.5 * MATH->Sin(CAMERA_ANGLE * 0.5), MINI_HEIGHT - MINI_WIDTH * 0.5 * MATH->Cos(CAMERA_ANGLE * 0.5), ColorF::Blue, 2);
+	pMinimapCamera->DrawLine(MINI_WIDTH * 0.5, MINI_HEIGHT,
+		MINI_WIDTH * 0.5 + MINI_WIDTH * 0.5 * MATH->Sin(CAMERA_ANGLE * 0.5), MINI_HEIGHT - MINI_WIDTH * 0.5 * MATH->Cos(CAMERA_ANGLE * 0.5), ColorF::Blue, 2);
+	pMinimapCamera->DrawLine(MINI_WIDTH * 0.5, MINI_HEIGHT,	MINI_WIDTH * 0.5, 0, ColorF::Blue, 1);
 	pMinimapCamera->DrawCircle(Vector(MINI_WIDTH * 0.5, MINI_HEIGHT), Vector(MINI_WIDTH, MINI_WIDTH), ColorF::Yellow);
 	pMinimapCamera->DrawFilledCircle(Vector(MINI_WIDTH * 0.5 , MINI_HEIGHT), Vector(8, 8), ColorF::Yellow);
 
