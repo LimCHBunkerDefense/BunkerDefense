@@ -274,6 +274,8 @@ class Camera
 	float m_height;//카메라 y축 높이
 	Line m_LineCamera, m_LineLeft, m_LineRight;//	1. 카메라 중심선, 왼쪽, 오른쪽 선
 
+	IDWriteFactory*			m_pDWriteFactory; // 텍스트 출력을 위한 팩토리
+
 
 	//실제 미니맵에서의 플레이어 위치
 	Line LineCenter;
@@ -296,6 +298,9 @@ public:
 		m_pBitmapTarget->EndDraw();
 		m_size = Vector(sizeX, sizeY);
 		m_opacity = 1.0f;
+
+		DWriteCreateFactory(DWRITE_FACTORY_TYPE_SHARED, __uuidof(*m_pDWriteFactory),
+			(IUnknown**)&m_pDWriteFactory);
 
 		SetCenterPos(Vector(0, 0));
 		SetScreenRect(0.0f, 0.0f, sizeX, sizeY);
@@ -337,6 +342,16 @@ public:
 		m_center = rightBottom - m_size * 0.5f;
 	}
 
+	void DrawT(wstring str, float x, float y, ColorF color, int size, ALIGN_TYPE align = ALIGN_LEFT, wstring fontName = TEXT("Arial")) 
+	{
+		m_pBitmapTarget->BeginDraw();
+
+		Text text = { str, fontName, x, y, color, size, align };
+		text.Render(m_pBitmapTarget, m_pDWriteFactory);
+
+		m_pBitmapTarget->EndDraw();
+	}
+
 	void Draw(Sprite* sprite, Vector pos, int dir = -1, float opacity = 1.0f)
 	{
 		m_pBitmapTarget->BeginDraw();
@@ -344,6 +359,17 @@ public:
 		sprite->SetPosition(pos.x, pos.y);
 		sprite->SetDirection(dir);
 		sprite->Render(m_pBitmapTarget);
+
+		m_pBitmapTarget->EndDraw();
+	}
+
+	void DrawLine(float startX, float startY, float endX, float endY, ColorF color, float lineSize)
+	{
+		m_pBitmapTarget->BeginDraw();
+
+		GraphicsObject line = { GRAPHICS_LINE, startX, startY,
+			endX - startX, endY - startY, color, lineSize };
+		line.Render(m_pBitmapTarget);
 
 		m_pBitmapTarget->EndDraw();
 	}
@@ -428,6 +454,27 @@ public:
 
 		GraphicsObject rect = { GRAPHICS_RECT, leftTop.x, leftTop.y, size.x, size.y, color, 0 };
 		rect.Render(m_pBitmapTarget);
+
+		m_pBitmapTarget->EndDraw();
+	}
+
+	void DrawCircle(Vector center, Vector size,
+		ColorF color = ColorF::Black, float lineSize = 1)
+	{
+		m_pBitmapTarget->BeginDraw();
+
+		GraphicsObject circle = { GRAPHICS_CIRCLE, center.x-(size.x * 0.5), center.y - (size.y * 0.5), size.x, size.y, color, lineSize };
+		circle.Render(m_pBitmapTarget);
+
+		m_pBitmapTarget->EndDraw();
+	}
+
+	void DrawFilledCircle(Vector center, Vector size, ColorF color = ColorF::Black)
+	{
+		m_pBitmapTarget->BeginDraw();
+
+		GraphicsObject circle = { GRAPHICS_CIRCLE, center.x - (size.x * 0.5), center.y - (size.y * 0.5), size.x, size.y, color, 0 };
+		circle.Render(m_pBitmapTarget);
 
 		m_pBitmapTarget->EndDraw();
 	}

@@ -70,15 +70,17 @@ void PlayScene::OnDraw()
 
 	pMainCamera->Draw(m_pBg, Vector(0, 0));
 	pMinimapCamera->DrawFilledRect(Vector(0,0), Vector(MINI_WIDTH,MINI_HEIGHT), ColorF::Green);
-	pMinimapCamera->DrawFilledRect(Vector(MINI_WIDTH * 0.5 , MINI_HEIGHT) - 4, Vector(8, 8), ColorF::Yellow);
+	pMinimapCamera->DrawCircle(Vector(MINI_WIDTH * 0.5, MINI_HEIGHT), Vector(MINI_WIDTH, MINI_WIDTH), ColorF::Yellow);
+	pMinimapCamera->DrawFilledCircle(Vector(MINI_WIDTH * 0.5 , MINI_HEIGHT), Vector(8, 8), ColorF::Yellow);
 
 	// 미니맵에 크리쳐 위치 표시
 	list<Object*> pList = OBJECT->GetCreatureList();
 	FOR_LIST(Object*, pList)
 	{
 		Vector pos = (*it)->Position();
-		pMinimapCamera->DrawFilledRect(pos - 4, Vector(8, 8), ColorF::Red);
+		pMinimapCamera->DrawFilledCircle(pos - 4, Vector(8, 8), ColorF::Red);
 	}
+
 
 
 	OBJECT->Draw(pMainCamera);
