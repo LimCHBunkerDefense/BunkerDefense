@@ -145,7 +145,7 @@ void Player::ShopState()
 					SCENE->GetScene(SCENE_SHOP)->SetCurrentButton(BUTTON_WEAPON);
 					SCENE->GetScene(SCENE_SHOP)->SetIsWeaponClicked(true);
 					SCENE->GetScene(SCENE_SHOP)->SetIsBulletClicked(false);
-					SCENE->GetScene(SCENE_SHOP)->SetIsUsingItemClicked(false);
+					SCENE->GetScene(SCENE_SHOP)->SetIsUsingItemClicked(false); 
 					break;
 				case ITEM_BULLET:
 					SCENE->GetScene(SCENE_SHOP)->SetCurrentButton(BUTTON_BULLET);
