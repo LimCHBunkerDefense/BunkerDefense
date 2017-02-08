@@ -18,6 +18,8 @@ class Creature :
 	DIRECTION_TAG m_dir;
 	Vector m_moveDirection;
 
+	
+
 public:
 	Creature();
 	Creature(OBJ_TAG tag);
@@ -33,6 +35,7 @@ public:
 
 	void SetMoveDirection(Vector vector) { m_moveDirection = vector; }
 	Vector GetMoveDirection() { return m_moveDirection; }
+	
 
 };
 

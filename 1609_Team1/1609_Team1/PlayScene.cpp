@@ -21,7 +21,7 @@ PlayScene::PlayScene()
 
 	// 朝五虞 持失
 	RENDER->CreateCamera(CAM_MAIN, 1920, 1200, VIEW_WIDTH, VIEW_HEIGHT);
-	RENDER->CreateCamera(CAM_MINIMAP, MINI_WIDTH, MINI_HEIGHT * 2, MINI_WIDTH, MINI_HEIGHT);
+	RENDER->CreateCamera(CAM_MINIMAP, MINI_WIDTH, MINI_HEIGHT, MINI_WIDTH, MINI_HEIGHT);
 
 }
 
@@ -74,7 +74,7 @@ void PlayScene::OnDraw()
 		MINI_WIDTH * 0.5 - MINI_WIDTH * 0.5 * MATH->Sin(CAMERA_ANGLE * 0.5), MINI_HEIGHT - MINI_WIDTH * 0.5 * MATH->Cos(CAMERA_ANGLE * 0.5), ColorF::Blue, 2);
 	pMinimapCamera->DrawLine(MINI_WIDTH * 0.5, MINI_HEIGHT,
 		MINI_WIDTH * 0.5 + MINI_WIDTH * 0.5 * MATH->Sin(CAMERA_ANGLE * 0.5), MINI_HEIGHT - MINI_WIDTH * 0.5 * MATH->Cos(CAMERA_ANGLE * 0.5), ColorF::Blue, 2);
-	pMinimapCamera->DrawLine(MINI_WIDTH * 0.5, MINI_HEIGHT,	MINI_WIDTH * 0.5, 0, ColorF::Blue, 1);
+	pMinimapCamera->DrawLine(MINI_WIDTH * 0.5, MINI_HEIGHT, MINI_WIDTH * 0.5, MINI_HEIGHT - MINI_WIDTH * 0.5, ColorF::Blue, 1);
 	pMinimapCamera->DrawCircle(Vector(MINI_WIDTH * 0.5, MINI_HEIGHT), Vector(MINI_WIDTH, MINI_WIDTH), ColorF::Yellow);
 	pMinimapCamera->DrawFilledCircle(Vector(MINI_WIDTH * 0.5 , MINI_HEIGHT), Vector(8, 8), ColorF::Yellow);
 
