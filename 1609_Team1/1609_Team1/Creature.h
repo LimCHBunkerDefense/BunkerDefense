@@ -38,8 +38,8 @@ public:
 	void SetMoveDirection(Vector vector) { m_moveDirection = vector; }
 	Vector GetMoveDirection() { return m_moveDirection; }
 
-	virtual void SetStartPos(Vector pos) { m_startPos = pos; }
-	virtual Vector GetStartPos() { return m_startPos; }
+	void SetStartPos(Vector pos) { m_startPos = pos; }
+	Vector GetStartPos() { return m_startPos; }
 	
 
 };
