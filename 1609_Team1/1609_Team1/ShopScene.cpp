@@ -79,7 +79,7 @@ void ShopScene::OnDraw()
 	{
 		pMainCamera->DrawT(m_selectedItem->GetName(), 820, 395, ColorF::AntiqueWhite, 15);
 		//*pMainCamera->DrawT(m_selectedItem->GetAttack*(), 820, 395, ColorF::AntiqueWhite, 15);
-		pMainCamera->DrawT(m_selectedItem->GetInfo(), 820, 490, ColorF::AntiqueWhite, 15);
+		pMainCamera->DrawT(m_selectedItem->GetInfo(), 800, 420, ColorF::AntiqueWhite, 15);
 	}
 
 	RENDER->DrawRect(Vector(135, 450), Vector(150, 150), ColorF::Aqua, 3);
