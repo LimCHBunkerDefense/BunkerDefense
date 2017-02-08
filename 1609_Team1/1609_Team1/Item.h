@@ -19,5 +19,8 @@ public:
 	Item();
 	Item(int itemID);
 	~Item();
+	
+	wstring GetName() { return m_name; }
+	ITEM_TAG GetTag() { return m_tag; }
 };
 

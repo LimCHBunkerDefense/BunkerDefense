@@ -5,6 +5,27 @@ ShopScene::ShopScene()
 	RENDER->LoadImageFile(TEXT("shopBG"), TEXT("Image/BackGround/shopBG.png"));
 	//m_itemList.push_back();
 
+	// itemDB 积己
+	ITEM->Init();
+
+	// ItemList俊 Item Database 历厘
+	m_itemList.push_back(new Item(1001));
+	m_itemList.push_back(new Item(1002));
+	m_itemList.push_back(new Item(1003));
+	m_itemList.push_back(new Item(1004));
+	m_itemList.push_back(new Item(1005));
+	m_itemList.push_back(new Item(1006));
+	m_itemList.push_back(new Item(1007));
+	m_itemList.push_back(new Item(1008));
+	m_itemList.push_back(new Item(1009));
+	m_itemList.push_back(new Item(1010));
+	m_itemList.push_back(new Item(1011));
+	m_itemList.push_back(new Item(1012));
+
+	// BoxList俊 Box Database 历厘
+	AddBoxList(new Box(ITEM_WEAPON, Vector(370, 235), Vector(120, 180)));
+	AddBoxList(new Box(ITEM_BULLET, Vector(500, 235), Vector(120, 180)));
+	AddBoxList(new Box(ITEM_USINGITEM, Vector(630, 235), Vector(120, 180)));
 }
 
 
@@ -16,11 +37,10 @@ void ShopScene::OnEnter()
 {
 	NEW_OBJECT(m_pBg, Sprite(RENDER->GetImage(TEXT("shopBG")), 1.0f, 0, 0));
 
-	m_bBuyButton = Box(Vector(1000, 500), Vector(100, 50));
-	m_bWeapon = Box(Vector(450, 450), Vector(200, 50));
-	m_bBullet = Box(Vector(450, 500), Vector(200, 50));
-	m_bItem = Box(Vector(450, 550), Vector(200, 50));
-	
+	// m_bBuyButton = Box(Vector(1000, 500), Vector(100, 50));
+	// m_bWeapon = Box(Vector(480, 200), Vector(200, 50));
+	// m_bBullet = Box(Vector(480, 280), Vector(200, 50));
+	// m_bUsingItem = Box(Vector(480, 360), Vector(200, 50));
 }
 
 void ShopScene::OnUpdate(float deltaTime)
@@ -47,23 +67,54 @@ void ShopScene::OnDraw()
 
 	if (SCENE->GetColliderOnOff())
 	{
-		RENDER->DrawRect(m_bBuyButton.LeftTop() + m_bBuyButton.size * 0.5f, m_bBuyButton.size, ColorF::Yellow, 3.0f);
-		
-		RENDER->DrawRect(m_bWeapon.LeftTop() + m_bWeapon.size * 0.5f, m_bWeapon.size, ColorF::Yellow, 3.0f);
-		RENDER->DrawRect(m_bBullet.LeftTop() + m_bBullet.size * 0.5f, m_bBullet.size, ColorF::Yellow, 3.0f);
-		RENDER->DrawRect(m_bItem.LeftTop() + m_bItem.size * 0.5f, m_bItem.size, ColorF::Yellow, 3.0f);
-		
-		
-		// RENDER->DrawRect(m_bMachineGun.LeftTop() + m_bMachineGun.size * 0.5f, m_bMachineGun.size, ColorF::Yellow, 3.0f);
-		// RENDER->DrawRect(m_bFireThrower.LeftTop() + m_bFireThrower.size * 0.5f, m_bFireThrower.size, ColorF::Yellow, 3.0f);
-		// RENDER->DrawRect(m_bPistolBullet.LeftTop() + m_bPistolBullet.size * 0.5f, m_bPistolBullet.size, ColorF::Yellow, 3.0f);
-		// RENDER->DrawRect(m_bMachineGunBullet.LeftTop() + m_bMachineGunBullet.size * 0.5f, m_bMachineGunBullet.size, ColorF::Yellow, 3.0f);
-		// RENDER->DrawRect(m_bFireThrowerBullet.LeftTop() + m_bFireThrowerBullet.size * 0.5f, m_bFireThrowerBullet.size, ColorF::Yellow, 3.0f);
-		// RENDER->DrawRect(m_bGrenade.LeftTop() + m_bGrenade.size * 0.5f, m_bGrenade.size, ColorF::Yellow, 3.0f);
-		// RENDER->DrawRect(m_bAirBomb.LeftTop() + m_bAirBomb.size * 0.5f, m_bAirBomb.size, ColorF::Yellow, 3.0f);
-		// RENDER->DrawRect(m_bRavaRegion.LeftTop() + m_bRavaRegion.size * 0.5f, m_bRavaRegion.size, ColorF::Yellow, 3.0f);
-		// RENDER->DrawRect(m_bBunckerRepair.LeftTop() + m_bBunckerRepair.size * 0.5f, m_bBunckerRepair.size, ColorF::Yellow, 3.0f);
+		list<Box*> boxList = GetBoxList();
+		FOR_LIST(Box*, boxList)
+		{
+			RENDER->DrawRect((*it)->LeftTop() + (*it)->size * 0.5f, (*it)->size, ColorF::Yellow, 3.0f);
+		}
 	}
+
+	list<Item*> itemList = SCENE->GetScene(SCENE_SHOP)->GetItemList();
+	int index = 0;
+	Item* pItem;
+
+	switch (m_currentButton)
+	{
+	case BUTTON_WEAPON:
+		FOR_LIST(Item*, itemList)
+		{
+			index++;
+			pItem = ((*it)->GetTag() == ITEM_WEAPON) ? (*it) : NULL;
+			if (pItem != NULL)
+			{
+				RENDER->DrawT(pItem->GetName(), 480, 350 + index * 50, ColorF::Yellow, 20.0f);
+			}
+		}
+		break;
+	case BUTTON_BULLET:
+		FOR_LIST(Item*, itemList)
+		{
+			index++;
+			pItem = ((*it)->GetTag() == ITEM_BULLET) ? (*it) : NULL;
+			if (pItem != NULL)
+			{
+				RENDER->DrawT(pItem->GetName(), 480, 350 + index * 50, ColorF::Yellow, 20.0f);
+			}
+		}
+		break;
+	case BUTTON_USINGITEM:
+		FOR_LIST(Item*, itemList)
+		{
+			index++;
+			pItem = ((*it)->GetTag() == ITEM_USINGITEM) ? (*it) : NULL;
+			if (pItem != NULL)
+			{
+				RENDER->DrawT(pItem->GetName(), 480, 350 + index * 50, ColorF::Yellow, 20.0f);
+			}
+		}
+		break;
+	}
+
 }
 
 void ShopScene::ItemListWnd()
@@ -71,11 +122,6 @@ void ShopScene::ItemListWnd()
 	RENDER->DrawRect(Vector(500, 235), Vector(400, 220), ColorF::OrangeRed);
 	RENDER->DrawRect(Vector(500, 560),Vector(400, 430),ColorF::Red);
 	RENDER->DrawT(TEXT("ITEM LIST"), 430, 550, ColorF::Red, 25);
-	RENDER->DrawT(TEXT("NPC Talk"), 430, 240, ColorF::GreenYellow, 25);
-	FOR_LIST(Item*, m_itemList)
-	{
-		
-	}
 }
 void ShopScene::ItemStatWnd()
 {

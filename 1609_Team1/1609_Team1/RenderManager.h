@@ -274,6 +274,8 @@ class Camera
 	float m_height;//카메라 y축 높이
 	Line m_LineCamera, m_LineLeft, m_LineRight;//	1. 카메라 중심선, 왼쪽, 오른쪽 선
 
+	IDWriteFactory*			m_pDWriteFactory; // 텍스트 출력을 위한 팩토리
+
 
 	//실제 미니맵에서의 플레이어 위치
 	Line LineCenter;
@@ -296,6 +298,9 @@ public:
 		m_pBitmapTarget->EndDraw();
 		m_size = Vector(sizeX, sizeY);
 		m_opacity = 1.0f;
+
+		DWriteCreateFactory(DWRITE_FACTORY_TYPE_SHARED, __uuidof(*m_pDWriteFactory),
+			(IUnknown**)&m_pDWriteFactory);
 
 		SetCenterPos(Vector(0, 0));
 		SetScreenRect(0.0f, 0.0f, sizeX, sizeY);
@@ -337,6 +342,16 @@ public:
 		m_center = rightBottom - m_size * 0.5f;
 	}
 
+	void DrawT(wstring str, float x, float y, ColorF color, int size, ALIGN_TYPE align = ALIGN_LEFT, wstring fontName = TEXT("Arial")) 
+	{
+		m_pBitmapTarget->BeginDraw();
+
+		Text text = { str, fontName, x, y, color, size, align };
+		text.Render(m_pBitmapTarget, m_pDWriteFactory);
+
+		m_pBitmapTarget->EndDraw();
+	}
+
 	void Draw(Sprite* sprite, Vector pos, int dir = -1, float opacity = 1.0f)
 	{
 		m_pBitmapTarget->BeginDraw();
@@ -348,20 +363,46 @@ public:
 		m_pBitmapTarget->EndDraw();
 	}
 
-	Vector SetVectorInMap(Vector point) {
-		return Vector(VIEW_WIDTH - MINI_WIDTH + point.x*MINI_WIDTH / VIEW_WIDTH, VIEW_HEIGHT - MINI_HEIGHT + point.y*MINI_HEIGHT / VIEW_HEIGHT);
-	}
-
-	/*void Draw3D(Sprite* sprite, Vector pos, int dir = -1, float opacity = 1.0f) {
+	void DrawLine(float startX, float startY, float endX, float endY, ColorF color, float lineSize)
+	{
 		m_pBitmapTarget->BeginDraw();
 
-		Vector MapPos= SetVector3D(pos);
-		sprite->SetPosition(MapPos.x, MapPos.y);
-		sprite->SetDirection(dir);
-		sprite->Render(m_pBitmapTarget);
+		GraphicsObject line = { GRAPHICS_LINE, startX, startY,
+			endX - startX, endY - startY, color, lineSize };
+		line.Render(m_pBitmapTarget);
 
 		m_pBitmapTarget->EndDraw();
-	}*/
+	}
+
+	//Vector SetVectorInMap(Vector point) {
+	//	return Vector(VIEW_WIDTH - MINI_WIDTH + point.x*MINI_WIDTH / VIEW_WIDTH, VIEW_HEIGHT - MINI_HEIGHT + point.y*MINI_HEIGHT / VIEW_HEIGHT);
+	//}
+
+	// 크리쳐의 좌표 (미니맵 상의 좌표)를 전장 화면의 좌표로 바꿔주는 함수
+	Vector ChangePositionToView(Vector position)
+	{
+		return Vector(position.x * VIEW_WIDTH / MINI_WIDTH, m_height);
+	}
+
+	// 크리쳐가 플레이어의 시야에 들어왔을 경우, 미니맵 상의 크리쳐를 전장 화면으로 출력해주는 함수
+	void Draw3D(Sprite* sprite, Vector pos, int dir = -1, float opacity = 1.0f) 
+	{
+		// 크리쳐가 플레이어의 시야 (미니맵 상의 두 파란선) 안에 들어왔는지 확인하는 단계. 플레이어의 시야는 CAMERA_ANGLE로 정의되어 있음
+		Vector moveDirOfCreature = Vector(MINI_WIDTH * 0.5, MINI_HEIGHT) - pos;
+		if (MATH->CosAngle(moveDirOfCreature, Vector::Up()) <= CAMERA_ANGLE * 0.5
+			|| MATH->CosAngle(Vector::Up(), moveDirOfCreature) <= CAMERA_ANGLE * 0.5)
+		{
+			m_pBitmapTarget->BeginDraw();
+
+			Vector posInMap = ChangePositionToView(pos);
+			sprite->SetPosition(posInMap.x, posInMap.y);
+			sprite->SetDirection(dir);
+			sprite->Render(m_pBitmapTarget);
+
+			m_pBitmapTarget->EndDraw();
+		}
+
+	}
 	
 	/*void PosInMap(Line line, ColorF color, float lineSize = 1)
 	{
@@ -428,6 +469,27 @@ public:
 
 		GraphicsObject rect = { GRAPHICS_RECT, leftTop.x, leftTop.y, size.x, size.y, color, 0 };
 		rect.Render(m_pBitmapTarget);
+
+		m_pBitmapTarget->EndDraw();
+	}
+
+	void DrawCircle(Vector center, Vector size,
+		ColorF color = ColorF::Black, float lineSize = 1)
+	{
+		m_pBitmapTarget->BeginDraw();
+
+		GraphicsObject circle = { GRAPHICS_CIRCLE, center.x-(size.x * 0.5), center.y - (size.y * 0.5), size.x, size.y, color, lineSize };
+		circle.Render(m_pBitmapTarget);
+
+		m_pBitmapTarget->EndDraw();
+	}
+
+	void DrawFilledCircle(Vector center, Vector size, ColorF color = ColorF::Black)
+	{
+		m_pBitmapTarget->BeginDraw();
+
+		GraphicsObject circle = { GRAPHICS_CIRCLE, center.x - (size.x * 0.5), center.y - (size.y * 0.5), size.x, size.y, color, 0 };
+		circle.Render(m_pBitmapTarget);
 
 		m_pBitmapTarget->EndDraw();
 	}
