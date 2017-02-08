@@ -43,6 +43,7 @@ public:
 
 	Box GetButton() { return m_bBuyButton; }
 	Item* GetSelectedItem() { return m_selectedItem; }
+
 	void AddItem(Item* pItem) { m_itemList.push_back(pItem); }
 };
 

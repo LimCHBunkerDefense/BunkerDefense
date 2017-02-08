@@ -3,6 +3,7 @@
 ShopScene::ShopScene()
 {
 	RENDER->LoadImageFile(TEXT("shopBG"), TEXT("Image/BackGround/shopBG.png"));
+	//m_itemList.push_back();
 
 }
 
@@ -71,6 +72,10 @@ void ShopScene::ItemListWnd()
 	RENDER->DrawRect(Vector(500, 560),Vector(400, 430),ColorF::Red);
 	RENDER->DrawT(TEXT("ITEM LIST"), 430, 550, ColorF::Red, 25);
 	RENDER->DrawT(TEXT("NPC Talk"), 430, 240, ColorF::GreenYellow, 25);
+	FOR_LIST(Item*, m_itemList)
+	{
+		
+	}
 }
 void ShopScene::ItemStatWnd()
 {
