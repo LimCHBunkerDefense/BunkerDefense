@@ -33,6 +33,10 @@ public:
 
 
 	Item* GetSelectedItem() { return m_selectedItem; }
+	void SetSelectedItem(int m_itemID)
+	{
+	 ITEM->GetItem(m_itemID);
+	}
 	// Item* SetSelectedItem(int m_itemID) 
 	// { 
 	// 	return m_selectedItem = ITEM->GetData(m_itemID); 
