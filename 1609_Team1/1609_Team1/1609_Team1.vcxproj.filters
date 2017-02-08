@@ -118,6 +118,9 @@
     <ClCompile Include="Bunker.cpp">
       <Filter>Object\Bunker</Filter>
     </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>Object\Bullet</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Math.h">
@@ -177,6 +180,9 @@
     </ClInclude>
     <ClInclude Include="Bunker.h">
       <Filter>Object\Bunker</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>Object\Bullet</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
