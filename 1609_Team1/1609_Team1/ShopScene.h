@@ -48,10 +48,10 @@ public:
 
 	void SetCurrentButton(BUTTON_TAG buttonTag) { m_currentButton = buttonTag; }
 
-	void GetIsWeaponClicked() { IsWeaponClicked; }
+	bool GetIsWeaponClicked() { return IsWeaponClicked; }
 	void SetIsWeaponClicked(bool ON) { IsWeaponClicked = ON; }
-	void GetIsBulletClicked() { IsBulletClicked; }
+	bool GetIsBulletClicked() { IsBulletClicked; }
 	void SetIsBulletClicked(bool ON) { IsBulletClicked = ON; }
-	void GetIsUsingItemClicked() { IsUsingItemClicked; }
+	bool GetIsUsingItemClicked() { IsUsingItemClicked; }
 	void SetIsUsingItemClicked(bool ON) { IsUsingItemClicked = ON; }
 };
