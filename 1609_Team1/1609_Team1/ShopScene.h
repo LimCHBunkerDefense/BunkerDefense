@@ -33,9 +33,13 @@ public:
 
 
 	Item* GetSelectedItem() { return m_selectedItem; }
-	void SetSelectedItem(int m_itemID)
+	void SetSelectedItem(int itemID)
 	{
-	 ITEM->GetItem(m_itemID);
+		FOR_LIST(Item*, m_itemList)
+		{
+			if ((*it)->GetID() == itemID) m_selectedItem = (*it);
+			break;
+		}
 	}
 	// Item* SetSelectedItem(int m_itemID) 
 	// { 
@@ -51,4 +55,3 @@ public:
 	void GetIsUsingItemClicked() { IsUsingItemClicked; }
 	void SetIsUsingItemClicked(bool ON) { IsUsingItemClicked = ON; }
 };
-
