@@ -173,6 +173,10 @@ void Player::ShopState()
 					}
 					break;
 				case 2:
+					if (SCENE->GetScene(SCENE_SHOP)->GetIsWeaponClicked() == true)
+					{
+						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(1002);
+					}
 					break;
 				case 3:
 					break;
