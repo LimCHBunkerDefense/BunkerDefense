@@ -36,25 +36,6 @@ void Player::Update(float deltaTime)
 void Player::Draw(Camera* pCamera)
 {
 	RENDER->FillCircle(Position() * 5, 100, ColorF::Aqua);
-	//ColorF lineColor = MATH->IsCollided(m_player, m_LeftLine) ? ColorF::DeepPink : ColorF::Green;
-	/*RENDER->DrawInMap(m_LineCamera, ColorF::Red, 2);
-	RENDER->DrawInMap(m_LineLeft, ColorF::Blue, 2);
-	RENDER->DrawInMap(m_LineRight, ColorF::Blue, 2);*/
-
-
-	//ภ๛ต้
-	/*FOR_LIST(Line*, m_listLine) {
-		float now_angle = MATH->Angle(m_dir, (*it)->EndPoint() - (*it)->StartPoint());
-		RENDER->DrawInMap(*(*it), ColorF::Red);
-		if (now_angle <= CAMERA_LEFT && now_angle >= CAMERA_RIGHT) {
-
-			if (now_angle <= 90)	RENDER->Draw3D(m_LineCamera, m_LineLeft, *(*it), m_height, ColorF::Red);
-			else					RENDER->Draw3D(m_LineCamera, m_LineRight, *(*it), m_height, ColorF::Red, false);
-		}
-	}
-
-	RENDER->DrawInMap(m_player, ColorF::Aqua);
-	RENDER->Draw(m_player, ColorF::Aqua);*/
 }
 
 void Player::AttackState(float deltaTime)
@@ -126,12 +107,13 @@ void Player::AttackState(float deltaTime)
 	if (abs(NowMousePos.y - m_prevMousePos.y) >EPSILON
 		&& NowMousePos.y < m_prevMousePos.y) 
 	{
-		m_height += ROTATE_SPEED;
+		m_height += ROTATE_SPEED * deltaTime;
 	}
 	if (abs(NowMousePos.y - m_prevMousePos.y) >EPSILON
 		&& NowMousePos.y > m_prevMousePos.y) 
 	{
-		m_height -= ROTATE_SPEED;
+		m_height -= ROTATE_SPEED * deltaTime;
+		float aaa = m_height;
 	}
 	
 	if(abs(fTurnSpeed) > EPSILON) OBJECT->SetDeltaSightAngle(fTurnSpeed);
