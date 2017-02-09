@@ -47,6 +47,8 @@ void ObjectManager::Draw(Camera* pCamera)
 	FOR_LIST(Object*, m_bulletList)
 	{
 		(*it)->Draw(pCamera);
+		// 충돌체 보여주는 부분인데, 미니맵의 실제 움직임과 보여지는 움직임이 다르기 때문에 충돌체 보여주는 것이 의미가 없음.
+		if (SCENE->GetColliderOnOff()) pCamera->DrawRect((*it)->Collider().LeftTop(), (*it)->Collider().size, ColorF::Yellow, 3);
 	}
 
 	m_pPlayer->Draw(pCamera);
@@ -151,7 +153,7 @@ void ObjectManager::SetPosByDeltaAngle()
 
 
 	// 카메라 이동에 따른 배경 출력 위치 변경
-	SCENE->GetScene(SCENE_PLAY)->SetPosBg(SCENE->GetScene(SCENE_PLAY)->GetPosBg() - Vector(deltaPosX, deltaPosY));
+	//SCENE->GetScene(SCENE_PLAY)->SetPosBg(SCENE->GetScene(SCENE_PLAY)->GetPosBg() - Vector(deltaPosX, deltaPosY));
 
 	
 
