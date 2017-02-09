@@ -9,7 +9,13 @@
 class ShopScene :
 	public IScene
 {
+	//각 배경 및 박스 출력용 Sprite변수(각각 필요할듯하여 만들었는데 합치고 싶...습니다)
 	Sprite* m_pBg;
+	Sprite* m_pNpcIcon;
+	Sprite* m_pTalkBox;
+	Sprite* m_pMarketBG;
+	Sprite* m_pBoxBG;
+
 	BUTTON_TAG m_currentButton;				// 현재 버튼이 무엇인지 태그값으로 확인하는 변수
 	Item* m_selectedButton;					// 선택된 버튼이 무엇인지를 나나태는 변수
 	Item* m_currentItem;					// 현재 아이템이 무엇인지를 나타내는 변수
@@ -23,11 +29,13 @@ class ShopScene :
 public:
 	ShopScene();
 	~ShopScene();
-	
+
 	void OnEnter();
 	void OnUpdate(float deltaTime);
 	void OnExit();
 	void OnDraw();
+
+	void CreateList();											// 리스트들을 생성하는 함수
 
 	void ItemListWnd();											// 아이템 리스트 창
 	void ItemStatWnd();											// 아이템 정보 창

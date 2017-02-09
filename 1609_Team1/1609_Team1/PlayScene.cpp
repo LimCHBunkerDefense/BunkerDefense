@@ -24,10 +24,13 @@ PlayScene::PlayScene()
 	RENDER->LoadImageFiles(TEXT("BulletIdle"), TEXT("Image/Bullet/bullet"), TEXT("png"), 1);
 
 
+	// 플레이어 총 이미지 맵으로 저장
+	// RENDER->LoadImageFiles(TEXT("PistolIdle"), TEXT("Image/Item/Pistol/Idle/Idle"), TEXT("png"), 1);
+	// RENDER->LoadImageFiles(TEXT("PistolAttack"), TEXT("Image/Item/Pistol/Attack/Attack"), TEXT("png"), 3);
+
 	// 카메라 생성
 	RENDER->CreateCamera(CAM_MAIN, 1920, 1080, VIEW_WIDTH, VIEW_HEIGHT);
 	RENDER->CreateCamera(CAM_MINIMAP, MINI_WIDTH, MINI_HEIGHT* 2, MINI_WIDTH, MINI_HEIGHT * 2);
-
 }
 
 
