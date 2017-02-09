@@ -83,20 +83,29 @@ void Player::AttackState(float deltaTime)
 	// 이전 마우스좌표와 움직인 마우스 좌표를 비교하는 부분
 	float fTurnSpeed = 0;
 	Vector NowMousePos = Vector(INPUT->GetMousePos().x, INPUT->GetMousePos().y);
-	if (NowMousePos.x < m_prevMousePos.x) {
+
+	if (abs(NowMousePos.x - m_prevMousePos.x) >EPSILON
+		&& NowMousePos.x < m_prevMousePos.x) 
+	{
 		fTurnSpeed = -ROTATE_SPEED * deltaTime;
 	}
-	if (NowMousePos.x > m_prevMousePos.x) {
+	if (abs(NowMousePos.x - m_prevMousePos.x) >EPSILON
+		&& NowMousePos.x > m_prevMousePos.x) 
+	{
 		fTurnSpeed = +ROTATE_SPEED * deltaTime;
 	}
-	if (NowMousePos.y < m_prevMousePos.y) {
+	if (abs(NowMousePos.y - m_prevMousePos.y) >EPSILON
+		&& NowMousePos.y < m_prevMousePos.y) 
+	{
 		m_height += ROTATE_SPEED;
 	}
-	if (NowMousePos.x > m_prevMousePos.x) {
+	if (abs(NowMousePos.y - m_prevMousePos.y) >EPSILON
+		&& NowMousePos.y > m_prevMousePos.y) 
+	{
 		m_height -= ROTATE_SPEED;
 	}
 	m_angle += fTurnSpeed;
-	OBJECT->SetDeltaSightAngle(m_angle);
+	if(abs(fTurnSpeed) > EPSILON) OBJECT->SetDeltaSightAngle(m_angle);
 	
 
 	m_prevMousePos = NowMousePos;

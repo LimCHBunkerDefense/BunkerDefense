@@ -78,17 +78,22 @@ void ObjectManager::CreateCreature(OBJ_TAG tag, Vector pos)
 
 void ObjectManager::SetPosByDeltaAngle()
 {
-	// 크리쳐 리스트 불러다가 미니맵 상의 pos 수정해주는 부분
-	FOR_LIST(Object*, m_creatureList)
+	if (abs(m_deltaSightAngle) > EPSILON)
 	{
-		Object* pObj = (*it);
-		float angle = MATH->Angle(Vector::Right(), (*it)->GetMoveDirection() * -1);
-		angle += m_deltaSightAngle;
-	
-		// 점 p(0,0)를 기준으로 구해진 새로운 pos를 플레이어 위지 p'(MINI_WIDTH * 0.5, MINI_HEIGHT) 기준으로 (*it)의 좌표 보정
-		float x = MINI_WIDTH*0.5f + MATH->Cos(angle) * MINI_WIDTH * 0.5f;
-		float y = MINI_HEIGHT +  MATH->Sin(angle) * MINI_WIDTH * 0.5f;
-	
-		(*it)->SetStartPos(Vector(x, y));
+		// 크리쳐 리스트 불러다가 미니맵 상의 pos 수정해주는 부분
+		FOR_LIST(Object*, m_creatureList)
+		{
+			Object* pObj = (*it);
+			float angle = MATH->Angle(Vector::Right(), (*it)->GetMoveDirection() * -1);
+			angle += m_deltaSightAngle;
+
+			// 점 p(0,0)를 기준으로 구해진 새로운 pos를 플레이어 위지 p'(MINI_WIDTH * 0.5, MINI_HEIGHT) 기준으로 (*it)의 좌표 보정
+			float x = MINI_WIDTH*0.5f + MATH->Cos(angle) * MINI_WIDTH * 0.5f;
+			float y = MINI_HEIGHT + MATH->Sin(angle) * MINI_WIDTH * 0.5f;
+
+			(*it)->SetStartPos(Vector(x, y));
+		}
 	}
+	m_deltaSightAngle = 0;
+	
 }
