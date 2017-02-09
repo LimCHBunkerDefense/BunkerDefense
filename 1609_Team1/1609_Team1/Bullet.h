@@ -5,7 +5,7 @@
 class Bullet :
 	public Object
 {
-	
+	BULLET_STATE m_state;
 	Sprite* m_pSprite;
 	float m_moveSpeed;
 
