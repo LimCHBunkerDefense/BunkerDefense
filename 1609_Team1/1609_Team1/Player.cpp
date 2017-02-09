@@ -66,26 +66,6 @@ void Player::AttackState(float deltaTime)
 		SCENE->SetColliderOnOff();
 	}
 
-	// 왼쪽 버튼을 눌렀을 때 공격
-	if (INPUT->IsMouseDown(MOUSE_LEFT))
-	{
-		switch (m_gunState)
-		{
-		case PISTOL_IDLE:
-			// 애니메이션 재생 후 다시 IDLE상태로 만듬
-			break;
-	
-		case MACHINEGUN_IDLE:
-			break;
-	
-		case FIRETHROWER_IDLE:
-			break;
-	
-		case LASERGUN_IDLE:
-			break;
-		}
-	}
-
 	// 마우스 움직이면 모든 오브젝트들이 플레이어 중심으로 회전하는 처리 시작---------------------------------------------------
 	// 이전 마우스좌표와 움직인 마우스 좌표를 비교하는 부분
 	float fTurnSpeed = 0;
@@ -123,6 +103,18 @@ void Player::AttackState(float deltaTime)
 
 	// 마우스 움직이면 모든 오브젝트들이 플레이어 중심으로 회전하는 처리 끝---------------------------------------------------
 	
+
+	// 왼쪽 버튼을 눌렀을 때 공격
+	if (INPUT->IsMouseDown(MOUSE_LEFT))
+	{
+		switch (m_gunState)
+		{
+		case PISTOL_IDLE: PistolState(deltaTime); break;
+		case MACHINEGUN_IDLE:MachineGunState(deltaTime); break;
+		case FIRETHROWER_IDLE: FireThrowerState(deltaTime); break;
+		case LASERGUN_IDLE: LaserGunState(deltaTime); break;
+		}
+	}
 }
 
 void Player::ShopState()
@@ -285,4 +277,24 @@ void Player::SetItem()
 		m_gunState = LASERGUN_IDLE;
 	}
 
+}
+
+void Player::PistolState(float deltaTime)
+{
+	m_gunState = PISTOL_ATTACK;
+}
+
+void Player::MachineGunState(float deltaTime)
+{
+	m_gunState = MACHINEGUN_ATTACK;
+}
+
+void Player::FireThrowerState(float deltaTime)
+{
+	m_gunState = FIRETHROWER_ATTACK;
+}
+
+void Player::LaserGunState(float deltaTime)
+{
+	m_gunState = LASERGUN_ATTACK;
 }

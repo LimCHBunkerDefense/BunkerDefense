@@ -39,5 +39,11 @@ public:
 
 	// 번호 입력시 아이템을 장착하는 함수
 	void SetItem();
+
+	// 총 상태 함수
+	void PistolState(float deltaTime);
+	void MachineGunState(float deltaTime);
+	void FireThrowerState(float deltaTime);
+	void LaserGunState(float deltaTime);
 };
 
