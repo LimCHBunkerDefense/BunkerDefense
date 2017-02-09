@@ -34,5 +34,5 @@ void Bullet::Update(float deltaTime)
 
 void Bullet::Draw(Camera* pCamera)
 {
-	pCamera->Draw3D(Animation()->Current()->GetSprite(), Position(), m_dir);
+	pCamera->Draw3D(Animation()->Current()->GetSprite(), Position(), m_dir, OBJECT->GetSightHeight());
 }

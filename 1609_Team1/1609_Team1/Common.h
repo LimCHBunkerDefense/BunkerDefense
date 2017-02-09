@@ -76,8 +76,6 @@
 #define VK_Y				0x59
 #define VK_Z				0x5A
 
-static float m_height = 400;
-
 enum KEY_STATE
 {
 	KEY_NONE, KEY_DOWN, KEY_UP, KEY_PRESS,
