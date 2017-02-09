@@ -72,12 +72,20 @@ void ShopScene::OnDraw()
 	RENDER->DrawT(TEXT("SHOP"), 590, 35, ColorF::BlanchedAlmond, 25);
 	RENDER->DrawRect(Vector(900, 450),Vector(320, 300),ColorF::AntiqueWhite, 3);
 	RENDER->DrawT(TEXT("-아이템 정보-"), 840, 335, ColorF::BlanchedAlmond, 20);
-
+	//pMainCamera->DrawT(TEXT("ATK:"), 800, 495, ColorF::AntiqueWhite, 15);
 	if (m_selectedItem != NULL)
 	{
 		pMainCamera->DrawT(m_selectedItem->GetName(), 820, 395, ColorF::AntiqueWhite, 15);
-		//*pMainCamera->DrawT(m_selectedItem->GetAttack*(), 820, 395, ColorF::AntiqueWhite, 15);
 		pMainCamera->DrawT(m_selectedItem->GetInfo(), 800, 420, ColorF::AntiqueWhite, 15);
+		
+		// float 값 사용해서 text 출력
+		TCHAR number[50] = {};
+		swprintf_s(number, TEXT("ATK: %.1f"), m_selectedItem->GetAttack());
+		pMainCamera->DrawT(number, 800, 495, ColorF::AntiqueWhite, 15);
+		swprintf_s(number, TEXT("DEF: %.1f"), m_selectedItem->GetDefense());
+		pMainCamera->DrawT(number, 880, 495, ColorF::AntiqueWhite, 15);
+
+		
 	}
 
 	RENDER->DrawRect(Vector(135, 450), Vector(150, 150), ColorF::Aqua, 3);
