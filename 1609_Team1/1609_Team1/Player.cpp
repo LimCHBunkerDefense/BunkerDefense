@@ -101,6 +101,7 @@ void Player::AttackState(float deltaTime)
 	list<Object*> creatureList = OBJECT->GetCreatureList();
 	FOR_LIST(Object*, creatureList)
 	{
+		Object* pObj = (*it);
 		float angle = MATH->Angle(Vector::Right(), (*it)->GetMoveDirection() * -1);
 		angle += fTurnSpeed;
 
