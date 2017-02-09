@@ -13,6 +13,9 @@ Player::Player(OBJ_TAG tag) : Object(tag)
 	
 	m_prevMousePos = Vector(INPUT->GetMousePos().x, INPUT->GetMousePos().y);
 	m_sight = SIGHT;
+
+	m_pItem = new Item(1001);
+	AddItem(m_pItem);
 }
 
 Player::~Player()
@@ -70,6 +73,33 @@ void Player::AttackState(float deltaTime)
 	if (INPUT->IsKeyDown(VK_F4))
 	{
 		PostQuitMessage(0);
+	}
+
+	// 기관총 장착
+	if (INPUT->IsKeyDown(VK_2))
+	{
+		if (m_itemBag.find(1002) != m_itemBag.end())
+		{
+			 m_pItem = m_itemBag[1002];
+		}
+	}
+
+	// 화염 방사기 장착
+	if (INPUT->IsKeyDown(VK_3))
+	{
+		if (m_itemBag.find(1003) != m_itemBag.end())
+		{
+			m_pItem = m_itemBag[1003];
+		}
+	}
+
+	// 레이저 건 장착
+	if (INPUT->IsKeyDown(VK_4))
+	{
+		if (m_itemBag.find(1004) != m_itemBag.end())
+		{
+			m_pItem = m_itemBag[1004];
+		}
 	}
 
 	// 충돌체 On/Off
@@ -139,27 +169,27 @@ void Player::ShopState()
 			if (MATH->IsCollided(Vector(INPUT->GetMousePos().x, INPUT->GetMousePos().y), *(*it_Box)))
 			{
 				list<Item*> itemList = SCENE->GetScene(SCENE_SHOP)->GetItemList();
-				switch ((*it_Box)->index)
+				switch ((*it_Box)->buttonTag)
 				{
-				case ITEM_WEAPON:
+				case BUTTON_WEAPON:
 					SCENE->GetScene(SCENE_SHOP)->SetCurrentButton(BUTTON_WEAPON);
 					SCENE->GetScene(SCENE_SHOP)->SetIsWeaponClicked(true);
 					SCENE->GetScene(SCENE_SHOP)->SetIsBulletClicked(false);
 					SCENE->GetScene(SCENE_SHOP)->SetIsUsingItemClicked(false);
 					break;
-				case ITEM_BULLET:
+				case BUTTON_BULLET:
 					SCENE->GetScene(SCENE_SHOP)->SetCurrentButton(BUTTON_BULLET);
 					SCENE->GetScene(SCENE_SHOP)->SetIsWeaponClicked(false);
 					SCENE->GetScene(SCENE_SHOP)->SetIsBulletClicked(true);
 					SCENE->GetScene(SCENE_SHOP)->SetIsUsingItemClicked(false);
 					break;
-				case ITEM_USINGITEM:
+				case BUTTON_USINGITEM:
 					SCENE->GetScene(SCENE_SHOP)->SetCurrentButton(BUTTON_USINGITEM);
 					SCENE->GetScene(SCENE_SHOP)->SetIsWeaponClicked(false);
 					SCENE->GetScene(SCENE_SHOP)->SetIsBulletClicked(false);
 					SCENE->GetScene(SCENE_SHOP)->SetIsUsingItemClicked(true);
 					break;
-				case 4:
+				case BUTTON_FIRST:
 					if (SCENE->GetScene(SCENE_SHOP)->GetIsWeaponClicked() == true)
 					{
 						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(1001);
@@ -173,7 +203,7 @@ void Player::ShopState()
 						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(1009);
 					}
 					break;
-				case 5:
+				case BUTTON_SECOND:
 					if (SCENE->GetScene(SCENE_SHOP)->GetIsWeaponClicked() == true)
 					{
 						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(1002);
@@ -187,7 +217,7 @@ void Player::ShopState()
 						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(1010);
 					}
 					break;
-				case 6:
+				case BUTTON_THIRD:
 					if (SCENE->GetScene(SCENE_SHOP)->GetIsWeaponClicked() == true)
 					{
 						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(1003);
@@ -201,7 +231,7 @@ void Player::ShopState()
 						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(1011);
 					}
 					break;
-				case 7:
+				case BUTTON_FORTH:
 					if (SCENE->GetScene(SCENE_SHOP)->GetIsWeaponClicked() == true)
 					{
 						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(1004);
@@ -215,13 +245,16 @@ void Player::ShopState()
 						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(1012);
 					}
 					break;
-				case 8:// 샵씬에서 구매 선택하면 그 아이템이 아이템 가방에 저장됨
-					   //	if (SCENE->GetScene(SCENE_SHOP)->GetIsWeaponClicked() == true)
-					   //	{
-					   //		Item* pItem = SCENE->GetScene(SCENE_SHOP)->GetSelectedItem();
-					   //		AddItem(pItem);
-					   //	}
-					break;
+				case BUTTON_BUY:// 샵씬에서 구매 선택하면 그 아이템이 아이템 가방에 저장됨
+					if (m_itemBag.find(SCENE->GetScene(SCENE_SHOP)->GetSelectedItem()->GetID()) != m_itemBag.end())
+					{
+						Item* pItem = SCENE->GetScene(SCENE_SHOP)->GetSelectedItem();
+						AddItem(pItem);
+						break;
+					}
+
+				case BUTTON_EXIT:
+					break;				
 				}
 			}
 		}
