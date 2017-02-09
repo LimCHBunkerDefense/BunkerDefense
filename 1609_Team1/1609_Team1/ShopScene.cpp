@@ -76,11 +76,13 @@ void ShopScene::OnDraw()
 	if (m_selectedItem != NULL)
 	{
 		pMainCamera->DrawT(m_selectedItem->GetName(), 820, 395, ColorF::AntiqueWhite, 15);
-
-		TCHAR number[50] = {};
-		// wsprintf(number, TEXT("%f"), m_selectedItem->GetAttack());
-		// pMainCamera->DrawT(number, 820, 305, ColorF::AntiqueWhite, 15);
 		pMainCamera->DrawT(m_selectedItem->GetInfo(), 800, 420, ColorF::AntiqueWhite, 15);
+		
+		// float 값 사용해서 text 출력
+		TCHAR number[50] = {};
+		swprintf_s(number, TEXT("%.1f"), m_selectedItem->GetAttack());
+		pMainCamera->DrawT(number, 820, 305, ColorF::AntiqueWhite, 15);
+		
 	}
 
 	RENDER->DrawRect(Vector(135, 450), Vector(150, 150), ColorF::Aqua, 3);
