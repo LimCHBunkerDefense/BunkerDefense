@@ -2,6 +2,17 @@
 #include "Player.h"
 #include "Creature.h"
 
+ObjectManager::ObjectManager()
+{
+
+}
+
+ObjectManager::~ObjectManager()
+{
+
+}
+
+
 void ObjectManager::Update(float deltaTime)
 {
 	m_pPlayer->Update(deltaTime);
