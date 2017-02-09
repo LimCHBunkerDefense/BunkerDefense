@@ -92,6 +92,7 @@ void Player::AttackState(float deltaTime)
 	// 마우스 움직이면 모든 오브젝트들이 플레이어 중심으로 회전하는 처리 시작---------------------------------------------------
 	// 이전 마우스좌표와 움직인 마우스 좌표를 비교하는 부분
 	float fTurnSpeed = 0;
+	float deltaHeight = 0;
 	Vector NowMousePos = Vector(INPUT->GetMousePos().x, INPUT->GetMousePos().y);
 
 	if (abs(NowMousePos.x - m_prevMousePos.x) >EPSILON
@@ -107,15 +108,18 @@ void Player::AttackState(float deltaTime)
 	if (abs(NowMousePos.y - m_prevMousePos.y) >EPSILON
 		&& NowMousePos.y < m_prevMousePos.y) 
 	{
+		deltaHeight += ROTATE_SPEED * deltaTime;
 		OBJECT->SetSightHeight(OBJECT->GetSightHeight() + ROTATE_SPEED * deltaTime);
 	}
 	if (abs(NowMousePos.y - m_prevMousePos.y) >EPSILON
 		&& NowMousePos.y > m_prevMousePos.y) 
 	{
+		deltaHeight -= ROTATE_SPEED * deltaTime;
 		OBJECT->SetSightHeight(OBJECT->GetSightHeight() - ROTATE_SPEED * deltaTime);
 	}
 	
 	if(abs(fTurnSpeed) > EPSILON) OBJECT->SetDeltaSightAngle(fTurnSpeed);
+	if (abs(deltaHeight) > EPSILON) OBJECT->SetDeltaSightHeight(deltaHeight);
 	
 
 	m_prevMousePos = NowMousePos;
