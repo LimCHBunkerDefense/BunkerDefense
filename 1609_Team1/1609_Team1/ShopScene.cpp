@@ -5,7 +5,6 @@ ShopScene::ShopScene()
 	RENDER->LoadImageFile(TEXT("shopBG"), TEXT("Image/BackGround/shopBG.png"));
 	RENDER->LoadImageFile(TEXT("shopNPC"), TEXT("Image/NPC/shopnpc2.png"));
 	RENDER->LoadImageFile(TEXT("talkBox"), TEXT("Image/NPC/talk_box.png"));
-	//m_itemList.push_back();
 
 	// itemDB 생성
 	ITEM->Init();
@@ -24,30 +23,15 @@ ShopScene::ShopScene()
 	m_itemList.push_back(new Item(1011));
 	m_itemList.push_back(new Item(1012));
 
-	// BoxList에 Box Database 저장
-	AddBoxList(new Box(BUTTON_WEAPON, Vector(420, 235), Vector(120, 180)));
-	AddBoxList(new Box(BUTTON_BULLET, Vector(550, 235), Vector(120, 180)));
-	AddBoxList(new Box(BUTTON_USINGITEM, Vector(680, 235), Vector(120, 180)));
-
-	AddBoxList(new Box(BUTTON_FIRST, Vector(550, 375), Vector(400, 60)));  // 소분류 아이템들 - index 3부터
-	AddBoxList(new Box(BUTTON_SECOND, Vector(550, 435), Vector(400, 60)));
-	AddBoxList(new Box(BUTTON_THIRD, Vector(550, 495), Vector(400, 60)));
-	AddBoxList(new Box(BUTTON_FORTH, Vector(550, 555), Vector(400, 60)));
-
-	AddBoxList(new Box(BUTTON_BUY, Vector(885, 700), Vector(125, 35)));	// 구매 버튼 박스
-
 	IsWeaponClicked = false;
 	IsBulletClicked = false;
-	IsUsingItemClicked = false;	
+	IsUsingItemClicked = false;
 }
 
 
 ShopScene::~ShopScene()
 {
-	// 씬 종료시 정보 초기화
-	//GetBoxList().clear();
-	//m_itemList.clear();
-	//m_selectedItem = NULL;
+
 }
 
 void ShopScene::OnEnter()
@@ -56,8 +40,8 @@ void ShopScene::OnEnter()
 	NEW_OBJECT(m_pNpcIcon, Sprite(RENDER->GetImage(TEXT("shopNPC")), 1.3f, 0, 0));
 	NEW_OBJECT(m_pTalkBox, Sprite(RENDER->GetImage(TEXT("talkBox")), 0.55, 0, 0));
 
-	// 마우스 커서 보이게
-	ShowCursor(true);
+	CreateList();		// 리스트 생성
+	ShowCursor(true);	// 마우스 커서 보이게
 }
 
 void ShopScene::OnUpdate(float deltaTime)
@@ -67,6 +51,13 @@ void ShopScene::OnUpdate(float deltaTime)
 
 void ShopScene::OnExit()
 {
+	m_boxList.clear();				// 박스 리스트 소멸
+	m_selectedItem = NULL;			// 선택한 아이템 삭제
+	m_currentButton = BUTTON_NONE;			// 현재 선택한 버튼값 삭제
+
+	IsWeaponClicked = false;		// 클릭변수 삭제
+	IsBulletClicked = false;
+	IsUsingItemClicked = false;
 }
 
 void ShopScene::OnDraw()
@@ -106,6 +97,21 @@ void ShopScene::OnDraw()
 	ItemListWnd();
 	ItemStatWnd();
 
+}
+
+void ShopScene::CreateList()
+{
+	// BoxList에 Box Database 저장
+	AddBoxList(new Box(BUTTON_WEAPON, Vector(420, 235), Vector(120, 180)));
+	AddBoxList(new Box(BUTTON_BULLET, Vector(550, 235), Vector(120, 180)));
+	AddBoxList(new Box(BUTTON_USINGITEM, Vector(680, 235), Vector(120, 180)));
+
+	AddBoxList(new Box(BUTTON_FIRST, Vector(550, 375), Vector(400, 60)));  // 소분류 아이템들 - index 3부터
+	AddBoxList(new Box(BUTTON_SECOND, Vector(550, 435), Vector(400, 60)));
+	AddBoxList(new Box(BUTTON_THIRD, Vector(550, 495), Vector(400, 60)));
+	AddBoxList(new Box(BUTTON_FORTH, Vector(550, 555), Vector(400, 60)));
+
+	AddBoxList(new Box(BUTTON_BUY, Vector(885, 700), Vector(125, 35)));	// 구매 버튼 박스
 }
 
 void ShopScene::ItemListWnd()
