@@ -18,7 +18,7 @@ void GameManager::Init()
 	m_prevTime = (float)timeGetTime() * 0.001f;
 
 	WINDOW->RegisterData(TEXT("Main"), CS_HREDRAW | CS_VREDRAW, RGB(255, 255, 255), WndProc);
-	WINDOW->Create(WND_MAIN, TEXT("Main"), TEXT("MainWindow"), 0, 0, VIEW_WIDTH, VIEW_HEIGHT);
+	WINDOW->Create(WND_MAIN, TEXT("Main"), TEXT("BunkerDefense_Team 1"), 0, 0, VIEW_WIDTH, VIEW_HEIGHT);
 
 	RENDER->Init(WINDOW->GetHandle(WND_MAIN));
 	INPUT->Init(WINDOW->GetHandle(WND_MAIN));

@@ -21,8 +21,8 @@ PlayScene::PlayScene()
 	RENDER->LoadImageFiles(TEXT("EntAttack"), TEXT("Image/Creature/Ent/Attack/Attack"), TEXT("png"), 6);
 
 	// 카메라 생성
-	RENDER->CreateCamera(CAM_MAIN, 1920, 1200, VIEW_WIDTH, VIEW_HEIGHT);
-	RENDER->CreateCamera(CAM_MINIMAP, MINI_WIDTH, MINI_HEIGHT, MINI_WIDTH, MINI_HEIGHT);
+	RENDER->CreateCamera(CAM_MAIN, 1920, 1080, VIEW_WIDTH, VIEW_HEIGHT);
+	RENDER->CreateCamera(CAM_MINIMAP, MINI_WIDTH, MINI_HEIGHT* 2, MINI_WIDTH, MINI_HEIGHT * 2);
 
 }
 
@@ -42,12 +42,15 @@ void PlayScene::OnEnter()
 
 	// 카메라 세팅
 	RENDER->GetCamera(CAM_MAIN)->SetScreenRect(0, 0, VIEW_WIDTH, VIEW_HEIGHT);
-	RENDER->GetCamera(CAM_MINIMAP)->SetScreenRect(VIEW_WIDTH - MINI_WIDTH, VIEW_HEIGHT - MINI_HEIGHT, MINI_WIDTH, MINI_HEIGHT);
+	RENDER->GetCamera(CAM_MINIMAP)->SetScreenRect(VIEW_WIDTH - MINI_WIDTH, VIEW_HEIGHT - MINI_HEIGHT * 2, MINI_WIDTH, MINI_HEIGHT * 2);
 
 	m_createdCretureCount = 0;
 
-	// 테스트 용 크리쳐 생성
-	OBJECT->CreateCreature(OBJ_ENT, Vector(120, 60));
+	// 테스트용 크리쳐 생성
+	//OBJECT->CreateCreature(OBJ_ENT, Vector(120, 60));
+
+	// 마우스 커서 없애기
+	ShowCursor(false);
 
 }
 
@@ -57,10 +60,11 @@ void PlayScene::OnUpdate(float deltaTime)
 	m_gameTime += deltaTime;
 
 	// 게임 시간에 따른 크리쳐 생성
-	//SetCreature(deltaTime);
+	SetCreature(deltaTime);
 	
 	// 오브젝트 전체 업데이트
 	OBJECT->Update(deltaTime);
+	OBJECT->SetPosByDeltaAngle();
 }
 
 void PlayScene::OnExit()

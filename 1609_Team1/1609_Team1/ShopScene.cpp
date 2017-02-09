@@ -23,16 +23,16 @@ ShopScene::ShopScene()
 	m_itemList.push_back(new Item(1012));
 
 	// BoxList에 Box Database 저장
-	AddBoxList(new Box(ITEM_WEAPON, Vector(370, 235), Vector(120, 180)));
-	AddBoxList(new Box(ITEM_BULLET, Vector(500, 235), Vector(120, 180)));
-	AddBoxList(new Box(ITEM_USINGITEM, Vector(630, 235), Vector(120, 180)));
+	AddBoxList(new Box(BUTTON_WEAPON, Vector(370, 235), Vector(120, 180)));
+	AddBoxList(new Box(BUTTON_BULLET, Vector(500, 235), Vector(120, 180)));
+	AddBoxList(new Box(BUTTON_USINGITEM, Vector(630, 235), Vector(120, 180)));
 
-	AddBoxList(new Box(4, Vector(500, 375), Vector(400, 60)));  // 소분류 아이템들 - index 3부터
-	AddBoxList(new Box(5, Vector(500, 435), Vector(400, 60)));
-	AddBoxList(new Box(6, Vector(500, 495), Vector(400, 60)));
-	AddBoxList(new Box(7, Vector(500, 555), Vector(400, 60)));
+	AddBoxList(new Box(BUTTON_FIRST, Vector(500, 375), Vector(400, 60)));  // 소분류 아이템들 - index 3부터
+	AddBoxList(new Box(BUTTON_SECOND, Vector(500, 435), Vector(400, 60)));
+	AddBoxList(new Box(BUTTON_THIRD, Vector(500, 495), Vector(400, 60)));
+	AddBoxList(new Box(BUTTON_FORTH, Vector(500, 555), Vector(400, 60)));
 
-	AddBoxList(new Box(8, Vector(835, 700), Vector(125, 35)));	// 구매 버튼 박스
+	AddBoxList(new Box(BUTTON_BUY, Vector(835, 700), Vector(125, 35)));	// 구매 버튼 박스
 
 	IsWeaponClicked = false;
 	IsBulletClicked = false;
@@ -48,10 +48,8 @@ void ShopScene::OnEnter()
 {
 	NEW_OBJECT(m_pBg, Sprite(RENDER->GetImage(TEXT("shopBG")), 1.0f, 0, 0));
 
-	// m_bBuyButton = Box(Vector(1000, 500), Vector(100, 50));
-	// m_bWeapon = Box(Vector(480, 200), Vector(200, 50));
-	// m_bBullet = Box(Vector(480, 280), Vector(200, 50));
-	// m_bUsingItem = Box(Vector(480, 360), Vector(200, 50));
+	// 마우스 커서 보이게
+	ShowCursor(true);
 }
 
 void ShopScene::OnUpdate(float deltaTime)
