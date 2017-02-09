@@ -124,7 +124,9 @@
     <ClCompile Include="Button.cpp">
       <Filter>Object\Button</Filter>
     </ClCompile>
-    <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="Bullet.cpp">
+      <Filter>Object\Bullet</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Math.h">
@@ -188,6 +190,8 @@
     <ClInclude Include="SceneManager.h">
       <Filter>Manager\SceneManager</Filter>
     </ClInclude>
-    <ClInclude Include="Bullet.h" />
+    <ClInclude Include="Bullet.h">
+      <Filter>Object\Bullet</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

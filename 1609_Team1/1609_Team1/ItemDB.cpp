@@ -41,7 +41,7 @@ void ItemDB::Init()
 	Add(new ItemData(ITEM_USINGITEM, 1010, 200, 0, 15.0f, 0,   0, 0, 3000, TEXT("공중 폭격(Air Bomb"),
 		TEXT("광범위하게 살상하는 공중폭격. \n무전기로 본부를 호출해서 지원을 요청한다.")));
 	Add(new ItemData(ITEM_USINGITEM, 1011,  30, 0, 10.0f, 0,   0, 0, 1000, TEXT("용암지대(Rava Region)"),
-		TEXT("지속적인 화상상태를 입히는 용암지대. \n용암이 담긴 캡슐을 던져 용암지대를 형성한다.")));
+		TEXT("지속적인 화상상태를 입히는 용암지대. \n용암이 담긴 캡슐을 던져 용암지대를\n형성한다.")));
 	Add(new ItemData(ITEM_USINGITEM, 1012,   0, 0, 0.0f,  100, 0, 0, 200,  TEXT("벙커 수리(Bunker Repair)"),
 		TEXT("금이 간 벙커를 수리. 몬스터로부터\n 공격당해 금이 간 벙커를 수리한다.")));
 

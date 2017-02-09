@@ -42,6 +42,10 @@ ShopScene::ShopScene()
 
 ShopScene::~ShopScene()
 {
+	// 씬 종료시 정보 초기화
+	//GetBoxList().clear();
+	//m_itemList.clear();
+	//m_selectedItem = NULL;
 }
 
 void ShopScene::OnEnter()
@@ -59,7 +63,6 @@ void ShopScene::OnUpdate(float deltaTime)
 
 void ShopScene::OnExit()
 {
-
 }
 
 void ShopScene::OnDraw()
@@ -76,7 +79,7 @@ void ShopScene::OnDraw()
 	if (m_selectedItem != NULL)
 	{
 		pMainCamera->DrawT(m_selectedItem->GetName(), 820, 395, ColorF::AntiqueWhite, 15);
-		pMainCamera->DrawT(m_selectedItem->GetInfo(), 800, 420, ColorF::AntiqueWhite, 15);
+		pMainCamera->DrawT(m_selectedItem->GetInfo(), 780, 420, ColorF::AntiqueWhite, 15);
 		
 		// float 값 사용해서 text 출력
 		TCHAR number[50] = {};
@@ -118,8 +121,8 @@ void ShopScene::ItemListWnd()
 	RENDER->DrawLine(Vector(300, 462), Vector(700, 462), ColorF::Red);
 	RENDER->DrawLine(Vector(300, 524), Vector(700, 524), ColorF::Red);
 	RENDER->DrawLine(Vector(300, 584), Vector(700, 584), ColorF::Red);
-	RENDER->DrawLine(Vector(300, 644), Vector(700, 644), ColorF::Red);
-	RENDER->DrawLine(Vector(300, 704),Vector(700, 704),ColorF::Red);
+	//RENDER->DrawLine(Vector(300, 644), Vector(700, 644), ColorF::Red);
+	//RENDER->DrawLine(Vector(300, 704),Vector(700, 704),ColorF::Red);
 
 	if (SCENE->GetColliderOnOff())
 	{

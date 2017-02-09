@@ -12,7 +12,7 @@ Bullet::Bullet(OBJ_TAG tag) : Object(tag)
 {
 	CreatureData* pData = CREATURE->GetData(tag);
 	m_dir = DIRECTION_CENTER;
-
+	m_state = BULLET_IDLE;
 	m_scale = 0.5f;
 	m_moveSpeed = pData->moveSpeed;
 
