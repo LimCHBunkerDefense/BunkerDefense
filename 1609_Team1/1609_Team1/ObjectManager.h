@@ -85,6 +85,7 @@ public:
 class ObjectManager : public Singleton<ObjectManager>
 {
 	float m_deltaSightAngle;
+
 	Object* m_pPlayer;
 	Object* m_bunker;
 	list<Object*> m_creatureList;
@@ -92,6 +93,9 @@ class ObjectManager : public Singleton<ObjectManager>
 
 
 public:	
+	ObjectManager();
+	~ObjectManager();
+
 	void Update(float deltaTime);
 	void Draw(Camera* pCamera);
 
@@ -111,5 +115,6 @@ public:
 	// 플레이어의 마우스 회전에 의한 각 변화값 저장 및 호출
 	void SetDeltaSightAngle(float deltaAngle) { m_deltaSightAngle = deltaAngle; }
 	float GetDeltaSightAngle() { return m_deltaSightAngle; }
+
 };
 

@@ -271,7 +271,6 @@ class Camera
 	Vector m_center;
 	float m_opacity;
 	D2D1_RECT_F m_screenRect;
-	float m_height;//카메라 y축 높이
 	Line m_LineCamera, m_LineLeft, m_LineRight;//	1. 카메라 중심선, 왼쪽, 오른쪽 선
 
 	IDWriteFactory*			m_pDWriteFactory; // 텍스트 출력을 위한 팩토리
@@ -384,19 +383,19 @@ public:
 		return a;
 	}
 
-	// 크리쳐가 플레이어의 시야에 들어왔을 경우, 미니맵 상의 크리쳐를 전장 화면으로 출력해주는 함수
-	void Draw3D(Sprite* sprite, Vector pos, int dir = -1, float opacity = 1.0f) 
+	// 크리쳐가 플레이어의 시야에 들어왔을 경우, 미니맵 상의 크리쳐를 전장 화면으로 출력해주는 함수, float 는 시작점부터 끝점까지 이동한 거리의 비율
+	void Draw3D(Sprite* sprite, Vector startPos, float t, int dir = -1, float opacity = 1.0f) 
 	{
 		// 크리쳐가 플레이어의 시야 (미니맵 상의 두 파란선) 안에 들어왔는지 확인하는 단계. 플레이어의 시야는 CAMERA_ANGLE로 정의되어 있음
 		//DrawLine(VIEW_WIDTH-MINI_WIDTH+moveLine.StartPoint().x, VIEW_HEIGHT - MINI_HEIGHT + moveLine.StartPoint().y, VIEW_WIDTH - MINI_WIDTH/2, VIEW_HEIGHT - MINI_HEIGHT / 2, ColorF::Red, 1);
-		float Angle = MATH->Angle(Vector::Right(), pos - Vector(MINI_WIDTH * 0.5, MINI_HEIGHT));
+		float Angle = MATH->Angle(Vector::Right(), startPos - Vector(MINI_WIDTH * 0.5, MINI_HEIGHT));
 
 		if (Angle <= CAMERA_LEFT && Angle >= CAMERA_RIGHT)
 		{
 			m_pBitmapTarget->BeginDraw();
 
-			Vector posInMap = ChangePositionToView(pos);
-			sprite->SetPosition(posInMap.x, posInMap.y);
+			Vector posInMap = ChangePositionToView(startPos);
+			sprite->SetPosition(posInMap.x, m_height + MINI_WIDTH * 0.5 * 5 * t);
 			sprite->SetDirection(dir);
 			sprite->Render(m_pBitmapTarget);
 

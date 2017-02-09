@@ -17,7 +17,7 @@
 #define CAMERA_RIGHT	90-CAMERA_ANGLE/2
 #define CHARACTER_X		VIEW_WIDTH*0.5F-30
 #define CHARACTER_Y		VIEW_HEIGHT-30
-#define ROTATE_SPEED	1
+#define ROTATE_SPEED	200
 #define SIGHT			VIEW_WIDTH/2
 
 #define EPSILON 0.001
@@ -76,7 +76,7 @@
 #define VK_Y				0x59
 #define VK_Z				0x5A
 
-static float m_height=400;
+static float m_height = 400;
 
 enum KEY_STATE
 {
