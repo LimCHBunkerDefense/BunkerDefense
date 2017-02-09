@@ -85,6 +85,7 @@ public:
 class ObjectManager : public Singleton<ObjectManager>
 {
 	float m_deltaSightAngle;
+	float m_deltaSightHeight;
 	float m_sightHeight;
 
 	Object* m_pPlayer;
@@ -116,6 +117,8 @@ public:
 	// 플레이어의 마우스 회전에 의한 각 변화값 저장 및 호출
 	void SetDeltaSightAngle(float deltaAngle) { m_deltaSightAngle = deltaAngle; }
 	float GetDeltaSightAngle() { return m_deltaSightAngle; }
+	void SetDeltaSightHeight(float deltaHeight) { m_deltaSightHeight = deltaHeight; }
+	float GetDeltaSightHeight() { return m_deltaSightHeight; }
 	void SetSightHeight(float height) { m_sightHeight = height; }
 	float GetSightHeight() { return m_sightHeight; }
 

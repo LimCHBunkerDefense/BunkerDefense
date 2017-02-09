@@ -35,7 +35,9 @@ void ObjectManager::Draw(Camera* pCamera)
 	FOR_LIST(Object*, m_creatureList)
 	{
 		(*it)->Draw(pCamera);
-		if(SCENE->GetColliderOnOff()) pCamera->DrawRect((*it)->Collider().LeftTop(), (*it)->Collider().size, ColorF::Yellow, 3);
+
+		// 충돌체 보여주는 부분인데, 미니맵의 실제 움직임과 보여지는 움직임이 다르기 때문에 충돌체 보여주는 것이 의미가 없음.
+		// if(SCENE->GetColliderOnOff()) pCamera->DrawRect((*it)->Collider().LeftTop(), (*it)->Collider().size, ColorF::Yellow, 3);
 	}
 
 	//FOR_LIST(Object*, m_bulletList)
@@ -89,6 +91,9 @@ void ObjectManager::CreateCreature(OBJ_TAG tag, Vector pos)
 
 void ObjectManager::SetPosByDeltaAngle()
 {
+	float deltaPosX = 0;
+	float deltaPosY = 0;
+
 	if (abs(m_deltaSightAngle) > EPSILON)
 	{
 		// 크리쳐 리스트 불러다가 미니맵 상의 pos 수정해주는 부분
@@ -106,16 +111,23 @@ void ObjectManager::SetPosByDeltaAngle()
 
 			(*it)->SetStartPos(pos);
 		}
+
+		// 배경 좌우 이동을 위한 변화량 계산
+		float sign = (m_deltaSightAngle > EPSILON) ? -1 : 1;
+		deltaPosX = MATH->Tan(m_deltaSightAngle) * VIEW_WIDTH * 0.5 * sign;
+		
 	}
 
+
 	// 카메라 이동에 따른 배경 출력 위치 변경
-	if (m_deltaSightAngle > 0)
-	{
-		//-
-		//float deltaX = 
-	}
+	SCENE->GetScene(SCENE_PLAY)->SetPosBg(SCENE->GetScene(SCENE_PLAY)->GetPosBg() - Vector(deltaPosX, deltaPosY));
+
+	
 
 	// 시야 변화 각 초기화
 	m_deltaSightAngle = 0;
+
+	// 화면 높이 변화량 초기화
+	m_deltaSightHeight = 0;
 	
 }
