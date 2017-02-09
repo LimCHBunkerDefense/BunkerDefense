@@ -41,6 +41,10 @@ public:
 	virtual void SetIsUsingItemClicked(bool ON){} 
 	virtual bool GetBuyClicked() { return NULL; }
 	virtual void SetBuyCilcked(bool ON) {}
+
+	// PlayScene ¿ë
+	virtual void SetPosBg(Vector pos) {}
+	virtual Vector GetPosBg() { return Vector::Zero(); }
 };
 
 class SceneManager : public Singleton<SceneManager>
