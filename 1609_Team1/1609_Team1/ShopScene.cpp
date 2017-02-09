@@ -3,8 +3,10 @@
 ShopScene::ShopScene()
 {
 	RENDER->LoadImageFile(TEXT("shopBG"), TEXT("Image/BackGround/shopBG.png"));
-	RENDER->LoadImageFile(TEXT("shopNPC"), TEXT("Image/NPC/shopnpc2.png"));
+	RENDER->LoadImageFile(TEXT("shopNPC"), TEXT("Image/NPC/shopnpc.png"));
 	RENDER->LoadImageFile(TEXT("talkBox"), TEXT("Image/NPC/talk_box.png"));
+	RENDER->LoadImageFile(TEXT("MarketBG"), TEXT("Image/NPC/MarketBG.png"));
+	RENDER->LoadImageFile(TEXT("box_bg"), TEXT("Image/NPC/box_bg.png"));
 
 	// itemDB 생성
 	ITEM->Init();
@@ -38,7 +40,9 @@ void ShopScene::OnEnter()
 {
 	NEW_OBJECT(m_pBg, Sprite(RENDER->GetImage(TEXT("shopBG")), 1.0f, 0, 0));
 	NEW_OBJECT(m_pNpcIcon, Sprite(RENDER->GetImage(TEXT("shopNPC")), 1.3f, 0, 0));
-	NEW_OBJECT(m_pTalkBox, Sprite(RENDER->GetImage(TEXT("talkBox")), 0.55, 0, 0));
+	NEW_OBJECT(m_pTalkBox, Sprite(RENDER->GetImage(TEXT("talkBox")), 0.65, 0, 0));
+	NEW_OBJECT(m_pMarketBG, Sprite(RENDER->GetImage(TEXT("MarketBG")), 0.815, 0, 0));
+	NEW_OBJECT(m_pBoxBG, Sprite(RENDER->GetImage(TEXT("box_bg")), 0.815, 0, 0));
 
 	CreateList();		// 리스트 생성
 	ShowCursor(true);	// 마우스 커서 보이게
@@ -64,11 +68,14 @@ void ShopScene::OnDraw()
 {
 	Camera* pMainCamera = RENDER->GetCamera(CAM_MAIN);
 	pMainCamera->Draw(m_pBg, Vector(0, 0));
-	pMainCamera->Draw(m_pTalkBox, Vector(15, 85)); // talkbox image
-	pMainCamera->Draw(m_pNpcIcon, Vector(-138, 250)); // npc image
+	pMainCamera->Draw(m_pMarketBG, Vector(350, 124));
+	pMainCamera->Draw(m_pBoxBG, Vector(786, 300));
+	pMainCamera->Draw(m_pTalkBox, Vector(20, 115)); // talkbox image
+	pMainCamera->DrawT(TEXT("반갑습니다. \n ***상점에 오신걸 환영합니다."), 84, 190, ColorF::BlanchedAlmond, 15);
+	pMainCamera->Draw(m_pNpcIcon, Vector(-138, 220)); // npc image
 
-	RENDER->DrawRect(Vector(670, 50), Vector (150, 50), ColorF::BlanchedAlmond);
-	RENDER->DrawT(TEXT("SHOP"), 640, 35, ColorF::BlanchedAlmond, 25);
+	RENDER->DrawRect(Vector(630, 50), Vector (150, 50), ColorF::BlanchedAlmond);
+	RENDER->DrawT(TEXT("SHOP"), 600, 35, ColorF::BlanchedAlmond, 25);
 	RENDER->DrawRect(Vector(950, 450),Vector(320, 300),ColorF::AntiqueWhite, 3);
 	RENDER->DrawT(TEXT("-아이템 정보-"), 880, 335, ColorF::BlanchedAlmond, 20);
 	//pMainCamera->DrawT(TEXT("ATK:"), 800, 495, ColorF::AntiqueWhite, 15);
@@ -117,9 +124,9 @@ void ShopScene::CreateList()
 void ShopScene::ItemListWnd()
 {
 	//아이템 종류 목차
-	RENDER->DrawRect(Vector(550, 235), Vector(400, 220), ColorF::OrangeRed);
+	//RENDER->DrawRect(Vector(550, 235), Vector(400, 220), ColorF::OrangeRed);
 	RENDER->DrawRect(Vector(418, 232), Vector(120, 180), ColorF::Tomato);
-	RENDER->DrawT(TEXT("    ITEM\nWEAPON"), 378, 215, ColorF::Tomato, 20);
+	RENDER->DrawT(TEXT("    ITEM\nWEAPON"), 374, 215, ColorF::Tomato, 20);
 
 	RENDER->DrawRect(Vector(550, 232), Vector(120, 180), ColorF::Khaki);
 	RENDER->DrawT(TEXT("  ITEM\nBULLET"), 515, 215, ColorF::Khaki, 20);
@@ -127,11 +134,11 @@ void ShopScene::ItemListWnd()
 	RENDER->DrawRect(Vector(680, 232), Vector(120, 180), ColorF::HotPink);
 	RENDER->DrawT(TEXT("      ITEM\nUSINGITEM"), 625, 215, ColorF::HotPink, 20);
 
-	RENDER->DrawRect(Vector(550, 560),Vector(400, 430),ColorF::Red);
-	RENDER->DrawLine(Vector(350, 408), Vector(750, 408), ColorF::Red);
-	RENDER->DrawLine(Vector(350, 462), Vector(750, 462), ColorF::Red);
-	RENDER->DrawLine(Vector(350, 524), Vector(750, 524), ColorF::Red);
-	RENDER->DrawLine(Vector(350, 584), Vector(750, 584), ColorF::Red);
+	//RENDER->DrawRect(Vector(550, 560),Vector(400, 430),ColorF::Red);
+	//RENDER->DrawLine(Vector(350, 408), Vector(750, 408), ColorF::Red);
+	//RENDER->DrawLine(Vector(350, 462), Vector(750, 462), ColorF::Red);
+	//RENDER->DrawLine(Vector(350, 524), Vector(750, 524), ColorF::Red);
+	//RENDER->DrawLine(Vector(350, 584), Vector(750, 584), ColorF::Red);
 	//RENDER->DrawLine(Vector(300, 644), Vector(700, 644), ColorF::Red);
 	//RENDER->DrawLine(Vector(300, 704),Vector(700, 704),ColorF::Red);
 
@@ -191,7 +198,7 @@ void ShopScene::ItemListWnd()
 void ShopScene::ItemStatWnd()
 {
 	//선택 아이탬 정보
-	RENDER->DrawRect(Vector(950, 450), Vector(400, 650), ColorF::Yellow);
+	//RENDER->DrawRect(Vector(950, 450), Vector(400, 650), ColorF::Yellow);
 	RENDER->DrawRect(Vector(950, 235), Vector(100, 100), ColorF::Aqua, 3);
 	RENDER->DrawT(TEXT("ITEM\nICON"), 930, 215, ColorF::Aqua, 20);
 
