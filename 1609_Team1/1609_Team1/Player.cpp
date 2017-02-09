@@ -13,6 +13,8 @@ Player::Player(OBJ_TAG tag) : Object(tag)
 	
 	m_prevMousePos = Vector(INPUT->GetMousePos().x, INPUT->GetMousePos().y);
 	m_sight = SIGHT;
+
+	m_itemBag.push_back(new Item(1001));
 }
 
 Player::~Player()
@@ -216,11 +218,8 @@ void Player::ShopState()
 					}
 					break;
 				case 8:// 샵씬에서 구매 선택하면 그 아이템이 아이템 가방에 저장됨
-					   //	if (SCENE->GetScene(SCENE_SHOP)->GetIsWeaponClicked() == true)
-					   //	{
-					   //		Item* pItem = SCENE->GetScene(SCENE_SHOP)->GetSelectedItem();
-					   //		AddItem(pItem);
-					   //	}
+					Item* pItem = SCENE->GetScene(SCENE_SHOP)->GetSelectedItem();
+					AddItem(pItem);
 					break;
 				}
 			}

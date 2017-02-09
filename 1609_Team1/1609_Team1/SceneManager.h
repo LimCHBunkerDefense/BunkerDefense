@@ -39,6 +39,8 @@ public:
 	virtual void SetIsBulletClicked(bool ON){}
 	virtual bool GetIsUsingItemClicked() { return NULL; }
 	virtual void SetIsUsingItemClicked(bool ON){} 
+	virtual bool GetBuyClicked() { return NULL; }
+	virtual void SetBuyCilcked(bool ON) {}
 };
 
 class SceneManager : public Singleton<SceneManager>
