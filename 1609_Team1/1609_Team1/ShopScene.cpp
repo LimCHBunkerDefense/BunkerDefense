@@ -72,13 +72,14 @@ void ShopScene::OnDraw()
 
 	RENDER->DrawRect(Vector(620, 50), Vector(150, 50), ColorF::BlanchedAlmond);
 	RENDER->DrawT(TEXT("SHOP"), 590, 35, ColorF::BlanchedAlmond, 25);
-	RENDER->DrawRect(Vector(900, 420),Vector(320, 135),ColorF::AntiqueWhite, 3);
-	RENDER->DrawT(TEXT("-아이템 정보-"), 840	, 370, ColorF::BlanchedAlmond, 20);
+	RENDER->DrawRect(Vector(900, 450),Vector(320, 300),ColorF::AntiqueWhite, 3);
+	RENDER->DrawT(TEXT("-아이템 정보-"), 840, 335, ColorF::BlanchedAlmond, 20);
 
 	if (m_selectedItem != NULL)
 	{
-		pMainCamera->DrawT(m_selectedItem->GetName(), 820, 405, ColorF::AntiqueWhite, 15);
-		pMainCamera->DrawT(m_selectedItem->GetInfo(), 820, 435, ColorF::AntiqueWhite, 15);
+		pMainCamera->DrawT(m_selectedItem->GetName(), 820, 395, ColorF::AntiqueWhite, 15);
+		//*pMainCamera->DrawT(m_selectedItem->GetAttack*(), 820, 395, ColorF::AntiqueWhite, 15);
+		pMainCamera->DrawT(m_selectedItem->GetInfo(), 800, 420, ColorF::AntiqueWhite, 15);
 	}
 
 	RENDER->DrawRect(Vector(135, 450), Vector(150, 150), ColorF::Aqua, 3);
@@ -171,8 +172,8 @@ void ShopScene::ItemStatWnd()
 {
 	//선택 아이탬 정보
 	RENDER->DrawRect(Vector(900, 450), Vector(400, 650), ColorF::Yellow);
-	RENDER->DrawRect(Vector(900, 250), Vector(150, 150), ColorF::Aqua, 3);
-	RENDER->DrawT(TEXT("ITEM\nICON"), 880, 230, ColorF::Aqua, 20);
+	RENDER->DrawRect(Vector(900, 235), Vector(100, 100), ColorF::Aqua, 3);
+	RENDER->DrawT(TEXT("ITEM\nICON"), 880, 215, ColorF::Aqua, 20);
 
 
 	RENDER->DrawRect(Vector(910, 650), Vector(125, 35), ColorF::Aquamarine, 3);
