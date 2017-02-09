@@ -107,13 +107,12 @@ void Player::AttackState(float deltaTime)
 	if (abs(NowMousePos.y - m_prevMousePos.y) >EPSILON
 		&& NowMousePos.y < m_prevMousePos.y) 
 	{
-		m_height += ROTATE_SPEED * deltaTime;
+		OBJECT->SetSightHeight(OBJECT->GetSightHeight() + ROTATE_SPEED * deltaTime);
 	}
 	if (abs(NowMousePos.y - m_prevMousePos.y) >EPSILON
 		&& NowMousePos.y > m_prevMousePos.y) 
 	{
-		m_height -= ROTATE_SPEED * deltaTime;
-		float aaa = m_height;
+		OBJECT->SetSightHeight(OBJECT->GetSightHeight() - ROTATE_SPEED * deltaTime);
 	}
 	
 	if(abs(fTurnSpeed) > EPSILON) OBJECT->SetDeltaSightAngle(fTurnSpeed);

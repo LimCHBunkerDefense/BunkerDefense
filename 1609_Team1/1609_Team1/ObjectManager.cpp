@@ -4,7 +4,7 @@
 
 ObjectManager::ObjectManager()
 {
-
+	m_sightHeight = 400;
 }
 
 ObjectManager::~ObjectManager()
