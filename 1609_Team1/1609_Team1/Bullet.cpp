@@ -8,7 +8,7 @@ Bullet::Bullet()
 
 Bullet::Bullet(OBJ_TAG tag) : Object(tag)
 {
-	m_angle = 10;//각도 내의 적에게만 반응
+	//m_angle = 10;//각도 내의 적에게만 반응
 	CreatureData* pData = CREATURE->GetData(tag);
 	m_scale = 0.25f;
 	m_state = BULLET_IDLE;
@@ -75,7 +75,7 @@ BOOL Bullet::Collided()
 {
 	list<Object*> creatureList = OBJECT->GetCreatureList();
 	FOR_LIST(Object*, creatureList) {
-		if (abs(MATH->Angle(m_moveDirection, (*it)->GetMoveDirection())) < m_angle) {
+		if (abs(MATH->Angle(m_moveDirection, (*it)->GetMoveDirection())) < (*it)->GetCollideAngle()) {
 			if (m_t + (*it)->GetMT() >= 1.0f) {
 				if (MATH->IsCollided(this->Collider(), (*it)->Collider()))
 				{
