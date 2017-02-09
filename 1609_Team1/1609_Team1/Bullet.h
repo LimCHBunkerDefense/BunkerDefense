@@ -9,10 +9,10 @@ class Bullet :
 	Sprite* m_pSprite;
 	float m_moveSpeed;
 	float m_scale;
-	float m_angle;//각도 내의 적에게만 반응
+	//float m_angle;//각도 내의 적에게만 반응
 	float m_addHeight; //높이 추가값 지정
 
-
+	float m_height; //생성됐을 때 높이
 	float m_t;//날아간 거리 비율 소수점
 	Vector m_moveDirection;
 	Vector m_startPos;//시작 위치

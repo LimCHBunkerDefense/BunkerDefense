@@ -41,7 +41,16 @@ public:
 	void SetStartPos(Vector pos) { m_startPos = pos; }
 	Vector GetStartPos() { return m_startPos; }
 	float GetMT() { return m_t; }
-	
+
+	//콜라이더 각도 구해서 리턴
+	float GetCollideAngle() {
+		Vector pos = m_startPos * (1 - m_t) + OBJECT->GetPlayer()->Position() * m_t;
+		Vector box = (Collider().size * (m_t *2.0f))/2;
+		Vector v_center = Position() - OBJECT->GetPlayer()->Position();
+		Vector v_side = box + pos - OBJECT->GetPlayer()->Position();
+		float a = MATH->CosAngle(v_center, v_side) * 2;
+		return a;
+	}
 
 };
 
