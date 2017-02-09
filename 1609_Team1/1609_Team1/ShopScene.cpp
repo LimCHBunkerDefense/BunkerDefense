@@ -79,7 +79,7 @@ void ShopScene::OnDraw()
 
 		TCHAR number[50] = {};
 		// wsprintf(number, TEXT("%f"), m_selectedItem->GetAttack());
-		pMainCamera->DrawT(number, 820, 305, ColorF::AntiqueWhite, 15);
+		// pMainCamera->DrawT(number, 820, 305, ColorF::AntiqueWhite, 15);
 		pMainCamera->DrawT(m_selectedItem->GetInfo(), 800, 420, ColorF::AntiqueWhite, 15);
 	}
 
