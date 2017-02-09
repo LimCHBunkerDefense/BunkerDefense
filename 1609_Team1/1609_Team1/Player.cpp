@@ -108,6 +108,16 @@ void Player::AttackState(float deltaTime)
 
 	m_prevMousePos = NowMousePos;
 
+	// 커서 화면 밖으로 나가지 않도록 보정
+	if (m_prevMousePos.x <= 100
+		|| m_prevMousePos.x >= 1000
+		|| m_prevMousePos.y < 100
+		|| m_prevMousePos.y> 800)
+	{
+		SetCursorPos(500, 500);
+		m_prevMousePos = Vector(INPUT->GetMousePos().x, INPUT->GetMousePos().y);
+	}
+
 	// 마우스 움직이면 모든 오브젝트들이 플레이어 중심으로 회전하는 처리 끝---------------------------------------------------
 	
 
@@ -122,6 +132,9 @@ void Player::AttackState(float deltaTime)
 		case LASERGUN_IDLE: LaserGunState(deltaTime); break;
 		}
 	}
+
+
+
 }
 
 void Player::ShopState()

@@ -12,6 +12,10 @@ class PlayScene : public IScene
 	Sprite* m_pBg;
 	Vector m_posBg;
 
+	Sprite* m_pAim;
+	Sprite* m_pMinimap;
+	Sprite* m_pRadar;
+
 	
 	// 크리쳐 생성 y좌표(높이 h)
 	float m_heightOfCreature;

@@ -12,6 +12,11 @@ PlayScene::PlayScene()
 	RENDER->LoadImageFile(TEXT("ForestBG"), TEXT("Image/BackGround/ForestBG.jpg")); 
 	RENDER->LoadImageFile(TEXT("DroughtBG"), TEXT("Image/BackGround/DroughtBG.jpg"));
 
+	// UI 이미지 맵으로 저장
+	RENDER->LoadImageFile(TEXT("Aim"), TEXT("Image/UI/Aim/Aim.png"));
+	RENDER->LoadImageFile(TEXT("Minimap"), TEXT("Image/UI/Minimap/Minimap.png"));
+	RENDER->LoadImageFile(TEXT("Radar"), TEXT("Image/UI/Minimap/Radar.gif"));
+
 	// 크리쳐 데이터 생성
 	CREATURE->Init();
 	
@@ -43,6 +48,11 @@ void PlayScene::OnEnter()
 {
 	// 배경 이미지 스프라이트로 생성
 	NEW_OBJECT(m_pBg, Sprite(RENDER->GetImage(TEXT("DroughtBG")), 1.0f, 0, 0));
+
+	// UI 이미지 스프라이트로 생성
+	NEW_OBJECT(m_pAim, Sprite(RENDER->GetImage(TEXT("Aim")), 1.0));
+	NEW_OBJECT(m_pMinimap, Sprite(RENDER->GetImage(TEXT("Minimap")), 1.0));
+	NEW_OBJECT(m_pRadar, Sprite(RENDER->GetImage(TEXT("Radar")), 1.0));
 
 	// 플레이어 생성
 	OBJECT->CreatePlayer(Vector(MINI_WIDTH * 0.5F, MINI_HEIGHT), Vector(10, 10), Vector(0.5f, 1.0f));
@@ -88,7 +98,7 @@ void PlayScene::OnDraw()
 	DrawBG();
 
 	// 임시 미니맵 배경
-	pMinimapCamera->DrawFilledRect(Vector(0, 0), Vector(MINI_WIDTH, MINI_HEIGHT), ColorF::Green);
+	pMinimapCamera->Draw(m_pMinimap, Vector(VIEW_WIDTH - m_pMinimap->GetWidth(), VIEW_HEIGHT - m_pMinimap->GetHeight()));
 
 	// 미니맵 시야 각도 표시
 	pMinimapCamera->DrawLine(MINI_WIDTH * 0.5, MINI_HEIGHT, 
@@ -102,6 +112,9 @@ void PlayScene::OnDraw()
 
 	// 미니맵에 플레이어 위치 표시
 	pMinimapCamera->DrawFilledCircle(Vector(MINI_WIDTH * 0.5 , MINI_HEIGHT), Vector(8, 8), ColorF::Yellow);
+
+	// Aim 그려주는 부분
+	pMinimapCamera->Draw(m_pAim, Vector(VIEW_WIDTH * 0.5, VIEW_HEIGHT * 0.5f));
 
 	// 미니맵에 크리쳐 위치 표시
 	list<Object*> pList = OBJECT->GetCreatureList();
