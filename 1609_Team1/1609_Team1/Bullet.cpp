@@ -74,7 +74,7 @@ BOOL Bullet::IdleState(float deltaTime) {
 
 BOOL Bullet::Collided()
 {
-	if (0<=m_height && m_height <= 350.0f) {
+	if (0<=m_height && m_height <= 450.0f) {
 		list<Object*> creatureList = OBJECT->GetCreatureList();
 		FOR_LIST(Object*, creatureList) {
 			if (abs(MATH->Angle(m_moveDirection, (*it)->GetMoveDirection())) < (*it)->GetCollideAngle()) {
