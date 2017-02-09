@@ -41,7 +41,7 @@ void ObjectManager::Draw(Camera* pCamera)
 		(*it)->Draw(pCamera);
 
 		// 충돌체 보여주는 부분인데, 미니맵의 실제 움직임과 보여지는 움직임이 다르기 때문에 충돌체 보여주는 것이 의미가 없음.
-		// if(SCENE->GetColliderOnOff()) pCamera->DrawRect((*it)->Collider().LeftTop(), (*it)->Collider().size, ColorF::Yellow, 3);
+		if(SCENE->GetColliderOnOff()) pCamera->DrawRect((*it)->Collider().LeftTop(), (*it)->Collider().size, ColorF::Yellow, 3);
 	}
 
 	FOR_LIST(Object*, m_bulletList)
