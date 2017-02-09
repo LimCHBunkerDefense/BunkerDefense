@@ -49,6 +49,9 @@ void PlayScene::OnEnter()
 	// 테스트용 크리쳐 생성
 	//OBJECT->CreateCreature(OBJ_ENT, Vector(120, 60));
 
+	// 마우스 커서 없애기
+	ShowCursor(false);
+
 }
 
 void PlayScene::OnUpdate(float deltaTime)

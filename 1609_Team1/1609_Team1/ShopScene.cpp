@@ -48,10 +48,8 @@ void ShopScene::OnEnter()
 {
 	NEW_OBJECT(m_pBg, Sprite(RENDER->GetImage(TEXT("shopBG")), 1.0f, 0, 0));
 
-	// m_bBuyButton = Box(Vector(1000, 500), Vector(100, 50));
-	// m_bWeapon = Box(Vector(480, 200), Vector(200, 50));
-	// m_bBullet = Box(Vector(480, 280), Vector(200, 50));
-	// m_bUsingItem = Box(Vector(480, 360), Vector(200, 50));
+	// 마우스 커서 보이게
+	ShowCursor(true);
 }
 
 void ShopScene::OnUpdate(float deltaTime)
