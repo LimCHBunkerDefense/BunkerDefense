@@ -10,6 +10,9 @@ class ShopScene :
 	public IScene
 {
 	Sprite* m_pBg;
+	Sprite* m_pNpcIcon;
+	Sprite* m_pTalkBox;
+
 	BUTTON_TAG m_currentButton;				// 현재 버튼이 무엇인지 태그값으로 확인하는 변수
 	Item* m_selectedButton;					// 선택된 버튼이 무엇인지를 나나태는 변수
 	Item* m_currentItem;					// 현재 아이템이 무엇인지를 나타내는 변수
