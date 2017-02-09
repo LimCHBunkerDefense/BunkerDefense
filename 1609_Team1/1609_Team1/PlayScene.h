@@ -10,6 +10,7 @@
 class PlayScene : public IScene
 {
 	Sprite* m_pBg;
+	Vector m_posBg;
 
 	
 	// 크리쳐 생성 y좌표(높이 h)
@@ -33,5 +34,8 @@ public:
 	void OnExit();
 	void OnDraw();
 
+	void DrawBG();
 	void SetCreature(float deltaTime);
+	void SetPosBg(Vector pos) { m_posBg = pos; }
+	Vector GetPosBg() { return m_posBg; }
 };

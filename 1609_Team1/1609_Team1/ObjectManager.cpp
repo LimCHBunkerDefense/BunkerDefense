@@ -4,7 +4,7 @@
 
 ObjectManager::ObjectManager()
 {
-
+	m_sightHeight = 400;
 }
 
 ObjectManager::~ObjectManager()
@@ -107,6 +107,15 @@ void ObjectManager::SetPosByDeltaAngle()
 			(*it)->SetStartPos(pos);
 		}
 	}
+
+	// 카메라 이동에 따른 배경 출력 위치 변경
+	if (m_deltaSightAngle > 0)
+	{
+		//-
+		//float deltaX = 
+	}
+
+	// 시야 변화 각 초기화
 	m_deltaSightAngle = 0;
 	
 }
