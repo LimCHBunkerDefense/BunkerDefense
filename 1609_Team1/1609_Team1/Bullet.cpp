@@ -15,6 +15,7 @@ Bullet::Bullet(OBJ_TAG tag) : Object(tag)
 	m_t = 0.0F;
 	m_moveSpeed = 0.5F;
 
+	m_addHeight = 100;
 	m_moveDirection = Vector(Position() * -1 + Vector(MINI_WIDTH * 0.5, MINI_HEIGHT)).Normalize();
 }
 
@@ -94,5 +95,5 @@ void Bullet::Draw(Camera* pCamera)
 	SetScale((1-m_t) *0.05f);
 	m_scale = (1 - m_t) *0.05f;
 
-	pCamera->Draw3D(Animation()->Current()->GetSprite(), m_startPos, (1-m_t), OBJECT->GetSightHeight());
+	pCamera->Draw3D(Animation()->Current()->GetSprite(), Vector(m_startPos.x, m_startPos.y+ m_addHeight), (1-m_t), OBJECT->GetSightHeight()+m_addHeight);
 }
