@@ -84,6 +84,24 @@ void Player::AttackState(float deltaTime)
 		}
 	}
 
+	// È­¿° ¹æ»ç±â ÀåÂø
+	if (INPUT->IsKeyDown(VK_3))
+	{
+		if (m_itemBag.find(1003) != m_itemBag.end())
+		{
+			m_pItem = m_itemBag[1003];
+		}
+	}
+
+	// ·¹ÀÌÀú °Ç ÀåÂø
+	if (INPUT->IsKeyDown(VK_4))
+	{
+		if (m_itemBag.find(1004) != m_itemBag.end())
+		{
+			m_pItem = m_itemBag[1004];
+		}
+	}
+
 	// Ãæµ¹Ã¼ On/Off
 	if (INPUT->IsKeyDown(VK_0))
 	{
