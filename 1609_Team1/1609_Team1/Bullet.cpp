@@ -10,11 +10,12 @@ Bullet::Bullet(OBJ_TAG tag) : Object(tag)
 {
 	//m_angle = 10;//각도 내의 적에게만 반응
 	CreatureData* pData = CREATURE->GetData(tag);
-	m_scale = 0.25f;
+	m_scale = 1.0f;
 	m_state = BULLET_IDLE;
 	m_t = 0.0F;
 	m_moveSpeed = 0.5F;
 
+	m_height = OBJECT->GetSightHeight();
 	m_addHeight = 100;
 	m_moveDirection = Vector(Position() * -1 + Vector(MINI_WIDTH * 0.5, MINI_HEIGHT)).Normalize();
 }
@@ -73,14 +74,16 @@ BOOL Bullet::IdleState(float deltaTime) {
 
 BOOL Bullet::Collided()
 {
-	list<Object*> creatureList = OBJECT->GetCreatureList();
-	FOR_LIST(Object*, creatureList) {
-		if (abs(MATH->Angle(m_moveDirection, (*it)->GetMoveDirection())) < (*it)->GetCollideAngle()) {
-			if (m_t + (*it)->GetMT() >= 1.0f) {
-				if (MATH->IsCollided(this->Collider(), (*it)->Collider()))
-				{
-					OBJECT->DestroyCreature((*it));
-					return true;
+	if (0<=m_height && m_height <= 350.0f) {
+		list<Object*> creatureList = OBJECT->GetCreatureList();
+		FOR_LIST(Object*, creatureList) {
+			if (abs(MATH->Angle(m_moveDirection, (*it)->GetMoveDirection())) < (*it)->GetCollideAngle()) {
+				if (m_t + (*it)->GetMT() >= 1.0f) {
+					if (MATH->IsCollided(this->Collider(), (*it)->Collider()))
+					{
+						OBJECT->DestroyCreature((*it));
+						return true;
+					}
 				}
 			}
 		}
@@ -93,9 +96,9 @@ void Bullet::HitState(float deltaTime) {
 
 void Bullet::Draw(Camera* pCamera)
 {
-	SetCollider(Collider().size * ((1-m_t) *0.25f) / m_scale, Collider().anchor);
-	SetScale((1-m_t) *0.25f);
-	m_scale = (1 - m_t) *0.25f;
+	SetCollider(Collider().size * ((1-m_t) *1.0f) / m_scale, Collider().anchor);
+	SetScale((1-m_t) *1.0f);
+	m_scale = (1 - m_t) *1.0f;
 
 	pCamera->Draw3D(Animation()->Current()->GetSprite(), Vector(m_startPos.x, m_startPos.y+ m_addHeight), (1-m_t), OBJECT->GetSightHeight()+m_addHeight, m_state);
 }
