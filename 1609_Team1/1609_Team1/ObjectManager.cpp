@@ -88,10 +88,12 @@ void ObjectManager::SetPosByDeltaAngle()
 			angle += m_deltaSightAngle;
 
 			// 점 p(0,0)를 기준으로 구해진 새로운 pos를 플레이어 위지 p'(MINI_WIDTH * 0.5, MINI_HEIGHT) 기준으로 (*it)의 좌표 보정
-			float x = MINI_WIDTH*0.5f + MATH->Cos(angle) * MINI_WIDTH * 0.5f;
-			float y = MINI_HEIGHT + MATH->Sin(angle) * MINI_WIDTH * 0.5f;
+			//float x = MINI_WIDTH*0.5f + MATH->Cos(angle) * MINI_WIDTH * 0.5f;
+			//float y = MINI_HEIGHT + MATH->Sin(angle) * MINI_WIDTH * 0.5f;
 
-			(*it)->SetStartPos(Vector(x, y));
+			Vector pos = MATH->ToDirection(angle) * MINI_WIDTH * 0.5 + OBJECT->GetPlayer()->Position();
+
+			(*it)->SetStartPos(pos);
 		}
 	}
 	m_deltaSightAngle = 0;

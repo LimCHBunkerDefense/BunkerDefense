@@ -13,7 +13,6 @@ Player::Player(OBJ_TAG tag) : Object(tag)
 	
 	m_prevMousePos = Vector(INPUT->GetMousePos().x, INPUT->GetMousePos().y);
 	m_sight = SIGHT;
-	m_angle = 0;
 }
 
 Player::~Player()
@@ -104,8 +103,8 @@ void Player::AttackState(float deltaTime)
 	{
 		m_height -= ROTATE_SPEED;
 	}
-	m_angle += fTurnSpeed;
-	if(abs(fTurnSpeed) > EPSILON) OBJECT->SetDeltaSightAngle(m_angle);
+	
+	if(abs(fTurnSpeed) > EPSILON) OBJECT->SetDeltaSightAngle(fTurnSpeed);
 	
 
 	m_prevMousePos = NowMousePos;
