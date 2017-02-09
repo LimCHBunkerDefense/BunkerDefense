@@ -109,6 +109,41 @@ public:
 		return m_creatureList;
 	}
 
+	void DestroyCreature(Object* pCreature)
+	{
+		m_creatureList.remove(pCreature);
+		DELETE_OBJECT(pCreature);
+	}
+
+	void DestroyAllCreature()
+	{
+		FOR_LIST(Object*, m_creatureList)
+		{
+			DELETE_OBJECT((*it));
+		}
+		m_creatureList.clear();
+	}
+
+	void CreateBullet(OBJ_TAG tag, Vector pos);
+	list<Object*> GetBulletList() {
+		return m_bulletList;
+	}
+	void DestroyBullet(Object* pCreature)
+	{
+		m_bulletList.remove(pCreature);
+		DELETE_OBJECT(pCreature);
+	}
+
+	void DestroyAllBullet()
+	{
+		FOR_LIST(Object*, m_bulletList)
+		{
+			DELETE_OBJECT((*it));
+		}
+		m_bulletList.clear();
+	}
+	
+
 	// 카메라 회전에 따른 크리쳐 및 불렛의 위치 조정
 	void SetPosByDeltaAngle();
 

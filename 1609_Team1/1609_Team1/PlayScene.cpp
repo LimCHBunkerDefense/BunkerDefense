@@ -20,6 +20,10 @@ PlayScene::PlayScene()
 	RENDER->LoadImageFiles(TEXT("EntRun"), TEXT("Image/Creature/Ent/Run/Run"), TEXT("png"), 9);
 	RENDER->LoadImageFiles(TEXT("EntAttack"), TEXT("Image/Creature/Ent/Attack/Attack"), TEXT("png"), 6);
 
+	//Bullet 임시로 저장
+	RENDER->LoadImageFiles(TEXT("BulletIdle"), TEXT("Image/Bullet/bullet"), TEXT("png"), 1);
+
+
 	// 카메라 생성
 	RENDER->CreateCamera(CAM_MAIN, 1920, 1080, VIEW_WIDTH, VIEW_HEIGHT);
 	RENDER->CreateCamera(CAM_MINIMAP, MINI_WIDTH, MINI_HEIGHT* 2, MINI_WIDTH, MINI_HEIGHT * 2);
@@ -102,7 +106,16 @@ void PlayScene::OnDraw()
 	{
 		Vector pos = (*it)->Position();
 		pMinimapCamera->DrawFilledCircle(pos - 4, Vector(8, 8), ColorF::Red);
-		pMinimapCamera->DrawLine((*it)->GetStartPos().x, (*it)->GetStartPos().y, OBJECT->GetPlayer()->Position().x, OBJECT->GetPlayer()->Position().y, ColorF::Red, 2);
+		//pMinimapCamera->DrawLine((*it)->GetStartPos().x, (*it)->GetStartPos().y, OBJECT->GetPlayer()->Position().x, OBJECT->GetPlayer()->Position().y, ColorF::Red, 2);
+	}
+
+	//탄환 선 긋기
+	list<Object*> pBulletList = OBJECT->GetBulletList();
+	FOR_LIST(Object*, pBulletList)
+	{
+		Vector pos = (*it)->Position();
+		pMinimapCamera->DrawFilledCircle(pos - 4, Vector(8, 8), ColorF::DeepPink);
+		pMinimapCamera->DrawLine((*it)->GetStartPos().x, (*it)->GetStartPos().y, OBJECT->GetPlayer()->Position().x, OBJECT->GetPlayer()->Position().y, ColorF::DeepPink, 2);
 	}
 
 

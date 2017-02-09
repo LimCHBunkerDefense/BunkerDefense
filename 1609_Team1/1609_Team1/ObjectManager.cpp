@@ -1,6 +1,7 @@
 #include "ObjectManager.h"
 #include "Player.h"
 #include "Creature.h"
+#include "Bullet.h"
 
 ObjectManager::ObjectManager()
 {
@@ -22,10 +23,10 @@ void ObjectManager::Update(float deltaTime)
 		(*it)->Update(deltaTime);
 	}
 
-	//FOR_LIST(Object*, m_bulletList)
-	//{
-	//	(*it)->Update(deltaTime);
-	//}
+	FOR_LIST(Object*, m_bulletList)
+	{
+		(*it)->Update(deltaTime);
+	}
 
 
 }
@@ -38,10 +39,10 @@ void ObjectManager::Draw(Camera* pCamera)
 		if(SCENE->GetColliderOnOff()) pCamera->DrawRect((*it)->Collider().LeftTop(), (*it)->Collider().size, ColorF::Yellow, 3);
 	}
 
-	//FOR_LIST(Object*, m_bulletList)
-	//{
-	//	(*it)->Draw(pCamera);
-	//}
+	FOR_LIST(Object*, m_bulletList)
+	{
+		(*it)->Draw(pCamera);
+	}
 
 	m_pPlayer->Draw(pCamera);
 }
@@ -87,6 +88,24 @@ void ObjectManager::CreateCreature(OBJ_TAG tag, Vector pos)
 	m_creatureList.push_front(pCreature);
 }
 
+void ObjectManager::CreateBullet(OBJ_TAG tag, Vector pos)
+{
+	NEW_OBJECT(Object* pBullet, Bullet(tag));
+	pBullet->SetPosition_Creature(pos, pos * 5);
+	pBullet->SetStartPos(pos);
+
+	Vector colSize, anchor;
+	float scale = 0.05f;
+	colSize = Vector(20, 20) * scale;
+	anchor = Vector(0.5, 0.95f);
+	pBullet->Animation()->Register(BULLET_IDLE, new Animation(TEXT("BulletIdle"), 1, 10, false, scale, anchor.x, anchor.y));
+	//pBullet->Animation()->Register(BULLET_EXPLODE, new Animation(TEXT("EntRun"), 9, 7, true, scale, anchor.x, anchor.y));
+
+	pBullet->SetCollider(colSize, anchor);
+
+	m_bulletList.push_front(pBullet);
+}
+
 void ObjectManager::SetPosByDeltaAngle()
 {
 	if (abs(m_deltaSightAngle) > EPSILON)
@@ -101,6 +120,17 @@ void ObjectManager::SetPosByDeltaAngle()
 			// 점 p(0,0)를 기준으로 구해진 새로운 pos를 플레이어 위지 p'(MINI_WIDTH * 0.5, MINI_HEIGHT) 기준으로 (*it)의 좌표 보정
 			//float x = MINI_WIDTH*0.5f + MATH->Cos(angle) * MINI_WIDTH * 0.5f;
 			//float y = MINI_HEIGHT + MATH->Sin(angle) * MINI_WIDTH * 0.5f;
+
+			Vector pos = MATH->ToDirection(angle) * MINI_WIDTH * 0.5 + OBJECT->GetPlayer()->Position();
+
+			(*it)->SetStartPos(pos);
+		}
+
+		FOR_LIST(Object*, m_bulletList)
+		{
+			Object* pObj = (*it);
+			float angle = MATH->Angle(Vector::Right(), (*it)->GetMoveDirection() * -1);
+			angle += m_deltaSightAngle;
 
 			Vector pos = MATH->ToDirection(angle) * MINI_WIDTH * 0.5 + OBJECT->GetPlayer()->Position();
 
