@@ -76,10 +76,12 @@ BOOL Bullet::Collided()
 	list<Object*> creatureList = OBJECT->GetCreatureList();
 	FOR_LIST(Object*, creatureList) {
 		if (abs(MATH->Angle(m_moveDirection, (*it)->GetMoveDirection())) < m_angle) {
-			if (MATH->IsCollided(this->Collider(), (*it)->Collider()))
-			{
-				OBJECT->DestroyCreature((*it));
-				return true;
+			if (m_t + (*it)->GetMT() >= 1.0f) {
+				if (MATH->IsCollided(this->Collider(), (*it)->Collider()))
+				{
+					OBJECT->DestroyCreature((*it));
+					return true;
+				}
 			}
 		}
 	}

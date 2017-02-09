@@ -77,7 +77,7 @@ public:
 	virtual Vector GetMoveDirection() { return Vector::Zero(); }
 	virtual void SetStartPos(Vector pos) { }
 	virtual Vector GetStartPos() { return Vector::Zero(); }
-	
+	virtual float GetMT() { return 0; }
 
 	//Bullet¿ë ÇÔ¼ö
 	virtual BOOL UpdateBool(float deltaTime) { return false; }
