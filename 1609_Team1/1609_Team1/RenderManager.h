@@ -380,7 +380,7 @@ public:
 	// Å©¸®ÃÄÀÇ ÁÂÇ¥ (¹Ì´Ï¸Ê »óÀÇ ÁÂÇ¥)¸¦ ÀüÀå È­¸éÀÇ ÁÂÇ¥·Î ¹Ù²ãÁÖ´Â ÇÔ¼ö
 	Vector ChangePositionToView(Vector position)
 	{
-		Vector  a = Vector(position.x * 5, position.y*5);
+		Vector  a = Vector(position.x * 5, position.y * 5);
 		return a;
 	}
 

@@ -42,6 +42,7 @@ public:
 		m_collider.pos = pos;
 	}
 
+	// 크리쳐의 위치와 충돌체의 위치를 동시에 바꾸기 위해 추가한 함수
 	void SetPosition_Creature(Vector pos, Vector colPos)
 	{
 		m_pos = pos;
@@ -83,6 +84,7 @@ public:
 
 class ObjectManager : public Singleton<ObjectManager>
 {
+	float m_deltaSightAngle;
 	Object* m_pPlayer;
 	Object* m_bunker;
 	list<Object*> m_creatureList;
@@ -101,34 +103,13 @@ public:
 	list<Object*> GetCreatureList() {
 		return m_creatureList;
 	}
-	//void DestroyAllCreature();
-	//
-	//
-	//
-	//
-	//Object* GetPlayer() { return m_pPlayer; }
-	//
-	//list<Object*> GetCreatureList() { return m_creatureList; }
-	//
-	//Object* GetProps(int id)
-	//{
-	//	FOR_LIST(Object*, m_propsList)
-	//	{
-	//		if ((*it)->ID() == id) return (*it);
-	//	}
-	//	return NULL;
-	//}
-	//
-	//list<Object*> GetPropsList(int id)
-	//{
-	//	list<Object*> result;
-	//	FOR_LIST(Object*, m_propsList)
-	//	{
-	//		if ((*it)->ID() == id) result.push_back(*it);
-	//	}
-	//	return result;
-	//}
-	//
-	//list<Object*> GetBulletList() { return m_bulletList; }
+
+	// 카메라 회전에 따른 크리쳐 및 불렛의 위치 조정
+	void SetPosByDeltaAngle();
+
+
+	// 플레이어의 마우스 회전에 의한 각 변화값 저장 및 호출
+	void SetDeltaSightAngle(float deltaAngle) { m_deltaSightAngle = deltaAngle; }
+	float GetDeltaSightAngle() { return m_deltaSightAngle; }
 };
 
