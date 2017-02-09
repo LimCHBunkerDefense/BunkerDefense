@@ -53,7 +53,7 @@ void ShopScene::OnExit()
 {
 	m_boxList.clear();				// 박스 리스트 소멸
 	m_selectedItem = NULL;			// 선택한 아이템 삭제
-	m_currentButton = BUTTON_NONE;			// 현재 선택한 버튼값 삭제
+	m_currentButton = BUTTON_NONE;	// 현재 선택한 버튼값 삭제
 
 	IsWeaponClicked = false;		// 클릭변수 삭제
 	IsBulletClicked = false;
