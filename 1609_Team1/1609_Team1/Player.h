@@ -11,7 +11,7 @@ class Player :
 	public Object
 {
 	Item* m_pItem;								// 아이템
-	list<Item*> m_itemBag;						// 아이템 가방
+	map<int, Item*> m_itemBag;					// 아이템 가방
 
 	PLAYER_STATE m_state;
 
@@ -33,6 +33,6 @@ public:
 	void AttackState(float deltaTime);
 	void ShopState();
 
-	void AddItem(Item* pItem) { m_itemBag.push_back(new Item(pItem->GetID())); }
+	void AddItem(Item* pItem) { m_itemBag[pItem->GetID()] = new Item(pItem->GetID()); }
 };
 
