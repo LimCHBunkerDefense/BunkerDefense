@@ -95,6 +95,25 @@ void ObjectManager::CreateCreature(OBJ_TAG tag, Vector pos)
 	m_creatureList.push_front(pCreature);
 }
 
+
+void ObjectManager::CreateItem(GUN_TAG tag, Vector pos)
+{
+	switch (tag)
+	{
+	case GUN_PISTOL:
+		break;
+
+	case GUN_MACHINEGUN:
+		break;
+
+	case GUN_FIRETHROWER:
+		break;
+
+	case GUN_LASERGUN:
+		break;
+	}
+}
+
 void ObjectManager::CreateBullet(OBJ_TAG tag, Vector pos)
 {
 	NEW_OBJECT(Object* pBullet, Bullet(tag));

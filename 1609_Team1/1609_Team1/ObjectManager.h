@@ -106,14 +106,14 @@ public:
 	void Update(float deltaTime);
 	void Draw(Camera* pCamera);
 
+	// 플레이어
 	void CreatePlayer(Vector pos, Vector colSize, Vector anchor);
 	Object* GetPlayer() { return m_pPlayer; }
 	void DestroyPlayer();
 	
+	// 크리쳐
 	void CreateCreature(OBJ_TAG tag, Vector pos);
-	list<Object*> GetCreatureList() {
-		return m_creatureList;
-	}
+	list<Object*> GetCreatureList() { return m_creatureList; }
 
 	void DestroyCreature(Object* pCreature)
 	{
@@ -130,10 +130,14 @@ public:
 		m_creatureList.clear();
 	}
 
+	// 아이템
+	void CreateItem(GUN_TAG, Vector pos);
+
+
+	// 총알
 	void CreateBullet(OBJ_TAG tag, Vector pos);
-	list<Object*> GetBulletList() {
-		return m_bulletList;
-	}
+	list<Object*> GetBulletList() {	return m_bulletList; }
+	
 	void DestroyBullet(Object* pCreature)
 	{
 		m_bulletList.remove(pCreature);
