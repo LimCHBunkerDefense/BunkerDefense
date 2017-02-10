@@ -5,8 +5,8 @@
 
 ObjectManager::ObjectManager()
 {
-	m_sightHeight = 400;
-	m_aim = Vector(700, 500);
+	m_sightHeight = 600;
+	m_aim = Vector(VIEW_WIDTH * 0.5, VIEW_HEIGHT * 0.5);
 }
 
 ObjectManager::~ObjectManager()
@@ -32,9 +32,10 @@ void ObjectManager::Update(float deltaTime)
 		}
 	}
 
-	float x = MATH->Clamp(m_aim.x + m_deltaSightAngle, -1 * float(VIEW_WIDTH), float(VIEW_WIDTH * 2));
-	float y = MATH->Clamp(m_aim.y - m_deltaSightHeight, 
-	m_aim = MATH->Clamp(m_aim + Vector(m_deltaSightAngle, -1 * m_deltaSightHeight), ;
+	m_aim += Vector(m_deltaSightAngle, m_deltaSightHeight * -1);
+	//float x = MATH->Clamp(m_aim.x + m_deltaSightAngle, -1.0f * VIEW_WIDTH, VIEW_WIDTH * 2.0f);
+	//float y = MATH->Clamp(m_aim.y - m_deltaSightHeight, 0.0f, float(VIEW_HEIGHT));
+	//m_aim = m_aim + Vector(x, y);
 }
 
 void ObjectManager::Draw(Camera* pCamera)

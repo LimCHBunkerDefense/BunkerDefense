@@ -34,7 +34,7 @@ PlayScene::PlayScene()
 	// RENDER->LoadImageFiles(TEXT("PistolAttack"), TEXT("Image/Item/Pistol/Attack/Attack"), TEXT("png"), 3);
 
 	// 朝五虞 持失
-	RENDER->CreateCamera(CAM_MAIN, 1920, 1080, VIEW_WIDTH, VIEW_HEIGHT);
+	RENDER->CreateCamera(CAM_MAIN, MAP_WIDTH, MAP_HEIGHT, VIEW_WIDTH, VIEW_HEIGHT);
 	RENDER->CreateCamera(CAM_MINIMAP, MINI_WIDTH, MINI_HEIGHT* 2, MINI_WIDTH, MINI_HEIGHT * 2);
 	RENDER->CreateCamera(CAM_UI, VIEW_WIDTH, VIEW_HEIGHT, VIEW_WIDTH, VIEW_HEIGHT);
 
