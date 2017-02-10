@@ -100,11 +100,16 @@ void ObjectManager::CreateCreature(OBJ_TAG tag, Vector pos)
 }
 
 
-void ObjectManager::CreateItem(GUN_TAG tag, Vector pos)
+void ObjectManager::CreateItem(GUN_TAG tag, int itemID)
 {
+	NEW_OBJECT(Item* pItem, Item(itemID));
+
 	switch (tag)
 	{
 	case GUN_PISTOL:
+		pItem->Animation()->Register(GUN_IDLE, new Animation(TEXT("PistolIdle"), 2, 2, true, 1.0f, 0.5f, 1.0f));
+		pItem->Animation()->Register(GUN_SHOT, new Animation(TEXT("PistolShot"), 3, 3, false, 1.0f, 0.5f, 1.0f));
+		// pItem->Animation()->Register(GUN_RELOAD, new Animation(TEXT("PistolReload"), 6, 3, false, 1.0f, 0.5f, 1.0f));
 		break;
 
 	case GUN_MACHINEGUN:

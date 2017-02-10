@@ -141,6 +141,8 @@ void PlayScene::OnDraw()
 	}
 	
 	OBJECT->Draw(pMainCamera);
+	
+	pUICamera->Draw(OBJECT->GetPlayer()->Animation()->Current()->GetSprite(), Vector(VIEW_WIDTH * 0.5, VIEW_HEIGHT * 1.0f));
 
 	// Aim 그려주는 부분
 	pUICamera->Draw(m_pAim, Vector(VIEW_WIDTH * 0.5, VIEW_HEIGHT * 0.5f));

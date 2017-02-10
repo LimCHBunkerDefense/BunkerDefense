@@ -15,6 +15,7 @@ Player::Player(OBJ_TAG tag) : Object(tag)
 
 	m_pItem = new Item(1001);
 	AddItem(m_pItem);
+	SetAnimation(m_pItem->Animation());
 }
 
 Player::~Player()

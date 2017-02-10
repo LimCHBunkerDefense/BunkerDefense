@@ -29,6 +29,7 @@ public:
 	}
 
 	AnimationController* Animation() { return m_pAnim; }
+	void SetAnimation(AnimationController* anim) { m_pAnim = anim; }
 	OBJ_TAG Tag() { return m_tag; }
 	Vector Position() { return m_pos; }
 	Box Collider() { return m_collider; }
@@ -133,7 +134,7 @@ public:
 	}
 
 	// æ∆¿Ã≈€
-	void CreateItem(GUN_TAG, Vector pos);
+	void CreateItem(GUN_TAG, int itemID);
 
 
 	// √—æÀ
