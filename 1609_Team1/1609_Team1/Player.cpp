@@ -9,8 +9,7 @@ Player::Player()
 Player::Player(OBJ_TAG tag) : Object(tag)
 {
 	m_state = PLAYER_ATTACK;
-	m_gunState = PISTOL_IDLE;
-	m_vAngle =Vector::Right();
+	m_aim = Vector(600, 540);
 	
 	m_prevMousePos = Vector(INPUT->GetMousePos().x, INPUT->GetMousePos().y);
 	m_sight = SIGHT;
@@ -119,21 +118,6 @@ void Player::AttackState(float deltaTime)
 	}
 
 	// 마우스 움직이면 모든 오브젝트들이 플레이어 중심으로 회전하는 처리 끝---------------------------------------------------
-	
-
-	// 왼쪽 버튼을 눌렀을 때 공격
-	if (INPUT->IsMouseDown(MOUSE_LEFT))
-	{
-		switch (m_gunState)
-		{
-		case PISTOL_IDLE: PistolState(deltaTime); break;
-		case MACHINEGUN_IDLE:MachineGunState(deltaTime); break;
-		case FIRETHROWER_IDLE: FireThrowerState(deltaTime); break;
-		case LASERGUN_IDLE: LaserGunState(deltaTime); break;
-		}
-	}
-
-
 
 }
 
@@ -264,7 +248,6 @@ void Player::SetItem()
 		{
 			m_pItem = m_itemBag[1001];
 		}
-		m_gunState = PISTOL_IDLE;
 	}
 
 	// 기관총 장착
@@ -274,7 +257,6 @@ void Player::SetItem()
 		{
 			m_pItem = m_itemBag[1002];
 		}
-		m_gunState = MACHINEGUN_IDLE;
 	}
 
 	// 화염 방사기 장착
@@ -284,7 +266,6 @@ void Player::SetItem()
 		{
 			m_pItem = m_itemBag[1003];
 		}
-		m_gunState = FIRETHROWER_IDLE;
 	}
 
 	// 레이저 건 장착
@@ -294,27 +275,6 @@ void Player::SetItem()
 		{
 			m_pItem = m_itemBag[1004];
 		}
-		m_gunState = LASERGUN_IDLE;
 	}
 
-}
-
-void Player::PistolState(float deltaTime)
-{
-	m_gunState = PISTOL_ATTACK;
-}
-
-void Player::MachineGunState(float deltaTime)
-{
-	m_gunState = MACHINEGUN_ATTACK;
-}
-
-void Player::FireThrowerState(float deltaTime)
-{
-	m_gunState = FIRETHROWER_ATTACK;
-}
-
-void Player::LaserGunState(float deltaTime)
-{
-	m_gunState = LASERGUN_ATTACK;
 }

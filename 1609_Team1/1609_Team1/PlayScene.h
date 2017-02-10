@@ -10,7 +10,6 @@
 class PlayScene : public IScene
 {
 	Sprite* m_pBg;
-	Vector m_posBg;
 
 	Sprite* m_pAim;
 	Sprite* m_pMinimap;
@@ -40,6 +39,4 @@ public:
 
 	void DrawBG();
 	void SetCreature(float deltaTime);
-	void SetPosBg(Vector pos) { m_posBg = pos; }
-	Vector GetPosBg() { return m_posBg; }
 };

@@ -36,6 +36,7 @@ PlayScene::PlayScene()
 	// 카메라 생성
 	RENDER->CreateCamera(CAM_MAIN, 1920, 1080, VIEW_WIDTH, VIEW_HEIGHT);
 	RENDER->CreateCamera(CAM_MINIMAP, MINI_WIDTH, MINI_HEIGHT* 2, MINI_WIDTH, MINI_HEIGHT * 2);
+	RENDER->CreateCamera(CAM_UI, VIEW_WIDTH, VIEW_HEIGHT, VIEW_WIDTH, VIEW_HEIGHT);
 }
 
 
@@ -94,8 +95,10 @@ void PlayScene::OnDraw()
 	Camera* pMainCamera = RENDER->GetCamera(CAM_MAIN);
 	Camera* pMinimapCamera = RENDER->GetCamera(CAM_MINIMAP);
 
-	// 배경 그려주는 부분
-	DrawBG();
+	// 배경 그려주는 부분 (보이는 화면 좌우로 하나씩 더)
+	pMainCamera->Draw(m_pBg, Vector(0,0)); 
+	pMainCamera->Draw(m_pBg, Vector(-VIEW_WIDTH,0));
+	pMainCamera->Draw(m_pBg, Vector(VIEW_WIDTH,0));
 
 	// 임시 미니맵 배경
 	pMinimapCamera->Draw(m_pMinimap, Vector(0,0));
@@ -136,16 +139,6 @@ void PlayScene::OnDraw()
 
 	// Aim 그려주는 부분
 	pMainCamera->Draw(m_pAim, Vector(VIEW_WIDTH * 0.5, VIEW_HEIGHT * 0.5f));
-}
-
-void PlayScene::DrawBG()
-{
-	Camera* pMainCamera = RENDER->GetCamera(CAM_MAIN);
-	pMainCamera->Draw(m_pBg, m_posBg);
-
-	if (m_posBg.x < 0) pMainCamera->Draw(m_pBg, m_posBg + m_pBg->GetWidth());
-	if (m_posBg.x > 0) pMainCamera->Draw(m_pBg, m_posBg - m_pBg->GetWidth());
-
 }
 
 void PlayScene::SetCreature(float deltaTime)
