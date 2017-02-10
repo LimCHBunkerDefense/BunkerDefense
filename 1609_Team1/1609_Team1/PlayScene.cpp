@@ -28,6 +28,11 @@ PlayScene::PlayScene()
 	//Bullet 임시로 저장
 	RENDER->LoadImageFiles(TEXT("BulletIdle"), TEXT("Image/Bullet/bullet"), TEXT("png"), 1);
 
+	//무기 ICON 가져오기
+	RENDER->LoadImageFile(TEXT("PistolOn"),		TEXT("Image/Item/Icon/ico_pistol_on.png"));
+	RENDER->LoadImageFile(TEXT("PistolOff"),	TEXT("Image/Item/Icon/ico_pistol_off.png"));
+
+
 	// 카메라 생성
 	RENDER->CreateCamera(CAM_MAIN, MAP_WIDTH, MAP_HEIGHT, VIEW_WIDTH, VIEW_HEIGHT);
 	RENDER->CreateCamera(CAM_MINIMAP, MINI_WIDTH, MINI_HEIGHT* 2, MINI_WIDTH, MINI_HEIGHT * 2);
@@ -53,6 +58,7 @@ void PlayScene::OnEnter()
 	NEW_OBJECT(m_pAim, Sprite(RENDER->GetImage(TEXT("Aim")), 0.825));
 	NEW_OBJECT(m_pMinimap, Sprite(RENDER->GetImage(TEXT("Minimap")), 0.8));
 	NEW_OBJECT(m_pRadar, Sprite(RENDER->GetImage(TEXT("Radar")), 1.6, 0.0,0.0));
+	NEW_OBJECT(m_ico_pistol, Sprite(RENDER->GetImage(TEXT("PistolOn"))));
 
 	// 플레이어 생성
 	OBJECT->CreatePlayer(Vector(MINI_WIDTH * 0.5F, MINI_HEIGHT), Vector(10, 10), Vector(0.5f, 1.0f));
@@ -144,7 +150,8 @@ void PlayScene::OnDraw()
 	pUICamera->DrawRect(Vector(20, 20), Vector(260, 50), ColorF::Blue, 1);
 
 	//Icon
-	pUICamera->DrawRect(Vector(20, 90), Vector(50, 50), ColorF::Red, 1);
+	pUICamera->Draw(m_ico_pistol, Vector(40, 110));
+	//pUICamera->DrawRect(Vector(20, 90), Vector(50, 50), ColorF::Red, 1);
 	pUICamera->DrawRect(Vector(90, 90), Vector(50, 50), ColorF::Red, 1);
 	pUICamera->DrawRect(Vector(160, 90), Vector(50, 50), ColorF::Red, 1);
 	pUICamera->DrawRect(Vector(230, 90), Vector(50, 50), ColorF::Red, 1);
