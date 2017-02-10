@@ -134,7 +134,7 @@ public:
 	}
 
 	// 아이템
-	void CreateItem(GUN_TAG, int itemID);
+	Item* CreateItem(GUN_TAG tag, int itemID);
 
 
 	// 총알

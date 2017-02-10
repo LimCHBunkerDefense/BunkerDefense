@@ -1,12 +1,17 @@
 #include "ObjectManager.h"
 #include "Player.h"
 #include "Creature.h"
+#include "Item.h"
 #include "Bullet.h"
 
 ObjectManager::ObjectManager()
 {
 	m_sightHeight = 600;
 	m_aim = Vector(VIEW_WIDTH * 0.5, VIEW_HEIGHT * 0.5);
+
+	// 플레이어 총 이미지 맵으로 저장
+	RENDER->LoadImageFiles(TEXT("PistolIdle"), TEXT("Image/Item/Pistol/Idle/Idle"), TEXT("png"), 2);
+	RENDER->LoadImageFiles(TEXT("PistolShot"), TEXT("Image/Item/Pistol/Attack/Attack"), TEXT("png"), 3);
 }
 
 ObjectManager::~ObjectManager()
@@ -100,7 +105,7 @@ void ObjectManager::CreateCreature(OBJ_TAG tag, Vector pos)
 }
 
 
-void ObjectManager::CreateItem(GUN_TAG tag, int itemID)
+Item* ObjectManager::CreateItem(GUN_TAG tag, int itemID)
 {
 	NEW_OBJECT(Item* pItem, Item(itemID));
 
@@ -121,6 +126,8 @@ void ObjectManager::CreateItem(GUN_TAG tag, int itemID)
 	case GUN_LASERGUN:
 		break;
 	}
+
+	return pItem;
 }
 
 void ObjectManager::CreateBullet(OBJ_TAG tag, Vector pos)
