@@ -83,9 +83,6 @@ public:
 
 	//Bullet¿ë ÇÔ¼ö
 	virtual BOOL UpdateBool(float deltaTime) { return false; }
-
-
-
 };
 
 class ObjectManager : public Singleton<ObjectManager>
