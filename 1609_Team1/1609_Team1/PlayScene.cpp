@@ -82,9 +82,6 @@ void PlayScene::OnUpdate(float deltaTime)
 	// 오브젝트 전체 업데이트
 	OBJECT->Update(deltaTime);
 	OBJECT->SetPosByDeltaAngle();
-
-	// 플레이어 에임에 카메라 센터 맞추기
-	pMainCamera->SetCenterPos(OBJECT->GetAimPos());
 }
 
 void PlayScene::OnExit()

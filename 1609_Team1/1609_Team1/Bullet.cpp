@@ -16,7 +16,7 @@ Bullet::Bullet(OBJ_TAG tag) : Object(tag)
 	m_moveSpeed = 0.5F;
 
 	m_height = OBJECT->GetSightHeight();
-	m_addHeight = 100;
+	m_addHeight = 0;
 	m_moveDirection = Vector(Position() * -1 + Vector(MINI_WIDTH * 0.5, MINI_HEIGHT)).Normalize();
 }
 
