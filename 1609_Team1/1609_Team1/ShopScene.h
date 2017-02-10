@@ -14,7 +14,7 @@ class ShopScene :
 	Sprite* m_pNpcIcon;
 	Sprite* m_pTalkBox;
 	Sprite* m_pMarketBG;
-	Sprite* m_pBoxBG;
+	Sprite* m_pInfoBoxBG;
 
 	BUTTON_TAG m_currentButton;				// 현재 버튼이 무엇인지 태그값으로 확인하는 변수
 	Item* m_selectedButton;					// 선택된 버튼이 무엇인지를 나나태는 변수

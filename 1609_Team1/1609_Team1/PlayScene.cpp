@@ -55,7 +55,7 @@ void PlayScene::OnEnter()
 	NEW_OBJECT(m_pBg, Sprite(RENDER->GetImage(TEXT("DroughtBG")), 1.0f, 0, 0));
 
 	// UI 이미지 스프라이트로 생성
-	NEW_OBJECT(m_pAim, Sprite(RENDER->GetImage(TEXT("Aim")), 1.0));
+	NEW_OBJECT(m_pAim, Sprite(RENDER->GetImage(TEXT("Aim")), 0.825));
 	NEW_OBJECT(m_pMinimap, Sprite(RENDER->GetImage(TEXT("Minimap")), 2.0));
 	NEW_OBJECT(m_pRadar, Sprite(RENDER->GetImage(TEXT("Radar")), 1.0, 0.0,0.0));
 

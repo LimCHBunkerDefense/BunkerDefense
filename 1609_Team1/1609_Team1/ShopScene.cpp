@@ -6,7 +6,7 @@ ShopScene::ShopScene()
 	RENDER->LoadImageFile(TEXT("shopNPC"), TEXT("Image/NPC/shopnpc.png"));
 	RENDER->LoadImageFile(TEXT("talkBox"), TEXT("Image/NPC/talk_box.png"));
 	RENDER->LoadImageFile(TEXT("MarketBG"), TEXT("Image/NPC/MarketBG.png"));
-	RENDER->LoadImageFile(TEXT("box_bg"), TEXT("Image/NPC/box_bg.png"));
+	RENDER->LoadImageFile(TEXT("Infobox_bg"), TEXT("Image/NPC/infobox_bg.png"));
 
 	// itemDB 생성
 	ITEM->Init();
@@ -44,7 +44,7 @@ void ShopScene::OnEnter()
 	NEW_OBJECT(m_pNpcIcon, Sprite(RENDER->GetImage(TEXT("shopNPC")), 1.3f, 0, 0));
 	NEW_OBJECT(m_pTalkBox, Sprite(RENDER->GetImage(TEXT("talkBox")), 0.65, 0, 0));
 	NEW_OBJECT(m_pMarketBG, Sprite(RENDER->GetImage(TEXT("MarketBG")), 0.815, 0, 0));
-	NEW_OBJECT(m_pBoxBG, Sprite(RENDER->GetImage(TEXT("box_bg")), 0.815, 0, 0));
+	NEW_OBJECT(m_pInfoBoxBG, Sprite(RENDER->GetImage(TEXT("Infobox_bg")), 0.81, 0, 0));
 
 	CreateList();		// 리스트 생성
 	ShowCursor(true);	// 마우스 커서 보이게
@@ -71,9 +71,9 @@ void ShopScene::OnDraw()
 	Camera* pMainCamera = RENDER->GetCamera(CAM_MAIN);
 	pMainCamera->Draw(m_pBg, Vector(0, 0));
 	pMainCamera->Draw(m_pMarketBG, Vector(350, 124));
-	pMainCamera->Draw(m_pBoxBG, Vector(786, 300));
+	pMainCamera->Draw(m_pInfoBoxBG, Vector(788, 300));
 	pMainCamera->Draw(m_pTalkBox, Vector(20, 115)); // talkbox image
-	pMainCamera->DrawT(TEXT("반갑습니다. \n ***상점에 오신걸 환영합니다."), 84, 190, ColorF::BlanchedAlmond, 15);
+	pMainCamera->DrawT(TEXT("***님 반갑습니다. \n ***상점에 오신걸 환영합니다."), 84, 190, ColorF::BlanchedAlmond, 15);
 	pMainCamera->Draw(m_pNpcIcon, Vector(-138, 220)); // npc image
 
 	RENDER->DrawRect(Vector(630, 50), Vector (150, 50), ColorF::BlanchedAlmond);
