@@ -141,13 +141,23 @@ void PlayScene::OnDraw()
 	pUICamera->Draw(m_pAim, Vector(VIEW_WIDTH * 0.5, VIEW_HEIGHT * 0.5f));
 
 	//Bunker 체력
-	pUICamera->DrawRect(Vector(20, 20), Vector(280, 100), ColorF::Blue, 1);
+	pUICamera->DrawRect(Vector(20, 20), Vector(260, 50), ColorF::Blue, 1);
 
 	//Icon
-	pUICamera->DrawRect(Vector(20, 140), Vector(50, 50), ColorF::Red, 1);
-	pUICamera->DrawRect(Vector(90, 140), Vector(50, 50), ColorF::Red, 1);
-	pUICamera->DrawRect(Vector(160, 140), Vector(50, 50), ColorF::Red, 1);
-	pUICamera->DrawRect(Vector(230, 140), Vector(50, 50), ColorF::Red, 1);
+	pUICamera->DrawRect(Vector(20, 90), Vector(50, 50), ColorF::Red, 1);
+	pUICamera->DrawRect(Vector(90, 90), Vector(50, 50), ColorF::Red, 1);
+	pUICamera->DrawRect(Vector(160, 90), Vector(50, 50), ColorF::Red, 1);
+	pUICamera->DrawRect(Vector(230, 90), Vector(50, 50), ColorF::Red, 1);
+
+	pUICamera->DrawRect(Vector(20, VIEW_HEIGHT - 190), Vector(320, 70), ColorF::Blue, 1);
+	pUICamera->DrawRect(Vector(20, VIEW_HEIGHT - 100), Vector(70, 70), ColorF::Red, 1);
+	pUICamera->DrawRect(Vector(110, VIEW_HEIGHT - 100), Vector(70, 70), ColorF::Red, 1);
+	pUICamera->DrawRect(Vector(200, VIEW_HEIGHT - 100), Vector(70, 70), ColorF::Red,1);
+	pUICamera->DrawRect(Vector(290, VIEW_HEIGHT - 100), Vector(70, 70), ColorF::Red,1);
+
+	pUICamera->DrawT(TEXT("Stage 1"), VIEW_WIDTH / 2-50, 40, ColorF::White, 30, ALIGN_CENTER);
+	pUICamera->DrawT(TEXT("점수 : "), VIEW_WIDTH - 300, 30, ColorF::White, 30, ALIGN_RIGHT);
+	pUICamera->DrawT(TEXT("골드 : "), VIEW_WIDTH - 300, 70, ColorF::White, 30, ALIGN_RIGHT);
 }
 
 void PlayScene::SetCreature(float deltaTime)
