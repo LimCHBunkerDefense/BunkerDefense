@@ -40,10 +40,11 @@ public:
 	void ItemListWnd();											// 아이템 리스트 창
 	void ItemStatWnd();											// 아이템 정보 창
 
-	Item* GetSelectedItem() { return m_selectedItem; }
+	Object* GetSelectedItem() { return m_selectedItem; }
 	void SetSelectedItem(int itemID)
 	{
-		FOR_LIST(Item*, m_itemList)
+		list<Object*> pList = OBJECT->GetItemList();
+		FOR_LIST(Object*, pList)
 		{
 			if ((*it)->GetID() == itemID) 
 			{ 

@@ -28,11 +28,6 @@ PlayScene::PlayScene()
 	//Bullet 임시로 저장
 	RENDER->LoadImageFiles(TEXT("BulletIdle"), TEXT("Image/Bullet/bullet"), TEXT("png"), 1);
 
-
-	// 플레이어 총 이미지 맵으로 저장
-	// RENDER->LoadImageFiles(TEXT("PistolIdle"), TEXT("Image/Item/Pistol/Idle/Idle"), TEXT("png"), 1);
-	// RENDER->LoadImageFiles(TEXT("PistolAttack"), TEXT("Image/Item/Pistol/Attack/Attack"), TEXT("png"), 3);
-
 	// 카메라 생성
 	RENDER->CreateCamera(CAM_MAIN, MAP_WIDTH, MAP_HEIGHT, VIEW_WIDTH, VIEW_HEIGHT);
 	RENDER->CreateCamera(CAM_MINIMAP, MINI_WIDTH, MINI_HEIGHT* 2, MINI_WIDTH, MINI_HEIGHT * 2);
@@ -56,8 +51,8 @@ void PlayScene::OnEnter()
 
 	// UI 이미지 스프라이트로 생성
 	NEW_OBJECT(m_pAim, Sprite(RENDER->GetImage(TEXT("Aim")), 0.825));
-	NEW_OBJECT(m_pMinimap, Sprite(RENDER->GetImage(TEXT("Minimap")), 2.0));
-	NEW_OBJECT(m_pRadar, Sprite(RENDER->GetImage(TEXT("Radar")), 1.0, 0.0,0.0));
+	NEW_OBJECT(m_pMinimap, Sprite(RENDER->GetImage(TEXT("Minimap")), 0.8));
+	NEW_OBJECT(m_pRadar, Sprite(RENDER->GetImage(TEXT("Radar")), 1.6, 0.0,0.0));
 
 	// 플레이어 생성
 	OBJECT->CreatePlayer(Vector(MINI_WIDTH * 0.5F, MINI_HEIGHT), Vector(10, 10), Vector(0.5f, 1.0f));
@@ -88,9 +83,6 @@ void PlayScene::OnUpdate(float deltaTime)
 	// 오브젝트 전체 업데이트
 	OBJECT->Update(deltaTime);
 	OBJECT->SetPosByDeltaAngle();
-
-	// 플레이어 에임에 카메라 센터 맞추기
-	pMainCamera->SetCenterPos(OBJECT->GetAimPos());
 }
 
 void PlayScene::OnExit()
@@ -108,7 +100,7 @@ void PlayScene::OnDraw()
 
 	// 임시 미니맵 배경
 	pMinimapCamera->Draw(m_pMinimap, Vector(0,0));
-	pMinimapCamera->Draw(m_pRadar, Vector(0, 0));
+	pMinimapCamera->Draw(m_pRadar, Vector(-30, 30));
 
 	// 미니맵 시야 각도 표시
 	pMinimapCamera->DrawLine(MINI_WIDTH * 0.5, MINI_HEIGHT, 
@@ -118,7 +110,7 @@ void PlayScene::OnDraw()
 	pMinimapCamera->DrawLine(MINI_WIDTH * 0.5, MINI_HEIGHT, MINI_WIDTH * 0.5, MINI_HEIGHT - MINI_WIDTH * 0.5, ColorF::Blue, 1);
 
 	// 미니맵 크리쳐 생성되는 범위 표시	
-	pMinimapCamera->DrawCircle(Vector(MINI_WIDTH * 0.5, MINI_HEIGHT), Vector(MINI_WIDTH, MINI_WIDTH), ColorF::Yellow);
+	//pMinimapCamera->DrawCircle(Vector(MINI_WIDTH * 0.5, MINI_HEIGHT), Vector(MINI_WIDTH, MINI_WIDTH), ColorF::Yellow);
 
 	// 미니맵에 플레이어 위치 표시
 	pMinimapCamera->DrawFilledCircle(Vector(MINI_WIDTH * 0.5 , MINI_HEIGHT), Vector(8, 8), ColorF::Yellow);
@@ -143,7 +135,7 @@ void PlayScene::OnDraw()
 	
 	OBJECT->Draw(pMainCamera);
 	
-	pUICamera->Draw(OBJECT->GetPlayer()->Animation()->Current()->GetSprite(), Vector(VIEW_WIDTH * 0.5, VIEW_HEIGHT * 1.0f));
+	/*pUICamera->Draw(OBJECT->GetPlayer()->Animation()->Current()->GetSprite(), Vector(VIEW_WIDTH * 0.5, VIEW_HEIGHT * 1.0f));*/
 
 	// Aim 그려주는 부분
 	pUICamera->Draw(m_pAim, Vector(VIEW_WIDTH * 0.5, VIEW_HEIGHT * 0.5f));

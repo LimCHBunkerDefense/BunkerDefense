@@ -12,18 +12,18 @@ ShopScene::ShopScene()
 	ITEM->Init();
 
 	// ItemList¿¡ Item Database ÀúÀå
-	m_itemList.push_back(new Item(1001));
-	m_itemList.push_back(new Item(1002));
-	m_itemList.push_back(new Item(1003));
-	m_itemList.push_back(new Item(1004));
-	m_itemList.push_back(new Item(1005));
-	m_itemList.push_back(new Item(1006));
-	m_itemList.push_back(new Item(1007));
-	m_itemList.push_back(new Item(1008));
-	m_itemList.push_back(new Item(1009));
-	m_itemList.push_back(new Item(1010));
-	m_itemList.push_back(new Item(1011));
-	m_itemList.push_back(new Item(1012));
+	OBJECT->GetItemList().push_back(new Item(1001));
+	OBJECT->GetItemList().push_back(new Item(1002));
+	OBJECT->GetItemList().push_back(new Item(1003));
+	OBJECT->GetItemList().push_back(new Item(1004));
+	OBJECT->GetItemList().push_back(new Item(1005));
+	OBJECT->GetItemList().push_back(new Item(1006));
+	OBJECT->GetItemList().push_back(new Item(1007));
+	OBJECT->GetItemList().push_back(new Item(1008));
+	OBJECT->GetItemList().push_back(new Item(1009));
+	OBJECT->GetItemList().push_back(new Item(1010));
+	OBJECT->GetItemList().push_back(new Item(1011));
+	OBJECT->GetItemList().push_back(new Item(1012));
 
 	IsWeaponClicked = false;
 	IsBulletClicked = false;
@@ -38,7 +38,6 @@ ShopScene::~ShopScene()
 
 void ShopScene::OnEnter()
 {
-	RENDER->GetCamera(CAM_MAIN)->SetScreenRect(0, 0, VIEW_WIDTH, VIEW_HEIGHT);
 
 	NEW_OBJECT(m_pBg, Sprite(RENDER->GetImage(TEXT("shopBG")), 1.0f, 0, 0));
 	NEW_OBJECT(m_pNpcIcon, Sprite(RENDER->GetImage(TEXT("shopNPC")), 1.3f, 0, 0));
@@ -53,6 +52,7 @@ void ShopScene::OnEnter()
 void ShopScene::OnUpdate(float deltaTime)
 {
 	OBJECT->Update(deltaTime);
+	RENDER->GetCamera(CAM_MAIN)->SetCenterPos(Vector(0,0));
 }
 
 void ShopScene::OnExit()
@@ -153,16 +153,16 @@ void ShopScene::ItemListWnd()
 		}
 	}
 
-	list<Item*> itemList = SCENE->GetScene(SCENE_SHOP)->GetItemList();
+	list<Object*> itemList = OBJECT->GetItemList();
 	int weaponIndex = 0;
 	int bulletIndex = -4;
 	int usingItemIndex = -8;
-	Item* pItem;
+	Object* pItem;
 
 	switch (m_currentButton)
 	{
 	case BUTTON_WEAPON:
-		FOR_LIST(Item*, itemList)
+		FOR_LIST(Object*, itemList)
 		{
 			weaponIndex++;
 			pItem = ((*it)->GetTag() == ITEM_WEAPON) ? (*it) : NULL;
@@ -173,7 +173,7 @@ void ShopScene::ItemListWnd()
 		}
 		break;
 	case BUTTON_BULLET:
-		FOR_LIST(Item*, itemList)
+		FOR_LIST(Object*, itemList)
 		{
 			bulletIndex++;
 			pItem = ((*it)->GetTag() == ITEM_BULLET) ? (*it) : NULL;
@@ -184,7 +184,7 @@ void ShopScene::ItemListWnd()
 		}
 		break;
 	case BUTTON_USINGITEM:
-		FOR_LIST(Item*, itemList)
+		FOR_LIST(Object*, itemList)
 		{ 
 			usingItemIndex++;
 			pItem = ((*it)->GetTag() == ITEM_USINGITEM) ? (*it) : NULL;

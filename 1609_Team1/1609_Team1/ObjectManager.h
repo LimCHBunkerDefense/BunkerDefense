@@ -84,7 +84,16 @@ public:
 	//Bullet용 함수
 	virtual BOOL UpdateBool(float deltaTime) { return false; }
 
-
+	// 아이템용 함수
+	virtual int GetID() { return NULL; }
+	virtual wstring GetName() { return NULL; }
+	virtual float GetAttack() { return NULL; }
+	virtual float GetDefense() { return NULL; }
+	virtual float GetBunkerLife() { return NULL; }
+	virtual wstring GetRange() { return NULL; }
+	virtual wstring GetInfo() { return NULL; }
+	virtual int GetItemMoney() { return NULL; }
+	virtual ITEM_TAG GetTag() { return ITEM_NONE; }
 
 };
 
@@ -100,6 +109,7 @@ class ObjectManager : public Singleton<ObjectManager>
 	Object* m_bunker;
 	list<Object*> m_creatureList;
 	list<Object*> m_bulletList;
+	list<Object*> m_itemList;				// 아이템 리스트
 
 
 public:	
@@ -134,7 +144,9 @@ public:
 	}
 
 	// 아이템
-	void CreateItem(GUN_TAG, int itemID);
+	void CreateItem(GUN_TAG tag, int itemID);
+	list<Object*> GetItemList() { return m_itemList; }
+
 
 
 	// 총알
