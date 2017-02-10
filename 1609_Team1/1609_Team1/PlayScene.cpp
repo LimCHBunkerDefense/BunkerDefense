@@ -36,6 +36,11 @@ PlayScene::PlayScene()
 	// 카메라 생성
 	RENDER->CreateCamera(CAM_MAIN, 1920, 1080, VIEW_WIDTH, VIEW_HEIGHT);
 	RENDER->CreateCamera(CAM_MINIMAP, MINI_WIDTH, MINI_HEIGHT* 2, MINI_WIDTH, MINI_HEIGHT * 2);
+	RENDER->CreateCamera(CAM_UI, VIEW_WIDTH, VIEW_HEIGHT, VIEW_WIDTH, VIEW_HEIGHT);
+
+	pMainCamera = RENDER->GetCamera(CAM_MAIN);
+	pMinimapCamera = RENDER->GetCamera(CAM_MINIMAP);
+	pUICamera = RENDER->GetCamera(CAM_UI);
 }
 
 
@@ -82,6 +87,9 @@ void PlayScene::OnUpdate(float deltaTime)
 	// 오브젝트 전체 업데이트
 	OBJECT->Update(deltaTime);
 	OBJECT->SetPosByDeltaAngle();
+
+	// 플레이어 에임에 카메라 센터 맞추기
+	pMainCamera->SetCenterPos(OBJECT->GetAimPos());
 }
 
 void PlayScene::OnExit()
@@ -90,12 +98,12 @@ void PlayScene::OnExit()
 }
 
 void PlayScene::OnDraw()
-{
-	Camera* pMainCamera = RENDER->GetCamera(CAM_MAIN);
-	Camera* pMinimapCamera = RENDER->GetCamera(CAM_MINIMAP);
+{	
 
-	// 배경 그려주는 부분
-	DrawBG();
+	// 배경 그려주는 부분 (보이는 화면 좌우로 하나씩 더)
+	pMainCamera->Draw(m_pBg, Vector(0,0)); 
+	pMainCamera->Draw(m_pBg, Vector(-VIEW_WIDTH,0));
+	pMainCamera->Draw(m_pBg, Vector(VIEW_WIDTH,0));
 
 	// 임시 미니맵 배경
 	pMinimapCamera->Draw(m_pMinimap, Vector(0,0));
@@ -120,7 +128,7 @@ void PlayScene::OnDraw()
 	{
 		Vector pos = (*it)->Position();
 		pMinimapCamera->DrawFilledCircle(pos - 4, Vector(8, 8), ColorF::Red);
-		//pMinimapCamera->DrawLine((*it)->GetStartPos().x, (*it)->GetStartPos().y, OBJECT->GetPlayer()->Position().x, OBJECT->GetPlayer()->Position().y, ColorF::Red, 2);
+		pMinimapCamera->DrawLine((*it)->GetStartPos().x, (*it)->GetStartPos().y, OBJECT->GetPlayer()->Position().x, OBJECT->GetPlayer()->Position().y, ColorF::Red, 2);
 	}
 
 	//탄환 선 긋기
@@ -135,17 +143,7 @@ void PlayScene::OnDraw()
 	OBJECT->Draw(pMainCamera);
 
 	// Aim 그려주는 부분
-	pMainCamera->Draw(m_pAim, Vector(VIEW_WIDTH * 0.5, VIEW_HEIGHT * 0.5f));
-}
-
-void PlayScene::DrawBG()
-{
-	Camera* pMainCamera = RENDER->GetCamera(CAM_MAIN);
-	pMainCamera->Draw(m_pBg, m_posBg);
-
-	if (m_posBg.x < 0) pMainCamera->Draw(m_pBg, m_posBg + m_pBg->GetWidth());
-	if (m_posBg.x > 0) pMainCamera->Draw(m_pBg, m_posBg - m_pBg->GetWidth());
-
+	pUICamera->Draw(m_pAim, Vector(VIEW_WIDTH * 0.5, VIEW_HEIGHT * 0.5f));
 }
 
 void PlayScene::SetCreature(float deltaTime)

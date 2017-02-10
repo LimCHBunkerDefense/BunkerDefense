@@ -10,11 +10,14 @@
 class PlayScene : public IScene
 {
 	Sprite* m_pBg;
-	Vector m_posBg;
 
 	Sprite* m_pAim;
 	Sprite* m_pMinimap;
 	Sprite* m_pRadar;
+
+	Camera* pMainCamera;
+	Camera* pMinimapCamera;
+	Camera* pUICamera;
 
 	
 	// 크리쳐 생성 y좌표(높이 h)
@@ -40,6 +43,4 @@ public:
 
 	void DrawBG();
 	void SetCreature(float deltaTime);
-	void SetPosBg(Vector pos) { m_posBg = pos; }
-	Vector GetPosBg() { return m_posBg; }
 };

@@ -93,6 +93,8 @@ class ObjectManager : public Singleton<ObjectManager>
 	float m_deltaSightHeight;
 	float m_sightHeight;
 
+	Vector m_aim;						// 플레이어 조준점 좌표
+
 	Object* m_pPlayer;
 	Object* m_bunker;
 	list<Object*> m_creatureList;
@@ -166,5 +168,8 @@ public:
 	void SetSightHeight(float height) { m_sightHeight = height; }
 	float GetSightHeight() { return m_sightHeight; }
 
+	// 플레이어 에임 좌표 관련
+	Vector GetAimPos() { return m_aim; }
+	void SetAimPos(Vector aim) { m_aim = aim; }
 };
 

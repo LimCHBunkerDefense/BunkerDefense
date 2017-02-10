@@ -6,6 +6,7 @@
 ObjectManager::ObjectManager()
 {
 	m_sightHeight = 400;
+	m_aim = Vector(700, 500);
 }
 
 ObjectManager::~ObjectManager()
@@ -31,7 +32,7 @@ void ObjectManager::Update(float deltaTime)
 		}
 	}
 
-
+	m_aim = m_aim + Vector(m_deltaSightAngle, -1 * m_deltaSightHeight);
 }
 
 void ObjectManager::Draw(Camera* pCamera)
