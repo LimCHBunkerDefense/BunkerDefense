@@ -1,9 +1,10 @@
 #pragma once
 #include "RenderManager.h"
+#include "ObjectManager.h"
 #include "ItemDB.h"
 #include <list>
 
-class Item
+class Item : public Object
 {
 	ITEM_TAG m_tag;
 	int m_itemID;
@@ -24,6 +25,9 @@ public:
 	Item(int itemID);
 	~Item();
 	
+	void Update(float deltaTime);
+	void Draw();
+
 	// Item Database 반환
 	int GetID() { return m_itemID; }
 	wstring GetName() { return m_name; }
@@ -35,7 +39,10 @@ public:
 	int GetItemMoney() { return m_money; }
 	ITEM_TAG GetTag() { return m_tag; }
 
-	// 총 상태 Set함수
+	// 총 상태 함수
 	void SetGunState(GUN_STATE gunState) { m_gunState = gunState; }
+	void IdleState(float deltaTime);
+	void ShotState(float deltaTime);
+	void ReloadState(float deltaTime);
 };
 
