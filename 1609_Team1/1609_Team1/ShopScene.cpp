@@ -153,16 +153,16 @@ void ShopScene::ItemListWnd()
 		}
 	}
 
-	list<Item*> itemList = OBJECT->GetItemList();
+	list<Object*> itemList = OBJECT->GetItemList();
 	int weaponIndex = 0;
 	int bulletIndex = -4;
 	int usingItemIndex = -8;
-	Item* pItem;
+	Object* pItem;
 
 	switch (m_currentButton)
 	{
 	case BUTTON_WEAPON:
-		FOR_LIST(Item*, itemList)
+		FOR_LIST(Object*, itemList)
 		{
 			weaponIndex++;
 			pItem = ((*it)->GetTag() == ITEM_WEAPON) ? (*it) : NULL;
@@ -173,7 +173,7 @@ void ShopScene::ItemListWnd()
 		}
 		break;
 	case BUTTON_BULLET:
-		FOR_LIST(Item*, itemList)
+		FOR_LIST(Object*, itemList)
 		{
 			bulletIndex++;
 			pItem = ((*it)->GetTag() == ITEM_BULLET) ? (*it) : NULL;
@@ -184,7 +184,7 @@ void ShopScene::ItemListWnd()
 		}
 		break;
 	case BUTTON_USINGITEM:
-		FOR_LIST(Item*, itemList)
+		FOR_LIST(Object*, itemList)
 		{ 
 			usingItemIndex++;
 			pItem = ((*it)->GetTag() == ITEM_USINGITEM) ? (*it) : NULL;
