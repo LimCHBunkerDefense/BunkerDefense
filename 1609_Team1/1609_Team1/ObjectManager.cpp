@@ -105,7 +105,7 @@ void ObjectManager::CreateCreature(OBJ_TAG tag, Vector pos)
 }
 
 
-Item* ObjectManager::CreateItem(GUN_TAG tag, int itemID)
+void ObjectManager::CreateItem(GUN_TAG tag, int itemID)
 {
 	NEW_OBJECT(Item* pItem, Item(itemID));
 
@@ -127,7 +127,6 @@ Item* ObjectManager::CreateItem(GUN_TAG tag, int itemID)
 		break;
 	}
 
-	return pItem;
 }
 
 void ObjectManager::CreateBullet(OBJ_TAG tag, Vector pos)

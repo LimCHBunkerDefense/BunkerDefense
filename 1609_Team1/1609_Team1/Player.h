@@ -32,7 +32,7 @@ public:
 	void ShopState();
 
 	// 아이템을 가방에 추가하는 함수
-	void AddItem(Item* pItem) { m_itemBag[pItem->GetID()] = new Item(pItem->GetID()); }
+	void AddItem(Object* pItem) { m_itemBag[pItem->GetID()] = new Item(pItem->GetID()); }
 
 	// 번호 입력시 아이템을 장착하는 함수
 	void SetItem();

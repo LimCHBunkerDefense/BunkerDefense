@@ -12,18 +12,18 @@ ShopScene::ShopScene()
 	ITEM->Init();
 
 	// ItemList¿¡ Item Database ÀúÀå
-	m_itemList.push_back(new Item(1001));
-	m_itemList.push_back(new Item(1002));
-	m_itemList.push_back(new Item(1003));
-	m_itemList.push_back(new Item(1004));
-	m_itemList.push_back(new Item(1005));
-	m_itemList.push_back(new Item(1006));
-	m_itemList.push_back(new Item(1007));
-	m_itemList.push_back(new Item(1008));
-	m_itemList.push_back(new Item(1009));
-	m_itemList.push_back(new Item(1010));
-	m_itemList.push_back(new Item(1011));
-	m_itemList.push_back(new Item(1012));
+	OBJECT->GetItemList().push_back(new Item(1001));
+	OBJECT->GetItemList().push_back(new Item(1002));
+	OBJECT->GetItemList().push_back(new Item(1003));
+	OBJECT->GetItemList().push_back(new Item(1004));
+	OBJECT->GetItemList().push_back(new Item(1005));
+	OBJECT->GetItemList().push_back(new Item(1006));
+	OBJECT->GetItemList().push_back(new Item(1007));
+	OBJECT->GetItemList().push_back(new Item(1008));
+	OBJECT->GetItemList().push_back(new Item(1009));
+	OBJECT->GetItemList().push_back(new Item(1010));
+	OBJECT->GetItemList().push_back(new Item(1011));
+	OBJECT->GetItemList().push_back(new Item(1012));
 
 	IsWeaponClicked = false;
 	IsBulletClicked = false;

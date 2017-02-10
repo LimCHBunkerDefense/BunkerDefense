@@ -146,7 +146,7 @@ void Player::ShopState()
 		{
 			if (MATH->IsCollided(Vector(INPUT->GetMousePos().x, INPUT->GetMousePos().y), *(*it_Box)))
 			{
-				list<Item*> itemList = SCENE->GetScene(SCENE_SHOP)->GetItemList();
+				list<Object*> itemList = OBJECT->GetItemList();
 				switch ((*it_Box)->buttonTag)
 				{
 				case BUTTON_WEAPON:
@@ -226,7 +226,7 @@ void Player::ShopState()
 				case BUTTON_BUY:// 샵씬에서 구매 선택하면 그 아이템이 아이템 가방에 저장됨
 					if (m_itemBag.find(SCENE->GetScene(SCENE_SHOP)->GetSelectedItem()->GetID()) != m_itemBag.end())
 					{
-						Item* pItem = SCENE->GetScene(SCENE_SHOP)->GetSelectedItem();
+						Object* pItem = SCENE->GetScene(SCENE_SHOP)->GetSelectedItem();
 						AddItem(pItem);
 						break;
 					}
