@@ -17,11 +17,14 @@ class Item
 	wstring m_info;
 	wstring m_range;
 
+	GUN_STATE m_gunState;
+
 public:
 	Item();
 	Item(int itemID);
 	~Item();
 	
+	// Item Database 반환
 	int GetID() { return m_itemID; }
 	wstring GetName() { return m_name; }
 	float GetAttack() { return m_attack; }
@@ -31,5 +34,8 @@ public:
 	wstring GetInfo() { return m_info; }
 	int GetItemMoney() { return m_money; }
 	ITEM_TAG GetTag() { return m_tag; }
+
+	// 총 상태 Set함수
+	void SetGunState(GUN_STATE gunState) { m_gunState = gunState; }
 };
 
