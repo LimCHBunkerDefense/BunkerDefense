@@ -32,7 +32,9 @@ void ObjectManager::Update(float deltaTime)
 		}
 	}
 
-	m_aim = m_aim + Vector(m_deltaSightAngle, -1 * m_deltaSightHeight);
+	float x = MATH->Clamp(m_aim.x + m_deltaSightAngle, -1 * float(VIEW_WIDTH), float(VIEW_WIDTH * 2));
+	float y = MATH->Clamp(m_aim.y - m_deltaSightHeight, 
+	m_aim = MATH->Clamp(m_aim + Vector(m_deltaSightAngle, -1 * m_deltaSightHeight), ;
 }
 
 void ObjectManager::Draw(Camera* pCamera)
