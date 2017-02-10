@@ -14,8 +14,6 @@ class Player :
 	map<int, Item*> m_itemBag;			// 아이템 가방
 
 	PLAYER_STATE m_state;				// 플레이어 상태
-
-	Vector m_aim;						// 플레이어 조준점 좌표
 										   
 	Vector m_prevMousePos;				// 이전 마우스 좌표값
 	float m_sight;						// 시야 길이

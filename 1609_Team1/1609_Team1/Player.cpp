@@ -9,7 +9,6 @@ Player::Player()
 Player::Player(OBJ_TAG tag) : Object(tag)
 {
 	m_state = PLAYER_ATTACK;
-	m_aim = Vector(600, 540);
 	
 	m_prevMousePos = Vector(INPUT->GetMousePos().x, INPUT->GetMousePos().y);
 	m_sight = SIGHT;
