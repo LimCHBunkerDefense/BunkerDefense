@@ -8,22 +8,22 @@ ShopScene::ShopScene()
 	RENDER->LoadImageFile(TEXT("MarketBG"), TEXT("Image/NPC/MarketBG.png"));
 	RENDER->LoadImageFile(TEXT("Infobox_bg"), TEXT("Image/NPC/infobox_bg.png"));
 
-	// itemDB 생성
-	ITEM->Init();
-
 	// ItemList에 Item Database 저장
-	OBJECT->GetItemList().push_back(new Item(1001));
-	OBJECT->GetItemList().push_back(new Item(1002));
-	OBJECT->GetItemList().push_back(new Item(1003));
-	OBJECT->GetItemList().push_back(new Item(1004));
-	OBJECT->GetItemList().push_back(new Item(1005));
-	OBJECT->GetItemList().push_back(new Item(1006));
-	OBJECT->GetItemList().push_back(new Item(1007));
-	OBJECT->GetItemList().push_back(new Item(1008));
-	OBJECT->GetItemList().push_back(new Item(1009));
-	OBJECT->GetItemList().push_back(new Item(1010));
-	OBJECT->GetItemList().push_back(new Item(1011));
-	OBJECT->GetItemList().push_back(new Item(1012));
+	list<Object*> plist = OBJECT->GetItemList();
+	OBJECT->CreateItem(1001);
+	OBJECT->CreateItem(1002);
+	OBJECT->CreateItem(1003);
+	OBJECT->CreateItem(1004);
+	OBJECT->CreateItem(1005);
+	OBJECT->CreateItem(1006);
+	OBJECT->CreateItem(1007);
+	OBJECT->CreateItem(1008);
+	OBJECT->CreateItem(1009);
+	OBJECT->CreateItem(1010);
+	OBJECT->CreateItem(1011);
+	OBJECT->CreateItem(1012);
+	list<Object*> pplist = OBJECT->GetItemList();
+	
 
 	IsWeaponClicked = false;
 	IsBulletClicked = false;

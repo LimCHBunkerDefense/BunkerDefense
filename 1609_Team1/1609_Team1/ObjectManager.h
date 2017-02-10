@@ -109,7 +109,7 @@ class ObjectManager : public Singleton<ObjectManager>
 	Object* m_bunker;
 	list<Object*> m_creatureList;
 	list<Object*> m_bulletList;
-	list<Object*> m_itemList;				// 아이템 리스트
+	list<Object*> m_itemList;				// 아이템 싱점용 리스트
 
 
 public:	

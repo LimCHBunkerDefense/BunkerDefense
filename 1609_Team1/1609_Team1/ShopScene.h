@@ -55,6 +55,7 @@ public:
 	}
 
 	void SetCurrentButton(BUTTON_TAG buttonTag) { m_currentButton = buttonTag; }
+	int GetCurrentButton() { return m_currentButton; }
 
 	// 버튼이 클릭되었나를 확인하는 bool변수의 GetSet함수
 	bool GetIsWeaponClicked() { return IsWeaponClicked; }

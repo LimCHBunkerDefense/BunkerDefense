@@ -23,6 +23,9 @@ void GameManager::Init()
 	RENDER->Init(WINDOW->GetHandle(WND_MAIN));
 	INPUT->Init(WINDOW->GetHandle(WND_MAIN));
 
+	// itemDB 생성
+	ITEM->Init();
+
 	SCENE->Register(SCENE_PLAY, new PlayScene());
 	SCENE->Register(SCENE_SHOP, new ShopScene()); // *김윤중 추가
 	SCENE->ChangeScene(SCENE_PLAY); // 빠른 확인을위해여 변경

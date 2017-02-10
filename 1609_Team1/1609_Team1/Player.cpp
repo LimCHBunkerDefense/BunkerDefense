@@ -141,6 +141,7 @@ void Player::ShopState()
 	// 마우스 왼쪽 버튼 클릭
 	if (INPUT->IsMouseUp(MOUSE_LEFT))
 	{
+		int but;
 		list<Box*> boxList = SCENE->GetScene(SCENE_SHOP)->GetBoxList();
 		for (list<Box*>::iterator it_Box = boxList.begin(); it_Box != boxList.end(); it_Box++)
 		{
@@ -151,6 +152,7 @@ void Player::ShopState()
 				{
 				case BUTTON_WEAPON:
 					SCENE->GetScene(SCENE_SHOP)->SetCurrentButton(BUTTON_WEAPON);
+					but = SCENE->GetScene(SCENE_SHOP)->GetCurrentButton();
 					SCENE->GetScene(SCENE_SHOP)->SetIsWeaponClicked(true);
 					SCENE->GetScene(SCENE_SHOP)->SetIsBulletClicked(false);
 					SCENE->GetScene(SCENE_SHOP)->SetIsUsingItemClicked(false);
@@ -168,7 +170,7 @@ void Player::ShopState()
 					SCENE->GetScene(SCENE_SHOP)->SetIsUsingItemClicked(true);
 					break;
 				case BUTTON_FIRST:
-					if (SCENE->GetScene(SCENE_SHOP)->GetIsWeaponClicked() == true)
+					if (SCENE->GetScene(SCENE_SHOP)->GetIsWeaponClicked())
 					{
 						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(1001);
 					}
