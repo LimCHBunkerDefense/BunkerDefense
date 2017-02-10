@@ -15,7 +15,7 @@ PlayScene::PlayScene()
 	// UI 이미지 맵으로 저장
 	RENDER->LoadImageFile(TEXT("Aim"), TEXT("Image/UI/Aim/Aim.png"));
 	RENDER->LoadImageFile(TEXT("Minimap"), TEXT("Image/UI/Minimap/Minimap.png"));
-	RENDER->LoadImageFile(TEXT("Radar"), TEXT("Image/UI/Minimap/Radar.gif"));
+	RENDER->LoadImageFile(TEXT("Radar"), TEXT("Image/UI/Minimap/RadarBG.png"));
 
 	// 크리쳐 데이터 생성
 	CREATURE->Init();
