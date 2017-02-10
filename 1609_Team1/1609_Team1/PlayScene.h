@@ -14,6 +14,7 @@ class PlayScene : public IScene
 	Sprite* m_pAim;
 	Sprite* m_pMinimap;
 	Sprite* m_pRadar;
+	Sprite* m_ico_pistol;
 
 	Camera* pMainCamera;
 	Camera* pMinimapCamera;

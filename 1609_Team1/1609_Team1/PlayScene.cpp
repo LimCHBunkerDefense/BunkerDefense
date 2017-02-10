@@ -28,6 +28,11 @@ PlayScene::PlayScene()
 	//Bullet 임시로 저장
 	RENDER->LoadImageFiles(TEXT("BulletIdle"), TEXT("Image/Bullet/bullet"), TEXT("png"), 1);
 
+	//무기 ICON 가져오기
+	RENDER->LoadImageFile(TEXT("PistolOn"),		TEXT("Image/Item/Icon/ico_pistol_on.png"));
+	RENDER->LoadImageFile(TEXT("PistolOff"),	TEXT("Image/Item/Icon/ico_pistol_off.png"));
+
+
 	// 카메라 생성
 	RENDER->CreateCamera(CAM_MAIN, MAP_WIDTH, MAP_HEIGHT, VIEW_WIDTH, VIEW_HEIGHT);
 	RENDER->CreateCamera(CAM_MINIMAP, MINI_WIDTH, MINI_HEIGHT* 2, MINI_WIDTH, MINI_HEIGHT * 2);
@@ -51,8 +56,9 @@ void PlayScene::OnEnter()
 
 	// UI 이미지 스프라이트로 생성
 	NEW_OBJECT(m_pAim, Sprite(RENDER->GetImage(TEXT("Aim")), 0.825));
-	NEW_OBJECT(m_pMinimap, Sprite(RENDER->GetImage(TEXT("Minimap")), 0.8));
-	NEW_OBJECT(m_pRadar, Sprite(RENDER->GetImage(TEXT("Radar")), 1.6, 0.0,0.0));
+	NEW_OBJECT(m_pMinimap, Sprite(RENDER->GetImage(TEXT("Minimap")), 1.0));
+	NEW_OBJECT(m_pRadar, Sprite(RENDER->GetImage(TEXT("Radar")), 0.85, 0.0,0.0));
+	NEW_OBJECT(m_ico_pistol, Sprite(RENDER->GetImage(TEXT("PistolOn"))));
 
 	// 플레이어 생성
 	OBJECT->CreatePlayer(Vector(MINI_WIDTH * 0.5F, MINI_HEIGHT), Vector(10, 10), Vector(0.5f, 1.0f));
@@ -60,6 +66,7 @@ void PlayScene::OnEnter()
 	// 카메라 세팅
 	RENDER->GetCamera(CAM_MAIN)->SetScreenRect(0, 0, VIEW_WIDTH, VIEW_HEIGHT);
 	RENDER->GetCamera(CAM_MINIMAP)->SetScreenRect(VIEW_WIDTH - MINI_WIDTH, VIEW_HEIGHT - MINI_HEIGHT * 2, MINI_WIDTH, MINI_HEIGHT * 2);
+	RENDER->GetCamera(CAM_UI)->SetScreenRect(0, 0, VIEW_WIDTH, VIEW_HEIGHT);
 
 	m_createdCretureCount = 0;
 
@@ -98,8 +105,8 @@ void PlayScene::OnDraw()
 	pMainCamera->Draw(m_pBg, Vector(VIEW_WIDTH,0));
 
 	// 임시 미니맵 배경
-	pMinimapCamera->Draw(m_pMinimap, Vector(0,0));
-	pMinimapCamera->Draw(m_pRadar, Vector(-30, 30));
+	//pMinimapCamera->Draw(m_pMinimap, Vector(0,0));
+	pMinimapCamera->Draw(m_pRadar, Vector(-24, 24));
 
 	// 미니맵 시야 각도 표시
 	pMinimapCamera->DrawLine(MINI_WIDTH * 0.5, MINI_HEIGHT, 
@@ -138,6 +145,26 @@ void PlayScene::OnDraw()
 
 	// Aim 그려주는 부분
 	pUICamera->Draw(m_pAim, Vector(VIEW_WIDTH * 0.5, VIEW_HEIGHT * 0.5f));
+
+	//Bunker 체력
+	pUICamera->DrawRect(Vector(20, 20), Vector(260, 50), ColorF::Blue, 1);
+
+	//Icon
+	pUICamera->Draw(m_ico_pistol, Vector(40, 110));
+	//pUICamera->DrawRect(Vector(20, 90), Vector(50, 50), ColorF::Red, 1);
+	pUICamera->DrawRect(Vector(90, 90), Vector(50, 50), ColorF::Red, 1);
+	pUICamera->DrawRect(Vector(160, 90), Vector(50, 50), ColorF::Red, 1);
+	pUICamera->DrawRect(Vector(230, 90), Vector(50, 50), ColorF::Red, 1);
+
+	pUICamera->DrawRect(Vector(20, VIEW_HEIGHT - 190), Vector(320, 70), ColorF::Blue, 1);
+	pUICamera->DrawRect(Vector(20, VIEW_HEIGHT - 100), Vector(70, 70), ColorF::Red, 1);
+	pUICamera->DrawRect(Vector(110, VIEW_HEIGHT - 100), Vector(70, 70), ColorF::Red, 1);
+	pUICamera->DrawRect(Vector(200, VIEW_HEIGHT - 100), Vector(70, 70), ColorF::Red,1);
+	pUICamera->DrawRect(Vector(290, VIEW_HEIGHT - 100), Vector(70, 70), ColorF::Red,1);
+
+	pUICamera->DrawT(TEXT("Stage 1"), VIEW_WIDTH / 2-50, 40, ColorF::White, 30, ALIGN_CENTER);
+	pUICamera->DrawT(TEXT("점수 : "), VIEW_WIDTH - 300, 30, ColorF::White, 30, ALIGN_RIGHT);
+	pUICamera->DrawT(TEXT("골드 : "), VIEW_WIDTH - 300, 70, ColorF::White, 30, ALIGN_RIGHT);
 }
 
 void PlayScene::SetCreature(float deltaTime)
