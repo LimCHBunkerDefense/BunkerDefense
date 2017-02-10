@@ -1,6 +1,7 @@
 #include "ObjectManager.h"
 #include "Player.h"
 #include "Creature.h"
+#include "Bullet.h"
 
 ObjectManager::ObjectManager()
 {
@@ -22,10 +23,13 @@ void ObjectManager::Update(float deltaTime)
 		(*it)->Update(deltaTime);
 	}
 
-	//FOR_LIST(Object*, m_bulletList)
-	//{
-	//	(*it)->Update(deltaTime);
-	//}
+	FOR_LIST(Object*, m_bulletList)
+	{
+		if ((*it)->UpdateBool(deltaTime)) {
+			OBJECT->DestroyBullet((*it));
+			break;
+		}
+	}
 
 
 }
@@ -37,13 +41,15 @@ void ObjectManager::Draw(Camera* pCamera)
 		(*it)->Draw(pCamera);
 
 		// 충돌체 보여주는 부분인데, 미니맵의 실제 움직임과 보여지는 움직임이 다르기 때문에 충돌체 보여주는 것이 의미가 없음.
-		// if(SCENE->GetColliderOnOff()) pCamera->DrawRect((*it)->Collider().LeftTop(), (*it)->Collider().size, ColorF::Yellow, 3);
+		if(SCENE->GetColliderOnOff()) pCamera->DrawRect((*it)->Collider().LeftTop(), (*it)->Collider().size, ColorF::Yellow, 3);
 	}
 
-	//FOR_LIST(Object*, m_bulletList)
-	//{
-	//	(*it)->Draw(pCamera);
-	//}
+	FOR_LIST(Object*, m_bulletList)
+	{
+		(*it)->Draw(pCamera);
+		// 충돌체 보여주는 부분인데, 미니맵의 실제 움직임과 보여지는 움직임이 다르기 때문에 충돌체 보여주는 것이 의미가 없음.
+		if (SCENE->GetColliderOnOff()) pCamera->DrawRect((*it)->Collider().LeftTop(), (*it)->Collider().size, ColorF::Yellow, 3);
+	}
 
 	m_pPlayer->Draw(pCamera);
 }
@@ -89,6 +95,24 @@ void ObjectManager::CreateCreature(OBJ_TAG tag, Vector pos)
 	m_creatureList.push_front(pCreature);
 }
 
+void ObjectManager::CreateBullet(OBJ_TAG tag, Vector pos)
+{
+	NEW_OBJECT(Object* pBullet, Bullet(tag));
+	pBullet->SetPosition_Creature(pos, pos * 5);
+	pBullet->SetStartPos(pos);
+
+	Vector colSize, anchor;
+	float scale = 0.05f;
+	colSize = Vector(20, 20) * scale;
+	anchor = Vector(0.5, 0.95f);
+	pBullet->Animation()->Register(BULLET_IDLE, new Animation(TEXT("BulletIdle"), 1, 10, false, scale, anchor.x, anchor.y));
+	//pBullet->Animation()->Register(BULLET_EXPLODE, new Animation(TEXT("EntRun"), 9, 7, true, scale, anchor.x, anchor.y));
+
+	pBullet->SetCollider(colSize, anchor);
+
+	m_bulletList.push_front(pBullet);
+}
+
 void ObjectManager::SetPosByDeltaAngle()
 {
 	float deltaPosX = 0;
@@ -112,15 +136,24 @@ void ObjectManager::SetPosByDeltaAngle()
 			(*it)->SetStartPos(pos);
 		}
 
+		FOR_LIST(Object*, m_bulletList)
+		{
+			Object* pObj = (*it);
+			float angle = MATH->Angle(Vector::Right(), (*it)->GetMoveDirection() * -1);
+			angle += m_deltaSightAngle;
+
+			Vector pos = MATH->ToDirection(angle) * MINI_WIDTH * 0.5 + OBJECT->GetPlayer()->Position();
+
+			(*it)->SetStartPos(pos);
+		}
 		// 배경 좌우 이동을 위한 변화량 계산
 		float sign = (m_deltaSightAngle > EPSILON) ? -1 : 1;
 		deltaPosX = MATH->Tan(m_deltaSightAngle) * VIEW_WIDTH * 0.5 * sign;
-		
 	}
 
 
 	// 카메라 이동에 따른 배경 출력 위치 변경
-	SCENE->GetScene(SCENE_PLAY)->SetPosBg(SCENE->GetScene(SCENE_PLAY)->GetPosBg() - Vector(deltaPosX, deltaPosY));
+	//SCENE->GetScene(SCENE_PLAY)->SetPosBg(SCENE->GetScene(SCENE_PLAY)->GetPosBg() - Vector(deltaPosX, deltaPosY));
 
 	
 

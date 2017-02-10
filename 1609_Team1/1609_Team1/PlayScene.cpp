@@ -12,6 +12,11 @@ PlayScene::PlayScene()
 	RENDER->LoadImageFile(TEXT("ForestBG"), TEXT("Image/BackGround/ForestBG.jpg")); 
 	RENDER->LoadImageFile(TEXT("DroughtBG"), TEXT("Image/BackGround/DroughtBG.jpg"));
 
+	// UI 이미지 맵으로 저장
+	RENDER->LoadImageFile(TEXT("Aim"), TEXT("Image/UI/Aim/Aim.png"));
+	RENDER->LoadImageFile(TEXT("Minimap"), TEXT("Image/UI/Minimap/Minimap.png"));
+	RENDER->LoadImageFile(TEXT("Radar"), TEXT("Image/UI/Minimap/Radar.gif"));
+
 	// 크리쳐 데이터 생성
 	CREATURE->Init();
 	
@@ -19,6 +24,10 @@ PlayScene::PlayScene()
 	RENDER->LoadImageFiles(TEXT("EntIdle"), TEXT("Image/Creature/Ent/Idle/Idle"), TEXT("png"), 2);
 	RENDER->LoadImageFiles(TEXT("EntRun"), TEXT("Image/Creature/Ent/Run/Run"), TEXT("png"), 9);
 	RENDER->LoadImageFiles(TEXT("EntAttack"), TEXT("Image/Creature/Ent/Attack/Attack"), TEXT("png"), 6);
+
+	//Bullet 임시로 저장
+	RENDER->LoadImageFiles(TEXT("BulletIdle"), TEXT("Image/Bullet/bullet"), TEXT("png"), 1);
+
 
 	// 플레이어 총 이미지 맵으로 저장
 	// RENDER->LoadImageFiles(TEXT("PistolIdle"), TEXT("Image/Item/Pistol/Idle/Idle"), TEXT("png"), 1);
@@ -39,6 +48,11 @@ void PlayScene::OnEnter()
 {
 	// 배경 이미지 스프라이트로 생성
 	NEW_OBJECT(m_pBg, Sprite(RENDER->GetImage(TEXT("DroughtBG")), 1.0f, 0, 0));
+
+	// UI 이미지 스프라이트로 생성
+	NEW_OBJECT(m_pAim, Sprite(RENDER->GetImage(TEXT("Aim")), 1.0));
+	NEW_OBJECT(m_pMinimap, Sprite(RENDER->GetImage(TEXT("Minimap")), 2.0));
+	NEW_OBJECT(m_pRadar, Sprite(RENDER->GetImage(TEXT("Radar")), 1.0, 0.0,0.0));
 
 	// 플레이어 생성
 	OBJECT->CreatePlayer(Vector(MINI_WIDTH * 0.5F, MINI_HEIGHT), Vector(10, 10), Vector(0.5f, 1.0f));
@@ -84,7 +98,8 @@ void PlayScene::OnDraw()
 	DrawBG();
 
 	// 임시 미니맵 배경
-	pMinimapCamera->DrawFilledRect(Vector(0, 0), Vector(MINI_WIDTH, MINI_HEIGHT), ColorF::Green);
+	pMinimapCamera->Draw(m_pMinimap, Vector(0,0));
+	pMinimapCamera->Draw(m_pRadar, Vector(0, 0));
 
 	// 미니맵 시야 각도 표시
 	pMinimapCamera->DrawLine(MINI_WIDTH * 0.5, MINI_HEIGHT, 
@@ -105,12 +120,22 @@ void PlayScene::OnDraw()
 	{
 		Vector pos = (*it)->Position();
 		pMinimapCamera->DrawFilledCircle(pos - 4, Vector(8, 8), ColorF::Red);
-		pMinimapCamera->DrawLine((*it)->GetStartPos().x, (*it)->GetStartPos().y, OBJECT->GetPlayer()->Position().x, OBJECT->GetPlayer()->Position().y, ColorF::Red, 2);
+		//pMinimapCamera->DrawLine((*it)->GetStartPos().x, (*it)->GetStartPos().y, OBJECT->GetPlayer()->Position().x, OBJECT->GetPlayer()->Position().y, ColorF::Red, 2);
 	}
 
-
-
+	//탄환 선 긋기
+	list<Object*> pBulletList = OBJECT->GetBulletList();
+	FOR_LIST(Object*, pBulletList)
+	{
+		Vector pos = (*it)->Position();
+		pMinimapCamera->DrawFilledCircle(pos - 4, Vector(8, 8), ColorF::DeepPink);
+		pMinimapCamera->DrawLine((*it)->GetStartPos().x, (*it)->GetStartPos().y, OBJECT->GetPlayer()->Position().x, OBJECT->GetPlayer()->Position().y, ColorF::DeepPink, 2);
+	}
+	
 	OBJECT->Draw(pMainCamera);
+
+	// Aim 그려주는 부분
+	pMainCamera->Draw(m_pAim, Vector(VIEW_WIDTH * 0.5, VIEW_HEIGHT * 0.5f));
 }
 
 void PlayScene::DrawBG()
