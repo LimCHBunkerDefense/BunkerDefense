@@ -43,7 +43,8 @@ public:
 	Object* GetSelectedItem() { return m_selectedItem; }
 	void SetSelectedItem(int itemID)
 	{
-		FOR_LIST(Object*, m_itemList)
+		list<Object*> pList = OBJECT->GetItemList();
+		FOR_LIST(Object*, pList)
 		{
 			if ((*it)->GetID() == itemID) 
 			{ 

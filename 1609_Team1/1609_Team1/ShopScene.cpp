@@ -153,7 +153,7 @@ void ShopScene::ItemListWnd()
 		}
 	}
 
-	list<Item*> itemList = SCENE->GetScene(SCENE_SHOP)->GetItemList();
+	list<Item*> itemList = OBJECT->GetItemList();
 	int weaponIndex = 0;
 	int bulletIndex = -4;
 	int usingItemIndex = -8;

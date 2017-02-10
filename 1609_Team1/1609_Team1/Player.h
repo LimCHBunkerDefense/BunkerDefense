@@ -10,8 +10,8 @@
 class Player :
 	public Object
 {
-	Item* m_pItem;						// 아이템
-	map<int, Item*> m_itemBag;			// 아이템 가방
+	Object* m_pItem;						// 아이템
+	map<int, Object*> m_itemBag;			// 아이템 가방
 
 	PLAYER_STATE m_state;				// 플레이어 상태
 										   
