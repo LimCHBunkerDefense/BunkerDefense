@@ -1,6 +1,7 @@
 #pragma once
 #include "Singleton.h"
-#include "Item.h"
+#include "ObjectManager.h"
+#include "item.h"
 #include "Math.h"
 #include <map>
 #include <list>
@@ -12,10 +13,9 @@ using namespace std;
 class IScene
 {
 protected:
-	Item* m_selectedItem;			// 구매한 아이템
+	Object* m_selectedItem;			// 구매한 아이템
 
 	list<Box*> m_boxList;			// 박스 리스트
-	list<Item*> m_itemList;			// 아이템 리스트
 
 public:
 	virtual void OnEnter() = 0;
@@ -27,9 +27,7 @@ public:
 	virtual list<Box*> GetBoxList() { return m_boxList; }				// 박스 리스트 반환
 	virtual void AddBoxList(Box* box) { m_boxList.push_back(box); }		// 박스 리스트 안에 박스 추가
 
-	virtual list<Item*> GetItemList() { return m_itemList; }
-
-	virtual Item* GetSelectedItem() { return NULL; }					// 구매한 아이템에 대한 함수
+	virtual Object* GetSelectedItem() { return NULL; }					// 구매한 아이템에 대한 함수
 	virtual void SetSelectedItem(int itemID) {}
 	virtual void SetCurrentButton(BUTTON_TAG buttonTag) {}
 
