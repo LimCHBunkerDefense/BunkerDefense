@@ -6,6 +6,7 @@
 
 class Item : public Object
 {
+	ITEMTYPE_TAG m_iTag;
 	ITEM_TAG m_tag;
 	int m_itemID;
 	int m_money;
@@ -38,6 +39,7 @@ public:
 	wstring GetInfo() { return m_info; }
 	int GetItemMoney() { return m_money; }
 	ITEM_TAG GetTag() { return m_tag; }
+	ITEMTYPE_TAG GetItemTypeTag() { return m_iTag; }
 
 	// รั ป๓ลย วิผ๖
 	void SetGunState(GUN_STATE gunState) { m_gunState = gunState; }

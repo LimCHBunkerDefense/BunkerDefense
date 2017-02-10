@@ -9,6 +9,7 @@
 
 struct ItemData
 {
+	ITEMTYPE_TAG iTag;
 	ITEM_TAG tag;
 	int itemID;
 	int money;
@@ -23,8 +24,10 @@ struct ItemData
 	wstring info;
 	wstring ragestr;
 
-	ItemData(ITEM_TAG tag, int itemID, float attack, float defense, float range, float bunkerLife, int bulletCount, int addBullet, int money, wstring name, wstring info, wstring ragestr = TEXT(" "))
+	ItemData(ITEMTYPE_TAG iTag, ITEM_TAG tag, int itemID, float attack, float defense, float range, float bunkerLife, 
+		int bulletCount, int addBullet, int money, wstring name, wstring info, wstring ragestr = TEXT(" "))
 	{
+		this->iTag = iTag;
 		this->tag = tag;
 		this->itemID = itemID;
 		this->attack = attack;
@@ -36,6 +39,7 @@ struct ItemData
 		this->info = info;
 		this->ragestr = ragestr;
 	}
+
 public:
 };
 

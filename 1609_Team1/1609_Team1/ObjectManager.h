@@ -94,6 +94,7 @@ public:
 	virtual wstring GetInfo() { return NULL; }
 	virtual int GetItemMoney() { return NULL; }
 	virtual ITEM_TAG GetTag() { return ITEM_NONE; }
+	virtual ITEMTYPE_TAG GetItemTypeTag() { return ITEMTYPE_NONE; }
 
 };
 
@@ -144,7 +145,7 @@ public:
 	}
 
 	// æ∆¿Ã≈€
-	void CreateItem(GUN_TAG tag, int itemID);
+	void CreateItem(ITEM_TAG tag, int itemID);
 	list<Object*> GetItemList() { return m_itemList; }
 
 

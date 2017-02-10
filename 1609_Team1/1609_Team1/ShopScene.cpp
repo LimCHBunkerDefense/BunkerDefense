@@ -10,20 +10,18 @@ ShopScene::ShopScene()
 
 	// ItemList에 Item Database 저장
 	list<Object*> plist = OBJECT->GetItemList();
-	OBJECT->CreateItem(1001);
-	OBJECT->CreateItem(1002);
-	OBJECT->CreateItem(1003);
-	OBJECT->CreateItem(1004);
-	OBJECT->CreateItem(1005);
-	OBJECT->CreateItem(1006);
-	OBJECT->CreateItem(1007);
-	OBJECT->CreateItem(1008);
-	OBJECT->CreateItem(1009);
-	OBJECT->CreateItem(1010);
-	OBJECT->CreateItem(1011);
-	OBJECT->CreateItem(1012);
-	list<Object*> pplist = OBJECT->GetItemList();
-	
+	OBJECT->CreateItem(ITEM_PISTOL, 1001);
+	OBJECT->CreateItem(ITEM_MACHINEGUN,1002);
+	OBJECT->CreateItem(ITEM_FIRETHROWER,1003);
+	OBJECT->CreateItem(ITEM_LASERGUN,1004);
+	OBJECT->CreateItem(ITEM_PSBULLET,1005);
+	OBJECT->CreateItem(ITEM_MGBULLET,1006);
+	OBJECT->CreateItem(ITEM_FTBULLET,1007);
+	OBJECT->CreateItem(ITEM_LGBULLET,1008);
+	OBJECT->CreateItem(ITEM_GRENADE,1009);
+	OBJECT->CreateItem(ITEM_AIRBOMB,1010);
+	OBJECT->CreateItem(ITEM_RAVAREGION,1011);
+	OBJECT->CreateItem(ITEM_BUNKERREPAIR,1012);
 
 	IsWeaponClicked = false;
 	IsBulletClicked = false;
@@ -45,7 +43,7 @@ void ShopScene::OnEnter()
 	NEW_OBJECT(m_pMarketBG, Sprite(RENDER->GetImage(TEXT("MarketBG")), 0.815, 0, 0));
 	NEW_OBJECT(m_pInfoBoxBG, Sprite(RENDER->GetImage(TEXT("Infobox_bg")), 0.81, 0, 0));
 
-	CreateList();		// 리스트 생성
+	CreateBoxList();		// 리스트 생성
 	ShowCursor(true);	// 마우스 커서 보이게
 }
 
@@ -92,8 +90,6 @@ void ShopScene::OnDraw()
 		pMainCamera->DrawT(number, 850, 495, ColorF::AntiqueWhite, 15);
 		swprintf_s(number, TEXT("DEF: %.1f"), m_selectedItem->GetDefense());
 		pMainCamera->DrawT(number, 930, 495, ColorF::AntiqueWhite, 15);
-
-		
 	}
 
 	//RENDER->DrawRect(Vector(135, 450), Vector(150, 150), ColorF::Aqua, 3);
@@ -108,7 +104,7 @@ void ShopScene::OnDraw()
 
 }
 
-void ShopScene::CreateList()
+void ShopScene::CreateBoxList()
 {
 	// BoxList에 Box Database 저장
 	AddBoxList(new Box(BUTTON_WEAPON, Vector(420, 235), Vector(120, 180)));
@@ -165,7 +161,7 @@ void ShopScene::ItemListWnd()
 		FOR_LIST(Object*, itemList)
 		{
 			weaponIndex++;
-			pItem = ((*it)->GetTag() == ITEM_WEAPON) ? (*it) : NULL;
+			pItem = ((*it)->GetItemTypeTag() == ITEMTYPE_WEAPON) ? (*it) : NULL;
 			if (pItem != NULL)
 			{
 				RENDER->DrawT(pItem->GetName(), 385, 300 + weaponIndex * 60, ColorF::Tomato, 20.0f, ALIGN_CENTER);
@@ -176,7 +172,7 @@ void ShopScene::ItemListWnd()
 		FOR_LIST(Object*, itemList)
 		{
 			bulletIndex++;
-			pItem = ((*it)->GetTag() == ITEM_BULLET) ? (*it) : NULL;
+			pItem = ((*it)->GetItemTypeTag() == ITEMTYPE_BULLET) ? (*it) : NULL;
 			if (pItem != NULL)
 			{
 				RENDER->DrawT(pItem->GetName(), 385, 300 + bulletIndex * 60, ColorF::Khaki, 20.0f, ALIGN_CENTER);
@@ -187,7 +183,7 @@ void ShopScene::ItemListWnd()
 		FOR_LIST(Object*, itemList)
 		{ 
 			usingItemIndex++;
-			pItem = ((*it)->GetTag() == ITEM_USINGITEM) ? (*it) : NULL;
+			pItem = ((*it)->GetItemTypeTag() == ITEMTYPE_USINGITEM) ? (*it) : NULL;
 			if (pItem != NULL)
 			{
 				RENDER->DrawT(pItem->GetName(), 385, 300 + usingItemIndex * 60, ColorF::HotPink, 20.0f, ALIGN_CENTER);

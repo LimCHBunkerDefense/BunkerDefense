@@ -35,7 +35,7 @@ public:
 	void OnExit();
 	void OnDraw();
 
-	void CreateList();											// 리스트들을 생성하는 함수
+	void CreateBoxList();										// 박스 리스트들을 생성하는 함수
 
 	void ItemListWnd();											// 아이템 리스트 창
 	void ItemStatWnd();											// 아이템 정보 창
