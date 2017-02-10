@@ -13,9 +13,9 @@ Player::Player(OBJ_TAG tag) : Object(tag)
 	m_prevMousePos = Vector(INPUT->GetMousePos().x, INPUT->GetMousePos().y);
 	m_sight = SIGHT;
 
-	m_pItem = OBJECT->CreateItem(GUN_PISTOL, 1001);
-	AddItem(m_pItem);
-	SetAnimation(m_pItem->Animation());
+	//m_pItem = OBJECT->CreateItem(GUN_PISTOL, 1001);
+	//AddItem(m_pItem);
+	//SetAnimation(m_pItem->Animation());
 }
 
 Player::~Player()
