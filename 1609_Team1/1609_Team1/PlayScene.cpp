@@ -56,8 +56,8 @@ void PlayScene::OnEnter()
 
 	// UI 이미지 스프라이트로 생성
 	NEW_OBJECT(m_pAim, Sprite(RENDER->GetImage(TEXT("Aim")), 0.825));
-	NEW_OBJECT(m_pMinimap, Sprite(RENDER->GetImage(TEXT("Minimap")), 0.8));
-	NEW_OBJECT(m_pRadar, Sprite(RENDER->GetImage(TEXT("Radar")), 1.6, 0.0,0.0));
+	NEW_OBJECT(m_pMinimap, Sprite(RENDER->GetImage(TEXT("Minimap")), 1.0));
+	NEW_OBJECT(m_pRadar, Sprite(RENDER->GetImage(TEXT("Radar")), 0.85, 0.0,0.0));
 	NEW_OBJECT(m_ico_pistol, Sprite(RENDER->GetImage(TEXT("PistolOn"))));
 
 	// 플레이어 생성
@@ -105,8 +105,8 @@ void PlayScene::OnDraw()
 	pMainCamera->Draw(m_pBg, Vector(VIEW_WIDTH,0));
 
 	// 임시 미니맵 배경
-	pMinimapCamera->Draw(m_pMinimap, Vector(0,0));
-	pMinimapCamera->Draw(m_pRadar, Vector(-30, 30));
+	//pMinimapCamera->Draw(m_pMinimap, Vector(0,0));
+	pMinimapCamera->Draw(m_pRadar, Vector(-24, 24));
 
 	// 미니맵 시야 각도 표시
 	pMinimapCamera->DrawLine(MINI_WIDTH * 0.5, MINI_HEIGHT, 
