@@ -65,6 +65,7 @@ void PlayScene::OnEnter()
 	// 카메라 세팅
 	RENDER->GetCamera(CAM_MAIN)->SetScreenRect(0, 0, VIEW_WIDTH, VIEW_HEIGHT);
 	RENDER->GetCamera(CAM_MINIMAP)->SetScreenRect(VIEW_WIDTH - MINI_WIDTH, VIEW_HEIGHT - MINI_HEIGHT * 2, MINI_WIDTH, MINI_HEIGHT * 2);
+	RENDER->GetCamera(CAM_UI)->SetScreenRect(0, 0, VIEW_WIDTH, VIEW_HEIGHT);
 
 	m_createdCretureCount = 0;
 
@@ -146,6 +147,15 @@ void PlayScene::OnDraw()
 
 	// Aim 그려주는 부분
 	pUICamera->Draw(m_pAim, Vector(VIEW_WIDTH * 0.5, VIEW_HEIGHT * 0.5f));
+
+	//Bunker 체력
+	pUICamera->DrawRect(Vector(20, 20), Vector(280, 100), ColorF::Blue, 1);
+
+	//Icon
+	pUICamera->DrawRect(Vector(20, 140), Vector(50, 50), ColorF::Red, 1);
+	pUICamera->DrawRect(Vector(90, 140), Vector(50, 50), ColorF::Red, 1);
+	pUICamera->DrawRect(Vector(160, 140), Vector(50, 50), ColorF::Red, 1);
+	pUICamera->DrawRect(Vector(230, 140), Vector(50, 50), ColorF::Red, 1);
 }
 
 void PlayScene::SetCreature(float deltaTime)
