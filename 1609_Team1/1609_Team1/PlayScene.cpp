@@ -51,8 +51,8 @@ void PlayScene::OnEnter()
 
 	// UI 이미지 스프라이트로 생성
 	NEW_OBJECT(m_pAim, Sprite(RENDER->GetImage(TEXT("Aim")), 0.825));
-	NEW_OBJECT(m_pMinimap, Sprite(RENDER->GetImage(TEXT("Minimap")), 2.0));
-	NEW_OBJECT(m_pRadar, Sprite(RENDER->GetImage(TEXT("Radar")), 1.0, 0.0,0.0));
+	NEW_OBJECT(m_pMinimap, Sprite(RENDER->GetImage(TEXT("Minimap")), 0.8));
+	NEW_OBJECT(m_pRadar, Sprite(RENDER->GetImage(TEXT("Radar")), 1.6, 0.0,0.0));
 
 	// 플레이어 생성
 	OBJECT->CreatePlayer(Vector(MINI_WIDTH * 0.5F, MINI_HEIGHT), Vector(10, 10), Vector(0.5f, 1.0f));
@@ -102,7 +102,7 @@ void PlayScene::OnDraw()
 
 	// 임시 미니맵 배경
 	pMinimapCamera->Draw(m_pMinimap, Vector(0,0));
-	pMinimapCamera->Draw(m_pRadar, Vector(0, 0));
+	pMinimapCamera->Draw(m_pRadar, Vector(-30, 30));
 
 	// 미니맵 시야 각도 표시
 	pMinimapCamera->DrawLine(MINI_WIDTH * 0.5, MINI_HEIGHT, 
@@ -112,7 +112,7 @@ void PlayScene::OnDraw()
 	pMinimapCamera->DrawLine(MINI_WIDTH * 0.5, MINI_HEIGHT, MINI_WIDTH * 0.5, MINI_HEIGHT - MINI_WIDTH * 0.5, ColorF::Blue, 1);
 
 	// 미니맵 크리쳐 생성되는 범위 표시	
-	pMinimapCamera->DrawCircle(Vector(MINI_WIDTH * 0.5, MINI_HEIGHT), Vector(MINI_WIDTH, MINI_WIDTH), ColorF::Yellow);
+	//pMinimapCamera->DrawCircle(Vector(MINI_WIDTH * 0.5, MINI_HEIGHT), Vector(MINI_WIDTH, MINI_WIDTH), ColorF::Yellow);
 
 	// 미니맵에 플레이어 위치 표시
 	pMinimapCamera->DrawFilledCircle(Vector(MINI_WIDTH * 0.5 , MINI_HEIGHT), Vector(8, 8), ColorF::Yellow);
