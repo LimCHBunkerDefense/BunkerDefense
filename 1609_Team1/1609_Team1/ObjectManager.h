@@ -94,6 +94,7 @@ public:
 	virtual wstring GetInfo() { return NULL; }
 	virtual int GetItemMoney() { return NULL; }
 	virtual ITEM_TAG GetTag() { return ITEM_NONE; }
+	virtual ITEMTYPE_TAG GetItemTypeTag() { return ITEMTYPE_NONE; }
 
 };
 
