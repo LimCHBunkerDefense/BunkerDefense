@@ -147,7 +147,7 @@ void Player::ShopState()
 		{
 			if (MATH->IsCollided(Vector(INPUT->GetMousePos().x, INPUT->GetMousePos().y), *(*it_Box)))
 			{
-				list<Object*> itemList = OBJECT->GetItemList();
+				list<Object*> itemList = OBJECT->GetShopItemList();
 				switch ((*it_Box)->buttonTag)
 				{
 				case BUTTON_WEAPON:

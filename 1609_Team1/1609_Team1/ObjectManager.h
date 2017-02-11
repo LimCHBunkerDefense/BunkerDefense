@@ -109,7 +109,7 @@ class ObjectManager : public Singleton<ObjectManager>
 	Object* m_bunker;
 	list<Object*> m_creatureList;
 	list<Object*> m_bulletList;
-	list<Object*> m_itemList;				// 아이템 싱점용 리스트
+	list<Object*> m_shopItemList;				// 아이템 싱점용 리스트
 
 
 public:	
@@ -144,8 +144,8 @@ public:
 	}
 
 	// 아이템
-	void CreateItem(GUN_TAG tag, int itemID);
-	list<Object*> GetItemList() { return m_itemList; }
+	Object* CreateItem(GUN_TAG tag, int itemID);
+	list<Object*> GetShopItemList() { return m_shopItemList; }
 
 
 

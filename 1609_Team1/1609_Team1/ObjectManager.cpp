@@ -12,6 +12,22 @@ ObjectManager::ObjectManager()
 	// 플레이어 총 이미지 맵으로 저장
 	RENDER->LoadImageFiles(TEXT("PistolIdle"), TEXT("Image/Item/Pistol/Idle/Idle"), TEXT("png"), 2);
 	RENDER->LoadImageFiles(TEXT("PistolShot"), TEXT("Image/Item/Pistol/Attack/Attack"), TEXT("png"), 3);
+
+	// ItemList에 Item Database 저장
+	m_shopItemList.push_back(new Item(1001));
+	m_shopItemList.push_back(new Item(1002));
+	m_shopItemList.push_back(new Item(1003));
+	m_shopItemList.push_back(new Item(1004));
+	m_shopItemList.push_back(new Item(1005));
+	m_shopItemList.push_back(new Item(1006));
+	m_shopItemList.push_back(new Item(1007));
+	m_shopItemList.push_back(new Item(1008));
+	m_shopItemList.push_back(new Item(1009));
+	m_shopItemList.push_back(new Item(1010));
+	m_shopItemList.push_back(new Item(1011));
+	m_shopItemList.push_back(new Item(1012));
+
+
 }
 
 ObjectManager::~ObjectManager()
@@ -105,7 +121,7 @@ void ObjectManager::CreateCreature(OBJ_TAG tag, Vector pos)
 }
 
 
-void ObjectManager::CreateItem(GUN_TAG tag, int itemID)
+Object* ObjectManager::CreateItem(GUN_TAG tag, int itemID)
 {
 	NEW_OBJECT(Item* pItem, Item(itemID));
 
@@ -127,6 +143,7 @@ void ObjectManager::CreateItem(GUN_TAG tag, int itemID)
 		break;
 	}
 
+	return pItem;
 }
 
 void ObjectManager::CreateBullet(OBJ_TAG tag, Vector pos)
