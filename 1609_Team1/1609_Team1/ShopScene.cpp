@@ -21,7 +21,6 @@ ShopScene::~ShopScene()
 
 void ShopScene::OnEnter()
 {
-
 	NEW_OBJECT(m_pBg, Sprite(RENDER->GetImage(TEXT("shopBG")), 1.0f, 0, 0));
 	NEW_OBJECT(m_pNpcIcon, Sprite(RENDER->GetImage(TEXT("shopNPC")), 1.3f, 0, 0));
 	NEW_OBJECT(m_pTalkBox, Sprite(RENDER->GetImage(TEXT("talkBox")), 0.65, 0, 0));
@@ -149,7 +148,7 @@ void ShopScene::ItemListWnd()
 			pItem = ((*it)->GetItemTypeTag() == ITEMTYPE_WEAPON) ? (*it) : NULL;
 			if (pItem != NULL)
 			{
-				RENDER->DrawT(pItem->GetName(), 385, 300 + weaponIndex * 60, ColorF::Tomato, 20.0f, ALIGN_CENTER);
+				RENDER->DrawT(pItem->GetName(), 150, 50 + weaponIndex * 60, ColorF::Tomato, 20.0f, ALIGN_CENTER);
 			}
 		}
 		break;

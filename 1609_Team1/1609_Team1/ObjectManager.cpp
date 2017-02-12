@@ -121,7 +121,7 @@ void ObjectManager::CreateCreature(OBJ_TAG tag, Vector pos)
 }
 
 
-Object* ObjectManager::CreateItem(GUN_TAG tag, int itemID)
+Object* ObjectManager::CreateItem(ITEMTYPE_TAG tag, int itemID)
 {
 	NEW_OBJECT(Item* pItem, Item(itemID));
 	 

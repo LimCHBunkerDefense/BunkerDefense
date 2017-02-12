@@ -145,7 +145,7 @@ public:
 	}
 
 	// æ∆¿Ã≈€
-	Object* CreateItem(GUN_TAG tag, int itemID);
+	Object* CreateItem(ITEMTYPE_TAG tag, int itemID);
 	list<Object*> GetShopItemList() { return m_shopItemList; }
 
 
