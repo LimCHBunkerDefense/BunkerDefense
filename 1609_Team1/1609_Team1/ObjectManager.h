@@ -188,6 +188,10 @@ public:
 
 	// 플레이어 에임 좌표 관련
 	Vector GetAimPos() { return m_aim; }
-	void SetAimPos(Vector aim) { m_aim = aim; }
+	void SetAimPos(Vector aim)
+	{ 
+		float y = MATH->Clamp(aim.y, SIGHTHEIGHT_MIN, SIGHTHEIGHT_MAX);
+		m_aim = Vector(aim.x, y); 
+	}
 };
 

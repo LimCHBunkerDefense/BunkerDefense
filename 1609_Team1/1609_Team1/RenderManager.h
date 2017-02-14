@@ -396,7 +396,7 @@ public:
 		x = x * 5 + VIEW_WIDTH * 0.5;
 
 		// yÁÂÇ¥ ±¸ÇÏ±â
-		y = sightHeight + VIEW_WIDTH * 0.5 * t;
+		y = sightHeight + 50 + VIEW_WIDTH * 0.5 * t;
 		if (object_state >= BULLET_NONE) y = y - (400 * t);
 
 		return Vector(x, y);

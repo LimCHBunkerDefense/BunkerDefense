@@ -11,7 +11,7 @@
 #define SOUND_MAX_CHANNEL	10
 
 #define CAMERA_ANGLE			120
-#define SIGHTHEIGHT_MIN			-200.0f		// 플레이어의 상하 시야각의 최소값
+#define SIGHTHEIGHT_MIN			0.0f		// 플레이어의 상하 시야각의 최소값
 #define SIGHTHEIGHT_MAX			600.0f		// 플레이어의 상하 시야각의 최대값
 #define SIGHTHEIGHT_DEFAULT		500.0f		// 플레이어의 상하 시야각의 초기 시작값
 #define MAP_WIDTH				1920
@@ -142,7 +142,7 @@ enum ITEM_TAG																	// 소분류 아이템 태그
 enum BUTTON_TAG
 {
 	BUTTON_NONE, 
-	BUTTON_BUY, BUTTON_EXIT,													// 구매 버튼, 나가기 버튼
+	BUTTON_COUNT, BUTTON_BUY, BUTTON_EXIT,										// 수량 버튼, 구매 버튼, 나가기 버튼
 	BUTTON_WEAPON, BUTTON_BULLET, BUTTON_USINGITEM,								// 중분류 - 무기/총알/소모품
 	BUTTON_FIRST, BUTTON_SECOND, BUTTON_THIRD, BUTTON_FORTH,					// 소분류 - 버튼 4개 
 };
