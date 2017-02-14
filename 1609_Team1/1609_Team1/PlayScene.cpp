@@ -56,7 +56,7 @@ PlayScene::~PlayScene()
 void PlayScene::OnEnter()
 {
 	// 배경 이미지 스프라이트로 생성
-	NEW_OBJECT(m_pBg, Sprite(RENDER->GetImage(TEXT("DroughtBG")), 1.0));
+	NEW_OBJECT(m_pBg, Sprite(RENDER->GetImage(TEXT("DroughtBG")), 1.8));
 
 	// UI 이미지 스프라이트로 생성
 	NEW_OBJECT(m_pAim, Sprite(RENDER->GetImage(TEXT("Aim")), 0.825));
@@ -228,4 +228,7 @@ void PlayScene::DrawBG()
 {
 	Vector bgPos = OBJECT->GetAimPos();
 	pMainCamera->Draw(m_pBg, bgPos);
+
+	if(bgPos.x > 0) pMainCamera->Draw(m_pBg, bgPos - Vector(1920 * 1.8, 0));
+	else pMainCamera->Draw(m_pBg, bgPos + Vector(1920 * 1.8, 0));
 }

@@ -56,9 +56,9 @@ void Creature::Update(float deltaTime)
 void Creature::Draw(Camera* pCamera)
 {
 	// 크리처 스케일 변화되는 부분
-	SetCollider(Collider().size * (m_t *2.0f) / m_scale, Collider().anchor);
-	SetScale(m_t *2.0f);
-	m_scale = m_t *2.0f;
+	SetCollider(Collider().size * (m_t *3.0f) / m_scale, Collider().anchor);
+	SetScale(m_t *3.0f);
+	m_scale = m_t *3.0f;
 
 	pCamera->Draw3D(Animation()->Current()->GetSprite(), m_startPos, m_t, OBJECT->GetSightHeight(), m_state);
 }
