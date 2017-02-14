@@ -25,6 +25,8 @@ class PlayScene : public IScene
 	Sprite* m_stageUI;
 	Sprite* m_BunkerUI;
 	Sprite* m_ItemBarUI;
+	Sprite* m_ScoreUI;
+	Sprite* m_MoneyUI;
 
 
 	Camera* pMainCamera;

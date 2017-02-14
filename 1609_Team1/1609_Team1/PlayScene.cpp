@@ -29,6 +29,8 @@ PlayScene::PlayScene() : m_attackedColor(ColorF::Red)
 	RENDER->LoadImageFile(TEXT("StageFont_UI"), TEXT("Image/UI/InterfaceUI/stage.png"));
 	RENDER->LoadImageFile(TEXT("Bunker_UI"), TEXT("Image/UI/InterfaceUI/Bunker_UI.png"));
 	RENDER->LoadImageFile(TEXT("ItemBar_UI"), TEXT("Image/UI/InterfaceUI/ItemBarUI.png"));
+	RENDER->LoadImageFile(TEXT("ScoreUI"), TEXT("Image/UI/InterfaceUI/Score.png"));
+	RENDER->LoadImageFile(TEXT("MoneyUI"), TEXT("Image/UI/InterfaceUI/money.png"));
 
 	//Bullet 임시로 저장
 	RENDER->LoadImageFiles(TEXT("BulletIdle"), TEXT("Image/Bullet/bullet"), TEXT("png"), 1);
@@ -74,6 +76,8 @@ void PlayScene::OnEnter()
 
 	// UI 이미지 생성
 	NEW_OBJECT(m_stageUI, Sprite(RENDER->GetImage(TEXT("StageFont_UI"))));
+	NEW_OBJECT(m_ScoreUI, Sprite(RENDER->GetImage(TEXT("ScoreUI")),0.8f));
+	NEW_OBJECT(m_MoneyUI, Sprite(RENDER->GetImage(TEXT("MoneyUI")), 0.8f));
 	NEW_OBJECT(m_BunkerUI, Sprite(RENDER->GetImage(TEXT("Bunker_UI"))));
 	NEW_OBJECT(m_ItemBarUI, Sprite(RENDER->GetImage(TEXT("ItemBar_UI"))));
 
@@ -210,11 +214,14 @@ void PlayScene::OnDraw()
 	//2.벙커UI / 스킬 UI
 	pUICamera->Draw(m_BunkerUI, Vector(150, 80));
 	pUICamera->Draw(m_ItemBarUI, Vector(200, 790));
-
-
+	
 	//3.점수 출력
-	pUICamera->DrawT(TEXT("점수 : "), VIEW_WIDTH - 300, 30, ColorF::White, 30, ALIGN_RIGHT);
-	pUICamera->DrawT(TEXT("골드 : "), VIEW_WIDTH - 300, 70, ColorF::White, 30, ALIGN_RIGHT);
+	//pUICamera->DrawT(TEXT("점수 : "), VIEW_WIDTH - 300, 30, ColorF::White, 30, ALIGN_RIGHT);
+	//pUICamera->DrawT(TEXT("골드 : "), VIEW_WIDTH - 300, 70, ColorF::White, 30, ALIGN_RIGHT);
+	pUICamera->Draw(m_ScoreUI, Vector(VIEW_WIDTH - 300, 45));
+	pUICamera->DrawRect(Vector(VIEW_WIDTH - 220, 25), Vector(200, 35), ColorF::Red, 5);
+	pUICamera->Draw(m_MoneyUI, Vector(VIEW_WIDTH - 300, 100));
+	pUICamera->DrawRect(Vector(VIEW_WIDTH - 220, 80), Vector(200, 35), ColorF::Red, 5);
 
 	// 크리쳐에게 공격 받았음을 나타내기 위한 부분
 	if (m_attackedColor.a != 0) pUICamera->DrawFilledRect(Vector(0,0), Vector(VIEW_WIDTH, VIEW_HEIGHT), m_attackedColor);
