@@ -36,6 +36,11 @@ PlayScene::PlayScene()
 	RENDER->LoadImageFile(TEXT("MachineOn"),	TEXT("Image/Item/Icon/ico_machine_on.png"));
 	RENDER->LoadImageFile(TEXT("MachineOff"),	TEXT("Image/Item/Icon/ico_machine_off.png"));
 
+	//인터페이스 UI 이미지 가져오기
+	RENDER->LoadImageFile(TEXT("StageFont_UI"), TEXT("Image/UI/InterfaceUI/stage.png"));
+	RENDER->LoadImageFile(TEXT("Bunker_UI"), TEXT("Image/UI/InterfaceUI/Bunker_UI.png"));
+	RENDER->LoadImageFile(TEXT("ItemBar_UI"), TEXT("Image/UI/InterfaceUI/ItemBarUI.png"));
+
 
 	// 카메라 생성
 	RENDER->CreateCamera(CAM_MAIN, MAP_WIDTH, MAP_HEIGHT, VIEW_WIDTH, VIEW_HEIGHT);
@@ -70,6 +75,12 @@ void PlayScene::OnEnter()
 
 	// 플레이어 생성
 	OBJECT->CreatePlayer(Vector(MINI_WIDTH * 0.5F, MINI_HEIGHT), Vector(10, 10), Vector(0.5f, 1.0f));
+
+	// UI 이미지 생성
+	NEW_OBJECT(m_stageUI, Sprite(RENDER->GetImage(TEXT("StageFont_UI"))));
+	NEW_OBJECT(m_BunkerUI, Sprite(RENDER->GetImage(TEXT("Bunker_UI"))));
+	NEW_OBJECT(m_ItemBarUI, Sprite(RENDER->GetImage(TEXT("ItemBar_UI"))));
+
 
 	// 카메라 세팅
 	RENDER->GetCamera(CAM_MAIN)->SetScreenRect(0, 0, VIEW_WIDTH, VIEW_HEIGHT);
@@ -176,25 +187,39 @@ void PlayScene::OnDraw()
 	// Aim 그려주는 부분
 	pUICamera->Draw(m_pAim, Vector(VIEW_WIDTH * 0.5, VIEW_HEIGHT * 0.5f));
 
+	//플레이 UI출력
+	//1.Stage UI 출력
+	pUICamera->Draw(m_stageUI, Vector(600, 100));
+	pUICamera->DrawRect(Vector(565, 125), Vector(70, 70), ColorF::Red, 3);
+	pUICamera->DrawT(TEXT("1"), 590, 140, ColorF::Red, 30, ALIGN_RIGHT);
+	//pUICamera->DrawT(TEXT("Stage 1"), VIEW_WIDTH / 2 - 50, 40, ColorF::White, 30, ALIGN_CENTER);
+
+	//2.벙커UI / 스킬 UI
+	pUICamera->Draw(m_BunkerUI, Vector(150, 80));
+	pUICamera->Draw(m_ItemBarUI, Vector(200, 790));
+
+
+	//3.점수 출력
+	pUICamera->DrawT(TEXT("점수 : "), VIEW_WIDTH - 300, 30, ColorF::White, 30, ALIGN_RIGHT);
+	pUICamera->DrawT(TEXT("골드 : "), VIEW_WIDTH - 300, 70, ColorF::White, 30, ALIGN_RIGHT);
+
 	//Bunker 체력
 	pUICamera->DrawRect(Vector(20, 20), Vector(260, 50), ColorF::Blue, 1);
 
 	//Icon
-	pUICamera->Draw(m_ico_pistol, Vector(40, 110));
-	pUICamera->Draw(m_ico_machine, Vector(110, 110));
-	pUICamera->DrawRect(Vector(160, 90), Vector(50, 50), ColorF::Red, 1);
-	pUICamera->Draw(m_ico_laser, Vector(250, 110));
+	pUICamera->Draw(m_ico_pistol, Vector(50, 110));
+	pUICamera->Draw(m_ico_machine, Vector(112, 110));
+	pUICamera->DrawRect(Vector(150, 85), Vector(50, 50), ColorF::Red, 1);
+	pUICamera->Draw(m_ico_laser, Vector(242, 110));
 
 
-	pUICamera->DrawRect(Vector(20, VIEW_HEIGHT - 190), Vector(320, 70), ColorF::Blue, 1);
-	pUICamera->DrawRect(Vector(20, VIEW_HEIGHT - 100), Vector(70, 70), ColorF::Red, 1);
-	pUICamera->DrawRect(Vector(110, VIEW_HEIGHT - 100), Vector(70, 70), ColorF::Red, 1);
-	pUICamera->DrawRect(Vector(200, VIEW_HEIGHT - 100), Vector(70, 70), ColorF::Red,1);
-	pUICamera->DrawRect(Vector(290, VIEW_HEIGHT - 100), Vector(70, 70), ColorF::Red,1);
+	pUICamera->DrawRect(Vector(40, VIEW_HEIGHT - 195), Vector(320, 70), ColorF::Blue, 1);
+	pUICamera->DrawRect(Vector(30, VIEW_HEIGHT - 95), Vector(70, 70), ColorF::Red, 1);
+	pUICamera->DrawRect(Vector(120, VIEW_HEIGHT - 95), Vector(70, 70), ColorF::Red, 1);
+	pUICamera->DrawRect(Vector(210, VIEW_HEIGHT - 95), Vector(70, 70), ColorF::Red,1);
+	pUICamera->DrawRect(Vector(300, VIEW_HEIGHT - 95), Vector(70, 70), ColorF::Red,1);
 
-	pUICamera->DrawT(TEXT("Stage 1"), VIEW_WIDTH / 2-50, 40, ColorF::White, 30, ALIGN_CENTER);
-	pUICamera->DrawT(TEXT("점수 : "), VIEW_WIDTH - 300, 30, ColorF::White, 30, ALIGN_RIGHT);
-	pUICamera->DrawT(TEXT("골드 : "), VIEW_WIDTH - 300, 70, ColorF::White, 30, ALIGN_RIGHT);
+
 }
 
 void PlayScene::SetCreature(float deltaTime)

@@ -20,6 +20,12 @@ class PlayScene : public IScene
 	Sprite* m_ico_laser;
 	Sprite* m_ico_machine;
 
+	//ui
+	Sprite* m_stageUI;
+	Sprite* m_BunkerUI;
+	Sprite* m_ItemBarUI;
+
+
 	Camera* pMainCamera;
 	Camera* pMinimapCamera;
 	Camera* pUICamera;
