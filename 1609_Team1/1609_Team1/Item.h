@@ -13,8 +13,9 @@ class Item : public Object
 	float m_attack;
 	float m_defense;
 	float m_bunkerLife;
-	int m_bulletCount;
-	int m_addBullet;
+	int m_maxBulletCount;
+	int m_reloadBulletCount;
+	int m_maxCount;
 	wstring m_name;
 	wstring m_info;
 	wstring m_range;
@@ -25,7 +26,7 @@ public:
 	Item();
 	Item(int itemID);
 	~Item();
-	
+
 	void Update(float deltaTime);
 	void Draw();
 
@@ -35,6 +36,9 @@ public:
 	float GetAttack() { return m_attack; }
 	float GetDefense() { return m_defense; }
 	float GetBunkerLife() { return m_bunkerLife; }
+	int GetMaxBulletCount() { return  m_maxBulletCount; }
+	int GetReloadBulletCount() { return m_reloadBulletCount; }
+	int GetMaxCount() { return m_maxCount; }
 	wstring GetRange() { return m_range; }
 	wstring GetInfo() { return m_info; }
 	int GetItemMoney() { return m_money; }

@@ -91,6 +91,15 @@ void PlayScene::OnUpdate(float deltaTime)
 	OBJECT->SetPosByDeltaAngle();
 }
 
+void PlayScene::ChangeIcon() {
+	switch (OBJECT->GetPlayer()->GetItemState()) {
+		case ITEM_PISTOL: {
+			NEW_OBJECT(m_ico_pistol, Sprite(RENDER->GetImage(TEXT("PistolOn"))));
+			break;
+		}
+	}
+}
+
 void PlayScene::OnExit()
 {
 	//Exit	

@@ -15,14 +15,16 @@ Item::Item(int itemID)
 {
 	ItemData* pData = ITEM->GetData(itemID);
 
+	m_iTag = pData->iTag;
 	m_tag = pData->tag;
 	m_itemID = pData->itemID;
 	m_money = pData->money;
 	m_attack = pData->attack;
 	m_defense = pData->defense;
 	m_bunkerLife = pData->bunkerLife;
-	m_bulletCount = pData->bulletCount;
-	m_addBullet = pData->addBullet;
+	m_maxBulletCount = pData->maxBulletCount;
+	m_reloadBulletCount = pData->reloadBulletCount;
+	m_maxCount = pData->maxCount;
 	m_name = pData->name;
 	m_info = pData->info;
 }

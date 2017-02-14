@@ -44,4 +44,5 @@ public:
 
 	void DrawBG();
 	void SetCreature(float deltaTime);
+	void ChangeIcon();
 };

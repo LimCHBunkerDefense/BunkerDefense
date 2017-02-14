@@ -9,23 +9,24 @@
 
 struct ItemData
 {
-	ITEMTYPE_TAG iTag;
-	ITEM_TAG tag;
-	int itemID;
-	int money;
-	float attack;
-	float defense;
-	float range;
-	float bunkerLife;
-	int bulletCount;
-	int addBullet;
-	int quantity;
-	wstring name;
-	wstring info;
-	wstring ragestr;
-
+	ITEMTYPE_TAG iTag;			// 중분류 아이템 태그 
+	ITEM_TAG tag;				// 소분류 아이템 태그
+	int itemID;					// 아이템에 대한 ID값
+	int money;					// 아이템 구매에 필요한 돈
+	float attack;				// 능력치 - 공격력	
+	float defense;				// 능력치 - 방어력
+	float range;				// 능력치 - 사정거리
+	float bunkerLife;			// 벙커 체력
+	int maxBulletCount;			// 총에 장착하는 총알의 갯수
+	int reloadBulletCount;		// 장전할 수 있는 총알의 갯수
+	int maxCount;				// 아이템을 구매할 수 있는 최대 갯수
+	wstring name;				// 아이템 이름
+	wstring info;				// 아이템 정보
+	wstring ragestr;			// 사정거리 표시 이름
+		
 	ItemData(ITEMTYPE_TAG iTag, ITEM_TAG tag, int itemID, float attack, float defense, float range, float bunkerLife, 
-		int bulletCount, int addBullet, int money, wstring name, wstring info, wstring ragestr = TEXT(" "))
+		int maxBulletCount, int reloadBulletCount, int maxCount, int money, 
+		wstring name, wstring info, wstring ragestr = TEXT(" "))
 	{
 		this->iTag = iTag;
 		this->tag = tag;
@@ -33,8 +34,9 @@ struct ItemData
 		this->attack = attack;
 		this->defense = defense;
 		this->bunkerLife = bunkerLife;
-		this->bulletCount = bulletCount;
-		this->addBullet = addBullet;
+		this->maxBulletCount = maxBulletCount;
+		this->reloadBulletCount = reloadBulletCount;
+		this->maxCount = maxCount;
 		this->name = name;
 		this->info = info;
 		this->ragestr = ragestr;

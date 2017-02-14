@@ -6,7 +6,7 @@ ShopScene::ShopScene()
 	RENDER->LoadImageFile(TEXT("shopNPC"), TEXT("Image/NPC/shopnpc.png"));
 	RENDER->LoadImageFile(TEXT("talkBox"), TEXT("Image/NPC/talk_box.png"));
 	RENDER->LoadImageFile(TEXT("MarketBG"), TEXT("Image/NPC/MarketBG.png"));
-	RENDER->LoadImageFile(TEXT("Infobox_bg"), TEXT("Image/NPC/infobox_bg.png"));	
+	RENDER->LoadImageFile(TEXT("Infobox_bg"), TEXT("Image/NPC/infobox_bg.png"));
 
 	IsWeaponClicked = false;
 	IsBulletClicked = false;
@@ -28,7 +28,10 @@ void ShopScene::OnEnter()
 	NEW_OBJECT(m_pInfoBoxBG, Sprite(RENDER->GetImage(TEXT("Infobox_bg")), 0.81, 0, 0));
 
 	CreateBoxList();		// 리스트 생성
-	ShowCursor(true);	// 마우스 커서 보이게
+	ShowCursor(true);		// 마우스 커서 보이게
+
+	m_inputCount = 0;
+	m_inputOnOff = false;
 }
 
 void ShopScene::OnUpdate(float deltaTime)
@@ -91,16 +94,18 @@ void ShopScene::OnDraw()
 void ShopScene::CreateBoxList()
 {
 	// BoxList에 Box Database 저장
-	AddBoxList(new Box(BUTTON_WEAPON, Vector(420, 235), Vector(120, 180)));
+	AddBoxList(new Box(BUTTON_WEAPON, Vector(420, 235), Vector(120, 180)));	// 중분류 아이템들
 	AddBoxList(new Box(BUTTON_BULLET, Vector(550, 235), Vector(120, 180)));
 	AddBoxList(new Box(BUTTON_USINGITEM, Vector(680, 235), Vector(120, 180)));
 
-	AddBoxList(new Box(BUTTON_FIRST, Vector(550, 375), Vector(400, 60)));  // 소분류 아이템들 - index 3부터
+	AddBoxList(new Box(BUTTON_FIRST, Vector(550, 375), Vector(400, 60)));	// 소분류 아이템들 - index 3부터
 	AddBoxList(new Box(BUTTON_SECOND, Vector(550, 435), Vector(400, 60)));
 	AddBoxList(new Box(BUTTON_THIRD, Vector(550, 495), Vector(400, 60)));
 	AddBoxList(new Box(BUTTON_FORTH, Vector(550, 555), Vector(400, 60)));
 
-	AddBoxList(new Box(BUTTON_BUY, Vector(885, 700), Vector(125, 35)));	// 구매 버튼 박스
+	AddBoxList(new Box(BUTTON_COUNT, Vector(940, 650), Vector(125, 35)));	// 수량 버튼 박스
+	AddBoxList(new Box(BUTTON_BUY, Vector(885, 700), Vector(125, 35)));		// 구매 버튼 박스
+	AddBoxList(new Box(BUTTON_EXIT, Vector(1025, 700), Vector(125, 35)));	// 종료 버튼 박스
 }
 
 void ShopScene::ItemListWnd()
@@ -148,7 +153,7 @@ void ShopScene::ItemListWnd()
 			pItem = ((*it)->GetItemTypeTag() == ITEMTYPE_WEAPON) ? (*it) : NULL;
 			if (pItem != NULL)
 			{
-				RENDER->DrawT(pItem->GetName(), 150, 50 + weaponIndex * 60, ColorF::Tomato, 20.0f, ALIGN_CENTER);
+				RENDER->DrawT(pItem->GetName(), 385, 300 + weaponIndex * 60, ColorF::Tomato, 20.0f, ALIGN_CENTER);
 			}
 		}
 		break;
@@ -186,10 +191,27 @@ void ShopScene::ItemStatWnd()
 
 
 	RENDER->DrawRect(Vector(940, 650), Vector(125, 35), ColorF::Aquamarine, 3);
-	RENDER->DrawT(TEXT("수 량"), 920, 635, ColorF::Aquamarine, 20);
+	if (m_inputOnOff == false)
+	{
+		RENDER->DrawT(TEXT("수 량"), 920, 635, ColorF::White, 20);
+	}
+	else if (m_inputOnOff == true)
+	{
+		TCHAR text[50] = {};
+		wsprintf(text, TEXT("%d"), m_inputCount);
+		RENDER->DrawT(text, 920, 635, ColorF::White, 20);
+	}
 
 	RENDER->DrawT(TEXT("BUY"), 860, 688, ColorF::Aquamarine, 20);
-	RENDER->DrawRect(Vector(1025, 700), Vector(125, 35), ColorF::Aquamarine, 3);
 	RENDER->DrawT(TEXT("나가기 F3"), 985, 686, ColorF::Aquamarine, 20);
 	//RENDER->DrawT(TEXT("ITEM INFO"), 750, 400, ColorF::Red, 25);
+}
+
+void ShopScene::SetInputCount(int addCount)
+{
+	if (m_inputCount == 0) m_inputCount += addCount;
+	if (m_inputCount != 0)
+	{
+		m_inputCount = MATH->Clamp(m_inputCount * 10 + addCount, 0, 1000);
+	}
 }
