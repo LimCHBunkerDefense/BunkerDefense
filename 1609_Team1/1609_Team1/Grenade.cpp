@@ -1,12 +1,12 @@
-#include "Bullet.h"
+#include "Grenade.h"
 
 
 
-Bullet::Bullet()
+Grenade::Grenade()
 {
 }
 
-Bullet::Bullet(OBJ_TAG tag) : Object(tag)
+Grenade::Grenade(OBJ_TAG tag) : Object(tag)
 {
 	//m_angle = 10;//각도 내의 적에게만 반응
 	CreatureData* pData = CREATURE->GetData(tag);
@@ -21,12 +21,12 @@ Bullet::Bullet(OBJ_TAG tag) : Object(tag)
 }
 
 
-Bullet::~Bullet()
+Grenade::~Grenade()
 {
 }
 
 //부딪히면 삭제되게 하기 위해 BOOL 함수 추가
-BOOL Bullet::UpdateBool(float deltaTime) {
+BOOL Grenade::UpdateBool(float deltaTime) {
 	BOOL result;
 	m_moveDirection = Vector(Position() * -1 + Vector(MINI_WIDTH * 0.5, MINI_HEIGHT)).Normalize();
 
@@ -40,7 +40,7 @@ BOOL Bullet::UpdateBool(float deltaTime) {
 	return result;
 }
 
-void Bullet::Update(float deltaTime)
+void Grenade::Update(float deltaTime)
 {
 	//이동방향벡터 실시간 업데이트
 	m_moveDirection = Vector(Position() * -1 + Vector(MINI_WIDTH * 0.5, MINI_HEIGHT)).Normalize();
@@ -54,7 +54,7 @@ void Bullet::Update(float deltaTime)
 	Animation()->Update(deltaTime);
 }
 
-BOOL Bullet::IdleState(float deltaTime) {
+BOOL Grenade::IdleState(float deltaTime) {
 	// 이동에 관계된 비율 (시작점에서 플레이어까지 가는 거리를 1로 봤을 때, 현재 이동한 거리의 비율)
 	m_t = MATH->Clamp(m_t + m_moveSpeed * deltaTime, 0.0f, 1.0f);
 	if (m_t == 1.0F) return true;
@@ -72,7 +72,7 @@ BOOL Bullet::IdleState(float deltaTime) {
 	return false;
 }
 
-BOOL Bullet::Collided()
+BOOL Grenade::Collided()
 {
 	if (0 <= m_height && m_height <= 450.0f) {
 		list<Object*> creatureList = OBJECT->GetCreatureList();
@@ -90,11 +90,11 @@ BOOL Bullet::Collided()
 	}
 	return false;
 }
-void Bullet::HitState(float deltaTime) {
+void Grenade::HitState(float deltaTime) {
 
 }
 
-void Bullet::Draw(Camera* pCamera)
+void Grenade::Draw(Camera* pCamera)
 {
 	SetCollider(Collider().size * ((1 - m_t) *1.0f) / m_scale, Collider().anchor);
 	SetScale((1 - m_t) *1.0f);

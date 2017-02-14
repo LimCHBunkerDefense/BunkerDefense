@@ -1,9 +1,8 @@
 #pragma once
-#pragma once
 #include "ObjectManager.h"
 #include "CreatureDB.h"
 
-class Bullet :
+class Grenade :
 	public Object
 {
 	BULLET_STATE m_state;
@@ -19,9 +18,9 @@ class Bullet :
 	Vector m_startPos;//시작 위치
 
 public:
-	Bullet();
-	Bullet(OBJ_TAG tag);
-	~Bullet();
+	Grenade();
+	Grenade(OBJ_TAG tag);
+	~Grenade();
 
 	void Update(float deltaTime);
 	BOOL UpdateBool(float deltaTime);
