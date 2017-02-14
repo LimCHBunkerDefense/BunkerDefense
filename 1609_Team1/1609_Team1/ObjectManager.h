@@ -96,6 +96,9 @@ public:
 	virtual ITEM_TAG GetTag() { return ITEM_NONE; }
 	virtual ITEMTYPE_TAG GetItemTypeTag() { return ITEMTYPE_NONE; }
 
+	//Player
+	virtual ITEM_TAG GetItemState() { return ITEM_NONE; }
+
 };
 
 class ObjectManager : public Singleton<ObjectManager>
