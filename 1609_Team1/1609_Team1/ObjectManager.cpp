@@ -7,7 +7,7 @@
 ObjectManager::ObjectManager()
 {
 	m_sightHeight = SIGHTHEIGHT_DEFAULT;
-	m_aim = Vector(VIEW_WIDTH * 0.5, SIGHTHEIGHT_DEFAULT);
+	m_aim = Vector(0,0);
 
 	// 플레이어 총 이미지 맵으로 저장
 	RENDER->LoadImageFiles(TEXT("PistolIdle"), TEXT("Image/Item/Pistol/Idle/Idle"), TEXT("png"), 2);
@@ -162,7 +162,7 @@ void ObjectManager::CreateBullet(OBJ_TAG tag, Vector pos)
 	m_bulletList.push_front(pBullet);
 }
 
-void ObjectManager::SetPosByDeltaAngle()
+void ObjectManager::SetPosByDeltaAngle(float deltaTime)
 {
 	float deltaPosX = 0;
 	float deltaPosY = 0;
@@ -194,7 +194,7 @@ void ObjectManager::SetPosByDeltaAngle()
 		}
 
 		// 배경 좌우 이동을 위한 변화량 계산
-		deltaPosX = MATH->Tan(m_deltaSightAngle) * MINI_WIDTH * 0.5;
+		deltaPosX = MATH->Tan(m_deltaSightAngle) * VIEW_WIDTH * 0.5f;
 
 	}	
 

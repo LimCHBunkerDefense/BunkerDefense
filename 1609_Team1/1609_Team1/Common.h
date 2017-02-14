@@ -26,7 +26,8 @@
 #define SIGHT					VIEW_WIDTH/2
 #define GRENADE_SIZE			10
 
-#define EPSILON 0.001
+#define PI						3.1415
+#define EPSILON					0.001
 
 
 #define NEW_OBJECT(p, type) p = new type
