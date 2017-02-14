@@ -24,5 +24,6 @@ void Bunker::Update(float deltaTime)
 
 void Bunker::Draw(Camera* pCamera)
 {
-
+	//벙커 천장 카메라 출력 (테스트)
+		pCamera->DrawRect(Vector(0, 0), Vector(VIEW_WIDTH, VIEW_HEIGHT*0.8), ColorF::Indigo, 2.5f);
 }
