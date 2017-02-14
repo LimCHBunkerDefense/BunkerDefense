@@ -38,6 +38,7 @@ public:
 	void SetMoveDirection(Vector vector) { m_moveDirection = vector; }
 	Vector GetMoveDirection() { return m_moveDirection; }
 
+	void StartPosUpdate();
 	void SetStartPos(Vector pos) { m_startPos = pos; }
 	Vector GetStartPos() { return m_startPos; }
 	float GetMT() { return m_t; }

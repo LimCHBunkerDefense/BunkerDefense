@@ -26,6 +26,8 @@ public:
 	BOOL UpdateBool(float deltaTime);
 	void Draw(Camera* pCamera);
 
+	void StartPosUpdate();
+
 	BOOL IdleState(float deltaTime);
 	void HitState(float deltaTime);
 

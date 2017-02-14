@@ -53,7 +53,8 @@ void ObjectManager::Update(float deltaTime)
 		}
 	}
 
-
+	// 카메라 회전에 의한 맵 표시 좌표 업데이트 및 각도와 높이 변화값 초기화
+	SetPosByDeltaAngle(deltaTime);
 }
 
 void ObjectManager::Draw(Camera* pCamera)
@@ -162,41 +163,14 @@ void ObjectManager::CreateBullet(OBJ_TAG tag, Vector pos)
 	m_bulletList.push_front(pBullet);
 }
 
+// 카메라 회전에 의한 맵 표시 좌표 업데이트 및 각도와 높이 변화값 초기화
 void ObjectManager::SetPosByDeltaAngle(float deltaTime)
 {
 	float deltaPosX = 0;
 	float deltaPosY = 0;
 
-	if (abs(m_deltaSightAngle) > EPSILON)
-	{
-		// 크리쳐 리스트 불러다가 미니맵 상의 pos 수정해주는 부분
-		FOR_LIST(Object*, m_creatureList)
-		{
-			Object* pObj = (*it);
-			float angle = MATH->Angle(Vector::Right(), (*it)->GetMoveDirection() * -1);
-			angle += m_deltaSightAngle;
-
-			// 점 p(0,0)를 기준으로 구해진 새로운 pos를 플레이어 위지 p'(MINI_WIDTH * 0.5, MINI_HEIGHT) 기준으로 (*it)의 좌표 보정
-			Vector pos = MATH->ToDirection(angle) * MINI_WIDTH * 0.5 + OBJECT->GetPlayer()->Position();
-
-			(*it)->SetStartPos(pos);
-		}
-
-		FOR_LIST(Object*, m_bulletList)
-		{
-			Object* pObj = (*it);
-			float angle = MATH->Angle(Vector::Right(), (*it)->GetMoveDirection() * -1);
-			angle += m_deltaSightAngle;
-
-			Vector pos = MATH->ToDirection(angle) * MINI_WIDTH * 0.5 + OBJECT->GetPlayer()->Position();
-
-			(*it)->SetStartPos(pos);
-		}
-
-		// 배경 좌우 이동을 위한 변화량 계산
-		deltaPosX = MATH->Tan(m_deltaSightAngle) * VIEW_WIDTH * 0.5f;
-
-	}	
+	// 배경 좌우 이동을 위한 변화량 계산
+	deltaPosX = MATH->Tan(m_deltaSightAngle) * VIEW_WIDTH * 0.5f;
 
 	// 카메라 이동에 따른 배경 출력 위치 변경
 	m_aim = Vector(m_aim.x - deltaPosX, m_sightHeight);

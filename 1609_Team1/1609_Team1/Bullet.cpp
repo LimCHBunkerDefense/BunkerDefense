@@ -29,6 +29,9 @@ Bullet::~Bullet()
 BOOL Bullet::UpdateBool(float deltaTime) {
 	BOOL result;
 	m_moveDirection = Vector(Position() * -1 + Vector(MINI_WIDTH * 0.5, MINI_HEIGHT)).Normalize();
+	
+	// 플레이어의 카메라 회전에 의한 StartPos 업데이트
+	StartPosUpdate();
 
 	switch (m_state)
 	{
@@ -102,4 +105,16 @@ void Bullet::Draw(Camera* pCamera)
 
 	Vector gap = Vector(VIEW_WIDTH, VIEW_HEIGHT) - OBJECT->GetAimPos();
 	pCamera->Draw3D(Animation()->Current()->GetSprite(), Vector(m_startPos.x, m_startPos.y+ m_addHeight) , (1-m_t), OBJECT->GetSightHeight()+m_addHeight, m_state);
+}
+
+// 카메라 회전에 의한 StartPos 업데이트
+void Bullet::StartPosUpdate()
+{
+	float angle = MATH->Angle(Vector::Right(), m_moveDirection * -1);
+	angle += OBJECT->GetDeltaSightAngle();
+
+	// 점 p(0,0)를 기준으로 구해진 새로운 pos를 플레이어 위지 p'(MINI_WIDTH * 0.5, MINI_HEIGHT) 기준으로 (*it)의 좌표 보정
+	Vector pos = MATH->ToDirection(angle) * MINI_WIDTH * 0.5 + OBJECT->GetPlayer()->Position();
+
+	m_startPos = pos;
 }

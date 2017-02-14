@@ -37,6 +37,9 @@ void Creature::Update(float deltaTime)
 	// 크리쳐 이동방향벡터 실시간 업데이트
 	m_moveDirection = Vector(Position() * -1 + Vector(MINI_WIDTH * 0.5, MINI_HEIGHT)).Normalize();
 
+	// 카메라 회전에 따른 크리쳐 StartPos 업데이트
+	StartPosUpdate();
+
 
 	switch (m_state)
 	{
@@ -99,4 +102,16 @@ void Creature::AttackState(float deltaTime)
 void Creature::DeadState(float deltaTime)
 {
 	Animation()->Play(CREATURE_DEAD);
+}
+
+// 카메라 회전에 의한 StartPos 업데이트
+void Creature::StartPosUpdate()
+{
+	float angle = MATH->Angle(Vector::Right(), m_moveDirection * -1);
+	angle += OBJECT->GetDeltaSightAngle();
+
+	// 점 p(0,0)를 기준으로 구해진 새로운 pos를 플레이어 위지 p'(MINI_WIDTH * 0.5, MINI_HEIGHT) 기준으로 (*it)의 좌표 보정
+	Vector pos = MATH->ToDirection(angle) * MINI_WIDTH * 0.5 + OBJECT->GetPlayer()->Position();
+
+	m_startPos = pos;
 }
