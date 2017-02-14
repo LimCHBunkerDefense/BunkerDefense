@@ -19,6 +19,8 @@ class Player :
 	float HitPoint;
 										   
 	Vector m_prevMousePos;				    // 이전 마우스 좌표값
+
+	float HitPoint;
 	//float m_sight;						// 시야 길이
 
 

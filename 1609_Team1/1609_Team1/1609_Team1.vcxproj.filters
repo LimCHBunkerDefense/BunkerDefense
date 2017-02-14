@@ -73,12 +73,6 @@
     <Filter Include="Database\ItemDB">
       <UniqueIdentifier>{27d3fc69-5c63-4de7-8f4b-a2cfd8db482c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Manager\WindowManager\Object\UsingItem">
-      <UniqueIdentifier>{44918ecb-be50-4c24-b081-2782bc31cebc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Manager\WindowManager\Object\UsingItem\Grenade">
-      <UniqueIdentifier>{93bd15f9-8476-4ffa-ab0a-04e51f5cab8b}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
@@ -132,9 +126,6 @@
     </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>Manager\WindowManager\Object\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="Grenade.cpp">
-      <Filter>Manager\WindowManager\Object\UsingItem\Grenade</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -201,9 +192,6 @@
     </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>Manager\WindowManager\Object\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Grenade.h">
-      <Filter>Manager\WindowManager\Object\UsingItem\Grenade</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
