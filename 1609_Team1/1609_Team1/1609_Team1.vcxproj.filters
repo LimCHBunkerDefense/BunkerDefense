@@ -157,9 +157,6 @@
       <Filter>Scene\PlayScene</Filter>
     </ClInclude>
     <ClInclude Include="Note.h" />
-    <ClInclude Include="Player.h">
-      <Filter>Manager\WindowManager\Object\Player</Filter>
-    </ClInclude>
     <ClInclude Include="Creature.h">
       <Filter>Manager\WindowManager\Object\Creature</Filter>
     </ClInclude>
@@ -192,6 +189,9 @@
     </ClInclude>
     <ClInclude Include="ObjectManager.h">
       <Filter>Manager\ObjectManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Manager\WindowManager\Object\Player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
