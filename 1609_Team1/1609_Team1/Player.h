@@ -14,9 +14,10 @@ class Player :
 	map<int, Object*> m_itemBag;			// 아이템 가방
 
 	PLAYER_STATE m_state;				// 플레이어 상태
+	ITEM_TAG item_state;				//아이템 가진 상태
 										   
 	Vector m_prevMousePos;				// 이전 마우스 좌표값
-	float m_sight;						// 시야 길이
+	//float m_sight;						// 시야 길이
 
 
 
@@ -36,5 +37,7 @@ public:
 
 	// 번호 입력시 아이템을 장착하는 함수
 	void SetItem();
+
+	ITEM_TAG GetItemState() { return item_state; }
 };
 
