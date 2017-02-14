@@ -15,6 +15,7 @@ Item::Item(int itemID)
 {
 	ItemData* pData = ITEM->GetData(itemID);
 
+	m_iTag = pData->iTag;
 	m_tag = pData->tag;
 	m_itemID = pData->itemID;
 	m_money = pData->money;

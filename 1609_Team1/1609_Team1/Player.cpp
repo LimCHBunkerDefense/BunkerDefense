@@ -160,7 +160,6 @@ void Player::ShopState()
 				{
 				case BUTTON_WEAPON:
 					SCENE->GetScene(SCENE_SHOP)->SetCurrentButton(BUTTON_WEAPON);
-					but = SCENE->GetScene(SCENE_SHOP)->GetCurrentButton();
 					SCENE->GetScene(SCENE_SHOP)->SetIsWeaponClicked(true);
 					SCENE->GetScene(SCENE_SHOP)->SetIsBulletClicked(false);
 					SCENE->GetScene(SCENE_SHOP)->SetIsUsingItemClicked(false);
@@ -242,6 +241,8 @@ void Player::ShopState()
 					}
 
 				case BUTTON_EXIT:
+					SCENE->ChangeScene(SCENE_PLAY);
+					m_state = PLAYER_ATTACK;
 					break;				
 				}
 			}
