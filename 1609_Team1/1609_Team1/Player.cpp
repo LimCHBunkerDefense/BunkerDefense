@@ -12,6 +12,7 @@ Player::Player(OBJ_TAG tag) : Object(tag)
 	item_state = ITEM_PISTOL;
 	
 	m_prevMousePos = Vector(INPUT->GetMousePos().x, INPUT->GetMousePos().y);
+	HitPoint = 100;
 	//m_sight = SIGHT;
 
 	//m_pItem = OBJECT->CreateItem(GUN_PISTOL, 1001);
