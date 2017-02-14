@@ -10,6 +10,8 @@ Player::Player(OBJ_TAG tag) : Object(tag)
 {
 	m_state = PLAYER_ATTACK;
 	item_state = ITEM_PISTOL;
+
+	HitPoint = 10;
 	
 	m_prevMousePos = Vector(INPUT->GetMousePos().x, INPUT->GetMousePos().y);
 	HitPoint = 100;
@@ -126,6 +128,7 @@ void Player::AttackState(float deltaTime)
 
 	// m_prevMousePos를 현재 커서 위치로 초기화
 	m_prevMousePos = NowMousePos;
+
 
 	// 마우스 움직이면 모든 오브젝트들이 플레이어 중심으로 회전하는 처리 끝---------------------------------------------------
 
