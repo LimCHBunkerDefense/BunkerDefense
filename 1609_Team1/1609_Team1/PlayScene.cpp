@@ -85,7 +85,10 @@ void PlayScene::OnUpdate(float deltaTime)
 
 	// 게임 시간에 따른 크리쳐 생성
 	SetCreature(deltaTime);
-	
+	if (OBJECT->GetPlayer()->GetItemState()) {
+
+	}
+	NEW_OBJECT(m_ico_pistol, Sprite(RENDER->GetImage(TEXT("PistolOn"))));
 	// 오브젝트 전체 업데이트
 	OBJECT->Update(deltaTime);
 	OBJECT->SetPosByDeltaAngle();
