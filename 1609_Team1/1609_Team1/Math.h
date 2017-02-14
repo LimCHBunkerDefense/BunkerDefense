@@ -15,7 +15,7 @@ struct Vector
 
 	Vector() { x = 0.0f; y = 0.0f; }
 	Vector(float x, float y) { this->x = x; this->y = y; }
-	//Vector(POINT point) { x = point.x; y = point.y; }
+	//Vector(POINT point) { x = point.x; y = point.y; }	왜 안되는건지 모르겠당
 
 	float Magnitude() { return sqrt(SqrMagnitude()); }
 	float SqrMagnitude() { return pow(x, 2) + pow(y, 2); }
@@ -153,6 +153,11 @@ struct Box2
 		dirY = Vector(cosf((angle - 90) * ANGLE_TO_RADIAN), -sinf((angle - 90) * ANGLE_TO_RADIAN));
 	}
 
+	void SetLeftTop(Vector leftTop)
+	{
+		center = leftTop + Width() * 0.5f + Height() * 0.5f;
+	}
+
 	Vector Width() { return dirX * size.x; }
 	Vector Height() { return dirY * size.y; }
 
@@ -251,20 +256,32 @@ public:
 		return angle;
 	}
 
-	// 값 선형보간
-	float MoveForward(float from, float to, float delta)
+	// 값을 일정 비율로 보간
+	float Lerp(float from, float to, float rate)
 	{
-		float t = delta / abs(from - to);
-		t = Clamp(t, 0.0f, 1.0f);
-		return from + (to - from) * t;
+		rate = Clamp(rate, 0.0f, 1.0f);
+		return from + (to - from) * rate;
 	}
 
-	// 벡터 선형보간
+	// 벡터를 일정 비율로 보간
+	Vector Lerp(Vector from, Vector to, float rate)
+	{
+		rate = Clamp(rate, 0.0f, 1.0f);
+		return from * (1 - rate) + to * rate;
+	}
+
+	// 값을 일정 값만큼 보간
+	float MoveForward(float from, float to, float delta)
+	{
+		float rate = delta / abs(from - to);
+		return Lerp(from, to, rate);
+	}
+
+	// 벡터를 일정 값만큼 보간
 	Vector MoveForward(Vector from, Vector to, float delta)
 	{
-		float t = delta / (to - from).Magnitude();
-		t = Clamp(t, 0.0f, 1.0f);
-		return from * (1.0f - t) + to * t;
+		float rate = delta / (to - from).Magnitude();
+		return Lerp(from, to, rate);
 	}
 
 	// 점에서 선까지 가장 가까운 점 반환

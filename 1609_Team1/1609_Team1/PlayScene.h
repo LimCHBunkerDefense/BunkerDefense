@@ -3,6 +3,7 @@
 #include "InputManager.h"
 #include "RenderManager.h"
 #include "ObjectManager.h"
+#include "ProgressBar.h"
 #include "CreatureDB.h"
 #include "Common.h"
 #include "Math.h"
@@ -23,6 +24,11 @@ class PlayScene : public IScene
 	Camera* pMainCamera;
 	Camera* pMinimapCamera;
 	Camera* pUICamera;
+
+	UIProgressBar* m_bunkerLife;
+
+	// 크리쳐 공격 연출을 위한 도구(색 저장용)
+	ColorF m_attackedColor;
 
 	
 	// 크리쳐 생성 y좌표(높이 h)
@@ -49,4 +55,7 @@ public:
 	void DrawBG();
 	void SetCreature(float deltaTime);
 	void ChangeIcon();
+	
+	// m_attackedColor 투명도 조정하여 공격당함 연출
+	void SetAttackedColor() { m_attackedColor.a = 20; }
 };

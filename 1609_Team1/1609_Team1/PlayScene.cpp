@@ -2,7 +2,7 @@
 
 
 
-PlayScene::PlayScene()
+PlayScene::PlayScene() : m_attackedColor(ColorF::Red)
 {
 	// 크리쳐 생성되는 높이h값 생성. 추후 마우스에 따라 실시간 변화
 	m_heightOfCreature = 600;
@@ -36,6 +36,8 @@ PlayScene::PlayScene()
 	RENDER->LoadImageFile(TEXT("MachineOn"),	TEXT("Image/Item/Icon/ico_machine_on.png"));
 	RENDER->LoadImageFile(TEXT("MachineOff"),	TEXT("Image/Item/Icon/ico_machine_off.png"));
 
+	// 벙커 체력 막대 생성
+	m_bunkerLife = new UIProgressBar(Vector(140, 25), Vector(120, 30), ColorF::LightGreen, ColorF::DarkSlateGray);
 
 	// 카메라 생성
 	RENDER->CreateCamera(CAM_MAIN, MAP_WIDTH, MAP_HEIGHT, VIEW_WIDTH, VIEW_HEIGHT);
@@ -71,6 +73,12 @@ void PlayScene::OnEnter()
 	// 플레이어 생성
 	OBJECT->CreatePlayer(Vector(MINI_WIDTH * 0.5F, MINI_HEIGHT), Vector(10, 10), Vector(0.5f, 1.0f));
 
+	// 벙커 생성
+	OBJECT->CreateBunker();
+
+	// 크리쳐 공격 연출을 위한 도구(색 저장용) 투명도 초기화
+	m_attackedColor.a = 0;
+
 	// 카메라 세팅
 	RENDER->GetCamera(CAM_MAIN)->SetScreenRect(0, 0, VIEW_WIDTH, VIEW_HEIGHT);
 	RENDER->GetCamera(CAM_MINIMAP)->SetScreenRect(VIEW_WIDTH - MINI_WIDTH, VIEW_HEIGHT - MINI_HEIGHT * 2, MINI_WIDTH, MINI_HEIGHT * 2);
@@ -98,6 +106,10 @@ void PlayScene::OnUpdate(float deltaTime)
 	
 	// 오브젝트 전체 업데이트
 	OBJECT->Update(deltaTime);
+
+	m_bunkerLife->Update(deltaTime);
+
+	if(m_attackedColor.a != 0) m_attackedColor.a = MATH->Clamp(m_attackedColor.a - deltaTime * 10, 0.0f, 20.0f);
 }
 
 void PlayScene::ChangeIcon() {
@@ -176,8 +188,11 @@ void PlayScene::OnDraw()
 	// Aim 그려주는 부분
 	pUICamera->Draw(m_pAim, Vector(VIEW_WIDTH * 0.5, VIEW_HEIGHT * 0.5f));
 
+	// 크리쳐에게 공격 받았음을 나타내기 위한 부분
+	if (m_attackedColor.a != 0) pUICamera->DrawFilledRect(Vector(0,0), Vector(VIEW_WIDTH, VIEW_HEIGHT), m_attackedColor);
+
 	//Bunker 체력
-	pUICamera->DrawRect(Vector(20, 20), Vector(260, 50), ColorF::Blue, 1);
+	m_bunkerLife->Render();
 
 	//Icon
 	pUICamera->Draw(m_ico_pistol, Vector(40, 110));

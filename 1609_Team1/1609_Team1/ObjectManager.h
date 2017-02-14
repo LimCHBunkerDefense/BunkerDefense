@@ -88,7 +88,7 @@ public:
 	virtual int GetID() { return NULL; }
 	virtual wstring GetName() { return NULL; }
 	virtual float GetAttack() { return NULL; }
-	virtual float GetDefense() { return NULL; }
+	virtual float GetDefense() { return NULL; }		// 벙커에서도 사용함
 	virtual float GetBunkerLife() { return NULL; }
 	virtual wstring GetRange() { return NULL; }
 	virtual wstring GetInfo() { return NULL; }
@@ -98,6 +98,11 @@ public:
 
 	//Player
 	virtual ITEM_TAG GetItemState() { return ITEM_NONE; }
+
+	// 벙커용 함수
+	virtual float GetLife() { return NULL; }
+	virtual void AddLife(float addLife) {}
+	virtual void AddDefense(float addDefense) {}
 
 };
 
@@ -171,6 +176,10 @@ public:
 		}
 		m_bulletList.clear();
 	}
+
+	// 벙커
+	void CreateBunker() { m_bunker = new Object(OBJ_BUNKER); }
+	void DestroyBunker() { if (m_bunker != NULL) delete m_bunker; m_bunker = NULL; }
 	
 
 	// 카메라 회전에 따른 크리쳐 및 불렛의 위치 조정
