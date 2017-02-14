@@ -6,7 +6,7 @@
 
 ObjectManager::ObjectManager()
 {
-	m_sightHeight = 600;
+	m_sightHeight = SIGHTHEIGHT_DEFAULT;
 	m_aim = Vector(VIEW_WIDTH * 0.5, VIEW_HEIGHT * 0.5);
 
 	// 플레이어 총 이미지 맵으로 저장
@@ -66,14 +66,15 @@ void ObjectManager::Draw(Camera* pCamera)
 		(*it)->Draw(pCamera);
 
 		// 충돌체 보여주는 부분인데, 미니맵의 실제 움직임과 보여지는 움직임이 다르기 때문에 충돌체 보여주는 것이 의미가 없음.
-		if(SCENE->GetColliderOnOff()) pCamera->DrawRect((*it)->Collider().LeftTop(), (*it)->Collider().size, ColorF::Yellow, 3);
+		//if(SCENE->GetColliderOnOff()) pCamera->DrawRect((*it)->Collider().LeftTop(), (*it)->Collider().size, ColorF::Yellow, 3);
 	}
 
 	FOR_LIST(Object*, m_bulletList)
 	{
 		(*it)->Draw(pCamera);
+		
 		// 충돌체 보여주는 부분인데, 미니맵의 실제 움직임과 보여지는 움직임이 다르기 때문에 충돌체 보여주는 것이 의미가 없음.
-		if (SCENE->GetColliderOnOff()) pCamera->DrawRect((*it)->Collider().LeftTop(), (*it)->Collider().size, ColorF::Yellow, 3);
+		//if (SCENE->GetColliderOnOff()) pCamera->DrawRect((*it)->Collider().LeftTop(), (*it)->Collider().size, ColorF::Yellow, 3);
 	}
 
 	m_pPlayer->Draw(pCamera);
@@ -179,9 +180,6 @@ void ObjectManager::SetPosByDeltaAngle()
 			angle += m_deltaSightAngle;
 
 			// 점 p(0,0)를 기준으로 구해진 새로운 pos를 플레이어 위지 p'(MINI_WIDTH * 0.5, MINI_HEIGHT) 기준으로 (*it)의 좌표 보정
-			//float x = MINI_WIDTH*0.5f + MATH->Cos(angle) * MINI_WIDTH * 0.5f;
-			//float y = MINI_HEIGHT + MATH->Sin(angle) * MINI_WIDTH * 0.5f;
-
 			Vector pos = MATH->ToDirection(angle) * MINI_WIDTH * 0.5 + OBJECT->GetPlayer()->Position();
 
 			(*it)->SetStartPos(pos);
@@ -197,9 +195,10 @@ void ObjectManager::SetPosByDeltaAngle()
 
 			(*it)->SetStartPos(pos);
 		}
+
 		// 배경 좌우 이동을 위한 변화량 계산
-		float sign = (m_deltaSightAngle > EPSILON) ? -1 : 1;
-		deltaPosX = MATH->Tan(m_deltaSightAngle) * VIEW_WIDTH * 0.5 * sign;
+		//float sign = (m_deltaSightAngle > EPSILON) ? -1 : 1;
+		//deltaPosX = MATH->Tan(m_deltaSightAngle) * VIEW_WIDTH * 0.5 * sign;
 	}
 
 

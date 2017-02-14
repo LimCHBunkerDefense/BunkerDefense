@@ -73,41 +73,7 @@ void Player::AttackState(float deltaTime)
 
 	
 	// 마우스 움직이면 모든 오브젝트들이 플레이어 중심으로 회전하는 처리 시작---------------------------------------------------
-	// 이전 마우스좌표와 움직인 마우스 좌표를 비교하는 부분
-	float fTurnSpeed = 0;
-	float deltaHeight = 0;
-	Vector NowMousePos = Vector(INPUT->GetMousePos().x, INPUT->GetMousePos().y);
-
-	if (abs(NowMousePos.x - m_prevMousePos.x) >EPSILON
-		&& NowMousePos.x < m_prevMousePos.x) 
-	{
-		fTurnSpeed = -ROTATE_SPEED * deltaTime;
-	}
-	if (abs(NowMousePos.x - m_prevMousePos.x) >EPSILON
-		&& NowMousePos.x > m_prevMousePos.x) 
-	{
-		fTurnSpeed = +ROTATE_SPEED * deltaTime;
-	}
-	if (abs(NowMousePos.y - m_prevMousePos.y) >EPSILON
-		&& NowMousePos.y < m_prevMousePos.y) 
-	{
-		deltaHeight += ROTATE_SPEED * deltaTime;
-		OBJECT->SetSightHeight(OBJECT->GetSightHeight() + ROTATE_SPEED * deltaTime);
-	}
-	if (abs(NowMousePos.y - m_prevMousePos.y) >EPSILON
-		&& NowMousePos.y > m_prevMousePos.y) 
-	{
-		deltaHeight -= ROTATE_SPEED * deltaTime;
-		OBJECT->SetSightHeight(OBJECT->GetSightHeight() - ROTATE_SPEED * deltaTime);
-	}
-	
-	if(abs(fTurnSpeed) > EPSILON) OBJECT->SetDeltaSightAngle(fTurnSpeed);
-	if (abs(deltaHeight) > EPSILON) OBJECT->SetDeltaSightHeight(deltaHeight);
-	
-
-	m_prevMousePos = NowMousePos;
-
-	// 커서 화면 밖으로 나가지 않도록 보정
+	// 커서 화면 밖으로 나가지 않도록 보정. 이게 앞으로 마우스 이전좌표와 현재좌표를 가지고 계산하는 부분의 앞에 있어야 함.
 	if (m_prevMousePos.x <= 100
 		|| m_prevMousePos.x >= 1000
 		|| m_prevMousePos.y < 100
@@ -116,6 +82,48 @@ void Player::AttackState(float deltaTime)
 		SetCursorPos(500, 500);
 		m_prevMousePos = Vector(INPUT->GetMousePos().x, INPUT->GetMousePos().y);
 	}
+	
+	// 이전 마우스좌표와 움직인 마우스 좌표를 비교하는 부분
+	float fTurnSpeed = 0;
+	float deltaHeight = 0;
+	Vector NowMousePos = Vector(INPUT->GetMousePos().x, INPUT->GetMousePos().y);
+	Vector gap = m_prevMousePos - NowMousePos;
+
+	// 마우스 우측으로 움직였을 때
+	if (gap.x > 0) 
+	{
+		fTurnSpeed = ROTATE_SPEED * deltaTime * gap.x;
+	}
+
+	// 마우스 좌측으로 움직였을 때
+	if (gap.x < 0) 
+	{
+		fTurnSpeed = ROTATE_SPEED * deltaTime * gap.x;
+	}
+
+	// 마우스 위쪽으로 움직였을 때
+	if (gap.y < 0) 
+	{
+		// 마우스에 의해 변화된 높이값 계산
+		deltaHeight = ROTATE_SPEED * deltaTime * gap.y * 10;
+	}
+
+	// 마우스 아래쪽으로 움직였을 때
+	if (gap.y > 0) 
+	{
+		// 마우스에 의해 변화된 높이값 계산
+		deltaHeight = ROTATE_SPEED * deltaTime * gap.y * 10;
+	}
+	
+	// 마우스 이동에 의한 변화값들을 오브젝트 메니저에 셋팅해주기. SetDeltaSightAngle는 미니맵에서 크리쳐 회전을 위해 사용됨. 
+	OBJECT->SetDeltaSightAngle(fTurnSpeed * -1);
+	OBJECT->SetDeltaSightHeight(deltaHeight * -1);
+
+	// 플레이어가 보는 높이값 증감시켜주는 부분
+	OBJECT->SetSightHeight(deltaHeight);	
+
+	// m_prevMousePos를 현재 커서 위치로 초기화
+	m_prevMousePos = NowMousePos;
 
 	// 마우스 움직이면 모든 오브젝트들이 플레이어 중심으로 회전하는 처리 끝---------------------------------------------------
 
