@@ -7,7 +7,7 @@
 ObjectManager::ObjectManager()
 {
 	m_sightHeight = SIGHTHEIGHT_DEFAULT;
-	m_aim = Vector(VIEW_WIDTH * 0.5, SIGHTHEIGHT_DEFAULT);
+	m_aim = Vector(0,0);
 
 	// 플레이어 총 이미지 맵으로 저장
 	RENDER->LoadImageFiles(TEXT("PistolIdle"), TEXT("Image/Item/Pistol/Idle/Idle"), TEXT("png"), 2);
@@ -194,7 +194,7 @@ void ObjectManager::SetPosByDeltaAngle(float deltaTime)
 		}
 
 		// 배경 좌우 이동을 위한 변화량 계산
-		deltaPosX = pow(MINI_WIDTH * 0.5, 2) * PI * m_deltaSightAngle / 360 * deltaTime;
+		deltaPosX = MATH->Tan(m_deltaSightAngle) * VIEW_WIDTH * 0.5f;
 
 	}	
 
