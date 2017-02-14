@@ -35,6 +35,7 @@ public:
 	Vector GetMoveDirection() { return m_moveDirection; }
 	void SetStartPos(Vector pos) { m_startPos = pos; }
 	Vector GetStartPos() { return m_startPos; }
+	Vector GetNowPos() { return  m_startPos * m_t + OBJECT->GetPlayer()->Position() * (1 - m_t);}
 	BOOL Collided();
 };
 

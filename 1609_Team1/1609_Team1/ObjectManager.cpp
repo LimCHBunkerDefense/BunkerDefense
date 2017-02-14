@@ -75,6 +75,11 @@ void ObjectManager::Draw(Camera* pCamera)
 		//if (SCENE->GetColliderOnOff()) pCamera->DrawRect((*it)->Collider().LeftTop(), (*it)->Collider().size, ColorF::Yellow, 3);
 	}
 
+	FOR_LIST(Object*, m_grenadeList)
+	{
+		(*it)->Draw(pCamera);
+	}
+
 	m_pPlayer->Draw(pCamera);
 }
 
@@ -161,6 +166,24 @@ void ObjectManager::CreateBullet(OBJ_TAG tag, Vector pos)
 	pBullet->SetCollider(colSize, anchor);
 
 	m_bulletList.push_front(pBullet);
+}
+
+void ObjectManager::CreateGrenade(OBJ_TAG tag, Vector pos)
+{
+	NEW_OBJECT(Object* pBullet, Bullet(tag));
+	pBullet->SetPosition_Creature(pos, pos * 5);
+	pBullet->SetStartPos(pos);
+
+	Vector colSize, anchor;
+	float scale = 0.05f;
+	colSize = Vector(20, 20) * scale;
+	anchor = Vector(0.5, 0.95f);
+	//pBullet->Animation()->Register(BULLET_IDLE, new Animation(TEXT("BulletIdle"), 1, 10, false, scale, anchor.x, anchor.y));
+	//pBullet->Animation()->Register(BULLET_EXPLODE, new Animation(TEXT("EntRun"), 9, 7, true, scale, anchor.x, anchor.y));
+
+	pBullet->SetCollider(colSize, anchor);
+
+	m_grenadeList.push_front(pBullet);
 }
 
 // 카메라 회전에 의한 맵 표시 좌표 업데이트 및 각도와 높이 변화값 초기화
