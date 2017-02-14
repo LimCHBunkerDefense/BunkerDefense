@@ -100,7 +100,8 @@ void ShopScene::CreateBoxList()
 	AddBoxList(new Box(BUTTON_THIRD, Vector(550, 495), Vector(400, 60)));
 	AddBoxList(new Box(BUTTON_FORTH, Vector(550, 555), Vector(400, 60)));
 
-	AddBoxList(new Box(BUTTON_BUY, Vector(885, 700), Vector(125, 35)));	// 구매 버튼 박스
+	AddBoxList(new Box(BUTTON_BUY, Vector(885, 700), Vector(125, 35)));	   // 구매 버튼 박스
+	AddBoxList(new Box(BUTTON_EXIT, Vector(1025, 700), Vector(125, 35)));  // 종료 버튼 박스
 }
 
 void ShopScene::ItemListWnd()
@@ -148,7 +149,7 @@ void ShopScene::ItemListWnd()
 			pItem = ((*it)->GetItemTypeTag() == ITEMTYPE_WEAPON) ? (*it) : NULL;
 			if (pItem != NULL)
 			{
-				RENDER->DrawT(pItem->GetName(), 150, 50 + weaponIndex * 60, ColorF::Tomato, 20.0f, ALIGN_CENTER);
+				RENDER->DrawT(pItem->GetName(), 385, 300 + weaponIndex * 60, ColorF::Tomato, 20.0f, ALIGN_CENTER);
 			}
 		}
 		break;
@@ -189,7 +190,6 @@ void ShopScene::ItemStatWnd()
 	RENDER->DrawT(TEXT("수 량"), 920, 635, ColorF::Aquamarine, 20);
 
 	RENDER->DrawT(TEXT("BUY"), 860, 688, ColorF::Aquamarine, 20);
-	RENDER->DrawRect(Vector(1025, 700), Vector(125, 35), ColorF::Aquamarine, 3);
 	RENDER->DrawT(TEXT("나가기 F3"), 985, 686, ColorF::Aquamarine, 20);
 	//RENDER->DrawT(TEXT("ITEM INFO"), 750, 400, ColorF::Red, 25);
 }
