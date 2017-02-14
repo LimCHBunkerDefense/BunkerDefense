@@ -10,7 +10,7 @@ PlayScene::PlayScene()
 
 	// 배경 이미지 맵으로 저장
 	RENDER->LoadImageFile(TEXT("ForestBG"), TEXT("Image/BackGround/ForestBG.jpg")); 
-	RENDER->LoadImageFile(TEXT("DroughtBG"), TEXT("Image/BackGround/DroughtBG.jpg"));
+	RENDER->LoadImageFile(TEXT("DroughtBG"), TEXT("Image/BackGround/DroughtBG.png"));
 
 	// UI 이미지 맵으로 저장
 	RENDER->LoadImageFile(TEXT("Aim"), TEXT("Image/UI/Aim/Aim.png"));
@@ -229,6 +229,6 @@ void PlayScene::DrawBG()
 	Vector bgPos = OBJECT->GetAimPos();
 	pMainCamera->Draw(m_pBg, bgPos);
 
-	if(bgPos.x > 0) pMainCamera->Draw(m_pBg, bgPos - Vector(1920 * 1.8, 0));
-	else pMainCamera->Draw(m_pBg, bgPos + Vector(1920 * 1.8, 0));
+	if(bgPos.x > 0) pMainCamera->Draw(m_pBg, bgPos - Vector(1920 * 2 * 1.8, 0));
+	else pMainCamera->Draw(m_pBg, bgPos + Vector(1920 * 2 * 1.8, 0));
 }

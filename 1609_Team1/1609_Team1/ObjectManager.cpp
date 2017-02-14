@@ -175,8 +175,8 @@ void ObjectManager::SetPosByDeltaAngle(float deltaTime)
 
 	// 카메라 이동에 따른 배경 출력 위치 변경
 	m_aim = Vector(m_aim.x - deltaPosX, m_sightHeight);
-	if (m_aim.x > 1920 * 1.8) m_aim -= Vector(1920 * 1.8, 0);
-	if (m_aim.x < 1920 * 1.8 * -1) m_aim += Vector(1920 * 1.8, 0);
+	if (m_aim.x > 1920 * 2 * 1.8) m_aim -= Vector(1920 * 2 * 1.8, 0);
+	if (m_aim.x < 1920 * 2 * 1.8 * -1) m_aim += Vector(1920 * 2 * 1.8, 0);
 
 	// 시야 변화 각 초기화
 	m_deltaSightAngle = 0;
