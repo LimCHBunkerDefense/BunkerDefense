@@ -7,7 +7,7 @@
 ObjectManager::ObjectManager()
 {
 	m_sightHeight = SIGHTHEIGHT_DEFAULT;
-	m_aim = Vector(VIEW_WIDTH * 0.5, VIEW_HEIGHT * 0.5);
+	m_aim = Vector(VIEW_WIDTH * 0.5, SIGHTHEIGHT_DEFAULT);
 
 	// 플레이어 총 이미지 맵으로 저장
 	RENDER->LoadImageFiles(TEXT("PistolIdle"), TEXT("Image/Item/Pistol/Idle/Idle"), TEXT("png"), 2);
@@ -53,10 +53,7 @@ void ObjectManager::Update(float deltaTime)
 		}
 	}
 
-	m_aim += Vector(m_deltaSightAngle, m_deltaSightHeight * -1);
-	//float x = MATH->Clamp(m_aim.x + m_deltaSightAngle, -1.0f * VIEW_WIDTH, VIEW_WIDTH * 2.0f);
-	//float y = MATH->Clamp(m_aim.y - m_deltaSightHeight, 0.0f, float(VIEW_HEIGHT));
-	//m_aim = m_aim + Vector(x, y);
+
 }
 
 void ObjectManager::Draw(Camera* pCamera)
@@ -197,15 +194,12 @@ void ObjectManager::SetPosByDeltaAngle()
 		}
 
 		// 배경 좌우 이동을 위한 변화량 계산
-		//float sign = (m_deltaSightAngle > EPSILON) ? -1 : 1;
-		//deltaPosX = MATH->Tan(m_deltaSightAngle) * VIEW_WIDTH * 0.5 * sign;
-	}
+		deltaPosX = MATH->Tan(m_deltaSightAngle) * MINI_WIDTH * 0.5;
 
+	}	
 
 	// 카메라 이동에 따른 배경 출력 위치 변경
-	//SCENE->GetScene(SCENE_PLAY)->SetPosBg(SCENE->GetScene(SCENE_PLAY)->GetPosBg() - Vector(deltaPosX, deltaPosY));
-
-	
+	m_aim = Vector(m_aim.x - deltaPosX, m_sightHeight);
 
 	// 시야 변화 각 초기화
 	m_deltaSightAngle = 0;

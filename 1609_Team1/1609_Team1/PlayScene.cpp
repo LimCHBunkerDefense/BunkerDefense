@@ -52,7 +52,7 @@ PlayScene::~PlayScene()
 void PlayScene::OnEnter()
 {
 	// 배경 이미지 스프라이트로 생성
-	NEW_OBJECT(m_pBg, Sprite(RENDER->GetImage(TEXT("DroughtBG")), 1.0f, 0, 0));
+	NEW_OBJECT(m_pBg, Sprite(RENDER->GetImage(TEXT("DroughtBG")), 1.0));
 
 	// UI 이미지 스프라이트로 생성
 	NEW_OBJECT(m_pAim, Sprite(RENDER->GetImage(TEXT("Aim")), 0.825));
@@ -100,9 +100,7 @@ void PlayScene::OnDraw()
 {	
 
 	// 배경 그려주는 부분 (보이는 화면 좌우로 하나씩 더)
-	pMainCamera->Draw(m_pBg, Vector(0,0)); 
-	pMainCamera->Draw(m_pBg, Vector(-VIEW_WIDTH,0));
-	pMainCamera->Draw(m_pBg, Vector(VIEW_WIDTH,0));
+	DrawBG();
 
 	// 임시 미니맵 배경
 	//pMinimapCamera->Draw(m_pMinimap, Vector(0,0));
@@ -192,4 +190,10 @@ void PlayScene::SetCreature(float deltaTime)
 		m_createdCretureCount++;
 	}
 
+}
+
+void PlayScene::DrawBG()
+{
+	Vector bgPos = OBJECT->GetAimPos();
+	pMainCamera->Draw(m_pBg, bgPos);
 }
