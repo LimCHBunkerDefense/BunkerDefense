@@ -284,6 +284,7 @@ void Player::SetItem()
 	// ±ÇÃÑ ÀåÂø
 	if (INPUT->IsKeyDown(VK_1))
 	{
+		item_state = ITEM_PISTOL;
 		if (m_itemBag.find(1001) != m_itemBag.end())
 		{
 			m_pItem = m_itemBag[1001];
@@ -293,6 +294,7 @@ void Player::SetItem()
 	// ±â°üÃÑ ÀåÂø
 	if (INPUT->IsKeyDown(VK_2))
 	{
+		item_state = ITEM_MACHINEGUN;
 		if (m_itemBag.find(1002) != m_itemBag.end())
 		{
 			m_pItem = m_itemBag[1002];
@@ -311,6 +313,7 @@ void Player::SetItem()
 	// ·¹ÀÌÀú °Ç ÀåÂø
 	if (INPUT->IsKeyDown(VK_4))
 	{
+		item_state = ITEM_LASERGUN;
 		if (m_itemBag.find(1004) != m_itemBag.end())
 		{
 			m_pItem = m_itemBag[1004];

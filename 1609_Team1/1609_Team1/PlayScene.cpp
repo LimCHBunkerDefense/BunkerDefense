@@ -31,6 +31,10 @@ PlayScene::PlayScene()
 	//무기 ICON 가져오기
 	RENDER->LoadImageFile(TEXT("PistolOn"),		TEXT("Image/Item/Icon/ico_pistol_on.png"));
 	RENDER->LoadImageFile(TEXT("PistolOff"),	TEXT("Image/Item/Icon/ico_pistol_off.png"));
+	RENDER->LoadImageFile(TEXT("LaserOn"),		TEXT("Image/Item/Icon/ico_laser_on.png"));
+	RENDER->LoadImageFile(TEXT("LaserOff"),		TEXT("Image/Item/Icon/ico_laser_off.png"));
+	RENDER->LoadImageFile(TEXT("MachineOn"),	TEXT("Image/Item/Icon/ico_machine_on.png"));
+	RENDER->LoadImageFile(TEXT("MachineOff"),	TEXT("Image/Item/Icon/ico_machine_off.png"));
 
 
 	// 카메라 생성
@@ -58,7 +62,11 @@ void PlayScene::OnEnter()
 	NEW_OBJECT(m_pAim, Sprite(RENDER->GetImage(TEXT("Aim")), 0.825));
 	NEW_OBJECT(m_pMinimap, Sprite(RENDER->GetImage(TEXT("Minimap")), 1.0));
 	NEW_OBJECT(m_pRadar, Sprite(RENDER->GetImage(TEXT("Radar")), 0.85, 0.0,0.0));
+
+	//ico pistol
 	NEW_OBJECT(m_ico_pistol, Sprite(RENDER->GetImage(TEXT("PistolOn"))));
+	NEW_OBJECT(m_ico_laser, Sprite(RENDER->GetImage(TEXT("LaserOff"))));
+	NEW_OBJECT(m_ico_machine, Sprite(RENDER->GetImage(TEXT("MachineOff"))));	
 
 	// 플레이어 생성
 	OBJECT->CreatePlayer(Vector(MINI_WIDTH * 0.5F, MINI_HEIGHT), Vector(10, 10), Vector(0.5f, 1.0f));
@@ -80,6 +88,8 @@ void PlayScene::OnEnter()
 
 void PlayScene::OnUpdate(float deltaTime)
 {
+	//Icon 변경
+	ChangeIcon();
 	// 크리쳐 생성을 위한 게임 시간 업데이트
 	m_gameTime += deltaTime;
 
@@ -95,6 +105,20 @@ void PlayScene::ChangeIcon() {
 	switch (OBJECT->GetPlayer()->GetItemState()) {
 		case ITEM_PISTOL: {
 			NEW_OBJECT(m_ico_pistol, Sprite(RENDER->GetImage(TEXT("PistolOn"))));
+			NEW_OBJECT(m_ico_machine, Sprite(RENDER->GetImage(TEXT("MachineOff"))));
+			NEW_OBJECT(m_ico_laser, Sprite(RENDER->GetImage(TEXT("LaserOff"))));
+			break;
+		}
+		case ITEM_MACHINEGUN: {
+			NEW_OBJECT(m_ico_pistol, Sprite(RENDER->GetImage(TEXT("PistolOff"))));
+			NEW_OBJECT(m_ico_machine, Sprite(RENDER->GetImage(TEXT("MachineOn"))));
+			NEW_OBJECT(m_ico_laser, Sprite(RENDER->GetImage(TEXT("LaserOff"))));
+			break;
+		}
+		case ITEM_LASERGUN: {
+			NEW_OBJECT(m_ico_pistol, Sprite(RENDER->GetImage(TEXT("PistolOff"))));
+			NEW_OBJECT(m_ico_machine, Sprite(RENDER->GetImage(TEXT("MachineOff"))));
+			NEW_OBJECT(m_ico_laser, Sprite(RENDER->GetImage(TEXT("LaserOn"))));
 			break;
 		}
 	}
@@ -158,10 +182,10 @@ void PlayScene::OnDraw()
 
 	//Icon
 	pUICamera->Draw(m_ico_pistol, Vector(40, 110));
-	//pUICamera->DrawRect(Vector(20, 90), Vector(50, 50), ColorF::Red, 1);
-	pUICamera->DrawRect(Vector(90, 90), Vector(50, 50), ColorF::Red, 1);
+	pUICamera->Draw(m_ico_machine, Vector(110, 110));
 	pUICamera->DrawRect(Vector(160, 90), Vector(50, 50), ColorF::Red, 1);
-	pUICamera->DrawRect(Vector(230, 90), Vector(50, 50), ColorF::Red, 1);
+	pUICamera->Draw(m_ico_laser, Vector(250, 110));
+
 
 	pUICamera->DrawRect(Vector(20, VIEW_HEIGHT - 190), Vector(320, 70), ColorF::Blue, 1);
 	pUICamera->DrawRect(Vector(20, VIEW_HEIGHT - 100), Vector(70, 70), ColorF::Red, 1);
