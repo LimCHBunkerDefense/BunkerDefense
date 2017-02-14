@@ -179,7 +179,8 @@ public:
 	float GetDeltaSightAngle() { return m_deltaSightAngle; }
 	void SetDeltaSightHeight(float deltaHeight) { m_deltaSightHeight = deltaHeight; }
 	float GetDeltaSightHeight() { return m_deltaSightHeight; }
-	void SetSightHeight(float height) { m_sightHeight = height; }
+
+	void SetSightHeight(float height) { m_sightHeight = MATH->Clamp(height + m_sightHeight, SIGHTHEIGHT_MIN, SIGHTHEIGHT_MAX); }
 	float GetSightHeight() { return m_sightHeight; }
 
 	// 플레이어 에임 좌표 관련

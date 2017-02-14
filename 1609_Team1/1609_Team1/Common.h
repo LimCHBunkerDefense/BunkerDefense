@@ -10,17 +10,20 @@
 
 #define SOUND_MAX_CHANNEL	10
 
-#define CAMERA_ANGLE	120
-#define MAP_WIDTH		1920
-#define MAP_HEIGHT		1080
-#define MINI_WIDTH		VIEW_WIDTH/5
-#define	MINI_HEIGHT		VIEW_HEIGHT/5
-#define CAMERA_LEFT		90+CAMERA_ANGLE/2
-#define CAMERA_RIGHT	90-CAMERA_ANGLE/2
-#define CHARACTER_X		VIEW_WIDTH*0.5F-30
-#define CHARACTER_Y		VIEW_HEIGHT-30
-#define ROTATE_SPEED	200
-#define SIGHT			VIEW_WIDTH/2
+#define CAMERA_ANGLE			120
+#define SIGHTHEIGHT_MIN			-200.0f		// 플레이어의 상하 시야각의 최소값
+#define SIGHTHEIGHT_MAX			600.0f		// 플레이어의 상하 시야각의 최대값
+#define SIGHTHEIGHT_DEFAULT		500.0f		// 플레이어의 상하 시야각의 초기 시작값
+#define MAP_WIDTH				1920
+#define MAP_HEIGHT				1080
+#define MINI_WIDTH				VIEW_WIDTH/5
+#define	MINI_HEIGHT				VIEW_HEIGHT/5
+#define CAMERA_LEFT				90+CAMERA_ANGLE/2
+#define CAMERA_RIGHT			90-CAMERA_ANGLE/2
+#define CHARACTER_X				VIEW_WIDTH*0.5F-30
+#define CHARACTER_Y				VIEW_HEIGHT-30
+#define ROTATE_SPEED			10
+#define SIGHT					VIEW_WIDTH/2
 
 #define EPSILON 0.001
 
