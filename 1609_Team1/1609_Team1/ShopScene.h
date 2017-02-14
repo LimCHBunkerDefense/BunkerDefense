@@ -27,7 +27,7 @@ class ShopScene :
 	bool IsBuyClicked;
 
 	// 상점에 있는 수량 관련 변수
-	int m_inputNum;
+	int m_inputCount;
 	bool m_inputOnOff;
 
 public:
@@ -72,8 +72,8 @@ public:
 	void SetIsBuyClicked(bool ON) { IsBuyClicked = ON; }
 
 	// 상점에 있는 수량 관련 GetSet함수
-	int GetInputNum() { return m_inputNum; }
-	void SetInputNum(int num) { m_inputNum = num; }
+	int GetInputCount() { return m_inputCount; }
+	void SetInputCount(int addCount);
 	bool GetInputOnOff() { return m_inputOnOff; }
 	void SetInputOnOff(bool ON) { m_inputOnOff = ON; }
 };

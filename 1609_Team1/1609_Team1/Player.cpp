@@ -150,7 +150,6 @@ void Player::ShopState()
 	// 마우스 왼쪽 버튼 클릭
 	if (INPUT->IsMouseUp(MOUSE_LEFT))
 	{
-		int but;
 		list<Box*> boxList = SCENE->GetScene(SCENE_SHOP)->GetBoxList();
 		for (list<Box*>::iterator it_Box = boxList.begin(); it_Box != boxList.end(); it_Box++)
 		{
@@ -165,18 +164,21 @@ void Player::ShopState()
 					SCENE->GetScene(SCENE_SHOP)->SetIsBulletClicked(false);
 					SCENE->GetScene(SCENE_SHOP)->SetIsUsingItemClicked(false);
 					break;
+
 				case BUTTON_BULLET:
 					SCENE->GetScene(SCENE_SHOP)->SetCurrentButton(BUTTON_BULLET);
 					SCENE->GetScene(SCENE_SHOP)->SetIsWeaponClicked(false);
 					SCENE->GetScene(SCENE_SHOP)->SetIsBulletClicked(true);
 					SCENE->GetScene(SCENE_SHOP)->SetIsUsingItemClicked(false);
 					break;
+
 				case BUTTON_USINGITEM:
 					SCENE->GetScene(SCENE_SHOP)->SetCurrentButton(BUTTON_USINGITEM);
 					SCENE->GetScene(SCENE_SHOP)->SetIsWeaponClicked(false);
 					SCENE->GetScene(SCENE_SHOP)->SetIsBulletClicked(false);
 					SCENE->GetScene(SCENE_SHOP)->SetIsUsingItemClicked(true);
 					break;
+
 				case BUTTON_FIRST:
 					if (SCENE->GetScene(SCENE_SHOP)->GetIsWeaponClicked())
 					{
@@ -191,6 +193,7 @@ void Player::ShopState()
 						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(1009);
 					}
 					break;
+
 				case BUTTON_SECOND:
 					if (SCENE->GetScene(SCENE_SHOP)->GetIsWeaponClicked() == true)
 					{
@@ -205,6 +208,7 @@ void Player::ShopState()
 						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(1010);
 					}
 					break;
+
 				case BUTTON_THIRD:
 					if (SCENE->GetScene(SCENE_SHOP)->GetIsWeaponClicked() == true)
 					{
@@ -219,6 +223,7 @@ void Player::ShopState()
 						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(1011);
 					}
 					break;
+
 				case BUTTON_FORTH:
 					if (SCENE->GetScene(SCENE_SHOP)->GetIsWeaponClicked() == true)
 					{
@@ -233,7 +238,12 @@ void Player::ShopState()
 						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(1012);
 					}
 					break;
-				case BUTTON_BUY:// 샵씬에서 구매 선택하면 그 아이템이 아이템 가방에 저장됨
+
+				case BUTTON_COUNT:		// 수량 버튼 선택시 숫자 입력칸 활성화
+					SCENE->GetScene(SCENE_SHOP)->SetInputOnOff(true);
+					break;
+
+				case BUTTON_BUY:		// 샵씬에서 구매 선택하면 그 아이템이 아이템 가방에 저장됨
 					if (m_itemBag.find(SCENE->GetScene(SCENE_SHOP)->GetSelectedItem()->GetID()) != m_itemBag.end())
 					{
 						Object* pItem = SCENE->GetScene(SCENE_SHOP)->GetSelectedItem();
@@ -248,7 +258,25 @@ void Player::ShopState()
 				}
 			}
 		}
-	}
+	}	// switch문 END
+
+	if (SCENE->GetScene(SCENE_SHOP)->GetInputOnOff() == true)
+	{
+		int num = 0; 
+		if (INPUT->IsKeyDown(VK_0)) num = 0;
+		if (INPUT->IsKeyDown(VK_1)) num = 1;
+		if (INPUT->IsKeyDown(VK_2)) num = 2;
+		if (INPUT->IsKeyDown(VK_3)) num = 3;
+		if (INPUT->IsKeyDown(VK_4)) num = 4;
+		if (INPUT->IsKeyDown(VK_5)) num = 5;
+		if (INPUT->IsKeyDown(VK_6)) num = 6;
+		if (INPUT->IsKeyDown(VK_7)) num = 7;
+		if (INPUT->IsKeyDown(VK_8)) num = 8;
+		if (INPUT->IsKeyDown(VK_9)) num = 9;
+
+		if(num != 0) SCENE->GetScene(SCENE_SHOP)->SetInputCount(num);
+
+	}	// InputCount Bool함수 END
 }
 
 void Player::SetItem()

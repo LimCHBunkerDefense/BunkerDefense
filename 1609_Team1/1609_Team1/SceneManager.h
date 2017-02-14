@@ -41,6 +41,11 @@ public:
 	virtual bool GetBuyClicked() { return NULL; }
 	virtual void SetBuyCilcked(bool ON) {}
 
+	virtual int GetInputCount() { return NULL; }
+	virtual void SetInputCount(int addCount) {}
+	virtual bool GetInputOnOff() { return NULL; }
+	virtual void SetInputOnOff(bool ON) {}
+
 	// PlayScene ¿ë
 	virtual void SetPosBg(Vector pos) {}
 	virtual Vector GetPosBg() { return Vector::Zero(); }
