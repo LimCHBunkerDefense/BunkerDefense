@@ -10,7 +10,7 @@
 
 #define SOUND_MAX_CHANNEL	10
 
-#define CAMERA_ANGLE			120
+#define CAMERA_ANGLE			60
 #define SIGHTHEIGHT_MIN			0.0f		// 플레이어의 상하 시야각의 최소값
 #define SIGHTHEIGHT_MAX			600.0f		// 플레이어의 상하 시야각의 최대값
 #define SIGHTHEIGHT_DEFAULT		500.0f		// 플레이어의 상하 시야각의 초기 시작값

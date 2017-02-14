@@ -169,11 +169,14 @@ void ObjectManager::SetPosByDeltaAngle(float deltaTime)
 	float deltaPosX = 0;
 	float deltaPosY = 0;
 
-	// 배경 좌우 이동을 위한 변화량 계산
-	deltaPosX = MATH->Tan(m_deltaSightAngle) * VIEW_WIDTH * 0.5f;
+	// 배경 좌우 이동을 위한 변화량 계산, 곱하기 0.1은 구한 x좌표에 의한 스프라이트 그려지는 위치가 중앙선으로부터 너무 멀어져서 보정해준 값
+	deltaPosX = VIEW_WIDTH * m_deltaSightAngle / CAMERA_ANGLE;
+	
 
 	// 카메라 이동에 따른 배경 출력 위치 변경
 	m_aim = Vector(m_aim.x - deltaPosX, m_sightHeight);
+	if (m_aim.x > 1920 * 1.8) m_aim -= Vector(1920 * 1.8, 0);
+	if (m_aim.x < 1920 * 1.8 * -1) m_aim += Vector(1920 * 1.8, 0);
 
 	// 시야 변화 각 초기화
 	m_deltaSightAngle = 0;

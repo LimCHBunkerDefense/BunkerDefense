@@ -383,20 +383,12 @@ public:
 
 		// xÁÂÇ¥ ±¸ÇÏ±â
 		float angle = 90 - MATH->Angle(Vector::Right(), startPos - Vector(MINI_WIDTH * 0.5, MINI_HEIGHT));
-		if (angle > 90)
-		{
-			x = MATH->Tan(angle * -1) * MINI_WIDTH * 0.5;
-		}
-
-		else
-		{
-			x = MATH->Tan(angle) * MINI_WIDTH * 0.5;
-		}
-
-		x = x * 5 + VIEW_WIDTH * 0.5;
+		//x = (angle > 90) ? pow(MINI_WIDTH * 0.5, 2) * PI * angle / 360 * -1 : pow(MINI_WIDTH * 0.5, 2) * PI * angle / 360;
+		
+		x = (angle > 90) ? VIEW_WIDTH * angle / 60 + VIEW_WIDTH * 0.5 * -1: VIEW_WIDTH * angle / 60 + VIEW_WIDTH * 0.5;
 
 		// yÁÂÇ¥ ±¸ÇÏ±â
-		y = sightHeight + 50 + VIEW_WIDTH * 0.5 * t;
+		y = sightHeight + 130 + VIEW_WIDTH * 0.5 * t;
 		if (object_state >= BULLET_NONE) y = y - (400 * t);
 
 		return Vector(x, y);
