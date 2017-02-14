@@ -49,6 +49,7 @@ public:
 	// PlayScene ¿ë
 	virtual void SetPosBg(Vector pos) {}
 	virtual Vector GetPosBg() { return Vector::Zero(); }
+	virtual void SetAttackedColor() {}
 };
 
 class SceneManager : public Singleton<SceneManager>
