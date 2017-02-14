@@ -162,7 +162,7 @@ void ObjectManager::CreateBullet(OBJ_TAG tag, Vector pos)
 	m_bulletList.push_front(pBullet);
 }
 
-void ObjectManager::SetPosByDeltaAngle()
+void ObjectManager::SetPosByDeltaAngle(float deltaTime)
 {
 	float deltaPosX = 0;
 	float deltaPosY = 0;
@@ -194,7 +194,7 @@ void ObjectManager::SetPosByDeltaAngle()
 		}
 
 		// 배경 좌우 이동을 위한 변화량 계산
-		deltaPosX = MATH->Tan(m_deltaSightAngle) * MINI_WIDTH * 0.5;
+		deltaPosX = pow(MINI_WIDTH * 0.5, 2) * PI * m_deltaSightAngle / 360 * deltaTime;
 
 	}	
 

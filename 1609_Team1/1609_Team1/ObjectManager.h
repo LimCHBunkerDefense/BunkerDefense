@@ -174,7 +174,7 @@ public:
 	
 
 	// 카메라 회전에 따른 크리쳐 및 불렛의 위치 조정
-	void SetPosByDeltaAngle();
+	void SetPosByDeltaAngle(float deltaTime);
 
 
 	// 플레이어의 마우스 회전에 의한 각 변화값 저장 및 호출

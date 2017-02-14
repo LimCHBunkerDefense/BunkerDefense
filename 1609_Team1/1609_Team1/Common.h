@@ -25,7 +25,8 @@
 #define ROTATE_SPEED			10
 #define SIGHT					VIEW_WIDTH/2
 
-#define EPSILON 0.001
+#define PI						3.1415
+#define EPSILON					0.001
 
 
 #define NEW_OBJECT(p, type) p = new type

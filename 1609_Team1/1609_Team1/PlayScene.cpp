@@ -88,7 +88,7 @@ void PlayScene::OnUpdate(float deltaTime)
 	
 	// 오브젝트 전체 업데이트
 	OBJECT->Update(deltaTime);
-	OBJECT->SetPosByDeltaAngle();
+	OBJECT->SetPosByDeltaAngle(deltaTime);
 }
 
 void PlayScene::ChangeIcon() {
