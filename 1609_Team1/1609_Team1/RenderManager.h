@@ -388,7 +388,7 @@ public:
 		x = (angle > 90) ? VIEW_WIDTH * angle / 60 + VIEW_WIDTH * 0.5 * -1: VIEW_WIDTH * angle / 60 + VIEW_WIDTH * 0.5;
 
 		// yÁÂÇ¥ ±¸ÇÏ±â
-		y = sightHeight + 130 + VIEW_WIDTH * 0.5 * t;
+		y = sightHeight + 130 + VIEW_WIDTH * 0.5 * t * t;
 		if (object_state >= BULLET_NONE) y = y - (400 * t);
 
 		return Vector(x, y);
