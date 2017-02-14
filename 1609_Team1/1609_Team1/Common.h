@@ -161,6 +161,13 @@ enum GUN_STATE
 
 //따로 둘 경우 애니메이션 ID로 불러올 때 값 문제가 있어서 일단 여기에 추가했음. 나중에 int를 바꿔서 오버라이딩하거나 enum 이름을 바꿔야할 듯.
 
+
+//크리쳐를 구분할 태그 생성(일단 테스트용)
+enum CREATUR_TAG
+{
+	CREATUR_ENT, CREATUR_HYD, CREATUR_ZERG,
+};
+
 enum CREATURE_STATE
 {
 	CREATURE_NONE, CREATURE_IDLE, CREATURE_RUN, CREATURE_ATTACK, CREATURE_DEAD, 
