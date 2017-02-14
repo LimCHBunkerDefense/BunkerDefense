@@ -15,6 +15,8 @@ class Player :
 
 	PLAYER_STATE m_state;			    	// 플레이어 상태
 	ITEM_TAG item_state;			    	// 아이템 가진 상태
+
+	float HitPoint;
 										   
 	Vector m_prevMousePos;				    // 이전 마우스 좌표값
 	//float m_sight;						// 시야 길이

@@ -10,6 +10,8 @@ Player::Player(OBJ_TAG tag) : Object(tag)
 {
 	m_state = PLAYER_ATTACK;
 	item_state = ITEM_PISTOL;
+
+	HitPoint = 10;
 	
 	m_prevMousePos = Vector(INPUT->GetMousePos().x, INPUT->GetMousePos().y);
 	//m_sight = SIGHT;
