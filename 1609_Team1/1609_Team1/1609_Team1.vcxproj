@@ -152,7 +152,6 @@
     <ClCompile Include="Creature.cpp" />
     <ClCompile Include="CreatureDB.cpp" />
     <ClCompile Include="GameManager.cpp" />
-    <ClCompile Include="Grenade.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="ItemDB.cpp" />
@@ -175,7 +174,6 @@
     <ClInclude Include="Creature.h" />
     <ClInclude Include="CreatureDB.h" />
     <ClInclude Include="GameManager.h" />
-    <ClInclude Include="Grenade.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="ItemDB.h" />
