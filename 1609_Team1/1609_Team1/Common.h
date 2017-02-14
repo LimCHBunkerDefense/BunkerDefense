@@ -24,6 +24,7 @@
 #define CHARACTER_Y				VIEW_HEIGHT-30
 #define ROTATE_SPEED			10
 #define SIGHT					VIEW_WIDTH/2
+#define GRENADE_EXPLODE			10
 
 #define EPSILON 0.001
 
