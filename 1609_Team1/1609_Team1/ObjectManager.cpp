@@ -236,16 +236,17 @@ void ObjectManager::CreateGrenade(OBJ_TAG tag, Vector pos)
 {
 	NEW_OBJECT(Object* pBullet, Grenade(tag));
 	float m_t = GetSightHeight() / SIGHTHEIGHT_MAX;
-	Vector NewPos = pos * m_t + OBJECT->GetPlayer()->Position() * (1 - m_t);
-	pBullet->SetPosition_Creature(NewPos, NewPos * 5);
-	pBullet->SetStartPos(NewPos);
+	//Vector NewPos = pos * m_t + OBJECT->GetPlayer()->Position() * (1 - m_t);
+	pBullet->SetPosition_Creature(pos, pos * 5);
+	pBullet->SetStartPos(pos);
+	pBullet->SetGoal(m_t);
 
 	Vector colSize, anchor;
-	float scale = 1.0f;
+	float scale = 0.5f;
 	colSize = Vector(20, 20) * scale;
 	anchor = Vector(0.5, 0.95f);
-	pBullet->Animation()->Register(GRENADE_IDLE, new Animation(TEXT("Grenade"), 1, 10, false, scale, anchor.x, anchor.y));
-	pBullet->Animation()->Register(GRENADE_EXPLODE, new Animation(TEXT("Explode"), 7, 3,false, scale, anchor.x, anchor.y));
+	pBullet->Animation()->Register(GRENADE_IDLE, new Animation(TEXT("Grenade"), 1, 10, false, 0.2f, anchor.x, anchor.y));
+	pBullet->Animation()->Register(GRENADE_EXPLODE, new Animation(TEXT("Explode"), 7, 3,false, 100.0f, anchor.x, anchor.y));
 
 	pBullet->SetCollider(colSize, anchor);
 
