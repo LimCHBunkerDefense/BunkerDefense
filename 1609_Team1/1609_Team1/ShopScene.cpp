@@ -209,9 +209,61 @@ void ShopScene::ItemStatWnd()
 
 void ShopScene::SetInputCount(int addCount)
 {
+	if (m_inputCount != 0) m_inputCount = m_inputCount * 10 + addCount;
 	if (m_inputCount == 0) m_inputCount += addCount;
-	if (m_inputCount != 0)
+
+	map<int,Object*> playerBag = OBJECT->GetPlayer()->GetItemBag();
+	Object* pItem = NULL;
+	if (playerBag.find(m_selectedItem->GetTag()) != playerBag.end())
 	{
-		m_inputCount = MATH->Clamp(m_inputCount * 10 + addCount, 0, 1000);
+		pItem = playerBag[m_selectedItem->GetTag()];
 	}
+
+	int maxBulletCount = m_selectedItem->GetMaxBulletCount();		// 총알 최대 갯수
+	int maxCount = m_selectedItem->GetMaxCount();					// 나머지 아이템들의 최대 갯수
+
+	switch (m_selectedItem->GetItemTypeTag())
+	{
+	case ITEMTYPE_WEAPON:
+		if (pItem == NULL) m_inputCount = MATH->Clamp(addCount, 0, 1);
+		break;
+
+	case ITEMTYPE_BULLET:
+		if (pItem != NULL)
+		{
+			if (pItem->GetTag() == ITEM_PSBULLET)
+			{
+				if (playerBag.find(ITEM_PISTOL) != playerBag.end())
+				{
+					m_inputCount = MATH->Clamp(addCount, 0, maxBulletCount);
+				}
+			}
+			if (pItem->GetTag() == ITEM_MGBULLET)
+			{
+				if (playerBag.find(ITEM_MACHINEGUN) != playerBag.end())
+				{
+					m_inputCount = MATH->Clamp(addCount, 0, maxBulletCount);
+				}
+			}
+			if (pItem->GetTag() == ITEM_FTBULLET)
+			{
+				if (playerBag.find(ITEM_FIRETHROWER) != playerBag.end())
+				{
+					m_inputCount = MATH->Clamp(addCount, 0, maxBulletCount);
+				}
+			}
+			if (pItem->GetTag() == ITEM_LGBULLET)
+			{
+				if (playerBag.find(ITEM_LASERGUN) != playerBag.end())
+				{
+					m_inputCount = MATH->Clamp(addCount, 0, maxBulletCount);
+				}
+			}
+		}
+		break;
+
+	case ITEMTYPE_USINGITEM:
+		m_inputCount = MATH->Clamp(addCount, 0, maxCount);
+		break;
+	}	
 }

@@ -21,8 +21,6 @@ class Player :
 	float HitPoint;
 	//float m_sight;						// 시야 길이
 
-
-
 public:
 	Player();
 	Player(OBJ_TAG tag);
@@ -35,11 +33,12 @@ public:
 	void ShopState();
 
 	// 아이템을 가방에 추가하는 함수
-	void AddItem(Object* pItem) { m_itemBag[pItem->GetID()] = new Item(pItem->GetID()); }
+	void AddItem(Object* pItem); 
 
 	// 번호 입력시 아이템을 장착하는 함수
 	void SetItem();
 
 	ITEM_TAG GetItemState() { return item_state; }
+	map<int, Object*> GetItemBag() { return m_itemBag; }
 };
 
