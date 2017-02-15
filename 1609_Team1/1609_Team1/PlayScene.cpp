@@ -35,6 +35,10 @@ PlayScene::PlayScene() : m_attackedColor(ColorF::Red)
 	//Bullet 임시로 저장
 	RENDER->LoadImageFiles(TEXT("BulletIdle"), TEXT("Image/Bullet/bullet"), TEXT("png"), 1);
 
+	//Grenade 임시로 저장
+	RENDER->LoadImageFile(TEXT("Grenade"), TEXT("Image/Item/Grenade/Grenade.png"));
+	RENDER->LoadImageFiles(TEXT("Explode"), TEXT("Image/Item/Explode/explode"), TEXT("png"), 7);
+
 	//무기 ICON 가져오기
 	RENDER->LoadImageFile(TEXT("PistolOn"),		TEXT("Image/Item/Icon/ico_pistol_on.png"));
 	RENDER->LoadImageFile(TEXT("PistolOff"),	TEXT("Image/Item/Icon/ico_pistol_off.png"));
