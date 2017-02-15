@@ -85,6 +85,7 @@ public:
 
 	//Bullet용 함수
 	virtual BOOL UpdateBool(float deltaTime) { return false; }
+	virtual void SetMoveSpeed(float speed) {}
 
 
 	// 아이템용 함수
@@ -98,7 +99,8 @@ public:
 	virtual int GetCurrentCount() { return NULL; }
 	virtual void AddCurrentCount(int addCount) {}
 	virtual int GetMaxCount() { return NULL; }
-	virtual wstring GetRange() { return NULL; }
+	virtual float GetRange() { return NULL; }
+	virtual wstring GetRangeStr() { return NULL; }
 	virtual wstring GetInfo() { return NULL; }
 	virtual int GetItemMoney() { return NULL; }
 	virtual ITEM_TAG GetTag() { return ITEM_NONE; }
@@ -162,7 +164,7 @@ public:
 
 
 	// 총알
-	void CreateBullet(OBJ_TAG tag, Vector pos);
+	void CreateBullet(OBJ_TAG tag, Vector pos, ITEM_TAG itemTag);
 	list<Object*> GetBulletList() { return m_bulletList; }
 	void DestroyBullet(Object* pCreature);
 	void DestroyAllBullet();

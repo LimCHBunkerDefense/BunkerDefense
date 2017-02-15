@@ -33,6 +33,7 @@ struct ItemData
 		this->itemID = itemID;
 		this->attack = attack;
 		this->defense = defense;
+		this->range = range;
 		this->bunkerLife = bunkerLife;
 		this->maxBulletCount = maxBulletCount;
 		this->reloadBulletCount = reloadBulletCount;

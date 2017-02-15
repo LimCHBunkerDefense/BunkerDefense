@@ -120,10 +120,11 @@ void ObjectManager::CreateCreature(OBJ_TAG tag, Vector pos)
 	pCreature->SetStartPos(pos);
 
 	Vector colSize, anchor;
+	float scale;
 	switch (tag)
 	{
 	case OBJ_ENT:
-		float scale = 0.5;
+		scale = 0.5;
 		colSize = Vector(200, 300) * scale;
 		anchor = Vector(0.5, 0.95f);
 		pCreature->Animation()->Register(CREATURE_IDLE, new Animation(TEXT("EntIdle"), 2, 2, true, scale, anchor.x, anchor.y));
@@ -179,18 +180,26 @@ Object* ObjectManager::CreateItem(ITEM_TAG tag, int itemID)
 	return pItem;
 }
 
-void ObjectManager::CreateBullet(OBJ_TAG tag, Vector pos)
+void ObjectManager::CreateBullet(OBJ_TAG tag, Vector pos, ITEM_TAG itemTag)
 {
 	NEW_OBJECT(Object* pBullet, Bullet(tag));
 	pBullet->SetPosition_Creature(pos, pos * 5);
 	pBullet->SetStartPos(pos);
 
 	Vector colSize, anchor;
-	float scale = 0.05f;
-	colSize = Vector(20, 20) * scale;
-	anchor = Vector(0.5, 0.95f);
-	pBullet->Animation()->Register(BULLET_IDLE, new Animation(TEXT("BulletIdle"), 1, 10, false, scale, anchor.x, anchor.y));
-	//pBullet->Animation()->Register(BULLET_EXPLODE, new Animation(TEXT("EntRun"), 9, 7, true, scale, anchor.x, anchor.y));
+	float scale;
+	switch (itemTag)
+	{
+	case ITEM_PISTOL:
+		scale = 0.05f;
+		colSize = Vector(20, 20) * scale;
+		anchor = Vector(0.5, 0.95f);
+		pBullet->Animation()->Register(BULLET_IDLE, new Animation(TEXT("BulletIdle"), 1, 10, false, scale, anchor.x, anchor.y));
+		//pBullet->Animation()->Register(BULLET_EXPLODE, new Animation(TEXT("EntRun"), 9, 7, true, scale, anchor.x, anchor.y));
+		pBullet->SetMoveSpeed(5.0f);
+		break;
+	}
+	
 
 	pBullet->SetCollider(colSize, anchor);
 

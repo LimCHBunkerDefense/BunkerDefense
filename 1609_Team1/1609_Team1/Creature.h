@@ -14,9 +14,15 @@ class Creature :
 	float m_attackCoolTime;
 	float m_attackSpeed;
 	float m_moveSpeed;
+	float m_maxLife;
+	float m_currentLife;
 	int m_money;
 	int m_score;
-	UIProgressBar m_lifeBar;
+	UIProgressBar* m_lifeBar;
+
+	// 3D화면에서 총알에 적용된 z값과 비교하여 충돌처리를 하기 위한 z의 최소값과 최대값
+	float m_minZ;
+	float m_maxZ;
 
 	Vector m_startPos;
 	float m_scale;

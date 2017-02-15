@@ -8,15 +8,12 @@ Bullet::Bullet()
 
 Bullet::Bullet(OBJ_TAG tag) : Object(tag)
 {
-	//m_angle = 10;//각도 내의 적에게만 반응
 	CreatureData* pData = CREATURE->GetData(tag);
 	m_scale = 1.0f;
 	m_state = BULLET_IDLE;
 	m_t = 0.0F;
-	m_moveSpeed = 0.5F;
+	m_z = OBJECT->GetSightHeight();
 
-	m_height = OBJECT->GetSightHeight();
-	m_addHeight = 0;
 	m_moveDirection = Vector(Position() * -1 + Vector(MINI_WIDTH * 0.5, MINI_HEIGHT)).Normalize();
 }
 
@@ -77,7 +74,6 @@ BOOL Bullet::IdleState(float deltaTime) {
 
 BOOL Bullet::Collided()
 {
-	if (0<=m_height && m_height <= 450.0f) {
 		list<Object*> creatureList = OBJECT->GetCreatureList();
 		FOR_LIST(Object*, creatureList) {
 			if (abs(MATH->Angle(m_moveDirection, (*it)->GetMoveDirection())) < (*it)->GetCollideAngle()) {
@@ -95,7 +91,6 @@ BOOL Bullet::Collided()
 				}
 			}
 		}
-	}
 	return false;
 }
 void Bullet::HitState(float deltaTime) {
@@ -109,7 +104,7 @@ void Bullet::Draw(Camera* pCamera)
 	m_scale = (1 - m_t) *1.0f;
 
 	Vector gap = Vector(VIEW_WIDTH, VIEW_HEIGHT) - OBJECT->GetAimPos();
-	pCamera->Draw3D(Animation()->Current()->GetSprite(), Vector(m_startPos.x, m_startPos.y+ m_addHeight) , (1-m_t), OBJECT->GetSightHeight()+m_addHeight, m_state);
+	pCamera->Draw3D(Animation()->Current()->GetSprite(), Vector(m_startPos.x, m_startPos.y) , (1-m_t), OBJECT->GetSightHeight(), m_state);
 }
 
 // 카메라 회전에 의한 StartPos 업데이트

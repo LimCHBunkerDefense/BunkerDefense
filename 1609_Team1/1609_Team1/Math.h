@@ -156,6 +156,10 @@ struct Box2
 	{
 		center = leftTop + Width() * 0.5f + Height() * 0.5f;
 	}
+	void SetCenter(Vector center)
+	{
+		this->center = center;
+	}
 
 	Vector Width() { return dirX * size.x; }
 	Vector Height() { return dirY * size.y; }

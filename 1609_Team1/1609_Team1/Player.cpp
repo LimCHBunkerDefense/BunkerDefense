@@ -81,8 +81,8 @@ void Player::AttackState(float deltaTime)
 			//IsThrow = false;
 		}
 		else {
-			Vector pos = MATH->ToDirection(90) * MINI_WIDTH * 0.5 + OBJECT->GetPlayer()->Position();
-			OBJECT->CreateBullet(OBJ_BULLET, pos);
+			Vector pos = Vector::Up() * m_pItem->GetRange() + OBJECT->GetPlayer()->Position();
+			OBJECT->CreateBullet(OBJ_BULLET, pos, m_pItem->GetTag());
 		}
 	}
 

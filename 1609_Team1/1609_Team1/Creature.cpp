@@ -2,13 +2,13 @@
 
 
 
-Creature::Creature() : m_lifeBar(Vector(0, 0), Vector(400, 20), ColorF::Blue, ColorF::LightSlateGray)
+Creature::Creature()
 {
 	m_state = CREATURE_RUN;
 	m_dir = DIRECTION_CENTER;
 }
 
-Creature::Creature(OBJ_TAG tag) : Object(tag), m_lifeBar(Vector(0,0), Vector(400, 20), ColorF::Blue, ColorF::LightSlateGray)
+Creature::Creature(OBJ_TAG tag) : Object(tag)
 {
 	CreatureData* pData = CREATURE->GetData(tag);
 	m_state = CREATURE_RUN;
@@ -22,9 +22,13 @@ Creature::Creature(OBJ_TAG tag) : Object(tag), m_lifeBar(Vector(0,0), Vector(400
 	m_attackSpeed = pData->attackSpeed;
 	m_attackCoolTime = 0;
 	m_moveSpeed = pData->moveSpeed;
+	m_maxLife = pData->life;
+	m_currentLife = m_maxLife;
 	m_money = pData->money;
 	m_score = pData->score;
-	m_lifeBar.SetMinMaxColor(ColorF::Red, ColorF::Blue);
+
+	m_lifeBar = new UIProgressBar(Vector(0, 0), Vector(400, 20), ColorF::Blue, ColorF::LightSlateGray);
+	m_lifeBar->SetMinMaxColor(ColorF::Red, ColorF::Blue);
 
 	m_moveDirection = Vector(Position() * -1 + Vector(MINI_WIDTH * 0.5, MINI_HEIGHT)).Normalize();
 	
@@ -47,7 +51,8 @@ void Creature::Update(float deltaTime)
 	Vector pos = m_startPos * (1 - m_t) + OBJECT->GetPlayer()->Position() * m_t;
 	SetPosition_Creature(pos, pos * 5);
 
-
+	// m_lifeBar targetValue 업데이트
+	m_lifeBar->SetTargetValue(m_currentLife / m_maxLife);
 
 	switch (m_state)
 	{
