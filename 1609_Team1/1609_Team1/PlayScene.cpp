@@ -49,7 +49,7 @@ PlayScene::PlayScene() : m_attackedColor(ColorF::Red)
 
 	// 카메라 생성
 	RENDER->CreateCamera(CAM_MAIN, MAP_WIDTH, MAP_HEIGHT, VIEW_WIDTH, VIEW_HEIGHT);
-	RENDER->CreateCamera(CAM_MINIMAP, MINI_WIDTH, MINI_HEIGHT* 2, MINI_WIDTH, MINI_HEIGHT * 2);
+	RENDER->CreateCamera(CAM_MINIMAP, MINI_WIDTH, MINI_HEIGHT* 5, MINI_WIDTH, MINI_HEIGHT * 2);
 	RENDER->CreateCamera(CAM_UI, VIEW_WIDTH, VIEW_HEIGHT, VIEW_WIDTH, VIEW_HEIGHT);
 
 	pMainCamera = RENDER->GetCamera(CAM_MAIN);
@@ -189,17 +189,17 @@ void PlayScene::OnDraw()
 	pMinimapCamera->Draw(m_pRadar, Vector(-24, 24));
 
 	// 미니맵 시야 각도 표시
-	pMinimapCamera->DrawLine(MINI_WIDTH * 0.5, MINI_HEIGHT, 
-		MINI_WIDTH * 0.5 - MINI_WIDTH * 0.5 * MATH->Sin(CAMERA_ANGLE * 0.5), MINI_HEIGHT - MINI_WIDTH * 0.5 * MATH->Cos(CAMERA_ANGLE * 0.5), ColorF::Yellow, 2);
-	pMinimapCamera->DrawLine(MINI_WIDTH * 0.5, MINI_HEIGHT,
-		MINI_WIDTH * 0.5 + MINI_WIDTH * 0.5 * MATH->Sin(CAMERA_ANGLE * 0.5), MINI_HEIGHT - MINI_WIDTH * 0.5 * MATH->Cos(CAMERA_ANGLE * 0.5), ColorF::Yellow, 2);
+	pMinimapCamera->DrawLine(MINI_WIDTH * 0.5, MINI_HEIGHT + 44, 
+		MINI_WIDTH * 0.7 - MINI_WIDTH * 0.7 * MATH->Sin(CAMERA_ANGLE * 0.5), MINI_HEIGHT - MINI_WIDTH * 0.5 * MATH->Cos(CAMERA_ANGLE * 0.5), ColorF::Yellow, 2);
+	pMinimapCamera->DrawLine(MINI_WIDTH * 0.5, MINI_HEIGHT + 44,
+		MINI_WIDTH * 0.7 + MINI_WIDTH * 0.7 * MATH->Sin(CAMERA_ANGLE * 0.5), MINI_HEIGHT - MINI_WIDTH * 0.5 * MATH->Cos(CAMERA_ANGLE * 0.5), ColorF::Yellow, 2);
 	// pMinimapCamera->DrawLine(MINI_WIDTH * 0.5, MINI_HEIGHT, MINI_WIDTH * 0.5, MINI_HEIGHT - MINI_WIDTH * 0.5, ColorF::Yellow, 1); 미니맵 레이더의 중앙선
 
 	// 미니맵 크리쳐 생성되는 범위 표시	
 	//pMinimapCamera->DrawCircle(Vector(MINI_WIDTH * 0.5, MINI_HEIGHT), Vector(MINI_WIDTH, MINI_WIDTH), ColorF::Yellow);
 
 	// 미니맵에 플레이어 위치 표시
-	pMinimapCamera->DrawFilledCircle(Vector(MINI_WIDTH * 0.5 , MINI_HEIGHT), Vector(8, 8), ColorF::Yellow);
+	pMinimapCamera->DrawFilledCircle(Vector(MINI_WIDTH * 0.5 , MINI_HEIGHT + 44), Vector(8, 8), ColorF::Yellow);
 
 	// 미니맵에 크리쳐 위치 표시
 	list<Object*> pList = OBJECT->GetCreatureList();
@@ -207,7 +207,7 @@ void PlayScene::OnDraw()
 	{
 		Vector pos = (*it)->Position();
 		pMinimapCamera->DrawFilledCircle(pos - 4, Vector(8, 8), ColorF::Red);
-		pMinimapCamera->DrawLine((*it)->GetStartPos().x, (*it)->GetStartPos().y, OBJECT->GetPlayer()->Position().x, OBJECT->GetPlayer()->Position().y, ColorF::Red, 2);
+		pMinimapCamera->DrawLine((*it)->GetStartPos().x, (*it)->GetStartPos().y, OBJECT->GetPlayer()->Position().x, OBJECT->GetPlayer()->Position().y + 44, ColorF::Red, 2);
 	}
 
 	//탄환 선 긋기
@@ -216,7 +216,7 @@ void PlayScene::OnDraw()
 	{
 		Vector pos = (*it)->Position();
 		pMinimapCamera->DrawFilledCircle(pos - 4, Vector(8, 8), ColorF::DeepPink);
-		pMinimapCamera->DrawLine((*it)->GetStartPos().x, (*it)->GetStartPos().y, OBJECT->GetPlayer()->Position().x, OBJECT->GetPlayer()->Position().y, ColorF::DeepPink, 2);
+		pMinimapCamera->DrawLine((*it)->GetStartPos().x, (*it)->GetStartPos().y, OBJECT->GetPlayer()->Position().x, OBJECT->GetPlayer()->Position().y + 44, ColorF::DeepPink, 2);
 	}
 	
 	OBJECT->Draw(pMainCamera);
@@ -234,7 +234,7 @@ void PlayScene::OnDraw()
 	//pUICamera->DrawT(TEXT("Stage 1"), VIEW_WIDTH / 2 - 50, 40, ColorF::White, 30, ALIGN_CENTER);
 
 	//2.벙커UI / 스킬 UI
-	pUICamera->Draw(m_BunkerUI, Vector(150, 80));
+	pUICamera->Draw(m_BunkerUI, Vector(146, 80));
 	pUICamera->Draw(m_ItemBarUI, Vector(200, 790));
 	
 	//3.점수 출력
@@ -252,17 +252,17 @@ void PlayScene::OnDraw()
 	m_bunkerLife->Render(pUICamera);
 
 	//Icon
-	pUICamera->Draw(m_ico_pistol, Vector(50, 110));
-	pUICamera->Draw(m_ico_machine, Vector(112, 110));
-	pUICamera->DrawRect(Vector(150, 85), Vector(50, 50), ColorF::Red, 1);
-	pUICamera->Draw(m_ico_laser, Vector(242, 110));
+	pUICamera->Draw(m_ico_pistol, Vector(46, 110));
+	pUICamera->Draw(m_ico_machine, Vector(108, 110));
+	pUICamera->DrawRect(Vector(146, 85), Vector(50, 50), ColorF::Red, 1);
+	pUICamera->Draw(m_ico_laser, Vector(238, 110));
 
 
 	pUICamera->DrawRect(Vector(40, VIEW_HEIGHT - 195), Vector(320, 70), ColorF::Blue, 1);
-	pUICamera->DrawRect(Vector(30, VIEW_HEIGHT - 95), Vector(70, 70), ColorF::Red, 1);
-	pUICamera->DrawRect(Vector(120, VIEW_HEIGHT - 95), Vector(70, 70), ColorF::Red, 1);
-	pUICamera->DrawRect(Vector(210, VIEW_HEIGHT - 95), Vector(70, 70), ColorF::Red,1);
-	pUICamera->DrawRect(Vector(300, VIEW_HEIGHT - 95), Vector(70, 70), ColorF::Red,1);
+	pUICamera->DrawRect(Vector(28, VIEW_HEIGHT - 95), Vector(70, 70), ColorF::Red, 1);
+	pUICamera->DrawRect(Vector(118, VIEW_HEIGHT - 95), Vector(70, 70), ColorF::Red, 1);
+	pUICamera->DrawRect(Vector(208, VIEW_HEIGHT - 95), Vector(70, 70), ColorF::Red,1);
+	pUICamera->DrawRect(Vector(298, VIEW_HEIGHT - 95), Vector(70, 70), ColorF::Red,1);
 
 
 }
