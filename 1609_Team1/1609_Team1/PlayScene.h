@@ -35,8 +35,19 @@ class PlayScene : public IScene
 	Vector m_MainCameraPos;
 	Vector m_swayPos;
 
-
 	UIProgressBar* m_bunkerLife;
+
+	// 숫자 스프라이트 생성해놓기
+	Sprite* m_num1;
+	Sprite* m_num2;
+	Sprite* m_num3;
+	Sprite* m_num4;
+	Sprite* m_num5;
+	Sprite* m_num6;
+	Sprite* m_num7; 
+	Sprite* m_num8;
+	Sprite* m_num9;
+	Sprite* m_num0;
 
 	// 크리쳐 공격 연출을 위한 도구(색 저장용)
 	ColorF m_attackedColor;
@@ -74,9 +85,9 @@ public:
 	void SwayScreen(float deltaTime);
 
 	// 플레이어의 돈과 점수 출력해주는 함수
-	void ShowMoney();
-	void ShowScore();
+	void ShowMoney(Camera* pCamera);
+	void ShowScore(Camera* pCamera);
 
 	// 숫자를 스프라이트로 출력해주는 함수
-	void DrawNum(int num, Vector leftTop);
+	void DrawNum(Camera* pCamera, int num, Vector leftTop);
 };

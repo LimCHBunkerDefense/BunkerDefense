@@ -43,8 +43,20 @@ PlayScene::PlayScene() : m_attackedColor(ColorF::Red)
 	RENDER->LoadImageFile(TEXT("MachineOn"),	TEXT("Image/Item/Icon/ico_machine_on.png"));
 	RENDER->LoadImageFile(TEXT("MachineOff"),	TEXT("Image/Item/Icon/ico_machine_off.png"));
 
+	// 숫자 이미지 가져오기
+	RENDER->LoadImageFile(TEXT("Num0"), TEXT("Image/UI/ScoreNUM/Num0.png"));
+	RENDER->LoadImageFile(TEXT("Num1"), TEXT("Image/UI/ScoreNUM/Num1.png"));
+	RENDER->LoadImageFile(TEXT("Num2"), TEXT("Image/UI/ScoreNUM/Num2.png"));
+	RENDER->LoadImageFile(TEXT("Num3"), TEXT("Image/UI/ScoreNUM/Num3.png"));
+	RENDER->LoadImageFile(TEXT("Num4"), TEXT("Image/UI/ScoreNUM/Num4.png"));
+	RENDER->LoadImageFile(TEXT("Num5"), TEXT("Image/UI/ScoreNUM/Num5.png"));
+	RENDER->LoadImageFile(TEXT("Num6"), TEXT("Image/UI/ScoreNUM/Num6.png"));
+	RENDER->LoadImageFile(TEXT("Num7"), TEXT("Image/UI/ScoreNUM/Num7.png"));
+	RENDER->LoadImageFile(TEXT("Num8"), TEXT("Image/UI/ScoreNUM/Num8.png"));
+	RENDER->LoadImageFile(TEXT("Num9"), TEXT("Image/UI/ScoreNUM/Num9.png"));
+
 	// 벙커 체력 막대 생성
-	m_bunkerLife = new UIProgressBar(Vector(20, 35), Vector(240, 30), ColorF::Green, ColorF::LightYellow);
+	m_bunkerLife = new UIProgressBar(Vector(20, 35), Vector(240, 30), ColorF::YellowGreen, ColorF::LightYellow);
 	m_bunkerLife->SetMinMaxColor(ColorF::Red, ColorF::Green);
 
 	// 카메라 생성
@@ -88,6 +100,17 @@ void PlayScene::OnEnter()
 	NEW_OBJECT(m_ico_pistol, Sprite(RENDER->GetImage(TEXT("PistolOn"))));
 	NEW_OBJECT(m_ico_laser, Sprite(RENDER->GetImage(TEXT("LaserOff"))));
 	NEW_OBJECT(m_ico_machine, Sprite(RENDER->GetImage(TEXT("MachineOff"))));	
+
+	NEW_OBJECT(m_num1, Sprite(RENDER->GetImage(TEXT("Num1")), 1.0, 0,0));
+	NEW_OBJECT(m_num2, Sprite(RENDER->GetImage(TEXT("Num2")), 1.0, 0,0));
+	NEW_OBJECT(m_num3, Sprite(RENDER->GetImage(TEXT("Num3")), 1.0, 0,0));
+	NEW_OBJECT(m_num4, Sprite(RENDER->GetImage(TEXT("Num4")), 1.0, 0,0));
+	NEW_OBJECT(m_num5, Sprite(RENDER->GetImage(TEXT("Num5")), 1.0, 0,0));
+	NEW_OBJECT(m_num6, Sprite(RENDER->GetImage(TEXT("Num6")), 1.0, 0,0));
+	NEW_OBJECT(m_num7, Sprite(RENDER->GetImage(TEXT("Num7")), 1.0, 0,0));
+	NEW_OBJECT(m_num8, Sprite(RENDER->GetImage(TEXT("Num8")), 1.0, 0,0));
+	NEW_OBJECT(m_num9, Sprite(RENDER->GetImage(TEXT("Num9")), 1.0, 0,0));
+	NEW_OBJECT(m_num0, Sprite(RENDER->GetImage(TEXT("Num0")), 1.0, 0,0));
 
 	// 플레이어 생성
 	OBJECT->CreatePlayer(Vector(MINI_WIDTH * 0.5F, MINI_HEIGHT), Vector(10, 10), Vector(0.5f, 1.0f));
@@ -241,9 +264,9 @@ void PlayScene::OnDraw()
 	//pUICamera->DrawT(TEXT("점수 : "), VIEW_WIDTH - 300, 30, ColorF::White, 30, ALIGN_RIGHT);
 	//pUICamera->DrawT(TEXT("골드 : "), VIEW_WIDTH - 300, 70, ColorF::White, 30, ALIGN_RIGHT);
 	pUICamera->Draw(m_ScoreUI, Vector(VIEW_WIDTH - 300, 45));
-	pUICamera->DrawRect(Vector(VIEW_WIDTH - 220, 25), Vector(200, 35), ColorF::Red, 5);
+	ShowScore(pUICamera);
 	pUICamera->Draw(m_MoneyUI, Vector(VIEW_WIDTH - 300, 100));
-	pUICamera->DrawRect(Vector(VIEW_WIDTH - 220, 80), Vector(200, 35), ColorF::Red, 5);
+	ShowMoney(pUICamera);
 
 	// 크리쳐에게 공격 받았음을 나타내기 위한 부분
 	if (m_attackedColor.a != 0) pUICamera->DrawFilledRect(Vector(0,0), Vector(VIEW_WIDTH, VIEW_HEIGHT), m_attackedColor);
@@ -313,44 +336,107 @@ void PlayScene::SwayScreen(float deltaTime)
 	pMainCamera->SetScreenRect(m_MainCameraPos.x, m_MainCameraPos.y, VIEW_WIDTH, VIEW_HEIGHT);
 }
 
-void PlayScene::ShowMoney()
+void PlayScene::ShowMoney(Camera* pCamera)
 {
 	int money = OBJECT->GetPlayer()->GetMoney();
+	int num = 0;
+
+	// 일의 자리
+	num = money % 10;
+	DrawNum(pCamera, num, Vector(VIEW_WIDTH - 40, 80));
+
+	// 십의 자리
+	num = money / 10 % 10;
+	DrawNum(pCamera, num, Vector(VIEW_WIDTH - 70, 80));
+
+	// 백의 자리
+	num = money / 100 % 10;
+	DrawNum(pCamera, num, Vector(VIEW_WIDTH - 100, 80));
+
+	// 천의 자리
+	num = money / 1000 % 10;
+	DrawNum(pCamera, num, Vector(VIEW_WIDTH - 130, 80));
+
+	// 만의 자리
+	num = money / 10000 % 10;
+	DrawNum(pCamera, num, Vector(VIEW_WIDTH - 160, 80));
+
+	// 십만의 자리
+	num = money / 100000 % 10;
+	DrawNum(pCamera, num, Vector(VIEW_WIDTH - 190, 80));
+
+	// 백만의 자리
+	num = money / 1000000 % 10;
+	DrawNum(pCamera, num, Vector(VIEW_WIDTH - 220, 80));
 }
 
-void PlayScene::ShowScore()
+void PlayScene::ShowScore(Camera* pCamera)
 {
 	int score = OBJECT->GetPlayer()->GetScore();
 	int num = 0;
 
 	// 일의 자리
 	num = score % 10;
+	DrawNum(pCamera, num, Vector(VIEW_WIDTH - 40, 25));
 
+	// 십의 자리
+	num = score / 10 % 10;
+	DrawNum(pCamera, num, Vector(VIEW_WIDTH - 70, 25));
+
+	// 백의 자리
+	num = score / 100 % 10;
+	DrawNum(pCamera, num, Vector(VIEW_WIDTH - 100, 25));
+
+	// 천의 자리
+	num = score / 1000 % 10;
+	DrawNum(pCamera, num, Vector(VIEW_WIDTH - 130, 25));
+
+	// 만의 자리
+	num = score / 10000 % 10;
+	DrawNum(pCamera, num, Vector(VIEW_WIDTH - 160, 25));
+
+	// 십만의 자리
+	num = score / 100000 % 10;
+	DrawNum(pCamera, num, Vector(VIEW_WIDTH - 190, 25));
+
+	// 백만의 자리
+	num = score / 1000000 % 10;
+	DrawNum(pCamera, num, Vector(VIEW_WIDTH - 220, 25));
 }
 
-void PlayScene::DrawNum(int num, Vector leftTop)
+void PlayScene::DrawNum(Camera* pCamera, int num, Vector leftTop)
 {
 	switch (num)
 	{
 	case 0:
+		pCamera->Draw(m_num0, leftTop, 1);
 		break;
 	case 1:
+		pCamera->Draw(m_num1, leftTop, 1);
 		break;
 	case 2:
+		pCamera->Draw(m_num2, leftTop, 1);
 		break;
 	case 3:
+		pCamera->Draw(m_num3, leftTop, 1);
 		break;
 	case 4:
+		pCamera->Draw(m_num4, leftTop, 1);
 		break;
 	case 5:
+		pCamera->Draw(m_num5, leftTop, 1);
 		break;
 	case 6:
+		pCamera->Draw(m_num6, leftTop, 1);
 		break;
 	case 7:
+		pCamera->Draw(m_num7, leftTop, 1);
 		break;
 	case 8:
+		pCamera->Draw(m_num8, leftTop, 1);
 		break;
 	case 9:
+		pCamera->Draw(m_num9, leftTop, 1);
 		break;
 	}
 }
