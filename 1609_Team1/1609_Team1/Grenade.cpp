@@ -13,7 +13,6 @@ Grenade::Grenade(OBJ_TAG tag) : Object(tag)
 	m_scale = 1.0f;
 	m_state = GRENADE_IDLE;
 	m_t = 0.0F;
-	m_goal = 0.5F;
 	m_moveSpeed = 0.5F;
 
 	m_moveDirection = Vector(Position() * -1 + Vector(MINI_WIDTH * 0.5, MINI_HEIGHT)).Normalize();
@@ -44,6 +43,7 @@ void Grenade::Update(float deltaTime)
 }
 
 void Grenade::IdleState(float deltaTime) {
+	
 	// 이동에 관계된 비율 (시작점에서 플레이어까지 가는 거리를 1로 봤을 때, 현재 이동한 거리의 비율)
 	m_t = MATH->Clamp(m_t + m_moveSpeed * deltaTime, 0.0f, 1.0f);
 	
@@ -53,7 +53,8 @@ void Grenade::IdleState(float deltaTime) {
 	SetPosition_Creature(pos, pos * 5);
 
 	Animation()->Play(GRENADE_IDLE);
-	if (m_t <= m_goal) m_state=GRENADE_EXPLODE;
+	if (m_t == 1.0F) m_state = GRENADE_EXPLODE;
+	
 }
 
 BOOL Grenade::Collided()
@@ -69,7 +70,7 @@ BOOL Grenade::Collided()
 	return false;
 }
 BOOL Grenade::HitState(float deltaTime) {
-	Animation()->Play(BULLET_EXPLODE);
+	Animation()->Play(GRENADE_EXPLODE);
 	if (Collided()) {
 		return true;
 	}
@@ -82,6 +83,6 @@ void Grenade::Draw(Camera* pCamera)
 	SetScale((1 - m_t) *1.0f);
 	m_scale = (1 - m_t) *1.0f;
 
-	Vector gap = Vector(VIEW_WIDTH, VIEW_HEIGHT) - OBJECT->GetAimPos();
-	pCamera->Draw3D(Animation()->Current()->GetSprite(), Vector(m_startPos.x, m_startPos.y), (1 - m_t), OBJECT->GetSightHeight(), m_state);
+	//Vector gap = Vector(VIEW_WIDTH, VIEW_HEIGHT) - OBJECT->GetAimPos();
+	//pCamera->Draw3D(Animation()->Current()->GetSprite(), Vector(m_startPos.x, m_startPos.y), (1 - m_t), OBJECT->GetSightHeight(), m_state);
 }

@@ -177,21 +177,8 @@ public:
 	//수류탄
 	void CreateGrenade(OBJ_TAG tag, Vector pos);
 	list<Object*> GetGrenadeList() { return m_grenadeList; }
-
-	void DestroyGrenade(Object* pCreature)
-	{
-		m_grenadeList.remove(pCreature);
-		DELETE_OBJECT(pCreature);
-	}
-
-	void DestroyAllGrenade()
-	{
-		FOR_LIST(Object*, m_grenadeList)
-		{
-			DELETE_OBJECT((*it));
-		}
-		m_grenadeList.clear();
-	}
+	void DestroyGrenade(Object* pCreature);
+	void DestroyAllGrenade();
 
 	// 카메라 회전에 따른 크리쳐 및 불렛의 위치 조정
 	void SetPosByDeltaAngle(float deltaTime);
