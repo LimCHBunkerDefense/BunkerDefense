@@ -8,7 +8,8 @@ Bunker::Bunker()
 
 Bunker::Bunker(OBJ_TAG tag) : Object(tag)
 {
-	m_life = 1000.0f;
+	m_maxLife = 1000.0f;
+	m_currentLife = m_maxLife;
 	m_defense = 0.0f;
 }
 

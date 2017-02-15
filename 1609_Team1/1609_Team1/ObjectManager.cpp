@@ -3,6 +3,7 @@
 #include "Creature.h"
 #include "Item.h"
 #include "Bullet.h"
+#include "Bunker.h"
 
 ObjectManager::ObjectManager()
 {
@@ -44,6 +45,8 @@ void ObjectManager::Update(float deltaTime)
 	{
 		(*it)->Update(deltaTime);
 	}
+
+	m_bunker->Update(deltaTime);
 
 	FOR_LIST(Object*, m_bulletList)
 	{
@@ -124,8 +127,23 @@ void ObjectManager::CreateCreature(OBJ_TAG tag, Vector pos)
 	m_creatureList.push_front(pCreature);
 }
 
+void ObjectManager::DestroyCreature(Object* pCreature)
+{
+	m_creatureList.remove(pCreature);
+	DELETE_OBJECT(pCreature);
+}
 
-Object* ObjectManager::CreateItem(ITEMTYPE_TAG tag, int itemID)
+void ObjectManager::DestroyAllCreature()
+{
+	FOR_LIST(Object*, m_creatureList)
+	{
+		DELETE_OBJECT((*it));
+	}
+	m_creatureList.clear();
+}
+
+
+Object* ObjectManager::CreateItem(ITEM_TAG tag, int itemID)
 {
 	NEW_OBJECT(Object* pItem, Item(itemID));
 	 
@@ -166,6 +184,32 @@ void ObjectManager::CreateBullet(OBJ_TAG tag, Vector pos)
 	pBullet->SetCollider(colSize, anchor);
 
 	m_bulletList.push_front(pBullet);
+}
+
+void ObjectManager::DestroyAllBullet()
+{
+	FOR_LIST(Object*, m_bulletList)
+	{
+		DELETE_OBJECT((*it));
+	}
+	m_bulletList.clear();
+}
+
+void ObjectManager::DestroyBullet(Object* pCreature)
+{
+	m_bulletList.remove(pCreature);
+	DELETE_OBJECT(pCreature);
+}
+
+void ObjectManager::CreateBunker() 
+{
+	m_bunker = new Bunker(OBJ_BUNKER); 
+
+}
+
+void ObjectManager::DestroyBunker() 
+{ 
+	if (m_bunker != NULL) delete m_bunker; m_bunker = NULL; 
 }
 
 void ObjectManager::CreateGrenade(OBJ_TAG tag, Vector pos)

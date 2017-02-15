@@ -76,6 +76,9 @@
     <Filter Include="Manager\WindowManager\Object\Grenade">
       <UniqueIdentifier>{5d0d3396-dc64-40a6-81a2-98b21a233e66}</UniqueIdentifier>
     </Filter>
+    <Filter Include="UI">
+      <UniqueIdentifier>{5cb1db3c-58c1-4b11-86f3-65928f4f69ed}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
@@ -132,6 +135,9 @@
     </ClCompile>
     <ClCompile Include="Grenade.cpp">
       <Filter>Manager\WindowManager\Object\Grenade</Filter>
+    </ClCompile>
+    <ClCompile Include="Bunker.cpp">
+      <Filter>Object\Bunker</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -204,6 +210,9 @@
     </ClInclude>
     <ClInclude Include="UIProgressBar.h">
       <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="ProgressBar.h">
+      <Filter>UI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

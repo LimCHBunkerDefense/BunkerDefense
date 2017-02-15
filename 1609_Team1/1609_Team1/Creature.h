@@ -1,5 +1,6 @@
 #pragma once
 #include "ObjectManager.h"
+#include "SceneManager.h"
 #include "CreatureDB.h"
 
 class Creature :
@@ -9,9 +10,11 @@ class Creature :
 	float m_defense;
 	wstring m_name;
 	Sprite* m_pSprite;
-	float m_attackSpeed;
 	float m_attackCoolTime;
+	float m_attackSpeed;
 	float m_moveSpeed;
+	int m_money;
+	int m_score;
 
 	Vector m_startPos;
 	float m_scale;

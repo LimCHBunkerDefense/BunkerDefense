@@ -21,6 +21,8 @@ class Player :
 	float HitPoint;
 	//float m_sight;						// 시야 길이
 
+	int m_money;
+	int m_score;
 
 
 public:
@@ -36,11 +38,18 @@ public:
 	void ShopState();
 
 	// 아이템을 가방에 추가하는 함수
-	void AddItem(Object* pItem) { m_itemBag[pItem->GetID()] = new Item(pItem->GetID()); }
+	void AddItem(Object* pItem); 
 
 	// 번호 입력시 아이템을 장착하는 함수
 	void SetItem();
 
 	ITEM_TAG GetItemState() { return item_state; }
+
+	// 플레이어의 점수 및 돈 호출/추가 함수
+	int GetScore() { return m_score; }
+	void AddScore(int addScore) { m_score += addScore; }
+	int GetMoney() { return m_money; }
+	void AddMoney(int addMoney) { m_money += addMoney; }
+	map<int, Object*> GetItemBag() { return m_itemBag; }
 };
 

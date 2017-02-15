@@ -14,6 +14,7 @@ class Object
 	OBJ_TAG m_tag;
 	Vector m_pos;
 	Box m_collider;
+	map<int, Object*> m_trashMap;
 
 public:
 	Object() {}
@@ -92,8 +93,13 @@ public:
 	virtual int GetID() { return NULL; }
 	virtual wstring GetName() { return NULL; }
 	virtual float GetAttack() { return NULL; }
-	virtual float GetDefense() { return NULL; }
+	virtual float GetDefense() { return NULL; }		// 벙커에서도 사용함
 	virtual float GetBunkerLife() { return NULL; }
+	virtual int GetMaxBulletCount() { return  NULL; }
+	virtual int GetReloadBulletCount() { return NULL; }
+	virtual int GetCurrentCount() { return NULL; }
+	virtual void AddCurrentCount(int addCount) {}
+	virtual int GetMaxCount() { return NULL; }
 	virtual wstring GetRange() { return NULL; }
 	virtual wstring GetInfo() { return NULL; }
 	virtual int GetItemMoney() { return NULL; }
@@ -102,6 +108,18 @@ public:
 
 	//Player
 	virtual ITEM_TAG GetItemState() { return ITEM_NONE; }
+	virtual int GetScore() { return NULL; }
+	virtual void AddScore(int addScore) { }
+	virtual int GetMoney() { return NULL; }
+	virtual void AddMoney(int addMoney) { }
+	virtual map<int, Object*> GetItemBag() { return m_trashMap; }
+
+	// 벙커용 함수
+	virtual float GetCurrentLife() { return NULL; }
+	virtual void AddCurrentLife(float addLife) {}
+	virtual float GetMaxLife() { return NULL;}
+	virtual void AddMaxLife(float addLife) {  }
+	virtual void AddDefense(float addDefense) {}
 
 };
 
@@ -136,46 +154,25 @@ public:
 	// 크리쳐
 	void CreateCreature(OBJ_TAG tag, Vector pos);
 	list<Object*> GetCreatureList() { return m_creatureList; }
-
-	void DestroyCreature(Object* pCreature)
-	{
-		m_creatureList.remove(pCreature);
-		DELETE_OBJECT(pCreature);
-	}
-
-	void DestroyAllCreature()
-	{
-		FOR_LIST(Object*, m_creatureList)
-		{
-			DELETE_OBJECT((*it));
-		}
-		m_creatureList.clear();
-	}
+	void DestroyCreature(Object* pCreature);
+	void DestroyAllCreature();
 
 	// 아이템
-	Object* CreateItem(ITEMTYPE_TAG tag, int itemID);
+	Object* CreateItem(ITEM_TAG tag, int itemID);
 	list<Object*> GetShopItemList() { return m_shopItemList; }
 
 
 
 	// 총알
 	void CreateBullet(OBJ_TAG tag, Vector pos);
-	list<Object*> GetBulletList() {	return m_bulletList; }
-	
-	void DestroyBullet(Object* pCreature)
-	{
-		m_bulletList.remove(pCreature);
-		DELETE_OBJECT(pCreature);
-	}
+	list<Object*> GetBulletList() { return m_bulletList; }
+	void DestroyBullet(Object* pCreature);
+	void DestroyAllBullet();
 
-	void DestroyAllBullet()
-	{
-		FOR_LIST(Object*, m_bulletList)
-		{
-			DELETE_OBJECT((*it));
-		}
-		m_bulletList.clear();
-	}
+	// 벙커
+	void CreateBunker();
+	void DestroyBunker();
+	Object* GetBunker() { return m_bunker; }
 	
 	//수류탄
 	void CreateGrenade(OBJ_TAG tag, Vector pos);

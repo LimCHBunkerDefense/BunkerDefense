@@ -17,9 +17,12 @@ Player::Player(OBJ_TAG tag) : Object(tag)
 	HitPoint = 100;
 	//m_sight = SIGHT;
 
-	//m_pItem = OBJECT->CreateItem(GUN_PISTOL, 1001);
-	//AddItem(m_pItem);
+	m_pItem = OBJECT->CreateItem(ITEM_PISTOL, 1001);
+	AddItem(m_pItem);
 	//SetAnimation(m_pItem->Animation());
+
+	m_money = 10000;
+	m_score = 1234567;
 }
 
 Player::~Player()
@@ -168,6 +171,8 @@ void Player::ShopState()
 			if (MATH->IsCollided(Vector(INPUT->GetMousePos().x, INPUT->GetMousePos().y), *(*it_Box)))
 			{
 				list<Object*> itemList = OBJECT->GetShopItemList();
+				Object* pItem;
+
 				switch ((*it_Box)->buttonTag)
 				{
 				case BUTTON_WEAPON:
@@ -256,12 +261,9 @@ void Player::ShopState()
 					break;
 
 				case BUTTON_BUY:		// 샵씬에서 구매 선택하면 그 아이템이 아이템 가방에 저장됨
-					if (m_itemBag.find(SCENE->GetScene(SCENE_SHOP)->GetSelectedItem()->GetID()) != m_itemBag.end())
-					{
-						Object* pItem = SCENE->GetScene(SCENE_SHOP)->GetSelectedItem();
-						AddItem(pItem);
-						break;
-					}
+					pItem = SCENE->GetScene(SCENE_SHOP)->GetSelectedItem();
+					AddItem(pItem);
+					break;				
 
 				case BUTTON_EXIT:
 					SCENE->ChangeScene(SCENE_PLAY);
@@ -276,7 +278,10 @@ void Player::ShopState()
 	{
 		int num = 0; 
 		if (INPUT->IsKeyDown(VK_0)) num = 0;
-		if (INPUT->IsKeyDown(VK_1)) num = 1;
+		if (INPUT->IsKeyDown(VK_1))
+		{
+			num = 1;
+		}
 		if (INPUT->IsKeyDown(VK_2)) num = 2;
 		if (INPUT->IsKeyDown(VK_3)) num = 3;
 		if (INPUT->IsKeyDown(VK_4)) num = 4;
@@ -287,7 +292,6 @@ void Player::ShopState()
 		if (INPUT->IsKeyDown(VK_9)) num = 9;
 
 		if(num != 0) SCENE->GetScene(SCENE_SHOP)->SetInputCount(num);
-
 	}	// InputCount Bool함수 END
 }
 
@@ -331,7 +335,39 @@ void Player::SetItem()
 			m_pItem = m_itemBag[1004];
 		}
 	}
+}
 
+void Player::AddItem(Object* pItem)
+{
+	if (pItem->GetItemTypeTag() == ITEMTYPE_WEAPON)
+	{
+		if (pItem->GetCurrentCount() == 0)
+		{
+			m_itemBag[pItem->GetID()] = new Item(pItem->GetID());
+		}
+	}
+	if (pItem->GetItemTypeTag() == ITEMTYPE_BULLET)
+	{
+		if (pItem->GetCurrentCount() == 0)
+		{
+			m_itemBag[pItem->GetID()] = new Item(pItem->GetID());
+		}
+		if (pItem->GetCurrentCount() != 0)
+		{
+			pItem->AddCurrentCount(SCENE->GetScene(SCENE_SHOP)->GetInputCount());
+		}
+	}
+	if (pItem->GetItemTypeTag() == ITEMTYPE_USINGITEM)
+	{
+		if (pItem->GetCurrentCount() == 0)
+		{
+			m_itemBag[pItem->GetID()] = new Item(pItem->GetID());
+		}
+		if (pItem->GetCurrentCount() != 0)
+		{
+			pItem->AddCurrentCount(SCENE->GetScene(SCENE_SHOP)->GetInputCount());
+		}
+	}
 	if (INPUT->IsKeyDown(VK_Q))
 	{
 		IsThrow = true;
