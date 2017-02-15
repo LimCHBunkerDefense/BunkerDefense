@@ -84,6 +84,11 @@ BOOL Bullet::Collided()
 				if (m_t + (*it)->GetMT() >= 1.0f) {
 					if (MATH->IsCollided(this->Collider(), (*it)->Collider()))
 					{
+						int money = (*it)->GetMoney();
+						OBJECT->GetPlayer()->AddMoney(money);
+						int score = (*it)->GetScore();
+						OBJECT->GetPlayer()->AddScore(score);
+						Object* p = OBJECT->GetPlayer();
 						OBJECT->DestroyCreature((*it));
 						return true;
 					}

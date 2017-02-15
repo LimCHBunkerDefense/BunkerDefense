@@ -71,6 +71,15 @@ PlayScene::PlayScene() : m_attackedColor(ColorF::Red)
 	// 크리쳐 공격에 의한 흔들림 구현을 위해서 초기화
 	m_MainCameraPos = Vector(0, 0);
 	m_swayPos = Vector(300, 0);
+
+	// 플레이어 생성
+	OBJECT->CreatePlayer(Vector(MINI_WIDTH * 0.5F, MINI_HEIGHT), Vector(10, 10), Vector(0.5f, 1.0f));
+
+	// 벙커 생성
+	OBJECT->CreateBunker();
+	Object* pObj = OBJECT->GetBunker();
+
+	m_createdCretureCount = 0;
 }
 
 
@@ -112,13 +121,6 @@ void PlayScene::OnEnter()
 	NEW_OBJECT(m_num9, Sprite(RENDER->GetImage(TEXT("Num9")), 1.0, 0,0));
 	NEW_OBJECT(m_num0, Sprite(RENDER->GetImage(TEXT("Num0")), 1.0, 0,0));
 
-	// 플레이어 생성
-	OBJECT->CreatePlayer(Vector(MINI_WIDTH * 0.5F, MINI_HEIGHT), Vector(10, 10), Vector(0.5f, 1.0f));
-
-	// 벙커 생성
-	OBJECT->CreateBunker();
-	Object* pObj = OBJECT->GetBunker();
-
 	// 크리쳐 공격 연출을 위한 도구(색 저장용) 투명도 초기화
 	m_attackedColor.a = 0;
 
@@ -126,8 +128,6 @@ void PlayScene::OnEnter()
 	pMainCamera->SetScreenRect(0, 0, VIEW_WIDTH, VIEW_HEIGHT);
 	pMinimapCamera->SetScreenRect(VIEW_WIDTH - MINI_WIDTH, VIEW_HEIGHT - MINI_HEIGHT * 2, MINI_WIDTH, MINI_HEIGHT * 2);
 	pUICamera->SetScreenRect(0, 0, VIEW_WIDTH, VIEW_HEIGHT);
-
-	m_createdCretureCount = 0;
 
 	// 테스트용 크리쳐 생성
 	//OBJECT->CreateCreature(OBJ_ENT, Vector(120, 60));
