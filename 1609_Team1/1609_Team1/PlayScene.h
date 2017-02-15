@@ -32,7 +32,9 @@ class PlayScene : public IScene
 	Camera* pMainCamera;
 	Camera* pMinimapCamera;
 	Camera* pUICamera;
-	Vector m_UICameraPos;
+	Vector m_MainCameraPos;
+	Vector m_swayPos;
+
 
 	UIProgressBar* m_bunkerLife;
 
@@ -41,7 +43,7 @@ class PlayScene : public IScene
 
 	
 	// 크리쳐 생성 y좌표(높이 h)
-	float m_heightOfCreature;
+	//float m_heightOfCreature;
 
 	// 화면 출력을 위한 시야의 각도
 	float m_angleToSee;
