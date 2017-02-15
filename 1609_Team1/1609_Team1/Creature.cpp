@@ -22,6 +22,9 @@ Creature::Creature(OBJ_TAG tag) : Object(tag)
 	m_attackSpeed = pData->attackSpeed;
 	m_attackCoolTime = 0;
 	m_moveSpeed = pData->moveSpeed;
+	m_money = pData->money;
+	m_score = pData->score;
+
 
 	m_moveDirection = Vector(Position() * -1 + Vector(MINI_WIDTH * 0.5, MINI_HEIGHT)).Normalize();
 	

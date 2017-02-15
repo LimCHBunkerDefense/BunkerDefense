@@ -98,6 +98,10 @@ public:
 
 	//Player
 	virtual ITEM_TAG GetItemState() { return ITEM_NONE; }
+	virtual int GetScore() { return NULL; }
+	virtual void AddScore(int addScore) { }
+	virtual int GetMoney() { return NULL; }
+	virtual void AddMoney(int addMoney) { }
 
 	// º¡Ä¿¿ë ÇÔ¼ö
 	virtual float GetCurrentLife() { return NULL; }

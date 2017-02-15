@@ -17,9 +17,11 @@ struct CreatureData
 	wstring name;
 	float attackSpeed;	//	(attackSpeed)초에 한 번씩 공격함
 	float moveSpeed;
+	int money;
+	int score;
 
 public:
-	CreatureData(OBJ_TAG tag, float life, float attack, float defense, wstring name, float attackSpeed, float moveSpeed)
+	CreatureData(OBJ_TAG tag, float life, float attack, float defense, wstring name, float attackSpeed, float moveSpeed, int money, int score)
 	{
 		this->tag = tag;
 		this->life = life;
@@ -28,6 +30,8 @@ public:
 		this->name = name;
 		this->attackSpeed = attackSpeed;
 		this->moveSpeed = moveSpeed;
+		this->money = money;
+		this->score = score;
 	}
 
 };
