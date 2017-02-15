@@ -18,6 +18,8 @@ class UIProgressBar
 	float m_value;
 	float m_targetValue;
 
+	float m_scale;
+
 	Vector m_originSize;
 	Vector m_originLeftTop;
 
@@ -34,6 +36,7 @@ public:
 		m_state = PROGRESS_STATE_NONE;
 		m_originSize = m_bar.size;
 		m_originLeftTop = m_bar.LeftTop();
+		m_scale = 1.0f;
 
 		SetValue(1.0f);
 		SetTargetValue(1.0f);
@@ -54,6 +57,11 @@ public:
 		m_colorBar.g = MATH->Lerp(m_colorMin.g, m_colorMax.g, m_value);
 		m_colorBar.b = MATH->Lerp(m_colorMin.b, m_colorMax.b, m_value);
 		m_colorBar.a = MATH->Lerp(m_colorMin.a, m_colorMax.a, m_value);
+	}
+
+	void SetScale(float scale)
+	{
+		m_scale = scale;
 	}
 
 	void SetTargetValue(float value)
@@ -84,17 +92,17 @@ public:
 
 	void Render()
 	{
-		RENDER->FillRect(m_frame.center, m_frame.size, m_colorBg);
-		RENDER->FillRect(m_bar.center, m_bar.size, m_colorBar);
-		RENDER->DrawRect(m_bar.center, m_bar.size, ColorF(1, 1, 1, 0.3f), 3);
-		RENDER->DrawRect(m_frame.center, m_frame.size, m_colorFrame, 3);
+		RENDER->FillRect(m_frame.center, m_frame.size * m_scale, m_colorBg);
+		RENDER->FillRect(m_bar.center, m_bar.size * m_scale, m_colorBar);
+		RENDER->DrawRect(m_bar.center, m_bar.size * m_scale, ColorF(1, 1, 1, 0.3f), 3);
+		RENDER->DrawRect(m_frame.center, m_frame.size * m_scale, m_colorFrame, 3);
 	}
 
 	void Render(Camera* pCamera)
 	{
-		pCamera->DrawFilledRect(m_frame.center, m_frame.size, m_colorBg);
-		pCamera->DrawFilledRect(m_bar.center, m_bar.size, m_colorBar);
-		pCamera->DrawRect(m_bar.center, m_bar.size, ColorF(1, 1, 1, 0.3f), 3);
-		pCamera->DrawRect(m_frame.center, m_frame.size, m_colorFrame, 3);
+		pCamera->DrawFilledRect(m_frame.center, m_frame.size * m_scale, m_colorBg);
+		pCamera->DrawFilledRect(m_bar.center, m_bar.size * m_scale, m_colorBar);
+		pCamera->DrawRect(m_bar.center, m_bar.size * m_scale, ColorF(1, 1, 1, 0.3f), 3);
+		pCamera->DrawRect(m_frame.center, m_frame.size * m_scale, m_colorFrame, 3);
 	}
 };

@@ -21,8 +21,8 @@ Player::Player(OBJ_TAG tag) : Object(tag)
 	AddItem(m_pItem);
 	//SetAnimation(m_pItem->Animation());
 
-	m_money = 10000;
-	m_score = 1234567;
+	m_money = 100000;
+	m_score = 0;
 }
 
 Player::~Player()
@@ -34,6 +34,7 @@ void Player::Update(float deltaTime)
 	switch (m_state)
 	{
 	case PLAYER_ATTACK: AttackState(deltaTime); break;
+	//case PLAYER_THROW: ThrowState(deltaTime); break;
 	case PLAYER_SHOP: ShopState(); break;
 	}
 
@@ -74,8 +75,15 @@ void Player::AttackState(float deltaTime)
 
 	//ÁÂÅ¬¸¯½Ã ¹ß»ç ºÎºÐ
 	if (INPUT->IsMouseUp(MOUSE_LEFT)) {
-		Vector pos = MATH->ToDirection(90) * MINI_WIDTH * 0.5 + OBJECT->GetPlayer()->Position();
-		OBJECT->CreateBullet(OBJ_BULLET, pos);
+		if (IsThrow) {
+			Vector pos = MATH->ToDirection(90) * MINI_WIDTH * 0.5 + OBJECT->GetPlayer()->Position();
+			OBJECT->CreateGrenade(OBJ_GRENADE, pos);
+			//IsThrow = false;
+		}
+		else {
+			Vector pos = MATH->ToDirection(90) * MINI_WIDTH * 0.5 + OBJECT->GetPlayer()->Position();
+			OBJECT->CreateBullet(OBJ_BULLET, pos);
+		}
 	}
 
 	
@@ -327,6 +335,13 @@ void Player::SetItem()
 			m_pItem = m_itemBag[1004];
 		}
 	}
+
+	//¼ö·ùÅº ÀåÂø
+	if (INPUT->IsKeyDown(VK_Q))
+	{
+		if (IsThrow)	IsThrow = false;
+		else 			IsThrow = true;
+	}
 }
 
 void Player::AddItem(Object* pItem)
@@ -360,4 +375,6 @@ void Player::AddItem(Object* pItem)
 			pItem->AddCurrentCount(SCENE->GetScene(SCENE_SHOP)->GetInputCount());
 		}
 	}
+	
+
 }

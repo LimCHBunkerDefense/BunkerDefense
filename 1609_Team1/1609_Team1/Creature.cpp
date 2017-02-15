@@ -2,13 +2,13 @@
 
 
 
-Creature::Creature()
+Creature::Creature() : m_lifeBar(Vector(0, 0), Vector(400, 20), ColorF::Blue, ColorF::LightSlateGray)
 {
 	m_state = CREATURE_RUN;
 	m_dir = DIRECTION_CENTER;
 }
 
-Creature::Creature(OBJ_TAG tag) : Object(tag)
+Creature::Creature(OBJ_TAG tag) : Object(tag), m_lifeBar(Vector(0,0), Vector(400, 20), ColorF::Blue, ColorF::LightSlateGray)
 {
 	CreatureData* pData = CREATURE->GetData(tag);
 	m_state = CREATURE_RUN;
@@ -24,7 +24,7 @@ Creature::Creature(OBJ_TAG tag) : Object(tag)
 	m_moveSpeed = pData->moveSpeed;
 	m_money = pData->money;
 	m_score = pData->score;
-
+	m_lifeBar.SetMinMaxColor(ColorF::Red, ColorF::Blue);
 
 	m_moveDirection = Vector(Position() * -1 + Vector(MINI_WIDTH * 0.5, MINI_HEIGHT)).Normalize();
 	
@@ -46,6 +46,8 @@ void Creature::Update(float deltaTime)
 	// 카메라 회전에 따른 크리쳐의 현재 위치를 미니맵 상에서 이동
 	Vector pos = m_startPos * (1 - m_t) + OBJECT->GetPlayer()->Position() * m_t;
 	SetPosition_Creature(pos, pos * 5);
+
+
 
 	switch (m_state)
 	{

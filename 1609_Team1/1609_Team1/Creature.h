@@ -2,6 +2,7 @@
 #include "ObjectManager.h"
 #include "SceneManager.h"
 #include "CreatureDB.h"
+#include "ProgressBar.h"
 
 class Creature :
 	public Object
@@ -15,6 +16,7 @@ class Creature :
 	float m_moveSpeed;
 	int m_money;
 	int m_score;
+	UIProgressBar m_lifeBar;
 
 	Vector m_startPos;
 	float m_scale;
@@ -40,11 +42,15 @@ public:
 
 	void SetMoveDirection(Vector vector) { m_moveDirection = vector; }
 	Vector GetMoveDirection() { return m_moveDirection; }
+	Vector GetNowPos(){return  m_startPos * (1 - m_t) + OBJECT->GetPlayer()->Position() * m_t;}
 
 	void StartPosUpdate();
 	void SetStartPos(Vector pos) { m_startPos = pos; }
 	Vector GetStartPos() { return m_startPos; }
 	float GetMT() { return m_t; }
+
+	int GetScore() { return m_score; }
+	int GetMoney() { return m_money; }
 
 	//콜라이더 각도 구해서 리턴
 	float GetCollideAngle() {

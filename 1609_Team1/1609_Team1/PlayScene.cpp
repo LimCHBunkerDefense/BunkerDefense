@@ -35,6 +35,10 @@ PlayScene::PlayScene() : m_attackedColor(ColorF::Red)
 	//Bullet 임시로 저장
 	RENDER->LoadImageFiles(TEXT("BulletIdle"), TEXT("Image/Bullet/bullet"), TEXT("png"), 1);
 
+	//Grenade 임시로 저장
+	RENDER->LoadImageFiles(TEXT("Grenade"), TEXT("Image/Item/Grenade/Grenade"), TEXT("png"), 1);
+	RENDER->LoadImageFiles(TEXT("Explode"), TEXT("Image/Item/Explode/explode"), TEXT("png"), 7);
+
 	//무기 ICON 가져오기
 	RENDER->LoadImageFile(TEXT("PistolOn"),		TEXT("Image/Item/Icon/ico_pistol_on.png"));
 	RENDER->LoadImageFile(TEXT("PistolOff"),	TEXT("Image/Item/Icon/ico_pistol_off.png"));
@@ -43,13 +47,25 @@ PlayScene::PlayScene() : m_attackedColor(ColorF::Red)
 	RENDER->LoadImageFile(TEXT("MachineOn"),	TEXT("Image/Item/Icon/ico_machine_on.png"));
 	RENDER->LoadImageFile(TEXT("MachineOff"),	TEXT("Image/Item/Icon/ico_machine_off.png"));
 
+	// 숫자 이미지 가져오기
+	RENDER->LoadImageFile(TEXT("Num0"), TEXT("Image/UI/ScoreNUM/Num0.png"));
+	RENDER->LoadImageFile(TEXT("Num1"), TEXT("Image/UI/ScoreNUM/Num1.png"));
+	RENDER->LoadImageFile(TEXT("Num2"), TEXT("Image/UI/ScoreNUM/Num2.png"));
+	RENDER->LoadImageFile(TEXT("Num3"), TEXT("Image/UI/ScoreNUM/Num3.png"));
+	RENDER->LoadImageFile(TEXT("Num4"), TEXT("Image/UI/ScoreNUM/Num4.png"));
+	RENDER->LoadImageFile(TEXT("Num5"), TEXT("Image/UI/ScoreNUM/Num5.png"));
+	RENDER->LoadImageFile(TEXT("Num6"), TEXT("Image/UI/ScoreNUM/Num6.png"));
+	RENDER->LoadImageFile(TEXT("Num7"), TEXT("Image/UI/ScoreNUM/Num7.png"));
+	RENDER->LoadImageFile(TEXT("Num8"), TEXT("Image/UI/ScoreNUM/Num8.png"));
+	RENDER->LoadImageFile(TEXT("Num9"), TEXT("Image/UI/ScoreNUM/Num9.png"));
+
 	// 벙커 체력 막대 생성
-	m_bunkerLife = new UIProgressBar(Vector(20, 35), Vector(240, 30), ColorF::Green, ColorF::LightYellow);
+	m_bunkerLife = new UIProgressBar(Vector(20, 35), Vector(240, 30), ColorF::YellowGreen, ColorF::LightYellow);
 	m_bunkerLife->SetMinMaxColor(ColorF::Red, ColorF::Green);
 
 	// 카메라 생성
 	RENDER->CreateCamera(CAM_MAIN, MAP_WIDTH, MAP_HEIGHT, VIEW_WIDTH, VIEW_HEIGHT);
-	RENDER->CreateCamera(CAM_MINIMAP, MINI_WIDTH, MINI_HEIGHT* 2, MINI_WIDTH, MINI_HEIGHT * 2);
+	RENDER->CreateCamera(CAM_MINIMAP, MINI_WIDTH, MINI_HEIGHT* 5, MINI_WIDTH, MINI_HEIGHT * 2);
 	RENDER->CreateCamera(CAM_UI, VIEW_WIDTH, VIEW_HEIGHT, VIEW_WIDTH, VIEW_HEIGHT);
 
 	pMainCamera = RENDER->GetCamera(CAM_MAIN);
@@ -59,6 +75,15 @@ PlayScene::PlayScene() : m_attackedColor(ColorF::Red)
 	// 크리쳐 공격에 의한 흔들림 구현을 위해서 초기화
 	m_MainCameraPos = Vector(0, 0);
 	m_swayPos = Vector(300, 0);
+
+	// 플레이어 생성
+	OBJECT->CreatePlayer(Vector(MINI_WIDTH * 0.5F, MINI_HEIGHT), Vector(10, 10), Vector(0.5f, 1.0f));
+	Object* p = OBJECT->GetPlayer();
+	// 벙커 생성
+	OBJECT->CreateBunker();
+	Object* pObj = OBJECT->GetBunker();
+
+	m_createdCretureCount = 0;
 }
 
 
@@ -89,22 +114,24 @@ void PlayScene::OnEnter()
 	NEW_OBJECT(m_ico_laser, Sprite(RENDER->GetImage(TEXT("LaserOff"))));
 	NEW_OBJECT(m_ico_machine, Sprite(RENDER->GetImage(TEXT("MachineOff"))));	
 
-	// 플레이어 생성
-	OBJECT->CreatePlayer(Vector(MINI_WIDTH * 0.5F, MINI_HEIGHT), Vector(10, 10), Vector(0.5f, 1.0f));
-
-	// 벙커 생성
-	OBJECT->CreateBunker();
-	Object* pObj = OBJECT->GetBunker();
+	NEW_OBJECT(m_num1, Sprite(RENDER->GetImage(TEXT("Num1")), 1.0, 0,0));
+	NEW_OBJECT(m_num2, Sprite(RENDER->GetImage(TEXT("Num2")), 1.0, 0,0));
+	NEW_OBJECT(m_num3, Sprite(RENDER->GetImage(TEXT("Num3")), 1.0, 0,0));
+	NEW_OBJECT(m_num4, Sprite(RENDER->GetImage(TEXT("Num4")), 1.0, 0,0));
+	NEW_OBJECT(m_num5, Sprite(RENDER->GetImage(TEXT("Num5")), 1.0, 0,0));
+	NEW_OBJECT(m_num6, Sprite(RENDER->GetImage(TEXT("Num6")), 1.0, 0,0));
+	NEW_OBJECT(m_num7, Sprite(RENDER->GetImage(TEXT("Num7")), 1.0, 0,0));
+	NEW_OBJECT(m_num8, Sprite(RENDER->GetImage(TEXT("Num8")), 1.0, 0,0));
+	NEW_OBJECT(m_num9, Sprite(RENDER->GetImage(TEXT("Num9")), 1.0, 0,0));
+	NEW_OBJECT(m_num0, Sprite(RENDER->GetImage(TEXT("Num0")), 1.0, 0,0));
 
 	// 크리쳐 공격 연출을 위한 도구(색 저장용) 투명도 초기화
 	m_attackedColor.a = 0;
 
 	// 카메라 세팅
 	pMainCamera->SetScreenRect(0, 0, VIEW_WIDTH, VIEW_HEIGHT);
-	pMinimapCamera->SetScreenRect(VIEW_WIDTH - MINI_WIDTH, VIEW_HEIGHT - MINI_HEIGHT * 2, MINI_WIDTH, MINI_HEIGHT * 2);
+	pMinimapCamera->SetScreenRect(VIEW_WIDTH - MINI_WIDTH - 10, VIEW_HEIGHT - MINI_HEIGHT * 2 + 50, MINI_WIDTH, MINI_HEIGHT * 2);
 	pUICamera->SetScreenRect(0, 0, VIEW_WIDTH, VIEW_HEIGHT);
-
-	m_createdCretureCount = 0;
 
 	// 테스트용 크리쳐 생성
 	//OBJECT->CreateCreature(OBJ_ENT, Vector(120, 60));
@@ -186,10 +213,10 @@ void PlayScene::OnDraw()
 	DrawBG();
 
 	// 임시 미니맵 배경
-	pMinimapCamera->Draw(m_pRadar, Vector(-24, 24));
+	pMinimapCamera->Draw(m_pRadar, Vector(-24, -23));
 
 	// 미니맵 시야 각도 표시
-	pMinimapCamera->DrawLine(MINI_WIDTH * 0.5, MINI_HEIGHT, 
+	pMinimapCamera->DrawLine(MINI_WIDTH * 0.5, MINI_HEIGHT,
 		MINI_WIDTH * 0.5 - MINI_WIDTH * 0.5 * MATH->Sin(CAMERA_ANGLE * 0.5), MINI_HEIGHT - MINI_WIDTH * 0.5 * MATH->Cos(CAMERA_ANGLE * 0.5), ColorF::Yellow, 2);
 	pMinimapCamera->DrawLine(MINI_WIDTH * 0.5, MINI_HEIGHT,
 		MINI_WIDTH * 0.5 + MINI_WIDTH * 0.5 * MATH->Sin(CAMERA_ANGLE * 0.5), MINI_HEIGHT - MINI_WIDTH * 0.5 * MATH->Cos(CAMERA_ANGLE * 0.5), ColorF::Yellow, 2);
@@ -216,6 +243,15 @@ void PlayScene::OnDraw()
 	{
 		Vector pos = (*it)->Position();
 		pMinimapCamera->DrawFilledCircle(pos - 4, Vector(8, 8), ColorF::DeepPink);
+		//pMinimapCamera->DrawLine((*it)->GetStartPos().x, (*it)->GetStartPos().y, OBJECT->GetPlayer()->Position().x, OBJECT->GetPlayer()->Position().y, ColorF::DeepPink, 2);
+	}
+
+	//수류탄 선 긋기
+	list<Object*> pGrenadeList = OBJECT->GetGrenadeList();
+	FOR_LIST(Object*, pGrenadeList)
+	{
+		Vector pos = (*it)->Position();
+		pMinimapCamera->DrawFilledCircle(pos - 4, Vector(8, 8), ColorF::Yellow);
 		pMinimapCamera->DrawLine((*it)->GetStartPos().x, (*it)->GetStartPos().y, OBJECT->GetPlayer()->Position().x, OBJECT->GetPlayer()->Position().y, ColorF::DeepPink, 2);
 	}
 	
@@ -234,16 +270,16 @@ void PlayScene::OnDraw()
 	//pUICamera->DrawT(TEXT("Stage 1"), VIEW_WIDTH / 2 - 50, 40, ColorF::White, 30, ALIGN_CENTER);
 
 	//2.벙커UI / 스킬 UI
-	pUICamera->Draw(m_BunkerUI, Vector(150, 80));
+	pUICamera->Draw(m_BunkerUI, Vector(146, 80));
 	pUICamera->Draw(m_ItemBarUI, Vector(200, 790));
 	
 	//3.점수 출력
 	//pUICamera->DrawT(TEXT("점수 : "), VIEW_WIDTH - 300, 30, ColorF::White, 30, ALIGN_RIGHT);
 	//pUICamera->DrawT(TEXT("골드 : "), VIEW_WIDTH - 300, 70, ColorF::White, 30, ALIGN_RIGHT);
 	pUICamera->Draw(m_ScoreUI, Vector(VIEW_WIDTH - 300, 45));
-	pUICamera->DrawRect(Vector(VIEW_WIDTH - 220, 25), Vector(200, 35), ColorF::Red, 5);
+	ShowScore(pUICamera);
 	pUICamera->Draw(m_MoneyUI, Vector(VIEW_WIDTH - 300, 100));
-	pUICamera->DrawRect(Vector(VIEW_WIDTH - 220, 80), Vector(200, 35), ColorF::Red, 5);
+	ShowMoney(pUICamera);
 
 	// 크리쳐에게 공격 받았음을 나타내기 위한 부분
 	if (m_attackedColor.a != 0) pUICamera->DrawFilledRect(Vector(0,0), Vector(VIEW_WIDTH, VIEW_HEIGHT), m_attackedColor);
@@ -252,17 +288,17 @@ void PlayScene::OnDraw()
 	m_bunkerLife->Render(pUICamera);
 
 	//Icon
-	pUICamera->Draw(m_ico_pistol, Vector(50, 110));
-	pUICamera->Draw(m_ico_machine, Vector(112, 110));
-	pUICamera->DrawRect(Vector(150, 85), Vector(50, 50), ColorF::Red, 1);
-	pUICamera->Draw(m_ico_laser, Vector(242, 110));
+	pUICamera->Draw(m_ico_pistol, Vector(46, 110));
+	pUICamera->Draw(m_ico_machine, Vector(108, 110));
+	pUICamera->DrawRect(Vector(146, 85), Vector(50, 50), ColorF::Red, 1);
+	pUICamera->Draw(m_ico_laser, Vector(238, 110));
 
 
 	pUICamera->DrawRect(Vector(40, VIEW_HEIGHT - 195), Vector(320, 70), ColorF::Blue, 1);
-	pUICamera->DrawRect(Vector(30, VIEW_HEIGHT - 95), Vector(70, 70), ColorF::Red, 1);
-	pUICamera->DrawRect(Vector(120, VIEW_HEIGHT - 95), Vector(70, 70), ColorF::Red, 1);
-	pUICamera->DrawRect(Vector(210, VIEW_HEIGHT - 95), Vector(70, 70), ColorF::Red,1);
-	pUICamera->DrawRect(Vector(300, VIEW_HEIGHT - 95), Vector(70, 70), ColorF::Red,1);
+	pUICamera->DrawRect(Vector(28, VIEW_HEIGHT - 95), Vector(70, 70), ColorF::Red, 1);
+	pUICamera->DrawRect(Vector(118, VIEW_HEIGHT - 95), Vector(70, 70), ColorF::Red, 1);
+	pUICamera->DrawRect(Vector(208, VIEW_HEIGHT - 95), Vector(70, 70), ColorF::Red,1);
+	pUICamera->DrawRect(Vector(298, VIEW_HEIGHT - 95), Vector(70, 70), ColorF::Red,1);
 
 
 }
@@ -313,44 +349,107 @@ void PlayScene::SwayScreen(float deltaTime)
 	pMainCamera->SetScreenRect(m_MainCameraPos.x, m_MainCameraPos.y, VIEW_WIDTH, VIEW_HEIGHT);
 }
 
-void PlayScene::ShowMoney()
+void PlayScene::ShowMoney(Camera* pCamera)
 {
 	int money = OBJECT->GetPlayer()->GetMoney();
+	int num = 0;
+
+	// 일의 자리
+	num = money % 10;
+	DrawNum(pCamera, num, Vector(VIEW_WIDTH - 40, 80));
+
+	// 십의 자리
+	num = money / 10 % 10;
+	DrawNum(pCamera, num, Vector(VIEW_WIDTH - 70, 80));
+
+	// 백의 자리
+	num = money / 100 % 10;
+	DrawNum(pCamera, num, Vector(VIEW_WIDTH - 100, 80));
+
+	// 천의 자리
+	num = money / 1000 % 10;
+	DrawNum(pCamera, num, Vector(VIEW_WIDTH - 130, 80));
+
+	// 만의 자리
+	num = money / 10000 % 10;
+	DrawNum(pCamera, num, Vector(VIEW_WIDTH - 160, 80));
+
+	// 십만의 자리
+	num = money / 100000 % 10;
+	DrawNum(pCamera, num, Vector(VIEW_WIDTH - 190, 80));
+
+	// 백만의 자리
+	num = money / 1000000 % 10;
+	DrawNum(pCamera, num, Vector(VIEW_WIDTH - 220, 80));
 }
 
-void PlayScene::ShowScore()
+void PlayScene::ShowScore(Camera* pCamera)
 {
 	int score = OBJECT->GetPlayer()->GetScore();
 	int num = 0;
 
 	// 일의 자리
 	num = score % 10;
+	DrawNum(pCamera, num, Vector(VIEW_WIDTH - 40, 25));
 
+	// 십의 자리
+	num = score / 10 % 10;
+	DrawNum(pCamera, num, Vector(VIEW_WIDTH - 70, 25));
+
+	// 백의 자리
+	num = score / 100 % 10;
+	DrawNum(pCamera, num, Vector(VIEW_WIDTH - 100, 25));
+
+	// 천의 자리
+	num = score / 1000 % 10;
+	DrawNum(pCamera, num, Vector(VIEW_WIDTH - 130, 25));
+
+	// 만의 자리
+	num = score / 10000 % 10;
+	DrawNum(pCamera, num, Vector(VIEW_WIDTH - 160, 25));
+
+	// 십만의 자리
+	num = score / 100000 % 10;
+	DrawNum(pCamera, num, Vector(VIEW_WIDTH - 190, 25));
+
+	// 백만의 자리
+	num = score / 1000000 % 10;
+	DrawNum(pCamera, num, Vector(VIEW_WIDTH - 220, 25));
 }
 
-void PlayScene::DrawNum(int num, Vector leftTop)
+void PlayScene::DrawNum(Camera* pCamera, int num, Vector leftTop)
 {
 	switch (num)
 	{
 	case 0:
+		pCamera->Draw(m_num0, leftTop, 1);
 		break;
 	case 1:
+		pCamera->Draw(m_num1, leftTop, 1);
 		break;
 	case 2:
+		pCamera->Draw(m_num2, leftTop, 1);
 		break;
 	case 3:
+		pCamera->Draw(m_num3, leftTop, 1);
 		break;
 	case 4:
+		pCamera->Draw(m_num4, leftTop, 1);
 		break;
 	case 5:
+		pCamera->Draw(m_num5, leftTop, 1);
 		break;
 	case 6:
+		pCamera->Draw(m_num6, leftTop, 1);
 		break;
 	case 7:
+		pCamera->Draw(m_num7, leftTop, 1);
 		break;
 	case 8:
+		pCamera->Draw(m_num8, leftTop, 1);
 		break;
 	case 9:
+		pCamera->Draw(m_num9, leftTop, 1);
 		break;
 	}
 }

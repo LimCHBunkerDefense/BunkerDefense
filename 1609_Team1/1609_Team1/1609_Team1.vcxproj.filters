@@ -52,9 +52,6 @@
     <Filter Include="Database\ItemDB">
       <UniqueIdentifier>{27d3fc69-5c63-4de7-8f4b-a2cfd8db482c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Manager\Grenade">
-      <UniqueIdentifier>{5d0d3396-dc64-40a6-81a2-98b21a233e66}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Object">
       <UniqueIdentifier>{0aa4cd92-a960-4af1-857a-cdb9d810f506}</UniqueIdentifier>
     </Filter>
@@ -76,8 +73,11 @@
     <Filter Include="Object\Bullet">
       <UniqueIdentifier>{902e043d-e981-4d06-af03-4ec3172b5fa1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\Grenade">
+      <UniqueIdentifier>{5d0d3396-dc64-40a6-81a2-98b21a233e66}</UniqueIdentifier>
+    </Filter>
     <Filter Include="UI">
-      <UniqueIdentifier>{5cb1db3c-58c1-4b11-86f3-65928f4f69ed}</UniqueIdentifier>
+      <UniqueIdentifier>{08e0a3d2-6751-47c4-8412-298da5f810fa}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -118,6 +118,9 @@
     <ClCompile Include="Item.cpp">
       <Filter>Object\Item</Filter>
     </ClCompile>
+    <ClCompile Include="Bunker.cpp">
+      <Filter>Object\Bunker</Filter>
+    </ClCompile>
     <ClCompile Include="Button.cpp">
       <Filter>Object\Button</Filter>
     </ClCompile>
@@ -131,10 +134,7 @@
       <Filter>Object\Player</Filter>
     </ClCompile>
     <ClCompile Include="Grenade.cpp">
-      <Filter>Manager\Grenade</Filter>
-    </ClCompile>
-    <ClCompile Include="Bunker.cpp">
-      <Filter>Object\Bunker</Filter>
+      <Filter>Object\Grenade</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -200,7 +200,7 @@
       <Filter>Manager\ObjectManager</Filter>
     </ClInclude>
     <ClInclude Include="Grenade.h">
-      <Filter>Manager\Grenade</Filter>
+      <Filter>Object\Grenade</Filter>
     </ClInclude>
     <ClInclude Include="ProgressBar.h">
       <Filter>UI</Filter>

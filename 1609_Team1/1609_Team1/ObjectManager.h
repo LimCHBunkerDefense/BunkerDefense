@@ -81,9 +81,11 @@ public:
 	virtual Vector GetStartPos() { return Vector::Zero(); }
 	virtual float GetMT() { return 0; }
 	virtual float GetCollideAngle() { return 0; }
+	virtual Vector GetNowPos() { return Vector(0, 0); }
 
 	//Bullet용 함수
 	virtual BOOL UpdateBool(float deltaTime) { return false; }
+
 
 	// 아이템용 함수
 	virtual int GetID() { return NULL; }
@@ -104,10 +106,10 @@ public:
 
 	//Player
 	virtual ITEM_TAG GetItemState() { return ITEM_NONE; }
-	virtual int GetScore() { return NULL; }
-	virtual void AddScore(int addScore) { }
-	virtual int GetMoney() { return NULL; }
-	virtual void AddMoney(int addMoney) { }
+	virtual int GetScore() { return NULL; }		// Creature도 사용
+	virtual void AddScore(int addScore) { }		
+	virtual int GetMoney() { return NULL; }		// Creature도 사용
+	virtual void AddMoney(int addMoney) { }		
 	virtual map<int, Object*> GetItemBag() { return m_trashMap; }
 
 	// 벙커용 함수
@@ -131,6 +133,7 @@ class ObjectManager : public Singleton<ObjectManager>
 	Object* m_bunker;
 	list<Object*> m_creatureList;
 	list<Object*> m_bulletList;
+	list<Object*> m_grenadeList;
 	list<Object*> m_shopItemList;				// 아이템 싱점용 리스트
 
 
@@ -169,6 +172,11 @@ public:
 	void DestroyBunker();
 	Object* GetBunker() { return m_bunker; }
 	
+	//수류탄
+	void CreateGrenade(OBJ_TAG tag, Vector pos);
+	list<Object*> GetGrenadeList() { return m_grenadeList; }
+	void DestroyGrenade(Object* pCreature);
+	void DestroyAllGrenade();
 
 	// 카메라 회전에 따른 크리쳐 및 불렛의 위치 조정
 	void SetPosByDeltaAngle(float deltaTime);
