@@ -33,7 +33,6 @@ class ShopScene :
 	// 상점에 있는 수량 관련 변수
 	int m_inputCount;
 	bool m_inputOnOff;
-	int m_buyCount;
 
 public:
 	ShopScene();

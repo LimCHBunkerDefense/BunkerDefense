@@ -34,7 +34,7 @@ void ShopScene::OnEnter()
 	NEW_OBJECT(m_pShopTitleBG, Sprite(RENDER->GetImage(TEXT("ShopTitle")), 0.85f, 0, 0));
 	NEW_OBJECT(m_pShopBT, Sprite(RENDER->GetImage(TEXT("ShopBT")), 0.85f, 0, 0));
 	NEW_OBJECT(m_pSelectBT, Sprite(RENDER->GetImage(TEXT("SelectBT")), 0.85f, 0, 0));
-	NEW_OBJECT(m_pSelectBT, Sprite(RENDER->GetImage(TEXT("ClickBT0")), 0.85f, 0, 0));
+	NEW_OBJECT(m_pClickBT, Sprite(RENDER->GetImage(TEXT("ClickBT0")), 0.85f, 0, 0));
 	//NEW_OBJECT(m_pSelectBT, Sprite(RENDER->GetImage(TEXT("ClickBT1")), 0.85f, 0, 0));
 
 	CreateBoxList();		// 리스트 생성
@@ -74,7 +74,7 @@ void ShopScene::OnDraw()
 	//샾 UI
 	//RENDER->DrawRect(Vector(630, 50), Vector (150, 50), ColorF::BlanchedAlmond);
 	//RENDER->DrawT(TEXT("SHOP"), 600, 35, ColorF::BlanchedAlmond, 25);
-	pMainCamera->Draw(m_pShopTitleBG, Vector(VIEW_WIDTH * 0.5f, 20));
+	pMainCamera->Draw(m_pShopTitleBG, Vector(VIEW_WIDTH * 0.45f, 20));
 
 	//버튼 이미지(테스트)
 	pMainCamera->Draw(m_pSelectBT, Vector(960, 680)); //선택 버튼
@@ -228,8 +228,8 @@ void ShopScene::ItemStatWnd()
 
 void ShopScene::SetInputCount(int addCount)
 {
-	if (m_inputCount != 0) m_inputCount = m_inputCount * 10 + addCount;
 	if (m_inputCount == 0) m_inputCount += addCount;
+	if (m_inputCount != 0) m_inputCount = m_inputCount * 10 + addCount;
 
 	map<int,Object*> playerBag = OBJECT->GetPlayer()->GetItemBag();
 	Object* pItem = NULL;
@@ -238,51 +238,58 @@ void ShopScene::SetInputCount(int addCount)
 		pItem = playerBag[m_selectedItem->GetTag()];
 	}
 
-	int maxBulletCount = m_selectedItem->GetMaxBulletCount();		// 총알 최대 갯수
-	int maxCount = m_selectedItem->GetMaxCount();					// 나머지 아이템들의 최대 갯수
+	int maxCount = m_selectedItem->GetMaxCount();	// 아이템들이 구매할 수 있는 최대 갯수
+	int buyCount = (pItem != NULL) ? maxCount - pItem->GetCurrentCount() : maxCount;																// 구매할 수 있는 수량
+
 
 	switch (m_selectedItem->GetItemTypeTag())
 	{
 	case ITEMTYPE_WEAPON:
-		if (pItem == NULL) m_inputCount = MATH->Clamp(addCount, 0, 1);
+		if (pItem == NULL) m_inputCount = MATH->Clamp(m_inputCount, 0, buyCount);
+		if (pItem != NULL) m_inputCount = 0;
 		break;
 
 	case ITEMTYPE_BULLET:
+		if (pItem == NULL)
+		{
+			m_inputCount = MATH->Clamp(m_inputCount, 0, buyCount);
+		}
+
 		if (pItem != NULL)
 		{
 			if (pItem->GetTag() == ITEM_PSBULLET)
 			{
 				if (playerBag.find(ITEM_PISTOL) != playerBag.end())
 				{
-					m_inputCount = MATH->Clamp(addCount, 0, maxBulletCount);
+					m_inputCount = MATH->Clamp(m_inputCount, 0, buyCount);
 				}
 			}
 			if (pItem->GetTag() == ITEM_MGBULLET)
 			{
 				if (playerBag.find(ITEM_MACHINEGUN) != playerBag.end())
 				{
-					m_inputCount = MATH->Clamp(addCount, 0, maxBulletCount);
+					m_inputCount = MATH->Clamp(m_inputCount, 0, buyCount);
 				}
 			}
 			if (pItem->GetTag() == ITEM_FTBULLET)
 			{
 				if (playerBag.find(ITEM_FIRETHROWER) != playerBag.end())
 				{
-					m_inputCount = MATH->Clamp(addCount, 0, maxBulletCount);
+					m_inputCount = MATH->Clamp(m_inputCount, 0, buyCount);
 				}
 			}
 			if (pItem->GetTag() == ITEM_LGBULLET)
 			{
 				if (playerBag.find(ITEM_LASERGUN) != playerBag.end())
 				{
-					m_inputCount = MATH->Clamp(addCount, 0, maxBulletCount);
+					m_inputCount = MATH->Clamp(m_inputCount, 0, buyCount);
 				}
 			}
 		}
 		break;
 
 	case ITEMTYPE_USINGITEM:
-		m_inputCount = MATH->Clamp(addCount, 0, maxCount);
+		m_inputCount = MATH->Clamp(m_inputCount, 0, buyCount);
 		break;
 	}	
 }

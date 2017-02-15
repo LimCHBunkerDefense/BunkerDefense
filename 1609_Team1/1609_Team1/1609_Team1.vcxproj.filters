@@ -199,14 +199,14 @@
     <ClInclude Include="ObjectManager.h">
       <Filter>Manager\ObjectManager</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Object\Player</Filter>
-    </ClInclude>
     <ClInclude Include="Grenade.h">
       <Filter>Object\Grenade</Filter>
     </ClInclude>
     <ClInclude Include="ProgressBar.h">
       <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Object\Player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
