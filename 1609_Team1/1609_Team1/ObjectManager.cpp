@@ -173,6 +173,7 @@ void ObjectManager::CreateGrenade(OBJ_TAG tag, Vector pos)
 	NEW_OBJECT(Object* pBullet, Bullet(tag));
 	pBullet->SetPosition_Creature(pos, pos * 5);
 	pBullet->SetStartPos(pos);
+	pBullet->SetGoal(GetSightHeight()/ SIGHTHEIGHT_MAX);
 
 	Vector colSize, anchor;
 	float scale = 0.05f;

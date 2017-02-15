@@ -4,6 +4,12 @@
 
 PlayScene::PlayScene()
 {
+	//체력바
+
+	m_pBar = new UIProgressBar(Vector(150, 50), Vector(260, 50), ColorF::YellowGreen, ColorF::DarkSlateGray);
+	m_pBar->SetMinMaxColor(ColorF::Red, ColorF::YellowGreen);
+
+
 	// 크리쳐 생성되는 높이h값 생성. 추후 마우스에 따라 실시간 변화
 	m_heightOfCreature = 600;
 
@@ -88,6 +94,7 @@ void PlayScene::OnEnter()
 
 void PlayScene::OnUpdate(float deltaTime)
 {
+	m_pBar->Update(deltaTime);
 	//Icon 변경
 	ChangeIcon();
 	// 크리쳐 생성을 위한 게임 시간 업데이트
@@ -130,6 +137,8 @@ void PlayScene::OnExit()
 
 void PlayScene::OnDraw()
 {	
+	//Bunker 체력
+	m_pBar->Render();
 
 	// 배경 그려주는 부분 (보이는 화면 좌우로 하나씩 더)
 	DrawBG();
@@ -166,7 +175,16 @@ void PlayScene::OnDraw()
 	{
 		Vector pos = (*it)->Position();
 		pMinimapCamera->DrawFilledCircle(pos - 4, Vector(8, 8), ColorF::DeepPink);
-		pMinimapCamera->DrawLine((*it)->GetStartPos().x, (*it)->GetStartPos().y, OBJECT->GetPlayer()->Position().x, OBJECT->GetPlayer()->Position().y, ColorF::DeepPink, 2);
+		//pMinimapCamera->DrawLine((*it)->GetStartPos().x, (*it)->GetStartPos().y, OBJECT->GetPlayer()->Position().x, OBJECT->GetPlayer()->Position().y, ColorF::DeepPink, 2);
+	}
+
+	//수류탄 선 긋기
+	list<Object*> pGrenadeList = OBJECT->GetGrenadeList();
+	FOR_LIST(Object*, pGrenadeList)
+	{
+		Vector pos = (*it)->Position();
+		pMinimapCamera->DrawFilledCircle(pos - 4, Vector(8, 8), ColorF::Yellow);
+		//pMinimapCamera->DrawLine((*it)->GetStartPos().x, (*it)->GetStartPos().y, OBJECT->GetPlayer()->Position().x, OBJECT->GetPlayer()->Position().y, ColorF::DeepPink, 2);
 	}
 	
 	OBJECT->Draw(pMainCamera);
@@ -176,8 +194,7 @@ void PlayScene::OnDraw()
 	// Aim 그려주는 부분
 	pUICamera->Draw(m_pAim, Vector(VIEW_WIDTH * 0.5, VIEW_HEIGHT * 0.5f));
 
-	//Bunker 체력
-	pUICamera->DrawRect(Vector(20, 20), Vector(260, 50), ColorF::Blue, 1);
+	
 
 	//Icon
 	pUICamera->Draw(m_ico_pistol, Vector(40, 110));

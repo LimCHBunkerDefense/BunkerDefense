@@ -202,5 +202,8 @@
     <ClInclude Include="Grenade.h">
       <Filter>Manager\WindowManager\Object\Grenade</Filter>
     </ClInclude>
+    <ClInclude Include="UIProgressBar.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

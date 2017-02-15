@@ -152,6 +152,10 @@ struct Box2
 		dirX = Vector(cosf(angle * ANGLE_TO_RADIAN), -sinf(angle * ANGLE_TO_RADIAN));
 		dirY = Vector(cosf((angle - 90) * ANGLE_TO_RADIAN), -sinf((angle - 90) * ANGLE_TO_RADIAN));
 	}
+	void SetLeftTop(Vector leftTop)
+	{
+		center = leftTop + Width() * 0.5f + Height() * 0.5f;
+	}
 
 	Vector Width() { return dirX * size.x; }
 	Vector Height() { return dirY * size.y; }
@@ -489,6 +493,13 @@ public:
 		if (distY > aHalfHeight + bHalfHeight) return false;
 
 		return true;
+	}
+
+	// 값을 일정 비율로 보간
+	float Lerp(float from, float to, float rate)
+	{
+		rate = Clamp(rate, 0.0f, 1.0f);
+		return from + (to - from) * rate;
 	}
 
 };

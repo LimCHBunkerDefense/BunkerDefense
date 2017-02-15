@@ -85,6 +85,9 @@ public:
 	//Bullet용 함수
 	virtual BOOL UpdateBool(float deltaTime) { return false; }
 
+	//수류탄
+	virtual void SetGoal(float goal){}
+
 	// 아이템용 함수
 	virtual int GetID() { return NULL; }
 	virtual wstring GetName() { return NULL; }

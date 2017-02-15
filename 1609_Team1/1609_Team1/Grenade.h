@@ -27,6 +27,7 @@ public:
 	void IdleState(float deltaTime);
 	BOOL HitState(float deltaTime);
 
+	void SetGoal(float goal) { m_goal = goal; }
 	void SetMoveDirection(Vector vector) { m_moveDirection = vector; }
 	Vector GetMoveDirection() { return m_moveDirection; }
 	void SetStartPos(Vector pos) { m_startPos = pos; }

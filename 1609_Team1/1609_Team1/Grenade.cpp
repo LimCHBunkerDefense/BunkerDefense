@@ -13,7 +13,7 @@ Grenade::Grenade(OBJ_TAG tag) : Object(tag)
 	m_scale = 1.0f;
 	m_state = GRENADE_IDLE;
 	m_t = 0.0F;
-	m_goal = 0.5;
+	m_goal = 0.5F;
 	m_moveSpeed = 0.5F;
 
 	m_moveDirection = Vector(Position() * -1 + Vector(MINI_WIDTH * 0.5, MINI_HEIGHT)).Normalize();
