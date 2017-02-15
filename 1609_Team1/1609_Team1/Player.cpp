@@ -339,7 +339,8 @@ void Player::SetItem()
 	//¼ö·ùÅº ÀåÂø
 	if (INPUT->IsKeyDown(VK_Q))
 	{
-		IsThrow = true;
+		if (IsThrow)	IsThrow = false;
+		else 			IsThrow = true;
 	}
 }
 

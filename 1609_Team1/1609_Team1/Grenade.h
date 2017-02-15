@@ -31,5 +31,6 @@ public:
 	void SetStartPos(Vector pos) { m_startPos = pos; }
 	Vector GetStartPos() { return m_startPos; }
 	BOOL Collided();
+	void StartPosUpdate();
 };
 
