@@ -14,7 +14,7 @@ Grenade::Grenade(OBJ_TAG tag) : Object(tag)
 	m_state = GRENADE_IDLE;
 	m_t = 0.0F;
 	m_moveSpeed = 0.5F;
-
+	m_explodetime = 0.0F;
 	m_moveDirection = Vector(Position() * -1 + Vector(MINI_WIDTH * 0.5, MINI_HEIGHT)).Normalize();
 }
 
@@ -60,25 +60,20 @@ void Grenade::IdleState(float deltaTime) {
 	
 }
 
-BOOL Grenade::Collided()
+void Grenade::Collided()
 {
 	list<Object*> creatureList = OBJECT->GetCreatureList();
 	FOR_LIST(Object*, creatureList) {
 		if (MATH->Distance(Position(), (*it)->GetNowPos())<= GRENADE_SIZE){
 			OBJECT->DestroyCreature((*it));
-			return true;
-		
 		}
 	}
-	return false;
 }
 BOOL Grenade::HitState(float deltaTime) {
-
+	m_explodetime = MATH->Clamp(m_explodetime + m_moveSpeed * deltaTime, 0.0f, 1.0f);
 	Animation()->Play(GRENADE_EXPLODE);
-	if (Collided()) {
-		return true;
-	}
-	return false;
+	if (m_explodetime <= 1.0)	return false;
+	return true;
 }
 
 void Grenade::Draw(Camera* pCamera)
