@@ -21,8 +21,8 @@ Player::Player(OBJ_TAG tag) : Object(tag)
 	AddItem(m_pItem);
 	//SetAnimation(m_pItem->Animation());
 
-	m_money = 10000;
-	m_score = 1234567;
+	m_money = 100000;
+	m_score = 0;
 }
 
 Player::~Player()

@@ -50,7 +50,8 @@ void ObjectManager::Update(float deltaTime)
 
 	FOR_LIST(Object*, m_bulletList)
 	{
-		if ((*it)->UpdateBool(deltaTime)) {
+		if ((*it)->UpdateBool(deltaTime)) 
+		{
 			OBJECT->DestroyBullet((*it));
 			break;
 		}

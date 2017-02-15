@@ -46,6 +46,9 @@ public:
 	Vector GetStartPos() { return m_startPos; }
 	float GetMT() { return m_t; }
 
+	int GetScore() { return m_score; }
+	int GetMoney() { return m_money; }
+
 	//콜라이더 각도 구해서 리턴
 	float GetCollideAngle() {
 		Vector pos = m_startPos * (1 - m_t) + OBJECT->GetPlayer()->Position() * m_t;
