@@ -17,7 +17,7 @@ void CreatureDB::Init()
 	// Add(new CreatureData(OBJ_1단계, 100, 100, 30, TEXT("Ent"), 3.0f, 0.5, 500, 200)); 
 	// Add(new CreatureData(OBJ_2단계, 200, 100, 30, TEXT("Ent"), 3.0f, 0.5, 500, 200)); 
 	// Add(new CreatureData(OBJ_3단계, 400, 100, 30, TEXT("Ent"), 3.0f, 0.5, 500, 200)); 
-	Add(new CreatureData(OBJ_ENT, 800, 100, 30, TEXT("Ent"), 3.0f, 0.5, 500, 200)); 
+	Add(new CreatureData(OBJ_ENT, 800, 100, 30, TEXT("Ent"), 3.0f, 0.05, 500, 200)); 
 	// Add(new CreatureData(OBJ_대빵, 3000, 100, 30, TEXT("Ent"), 3.0f, 0.5, 500, 200)); 
 }
 

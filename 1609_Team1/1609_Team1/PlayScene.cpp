@@ -312,3 +312,45 @@ void PlayScene::SwayScreen(float deltaTime)
 
 	pMainCamera->SetScreenRect(m_MainCameraPos.x, m_MainCameraPos.y, VIEW_WIDTH, VIEW_HEIGHT);
 }
+
+void PlayScene::ShowMoney()
+{
+	int money = OBJECT->GetPlayer()->GetMoney();
+}
+
+void PlayScene::ShowScore()
+{
+	int score = OBJECT->GetPlayer()->GetScore();
+	int num = 0;
+
+	// 일의 자리
+	num = score % 10;
+
+}
+
+void PlayScene::DrawNum(int num, Vector leftTop)
+{
+	switch (num)
+	{
+	case 0:
+		break;
+	case 1:
+		break;
+	case 2:
+		break;
+	case 3:
+		break;
+	case 4:
+		break;
+	case 5:
+		break;
+	case 6:
+		break;
+	case 7:
+		break;
+	case 8:
+		break;
+	case 9:
+		break;
+	}
+}

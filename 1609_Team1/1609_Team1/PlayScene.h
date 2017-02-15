@@ -72,4 +72,11 @@ public:
 
 	// 공격 당하고 있음을 연출해주는 함수
 	void SwayScreen(float deltaTime);
+
+	// 플레이어의 돈과 점수 출력해주는 함수
+	void ShowMoney();
+	void ShowScore();
+
+	// 숫자를 스프라이트로 출력해주는 함수
+	void DrawNum(int num, Vector leftTop);
 };
