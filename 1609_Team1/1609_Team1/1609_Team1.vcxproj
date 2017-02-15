@@ -190,6 +190,7 @@
     <ClInclude Include="ShopScene.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="SoundManager.h" />
+    <ClInclude Include="UIProgressBar.h" />
     <ClInclude Include="WindowManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

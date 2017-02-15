@@ -81,9 +81,13 @@ public:
 	virtual Vector GetStartPos() { return Vector::Zero(); }
 	virtual float GetMT() { return 0; }
 	virtual float GetCollideAngle() { return 0; }
+	virtual Vector GetNowPos() { return Vector(0, 0); }
 
 	//Bullet용 함수
 	virtual BOOL UpdateBool(float deltaTime) { return false; }
+
+	//수류탄
+	virtual void SetGoal(float goal){}
 
 	// 아이템용 함수
 	virtual int GetID() { return NULL; }
@@ -131,6 +135,7 @@ class ObjectManager : public Singleton<ObjectManager>
 	Object* m_bunker;
 	list<Object*> m_creatureList;
 	list<Object*> m_bulletList;
+	list<Object*> m_grenadeList;
 	list<Object*> m_shopItemList;				// 아이템 싱점용 리스트
 
 
@@ -169,6 +174,24 @@ public:
 	void DestroyBunker();
 	Object* GetBunker() { return m_bunker; }
 	
+	//수류탄
+	void CreateGrenade(OBJ_TAG tag, Vector pos);
+	list<Object*> GetGrenadeList() { return m_grenadeList; }
+
+	void DestroyGrenade(Object* pCreature)
+	{
+		m_grenadeList.remove(pCreature);
+		DELETE_OBJECT(pCreature);
+	}
+
+	void DestroyAllGrenade()
+	{
+		FOR_LIST(Object*, m_grenadeList)
+		{
+			DELETE_OBJECT((*it));
+		}
+		m_grenadeList.clear();
+	}
 
 	// 카메라 회전에 따른 크리쳐 및 불렛의 위치 조정
 	void SetPosByDeltaAngle(float deltaTime);

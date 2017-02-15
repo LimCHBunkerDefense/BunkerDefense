@@ -34,6 +34,7 @@ void Player::Update(float deltaTime)
 	switch (m_state)
 	{
 	case PLAYER_ATTACK: AttackState(deltaTime); break;
+	//case PLAYER_THROW: ThrowState(deltaTime); break;
 	case PLAYER_SHOP: ShopState(); break;
 	}
 
@@ -74,8 +75,15 @@ void Player::AttackState(float deltaTime)
 
 	//좌클릭시 발사 부분
 	if (INPUT->IsMouseUp(MOUSE_LEFT)) {
-		Vector pos = MATH->ToDirection(90) * MINI_WIDTH * 0.5 + OBJECT->GetPlayer()->Position();
-		OBJECT->CreateBullet(OBJ_BULLET, pos);
+		if (IsThrow) {
+			Vector pos = MATH->ToDirection(90) * MINI_WIDTH * 0.5 + OBJECT->GetPlayer()->Position();
+			OBJECT->CreateGrenade(OBJ_GRENADE, pos);
+			IsThrow = false;
+		}
+		else {
+			Vector pos = MATH->ToDirection(90) * MINI_WIDTH * 0.5 + OBJECT->GetPlayer()->Position();
+			OBJECT->CreateBullet(OBJ_BULLET, pos);
+		}
 	}
 
 	
@@ -360,4 +368,9 @@ void Player::AddItem(Object* pItem)
 			pItem->AddCurrentCount(SCENE->GetScene(SCENE_SHOP)->GetInputCount());
 		}
 	}
+	if (INPUT->IsKeyDown(VK_Q))
+	{
+		IsThrow = true;
+	}
+
 }
