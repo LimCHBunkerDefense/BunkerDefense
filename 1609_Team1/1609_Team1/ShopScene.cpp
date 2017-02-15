@@ -34,7 +34,7 @@ void ShopScene::OnEnter()
 	NEW_OBJECT(m_pShopTitleBG, Sprite(RENDER->GetImage(TEXT("ShopTitle")), 0.85f, 0, 0));
 	NEW_OBJECT(m_pShopBT, Sprite(RENDER->GetImage(TEXT("ShopBT")), 0.85f, 0, 0));
 	NEW_OBJECT(m_pSelectBT, Sprite(RENDER->GetImage(TEXT("SelectBT")), 0.85f, 0, 0));
-	NEW_OBJECT(m_pSelectBT, Sprite(RENDER->GetImage(TEXT("ClickBT0")), 0.85f, 0, 0));
+	NEW_OBJECT(m_pClickBT, Sprite(RENDER->GetImage(TEXT("ClickBT0")), 0.85f, 0, 0));
 	//NEW_OBJECT(m_pSelectBT, Sprite(RENDER->GetImage(TEXT("ClickBT1")), 0.85f, 0, 0));
 
 	CreateBoxList();		// 리스트 생성
@@ -74,7 +74,7 @@ void ShopScene::OnDraw()
 	//샾 UI
 	//RENDER->DrawRect(Vector(630, 50), Vector (150, 50), ColorF::BlanchedAlmond);
 	//RENDER->DrawT(TEXT("SHOP"), 600, 35, ColorF::BlanchedAlmond, 25);
-	pMainCamera->Draw(m_pShopTitleBG, Vector(VIEW_WIDTH * 0.5f, 20));
+	pMainCamera->Draw(m_pShopTitleBG, Vector(VIEW_WIDTH * 0.45f, 20));
 
 	//버튼 이미지(테스트)
 	pMainCamera->Draw(m_pSelectBT, Vector(960, 680)); //선택 버튼
