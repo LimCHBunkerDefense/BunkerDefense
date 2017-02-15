@@ -26,7 +26,7 @@ void ItemDB::Init()
 		TEXT("엄청난 사거리를 자랑하는 레이저건. \n 매우 비싼 가격이지만 눈물을 머금\n고 구매하기를 강추!"), TEXT("최상")));
 
 	// 상점 구매 아이템(총알)
-	Add(new ItemData(ITEMTYPE_BULLET, ITEM_PSBULLET, 1005, 0, 0, 0, 0, 0, 0, 60, 50, TEXT("권총 탄약(Pistol Bullet)"),
+	Add(new ItemData(ITEMTYPE_BULLET, ITEM_PSBULLET, 1005, 0, 0, 0, 0, 0, 0, 60, 10, TEXT("권총 탄약(Pistol Bullet)"),
 		TEXT("권총의 탄약")));
 	Add(new ItemData(ITEMTYPE_BULLET, ITEM_MGBULLET, 1006, 0, 0, 0, 0, 0, 0, 2000, 15, TEXT("기관총 탄약(Machine Gun Bullet)"),
 		TEXT("기관총의 탄약")));

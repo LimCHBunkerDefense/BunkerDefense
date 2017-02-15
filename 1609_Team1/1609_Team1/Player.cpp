@@ -67,7 +67,7 @@ void Player::AttackState(float deltaTime)
 	SetItem();
 
 	// 충돌체 On/Off
-	if (INPUT->IsKeyDown(VK_0))
+	if (INPUT->IsKeyDown(VK_F6))
 	{
 		SCENE->SetColliderOnOff();
 	}
@@ -149,7 +149,7 @@ void Player::ShopState()
 	}
 
 	// 충돌체 On/Off
-	if (INPUT->IsKeyDown(VK_0))
+	if (INPUT->IsKeyDown(VK_F6))
 	{
 		SCENE->SetColliderOnOff();
 	}
