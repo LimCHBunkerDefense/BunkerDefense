@@ -22,6 +22,9 @@ Creature::Creature(OBJ_TAG tag) : Object(tag)
 	m_attackSpeed = pData->attackSpeed;
 	m_attackCoolTime = 0;
 	m_moveSpeed = pData->moveSpeed;
+	m_money = pData->money;
+	m_score = pData->score;
+
 
 	m_moveDirection = Vector(Position() * -1 + Vector(MINI_WIDTH * 0.5, MINI_HEIGHT)).Normalize();
 	
@@ -39,6 +42,10 @@ void Creature::Update(float deltaTime)
 
 	// 카메라 회전에 따른 크리쳐 StartPos 업데이트
 	StartPosUpdate();
+
+	// 카메라 회전에 따른 크리쳐의 현재 위치를 미니맵 상에서 이동
+	Vector pos = m_startPos * (1 - m_t) + OBJECT->GetPlayer()->Position() * m_t;
+	SetPosition_Creature(pos, pos * 5);
 
 	switch (m_state)
 	{
@@ -73,10 +80,6 @@ void Creature::RunState(float deltaTime)
 
 	// 크리쳐 이동에 관계된 비율 (시작점에서 플레이어까지 가는 거리를 1로 봤을 때, 현재 이동한 거리의 비율)
 	m_t = MATH->Clamp(m_t + m_moveSpeed * deltaTime, 0.0f, 1.0f);
-
-	// 크리쳐의 현재 위치를 미니맵 상에서 이동
-	Vector pos = m_startPos * (1 - m_t) + OBJECT->GetPlayer()->Position() * m_t;
-	SetPosition_Creature(pos, pos * 5);
 
 	Animation()->Play(CREATURE_RUN);
 }

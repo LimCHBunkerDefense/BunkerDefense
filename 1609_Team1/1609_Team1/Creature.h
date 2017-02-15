@@ -13,6 +13,8 @@ class Creature :
 	float m_attackCoolTime;
 	float m_attackSpeed;
 	float m_moveSpeed;
+	int m_money;
+	int m_score;
 
 	Vector m_startPos;
 	float m_scale;

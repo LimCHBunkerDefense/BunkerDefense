@@ -49,7 +49,7 @@ public:
 	{
 		m_value = MATH->Clamp(value, 0.0f, 1.0f);
 		m_bar.size.x = MATH->Lerp(0.0f, m_originSize.x, m_value);
-		m_bar.SetLeftTop(m_originLeftTop);
+		//m_bar.SetLeftTop(m_originLeftTop);
 		m_colorBar.r = MATH->Lerp(m_colorMin.r, m_colorMax.r, m_value);
 		m_colorBar.g = MATH->Lerp(m_colorMin.g, m_colorMax.g, m_value);
 		m_colorBar.b = MATH->Lerp(m_colorMin.b, m_colorMax.b, m_value);

@@ -21,6 +21,10 @@ class Player :
 	float HitPoint;
 	//float m_sight;						// 시야 길이
 
+	int m_money;
+	int m_score;
+
+
 public:
 	Player();
 	Player(OBJ_TAG tag);
@@ -39,6 +43,12 @@ public:
 	void SetItem();
 
 	ITEM_TAG GetItemState() { return item_state; }
+
+	// 플레이어의 점수 및 돈 호출/추가 함수
+	int GetScore() { return m_score; }
+	void AddScore(int addScore) { m_score += addScore; }
+	int GetMoney() { return m_money; }
+	void AddMoney(int addMoney) { m_money += addMoney; }
 	map<int, Object*> GetItemBag() { return m_itemBag; }
 };
 

@@ -32,7 +32,9 @@ class PlayScene : public IScene
 	Camera* pMainCamera;
 	Camera* pMinimapCamera;
 	Camera* pUICamera;
-	Vector m_UICameraPos;
+	Vector m_MainCameraPos;
+	Vector m_swayPos;
+
 
 	UIProgressBar* m_bunkerLife;
 
@@ -41,7 +43,7 @@ class PlayScene : public IScene
 
 	
 	// 크리쳐 생성 y좌표(높이 h)
-	float m_heightOfCreature;
+	//float m_heightOfCreature;
 
 	// 화면 출력을 위한 시야의 각도
 	float m_angleToSee;
@@ -70,4 +72,11 @@ public:
 
 	// 공격 당하고 있음을 연출해주는 함수
 	void SwayScreen(float deltaTime);
+
+	// 플레이어의 돈과 점수 출력해주는 함수
+	void ShowMoney();
+	void ShowScore();
+
+	// 숫자를 스프라이트로 출력해주는 함수
+	void DrawNum(int num, Vector leftTop);
 };

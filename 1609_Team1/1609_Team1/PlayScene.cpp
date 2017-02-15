@@ -56,7 +56,9 @@ PlayScene::PlayScene() : m_attackedColor(ColorF::Red)
 	pMinimapCamera = RENDER->GetCamera(CAM_MINIMAP);
 	pUICamera = RENDER->GetCamera(CAM_UI);
 
-	m_UICameraPos = Vector(0, 0);
+	// 크리쳐 공격에 의한 흔들림 구현을 위해서 초기화
+	m_MainCameraPos = Vector(0, 0);
+	m_swayPos = Vector(300, 0);
 }
 
 
@@ -100,12 +102,12 @@ void PlayScene::OnEnter()
 	// 카메라 세팅
 	pMainCamera->SetScreenRect(0, 0, VIEW_WIDTH, VIEW_HEIGHT);
 	pMinimapCamera->SetScreenRect(VIEW_WIDTH - MINI_WIDTH, VIEW_HEIGHT - MINI_HEIGHT * 2, MINI_WIDTH, MINI_HEIGHT * 2);
-	pUICamera->SetScreenRect(m_UICameraPos.x, m_UICameraPos.y, VIEW_WIDTH, VIEW_HEIGHT);
+	pUICamera->SetScreenRect(0, 0, VIEW_WIDTH, VIEW_HEIGHT);
 
 	m_createdCretureCount = 0;
 
 	// 테스트용 크리쳐 생성
-	OBJECT->CreateCreature(OBJ_ENT, Vector(120, 60));
+	//OBJECT->CreateCreature(OBJ_ENT, Vector(120, 60));
 
 	// 마우스 커서 없애기
 	ShowCursor(false);
@@ -120,7 +122,7 @@ void PlayScene::OnUpdate(float deltaTime)
 	m_gameTime += deltaTime;
 
 	// 게임 시간에 따른 크리쳐 생성
-	//SetCreature(deltaTime);
+	SetCreature(deltaTime);
 	
 	// 오브젝트 전체 업데이트
 	OBJECT->Update(deltaTime);
@@ -132,12 +134,20 @@ void PlayScene::OnUpdate(float deltaTime)
 	// m_attackedColor 투명도 조정하여 공격당함 연출 부분으로 투명도를 점점 높여주는 부분
 	if (m_attackedColor.a != 0)
 	{
-		m_attackedColor.a = MATH->Clamp(m_attackedColor.a - deltaTime, 0.0f, 20.0f);
+		// 공격 당한 즉시 흔들림을 위한 카메라 위치 및 흔들림 변화량 초기화		
+		if (m_attackedColor.a >= 0.4999)
+		{
+			pMainCamera->SetScreenRect(0, 0, VIEW_WIDTH, VIEW_HEIGHT);
+			m_MainCameraPos = Vector(0, 0);
+		}
 
-		// 이와 동시에 화면 흔들림
+		// 흔들림 구현 함수
 		SwayScreen(deltaTime);
+
+		// 공격 표시를 위한 화면의 붉은색 표시부분의 투명도 감소
+		m_attackedColor.a = MATH->Clamp(m_attackedColor.a - deltaTime, 0.0f, 20.0f);				
 	}
-	else pUICamera->SetScreenRect(0,0, VIEW_WIDTH, VIEW_HEIGHT);
+	else if(m_attackedColor.a <= 0) pMainCamera->SetScreenRect(0,0, VIEW_WIDTH, VIEW_HEIGHT);
 
 }
 
@@ -295,18 +305,52 @@ void PlayScene::DrawBG()
 
 void PlayScene::SwayScreen(float deltaTime)
 {
-	if (m_UICameraPos.x == 0 )
-	{
-		m_UICameraPos = m_UICameraPos - Vector(deltaTime * 20, 0);
-	}
-	else if (m_UICameraPos.x < 0 && m_UICameraPos.x > -1)
-	{
-		m_UICameraPos = m_UICameraPos - Vector(deltaTime * 40, 0);
-	}
-	else if(m_UICameraPos.x > 0 && m_UICameraPos.x < 1)
-	{
-		m_UICameraPos = m_UICameraPos + Vector(deltaTime * 40, 0);
-	}
+	if (m_MainCameraPos.x <= -10) m_swayPos *= -1;
+	else if (m_MainCameraPos.x >= 10) m_swayPos *= -1;
 
-	pUICamera->SetScreenRect(m_UICameraPos.x, m_UICameraPos.y, VIEW_WIDTH, VIEW_HEIGHT);
+	m_MainCameraPos += m_swayPos *deltaTime;
+
+	pMainCamera->SetScreenRect(m_MainCameraPos.x, m_MainCameraPos.y, VIEW_WIDTH, VIEW_HEIGHT);
+}
+
+void PlayScene::ShowMoney()
+{
+	int money = OBJECT->GetPlayer()->GetMoney();
+}
+
+void PlayScene::ShowScore()
+{
+	int score = OBJECT->GetPlayer()->GetScore();
+	int num = 0;
+
+	// 일의 자리
+	num = score % 10;
+
+}
+
+void PlayScene::DrawNum(int num, Vector leftTop)
+{
+	switch (num)
+	{
+	case 0:
+		break;
+	case 1:
+		break;
+	case 2:
+		break;
+	case 3:
+		break;
+	case 4:
+		break;
+	case 5:
+		break;
+	case 6:
+		break;
+	case 7:
+		break;
+	case 8:
+		break;
+	case 9:
+		break;
+	}
 }
