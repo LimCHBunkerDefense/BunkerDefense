@@ -10,6 +10,7 @@
 class Player :
 	public Object
 {
+	float m_greCoolTime;
 	Object* m_pItem;						// 아이템
 	map<int, Object*> m_itemBag;			// 아이템 가방
 

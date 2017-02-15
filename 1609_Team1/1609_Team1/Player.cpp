@@ -8,6 +8,7 @@ Player::Player()
 
 Player::Player(OBJ_TAG tag) : Object(tag)
 {
+	m_greCoolTime = 0.0f;//¼ö·ùÅº ÄðÅ¸ÀÓ
 	m_state = PLAYER_ATTACK;
 	item_state = ITEM_PISTOL;
 
@@ -31,6 +32,7 @@ Player::~Player()
 
 void Player::Update(float deltaTime)
 {
+	m_greCoolTime = MATH->Clamp(m_greCoolTime - deltaTime, 0.0f, 2.0f);
 	switch (m_state)
 	{
 	case PLAYER_ATTACK: AttackState(deltaTime); break;
@@ -76,8 +78,11 @@ void Player::AttackState(float deltaTime)
 	//ÁÂÅ¬¸¯½Ã ¹ß»ç ºÎºÐ
 	if (INPUT->IsMouseUp(MOUSE_LEFT)) {
 		if (IsThrow) {
-			Vector pos = MATH->ToDirection(90) * MINI_WIDTH * 0.5 + OBJECT->GetPlayer()->Position();
-			OBJECT->CreateGrenade(OBJ_GRENADE, pos);
+			if (m_greCoolTime == 0.0f) {
+				Vector pos = MATH->ToDirection(90) * MINI_WIDTH * 0.5 + OBJECT->GetPlayer()->Position();
+				OBJECT->CreateGrenade(OBJ_GRENADE, pos);
+				m_greCoolTime = 2.0f;
+			}
 			//IsThrow = false;
 		}
 		else {
