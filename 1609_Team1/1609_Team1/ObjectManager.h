@@ -130,7 +130,7 @@ class ObjectManager : public Singleton<ObjectManager>
 	float m_deltaSightHeight;
 	float m_sightHeight;
 
-	Vector m_aim;						// 플레이어 조준점 좌표
+	Vector m_sight;						// 플레이어 조준점에 의한 배경 그려지는 좌표 수정을 위한 벡터
 
 	Object* m_pPlayer;
 	Object* m_bunker;
@@ -195,11 +195,11 @@ public:
 	float GetSightHeight() { return m_sightHeight; }
 
 	// 플레이어 에임 좌표 관련
-	Vector GetAimPos() { return m_aim; }
-	void SetAimPos(Vector aim)
+	Vector GetSightPos() { return m_sight; }
+	void SetSightPos(Vector aim)
 	{ 
 		float y = MATH->Clamp(aim.y, SIGHTHEIGHT_MIN, SIGHTHEIGHT_MAX);
-		m_aim = Vector(aim.x, y); 
+		m_sight = Vector(aim.x, y);
 	}
 };
 

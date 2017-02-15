@@ -9,7 +9,7 @@
 ObjectManager::ObjectManager()
 {
 	m_sightHeight = SIGHTHEIGHT_DEFAULT;
-	m_aim = Vector(0,0);
+	m_sight = Vector(0,0);
 
 	// 플레이어 총 이미지 맵으로 저장
 	RENDER->LoadImageFiles(TEXT("PistolIdle"), TEXT("Image/Item/Pistol/Idle/Idle"), TEXT("png"), 2);
@@ -51,11 +51,7 @@ void ObjectManager::Update(float deltaTime)
 
 	FOR_LIST(Object*, m_bulletList)
 	{
-		if ((*it)->UpdateBool(deltaTime)) 
-		{
-			OBJECT->DestroyBullet((*it));
-			break;
-		}
+		(*it)->Update(deltaTime);
 	}
 
 	FOR_LIST(Object*, m_grenadeList)
@@ -279,9 +275,9 @@ void ObjectManager::SetPosByDeltaAngle(float deltaTime)
 	
 
 	// 카메라 이동에 따른 배경 출력 위치 변경
-	m_aim = Vector(m_aim.x - deltaPosX, m_sightHeight);
-	if (m_aim.x > 1920 * 2 * 1.8) m_aim -= Vector(1920 * 2 * 1.8, 0);
-	if (m_aim.x < 1920 * 2 * 1.8 * -1) m_aim += Vector(1920 * 2 * 1.8, 0);
+	m_sight = Vector(m_sight.x - deltaPosX, m_sightHeight);
+	if (m_sight.x > 1920 * 2 * 1.8) m_sight -= Vector(1920 * 2 * 1.8, 0);
+	if (m_sight.x < 1920 * 2 * 1.8 * -1) m_sight += Vector(1920 * 2 * 1.8, 0);
 
 	// 시야 변화 각 초기화
 	m_deltaSightAngle = 0;

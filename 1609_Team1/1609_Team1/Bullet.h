@@ -14,7 +14,7 @@ class Bullet :
 
 	float m_t;//날아간 거리 비율 소수점
 	Vector m_moveDirection;
-	Vector m_startPos;//시작 위치
+	Vector m_startPos;//종료 위치
 
 public:
 	Bullet();
@@ -22,13 +22,12 @@ public:
 	~Bullet();
 
 	void Update(float deltaTime);
-	BOOL UpdateBool(float deltaTime);
 	void Draw(Camera* pCamera);
 
 	void StartPosUpdate();
 
-	BOOL IdleState(float deltaTime);
-	void HitState(float deltaTime);
+	void IdleState(float deltaTime);
+	void ExplodeState(float deltaTime);
 
 	void SetMoveDirection(Vector vector) { m_moveDirection = vector; }
 	Vector GetMoveDirection() { return m_moveDirection; }

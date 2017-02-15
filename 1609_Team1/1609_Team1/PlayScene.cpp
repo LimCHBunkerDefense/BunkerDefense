@@ -332,7 +332,7 @@ void PlayScene::SetCreature(float deltaTime)
 
 void PlayScene::DrawBG()
 {
-	Vector bgPos = OBJECT->GetAimPos();
+	Vector bgPos = OBJECT->GetSightPos();
 	pMainCamera->Draw(m_pBg, bgPos);
 
 	if(bgPos.x > 0) pMainCamera->Draw(m_pBg, bgPos - Vector(1920 * 2 * 1.8, 0));
