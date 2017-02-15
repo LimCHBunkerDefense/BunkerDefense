@@ -5,7 +5,7 @@
 PlayScene::PlayScene() : m_attackedColor(ColorF::Red)
 {
 	// 크리쳐 생성되는 높이h값 생성. 추후 마우스에 따라 실시간 변화
-	m_heightOfCreature = 600;
+	//m_heightOfCreature = 600;
 
 
 	// 배경 이미지 맵으로 저장
@@ -44,7 +44,7 @@ PlayScene::PlayScene() : m_attackedColor(ColorF::Red)
 	RENDER->LoadImageFile(TEXT("MachineOff"),	TEXT("Image/Item/Icon/ico_machine_off.png"));
 
 	// 벙커 체력 막대 생성
-	m_bunkerLife = new UIProgressBar(Vector(140, 35), Vector(240, 30), ColorF::Green, ColorF::LightYellow);
+	m_bunkerLife = new UIProgressBar(Vector(20, 35), Vector(240, 30), ColorF::Green, ColorF::LightYellow);
 	m_bunkerLife->SetMinMaxColor(ColorF::Red, ColorF::Green);
 
 	// 카메라 생성
@@ -55,6 +55,8 @@ PlayScene::PlayScene() : m_attackedColor(ColorF::Red)
 	pMainCamera = RENDER->GetCamera(CAM_MAIN);
 	pMinimapCamera = RENDER->GetCamera(CAM_MINIMAP);
 	pUICamera = RENDER->GetCamera(CAM_UI);
+
+	m_UICameraPos = Vector(0, 0);
 }
 
 
@@ -96,14 +98,14 @@ void PlayScene::OnEnter()
 	m_attackedColor.a = 0;
 
 	// 카메라 세팅
-	RENDER->GetCamera(CAM_MAIN)->SetScreenRect(0, 0, VIEW_WIDTH, VIEW_HEIGHT);
-	RENDER->GetCamera(CAM_MINIMAP)->SetScreenRect(VIEW_WIDTH - MINI_WIDTH, VIEW_HEIGHT - MINI_HEIGHT * 2, MINI_WIDTH, MINI_HEIGHT * 2);
-	RENDER->GetCamera(CAM_UI)->SetScreenRect(0, 0, VIEW_WIDTH, VIEW_HEIGHT);
+	pMainCamera->SetScreenRect(0, 0, VIEW_WIDTH, VIEW_HEIGHT);
+	pMinimapCamera->SetScreenRect(VIEW_WIDTH - MINI_WIDTH, VIEW_HEIGHT - MINI_HEIGHT * 2, MINI_WIDTH, MINI_HEIGHT * 2);
+	pUICamera->SetScreenRect(m_UICameraPos.x, m_UICameraPos.y, VIEW_WIDTH, VIEW_HEIGHT);
 
 	m_createdCretureCount = 0;
 
 	// 테스트용 크리쳐 생성
-	//OBJECT->CreateCreature(OBJ_ENT, Vector(120, 60));
+	OBJECT->CreateCreature(OBJ_ENT, Vector(120, 60));
 
 	// 마우스 커서 없애기
 	ShowCursor(false);
@@ -118,7 +120,7 @@ void PlayScene::OnUpdate(float deltaTime)
 	m_gameTime += deltaTime;
 
 	// 게임 시간에 따른 크리쳐 생성
-	SetCreature(deltaTime);
+	//SetCreature(deltaTime);
 	
 	// 오브젝트 전체 업데이트
 	OBJECT->Update(deltaTime);
@@ -127,7 +129,16 @@ void PlayScene::OnUpdate(float deltaTime)
 	m_bunkerLife->SetTargetValue(OBJECT->GetBunker()->GetCurrentLife() / OBJECT->GetBunker()->GetMaxLife());
 	m_bunkerLife->Update(deltaTime);
 
-	if(m_attackedColor.a != 0) m_attackedColor.a = MATH->Clamp(m_attackedColor.a - deltaTime * 10, 0.0f, 20.0f);
+	// m_attackedColor 투명도 조정하여 공격당함 연출 부분으로 투명도를 점점 높여주는 부분
+	if (m_attackedColor.a != 0)
+	{
+		m_attackedColor.a = MATH->Clamp(m_attackedColor.a - deltaTime, 0.0f, 20.0f);
+
+		// 이와 동시에 화면 흔들림
+		SwayScreen(deltaTime);
+	}
+	else pUICamera->SetScreenRect(0,0, VIEW_WIDTH, VIEW_HEIGHT);
+
 }
 
 void PlayScene::ChangeIcon() {
@@ -169,10 +180,10 @@ void PlayScene::OnDraw()
 
 	// 미니맵 시야 각도 표시
 	pMinimapCamera->DrawLine(MINI_WIDTH * 0.5, MINI_HEIGHT, 
-		MINI_WIDTH * 0.5 - MINI_WIDTH * 0.5 * MATH->Sin(CAMERA_ANGLE * 0.5), MINI_HEIGHT - MINI_WIDTH * 0.5 * MATH->Cos(CAMERA_ANGLE * 0.5), ColorF::Blue, 2);
+		MINI_WIDTH * 0.5 - MINI_WIDTH * 0.5 * MATH->Sin(CAMERA_ANGLE * 0.5), MINI_HEIGHT - MINI_WIDTH * 0.5 * MATH->Cos(CAMERA_ANGLE * 0.5), ColorF::Yellow, 2);
 	pMinimapCamera->DrawLine(MINI_WIDTH * 0.5, MINI_HEIGHT,
-		MINI_WIDTH * 0.5 + MINI_WIDTH * 0.5 * MATH->Sin(CAMERA_ANGLE * 0.5), MINI_HEIGHT - MINI_WIDTH * 0.5 * MATH->Cos(CAMERA_ANGLE * 0.5), ColorF::Blue, 2);
-	pMinimapCamera->DrawLine(MINI_WIDTH * 0.5, MINI_HEIGHT, MINI_WIDTH * 0.5, MINI_HEIGHT - MINI_WIDTH * 0.5, ColorF::Blue, 1);
+		MINI_WIDTH * 0.5 + MINI_WIDTH * 0.5 * MATH->Sin(CAMERA_ANGLE * 0.5), MINI_HEIGHT - MINI_WIDTH * 0.5 * MATH->Cos(CAMERA_ANGLE * 0.5), ColorF::Yellow, 2);
+	// pMinimapCamera->DrawLine(MINI_WIDTH * 0.5, MINI_HEIGHT, MINI_WIDTH * 0.5, MINI_HEIGHT - MINI_WIDTH * 0.5, ColorF::Yellow, 1); 미니맵 레이더의 중앙선
 
 	// 미니맵 크리쳐 생성되는 범위 표시	
 	//pMinimapCamera->DrawCircle(Vector(MINI_WIDTH * 0.5, MINI_HEIGHT), Vector(MINI_WIDTH, MINI_WIDTH), ColorF::Yellow);
@@ -228,7 +239,7 @@ void PlayScene::OnDraw()
 	if (m_attackedColor.a != 0) pUICamera->DrawFilledRect(Vector(0,0), Vector(VIEW_WIDTH, VIEW_HEIGHT), m_attackedColor);
 
 	//Bunker 체력
-	m_bunkerLife->Render();
+	m_bunkerLife->Render(pUICamera);
 
 	//Icon
 	pUICamera->Draw(m_ico_pistol, Vector(50, 110));
@@ -248,7 +259,7 @@ void PlayScene::OnDraw()
 
 void PlayScene::SetCreature(float deltaTime)
 {
-	int creatureLimit = m_gameTime / 3;
+	int creatureLimit = m_gameTime / 4;
 	if (m_createdCretureCount < creatureLimit)
 	{
 		int x = rand() % MINI_WIDTH * 0.5;
@@ -280,4 +291,22 @@ void PlayScene::DrawBG()
 
 	if(bgPos.x > 0) pMainCamera->Draw(m_pBg, bgPos - Vector(1920 * 2 * 1.8, 0));
 	else pMainCamera->Draw(m_pBg, bgPos + Vector(1920 * 2 * 1.8, 0));
+}
+
+void PlayScene::SwayScreen(float deltaTime)
+{
+	if (m_UICameraPos.x == 0 )
+	{
+		m_UICameraPos = m_UICameraPos - Vector(deltaTime * 20, 0);
+	}
+	else if (m_UICameraPos.x < 0 && m_UICameraPos.x > -1)
+	{
+		m_UICameraPos = m_UICameraPos - Vector(deltaTime * 40, 0);
+	}
+	else if(m_UICameraPos.x > 0 && m_UICameraPos.x < 1)
+	{
+		m_UICameraPos = m_UICameraPos + Vector(deltaTime * 40, 0);
+	}
+
+	pUICamera->SetScreenRect(m_UICameraPos.x, m_UICameraPos.y, VIEW_WIDTH, VIEW_HEIGHT);
 }

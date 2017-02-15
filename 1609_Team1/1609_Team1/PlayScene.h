@@ -32,6 +32,7 @@ class PlayScene : public IScene
 	Camera* pMainCamera;
 	Camera* pMinimapCamera;
 	Camera* pUICamera;
+	Vector m_UICameraPos;
 
 	UIProgressBar* m_bunkerLife;
 
@@ -64,6 +65,9 @@ public:
 	void SetCreature(float deltaTime);
 	void ChangeIcon();
 	
-	// m_attackedColor 투명도 조정하여 공격당함 연출
-	void SetAttackedColor() { m_attackedColor.a = 20; }
+	// Creature에서 공격시 m_attackedColor 투명도 조정을 위한 함수
+	void SetAttackedColor() { m_attackedColor.a = 0.5; }
+
+	// 공격 당하고 있음을 연출해주는 함수
+	void SwayScreen(float deltaTime);
 };

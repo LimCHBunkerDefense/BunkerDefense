@@ -14,7 +14,7 @@ CreatureDB::~CreatureDB()
 
 void CreatureDB::Init()
 {
-	Add(new CreatureData(OBJ_ENT, 800, 100, 30, TEXT("Ent"), 5.5f, 0.02)); // 예시
+	Add(new CreatureData(OBJ_ENT, 800, 100, 30, TEXT("Ent"), 3.0f, 0.5)); // 예시
 }
 
 void CreatureDB::Add(CreatureData* pData)

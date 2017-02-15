@@ -89,4 +89,12 @@ public:
 		RENDER->DrawRect(m_bar.center, m_bar.size, ColorF(1, 1, 1, 0.3f), 3);
 		RENDER->DrawRect(m_frame.center, m_frame.size, m_colorFrame, 3);
 	}
+
+	void Render(Camera* pCamera)
+	{
+		pCamera->DrawFilledRect(m_frame.center, m_frame.size, m_colorBg);
+		pCamera->DrawFilledRect(m_bar.center, m_bar.size, m_colorBar);
+		pCamera->DrawRect(m_bar.center, m_bar.size, ColorF(1, 1, 1, 0.3f), 3);
+		pCamera->DrawRect(m_frame.center, m_frame.size, m_colorFrame, 3);
+	}
 };
