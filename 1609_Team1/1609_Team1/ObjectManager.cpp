@@ -3,6 +3,7 @@
 #include "Creature.h"
 #include "Item.h"
 #include "Bullet.h"
+#include "Grenade.h"
 #include "Bunker.h"
 
 ObjectManager::ObjectManager()
@@ -53,6 +54,15 @@ void ObjectManager::Update(float deltaTime)
 		if ((*it)->UpdateBool(deltaTime)) 
 		{
 			OBJECT->DestroyBullet((*it));
+			break;
+		}
+	}
+
+	FOR_LIST(Object*, m_grenadeList)
+	{
+		if ((*it)->UpdateBool(deltaTime))
+		{
+			OBJECT->DestroyGrenade((*it));
 			break;
 		}
 	}
@@ -215,23 +225,39 @@ void ObjectManager::DestroyBunker()
 
 void ObjectManager::CreateGrenade(OBJ_TAG tag, Vector pos)
 {
-	NEW_OBJECT(Object* pBullet, Bullet(tag));
-	pBullet->SetPosition_Creature(pos, pos * 5);
-	pBullet->SetStartPos(pos);
-	pBullet->SetGoal(GetSightHeight()/ SIGHTHEIGHT_MAX);
+	NEW_OBJECT(Object* pBullet, Grenade(tag));
+	float m_t = GetSightHeight() / SIGHTHEIGHT_MAX;
+	Vector NewPos = pos * m_t + OBJECT->GetPlayer()->Position() * (1 - m_t);
+	pBullet->SetPosition_Creature(NewPos, NewPos * 5);
+	pBullet->SetStartPos(NewPos);
 
 	Vector colSize, anchor;
-	float scale = 0.05f;
+	float scale = 1.0f;
 	colSize = Vector(20, 20) * scale;
 	anchor = Vector(0.5, 0.95f);
-	//pBullet->Animation()->Register(BULLET_IDLE, new Animation(TEXT("BulletIdle"), 1, 10, false, scale, anchor.x, anchor.y));
-	//pBullet->Animation()->Register(BULLET_EXPLODE, new Animation(TEXT("EntRun"), 9, 7, true, scale, anchor.x, anchor.y));
+	pBullet->Animation()->Register(GRENADE_IDLE, new Animation(TEXT("Grenade"), 1, 10, false, scale, anchor.x, anchor.y));
+	pBullet->Animation()->Register(GRENADE_EXPLODE, new Animation(TEXT("Explode"), 7, 3,false, scale, anchor.x, anchor.y));
 
 	pBullet->SetCollider(colSize, anchor);
 
 	m_grenadeList.push_front(pBullet);
 }
 
+
+void ObjectManager::DestroyGrenade(Object* pCreature)
+{
+	m_grenadeList.remove(pCreature);
+	DELETE_OBJECT(pCreature);
+}
+
+void ObjectManager::DestroyAllGrenade()
+{
+	FOR_LIST(Object*, m_grenadeList)
+	{
+		DELETE_OBJECT((*it));
+	}
+	m_grenadeList.clear();
+}
 // 카메라 회전에 의한 맵 표시 좌표 업데이트 및 각도와 높이 변화값 초기화
 void ObjectManager::SetPosByDeltaAngle(float deltaTime)
 {

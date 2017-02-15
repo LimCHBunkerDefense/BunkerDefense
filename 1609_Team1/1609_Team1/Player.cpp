@@ -78,7 +78,7 @@ void Player::AttackState(float deltaTime)
 		if (IsThrow) {
 			Vector pos = MATH->ToDirection(90) * MINI_WIDTH * 0.5 + OBJECT->GetPlayer()->Position();
 			OBJECT->CreateGrenade(OBJ_GRENADE, pos);
-			IsThrow = false;
+			//IsThrow = false;
 		}
 		else {
 			Vector pos = MATH->ToDirection(90) * MINI_WIDTH * 0.5 + OBJECT->GetPlayer()->Position();
@@ -335,6 +335,13 @@ void Player::SetItem()
 			m_pItem = m_itemBag[1004];
 		}
 	}
+
+	//¼ö·ùÅº ÀåÂø
+	if (INPUT->IsKeyDown(VK_Q))
+	{
+		if (IsThrow)	IsThrow = false;
+		else 			IsThrow = true;
+	}
 }
 
 void Player::AddItem(Object* pItem)
@@ -368,9 +375,6 @@ void Player::AddItem(Object* pItem)
 			pItem->AddCurrentCount(SCENE->GetScene(SCENE_SHOP)->GetInputCount());
 		}
 	}
-	if (INPUT->IsKeyDown(VK_Q))
-	{
-		IsThrow = true;
-	}
+	
 
 }
