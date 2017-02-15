@@ -7,6 +7,10 @@ ShopScene::ShopScene()
 	RENDER->LoadImageFile(TEXT("talkBox"), TEXT("Image/NPC/talk_box.png"));
 	RENDER->LoadImageFile(TEXT("MarketBG"), TEXT("Image/NPC/MarketBG.png"));
 	RENDER->LoadImageFile(TEXT("Infobox_bg"), TEXT("Image/NPC/infobox_bg.png"));
+	RENDER->LoadImageFile(TEXT("ShopTitle"), TEXT("Image/NPC/ShopTitle.png"));
+	RENDER->LoadImageFile(TEXT("ShopBT"), TEXT("Image/NPC/shopbt.png"));
+	RENDER->LoadImageFile(TEXT("SelectBT"), TEXT("Image/NPC/shopselectbt.png"));
+	RENDER->LoadImageFile(TEXT("ClickBT"), TEXT("Image/NPC/shopclicktbt.png"));
 
 	IsWeaponClicked = false;
 	IsBulletClicked = false;
@@ -26,6 +30,10 @@ void ShopScene::OnEnter()
 	NEW_OBJECT(m_pTalkBox, Sprite(RENDER->GetImage(TEXT("talkBox")), 0.65, 0, 0));
 	NEW_OBJECT(m_pMarketBG, Sprite(RENDER->GetImage(TEXT("MarketBG")), 0.815, 0, 0));
 	NEW_OBJECT(m_pInfoBoxBG, Sprite(RENDER->GetImage(TEXT("Infobox_bg")), 0.81, 0, 0));
+	NEW_OBJECT(m_pShopTitleBG, Sprite(RENDER->GetImage(TEXT("ShopTitle")), 0.85f, 0, 0));
+	NEW_OBJECT(m_pShopBT, Sprite(RENDER->GetImage(TEXT("ShopBT")), 0.85f, 0, 0));
+	NEW_OBJECT(m_pSelectBT, Sprite(RENDER->GetImage(TEXT("SelectBT")), 0.85f, 0, 0));
+	NEW_OBJECT(m_pClickBT, Sprite(RENDER->GetImage(TEXT("ClickBT")), 0.85f, 0, 0));
 
 	CreateBoxList();		// 리스트 생성
 	ShowCursor(true);		// 마우스 커서 보이게
@@ -61,9 +69,17 @@ void ShopScene::OnDraw()
 	pMainCamera->DrawT(TEXT("***님 반갑습니다. \n ***상점에 오신걸 환영합니다."), 84, 190, ColorF::BlanchedAlmond, 15);
 	pMainCamera->Draw(m_pNpcIcon, Vector(-138, 220)); // npc image
 
-	RENDER->DrawRect(Vector(630, 50), Vector (150, 50), ColorF::BlanchedAlmond);
-	RENDER->DrawT(TEXT("SHOP"), 600, 35, ColorF::BlanchedAlmond, 25);
-	RENDER->DrawRect(Vector(950, 450),Vector(320, 300),ColorF::AntiqueWhite, 3);
+	//샾 UI
+	//RENDER->DrawRect(Vector(630, 50), Vector (150, 50), ColorF::BlanchedAlmond);
+	//RENDER->DrawT(TEXT("SHOP"), 600, 35, ColorF::BlanchedAlmond, 25);
+	pMainCamera->Draw(m_pShopTitleBG, Vector(VIEW_WIDTH * 0.5f, 20));
+
+	//버튼 이미지(테스트)
+	pMainCamera->Draw(m_pSelectBT, Vector(960, 680)); //선택 버튼
+	pMainCamera->Draw(m_pClickBT, Vector(900, 750)); // 클릭버튼
+	pMainCamera->Draw(m_pShopBT, Vector(820, 680)); // 일반 버튼
+
+	//RENDER->DrawRect(Vector(950, 450),Vector(320, 300),ColorF::AntiqueWhite, 3);
 	RENDER->DrawT(TEXT("-아이템 정보-"), 880, 335, ColorF::BlanchedAlmond, 20);
 	//pMainCamera->DrawT(TEXT("ATK:"), 800, 495, ColorF::AntiqueWhite, 15);
 	if (m_selectedItem != NULL)
@@ -186,11 +202,11 @@ void ShopScene::ItemStatWnd()
 {
 	//선택 아이탬 정보
 	//RENDER->DrawRect(Vector(950, 450), Vector(400, 650), ColorF::Yellow);
-	RENDER->DrawRect(Vector(950, 235), Vector(100, 100), ColorF::Aqua, 3);
-	RENDER->DrawT(TEXT("ITEM\nICON"), 930, 215, ColorF::Aqua, 20);
+	//RENDER->DrawRect(Vector(950, 235), Vector(100, 100), ColorF::Aqua, 3);
+	//RENDER->DrawT(TEXT("ITEM\nICON"), 930, 215, ColorF::Aqua, 20);
 
 
-	RENDER->DrawRect(Vector(940, 650), Vector(125, 35), ColorF::Aquamarine, 3);
+	RENDER->DrawRect(Vector(945, 650), Vector(125, 35), ColorF::Aquamarine, 3);
 	if (m_inputOnOff == false)
 	{
 		RENDER->DrawT(TEXT("수 량"), 920, 635, ColorF::White, 20);
@@ -202,16 +218,69 @@ void ShopScene::ItemStatWnd()
 		RENDER->DrawT(text, 920, 635, ColorF::White, 20);
 	}
 
-	RENDER->DrawT(TEXT("BUY"), 860, 688, ColorF::Aquamarine, 20);
-	RENDER->DrawT(TEXT("나가기 F3"), 985, 686, ColorF::Aquamarine, 20);
+	//RENDER->DrawT(TEXT("BUY"), 860, 688, ColorF::Aquamarine, 20);
+	//RENDER->DrawT(TEXT("나가기"), 985, 686, ColorF::Aquamarine, 20);
+
 	//RENDER->DrawT(TEXT("ITEM INFO"), 750, 400, ColorF::Red, 25);
 }
 
 void ShopScene::SetInputCount(int addCount)
 {
+	if (m_inputCount != 0) m_inputCount = m_inputCount * 10 + addCount;
 	if (m_inputCount == 0) m_inputCount += addCount;
-	if (m_inputCount != 0)
+
+	map<int,Object*> playerBag = OBJECT->GetPlayer()->GetItemBag();
+	Object* pItem = NULL;
+	if (playerBag.find(m_selectedItem->GetTag()) != playerBag.end())
 	{
-		m_inputCount = MATH->Clamp(m_inputCount * 10 + addCount, 0, 1000);
+		pItem = playerBag[m_selectedItem->GetTag()];
 	}
+
+	int maxBulletCount = m_selectedItem->GetMaxBulletCount();		// 총알 최대 갯수
+	int maxCount = m_selectedItem->GetMaxCount();					// 나머지 아이템들의 최대 갯수
+
+	switch (m_selectedItem->GetItemTypeTag())
+	{
+	case ITEMTYPE_WEAPON:
+		if (pItem == NULL) m_inputCount = MATH->Clamp(addCount, 0, 1);
+		break;
+
+	case ITEMTYPE_BULLET:
+		if (pItem != NULL)
+		{
+			if (pItem->GetTag() == ITEM_PSBULLET)
+			{
+				if (playerBag.find(ITEM_PISTOL) != playerBag.end())
+				{
+					m_inputCount = MATH->Clamp(addCount, 0, maxBulletCount);
+				}
+			}
+			if (pItem->GetTag() == ITEM_MGBULLET)
+			{
+				if (playerBag.find(ITEM_MACHINEGUN) != playerBag.end())
+				{
+					m_inputCount = MATH->Clamp(addCount, 0, maxBulletCount);
+				}
+			}
+			if (pItem->GetTag() == ITEM_FTBULLET)
+			{
+				if (playerBag.find(ITEM_FIRETHROWER) != playerBag.end())
+				{
+					m_inputCount = MATH->Clamp(addCount, 0, maxBulletCount);
+				}
+			}
+			if (pItem->GetTag() == ITEM_LGBULLET)
+			{
+				if (playerBag.find(ITEM_LASERGUN) != playerBag.end())
+				{
+					m_inputCount = MATH->Clamp(addCount, 0, maxBulletCount);
+				}
+			}
+		}
+		break;
+
+	case ITEMTYPE_USINGITEM:
+		m_inputCount = MATH->Clamp(addCount, 0, maxCount);
+		break;
+	}	
 }

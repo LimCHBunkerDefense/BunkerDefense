@@ -15,6 +15,7 @@ class Item : public Object
 	float m_bunkerLife;
 	int m_maxBulletCount;
 	int m_reloadBulletCount;
+	int m_currentCount;
 	int m_maxCount;
 	wstring m_name;
 	wstring m_info;
@@ -38,6 +39,8 @@ public:
 	float GetBunkerLife() { return m_bunkerLife; }
 	int GetMaxBulletCount() { return  m_maxBulletCount; }
 	int GetReloadBulletCount() { return m_reloadBulletCount; }
+	int GetCurrentCount() { return m_currentCount; }
+	void AddCurrentCount(int addCount) { m_currentCount += addCount; }	// ÇöÀç °¹¼ö µ¡¼À ¹× »¬¼À
 	int GetMaxCount() { return m_maxCount; }
 	wstring GetRange() { return m_range; }
 	wstring GetInfo() { return m_info; }

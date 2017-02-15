@@ -14,6 +14,7 @@ class Object
 	OBJ_TAG m_tag;
 	Vector m_pos;
 	Box m_collider;
+	map<int, Object*> m_trashMap;
 
 public:
 	Object() {}
@@ -90,6 +91,11 @@ public:
 	virtual float GetAttack() { return NULL; }
 	virtual float GetDefense() { return NULL; }		// 벙커에서도 사용함
 	virtual float GetBunkerLife() { return NULL; }
+	virtual int GetMaxBulletCount() { return  NULL; }
+	virtual int GetReloadBulletCount() { return NULL; }
+	virtual int GetCurrentCount() { return NULL; }
+	virtual void AddCurrentCount(int addCount) {}
+	virtual int GetMaxCount() { return NULL; }
 	virtual wstring GetRange() { return NULL; }
 	virtual wstring GetInfo() { return NULL; }
 	virtual int GetItemMoney() { return NULL; }
@@ -102,6 +108,7 @@ public:
 	virtual void AddScore(int addScore) { }
 	virtual int GetMoney() { return NULL; }
 	virtual void AddMoney(int addMoney) { }
+	virtual map<int, Object*> GetItemBag() { return m_trashMap; }
 
 	// 벙커용 함수
 	virtual float GetCurrentLife() { return NULL; }
@@ -146,7 +153,7 @@ public:
 	void DestroyAllCreature();
 
 	// 아이템
-	Object* CreateItem(ITEMTYPE_TAG tag, int itemID);
+	Object* CreateItem(ITEM_TAG tag, int itemID);
 	list<Object*> GetShopItemList() { return m_shopItemList; }
 
 

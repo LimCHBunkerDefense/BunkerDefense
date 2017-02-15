@@ -15,6 +15,10 @@ class ShopScene :
 	Sprite* m_pTalkBox;
 	Sprite* m_pMarketBG;
 	Sprite* m_pInfoBoxBG;
+	Sprite* m_pShopTitleBG;
+	Sprite* m_pShopBT;
+	Sprite* m_pSelectBT;
+	Sprite* m_pClickBT;
 
 	BUTTON_TAG m_currentButton;				// 현재 버튼이 무엇인지 태그값으로 확인하는 변수
 	Item* m_selectedButton;					// 선택된 버튼이 무엇인지를 나나태는 변수
@@ -29,6 +33,7 @@ class ShopScene :
 	// 상점에 있는 수량 관련 변수
 	int m_inputCount;
 	bool m_inputOnOff;
+	int m_buyCount;
 
 public:
 	ShopScene();

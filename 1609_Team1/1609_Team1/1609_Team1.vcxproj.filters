@@ -118,9 +118,6 @@
     <ClCompile Include="Item.cpp">
       <Filter>Object\Item</Filter>
     </ClCompile>
-    <ClCompile Include="Bunker.cpp">
-      <Filter>Object\Bunker</Filter>
-    </ClCompile>
     <ClCompile Include="Button.cpp">
       <Filter>Object\Button</Filter>
     </ClCompile>
@@ -135,6 +132,9 @@
     </ClCompile>
     <ClCompile Include="Grenade.cpp">
       <Filter>Manager\Grenade</Filter>
+    </ClCompile>
+    <ClCompile Include="Bunker.cpp">
+      <Filter>Object\Bunker</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

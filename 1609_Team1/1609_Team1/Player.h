@@ -37,7 +37,7 @@ public:
 	void ShopState();
 
 	// 아이템을 가방에 추가하는 함수
-	void AddItem(Object* pItem) { m_itemBag[pItem->GetID()] = new Item(pItem->GetID()); }
+	void AddItem(Object* pItem); 
 
 	// 번호 입력시 아이템을 장착하는 함수
 	void SetItem();
@@ -49,5 +49,6 @@ public:
 	void AddScore(int addScore) { m_score += addScore; }
 	int GetMoney() { return m_money; }
 	void AddMoney(int addMoney) { m_money += addMoney; }
+	map<int, Object*> GetItemBag() { return m_itemBag; }
 };
 

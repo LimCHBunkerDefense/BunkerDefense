@@ -138,7 +138,7 @@ void ObjectManager::DestroyAllCreature()
 }
 
 
-Object* ObjectManager::CreateItem(ITEMTYPE_TAG tag, int itemID)
+Object* ObjectManager::CreateItem(ITEM_TAG tag, int itemID)
 {
 	NEW_OBJECT(Object* pItem, Item(itemID));
 	 
