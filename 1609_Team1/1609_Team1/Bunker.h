@@ -3,7 +3,8 @@
 class Bunker :
 	public Object
 {
-	float m_life;
+	float m_currentLife;
+	float m_maxLife;
 	float m_defense;
 
 public:
@@ -14,8 +15,10 @@ public:
 	void Update(float deltaTime);
 	void Draw(Camera* pCamera);
 
-	float GetLife() { return m_life; }
-	void AddLife(float addLife) { m_life += addLife; }
+	float GetMaxLife() { return m_maxLife; }
+	float GetCurrentLife() { return m_currentLife; }
+	void AddCurrentLife(float addLife) { m_currentLife += addLife; }
+	void AddMaxLife(float addLife) { m_maxLife; }
 	float GetDefense() { return m_defense; }
 	void AddDefense(float addDefense) { m_defense += addDefense; }
 };

@@ -100,8 +100,10 @@ public:
 	virtual ITEM_TAG GetItemState() { return ITEM_NONE; }
 
 	// 벙커용 함수
-	virtual float GetLife() { return NULL; }
-	virtual void AddLife(float addLife) {}
+	virtual float GetCurrentLife() { return NULL; }
+	virtual void AddCurrentLife(float addLife) {}
+	virtual float GetMaxLife() { return NULL;}
+	virtual void AddMaxLife(float addLife) {  }
 	virtual void AddDefense(float addDefense) {}
 
 };
@@ -136,21 +138,8 @@ public:
 	// 크리쳐
 	void CreateCreature(OBJ_TAG tag, Vector pos);
 	list<Object*> GetCreatureList() { return m_creatureList; }
-
-	void DestroyCreature(Object* pCreature)
-	{
-		m_creatureList.remove(pCreature);
-		DELETE_OBJECT(pCreature);
-	}
-
-	void DestroyAllCreature()
-	{
-		FOR_LIST(Object*, m_creatureList)
-		{
-			DELETE_OBJECT((*it));
-		}
-		m_creatureList.clear();
-	}
+	void DestroyCreature(Object* pCreature);
+	void DestroyAllCreature();
 
 	// 아이템
 	Object* CreateItem(ITEMTYPE_TAG tag, int itemID);
@@ -160,26 +149,14 @@ public:
 
 	// 총알
 	void CreateBullet(OBJ_TAG tag, Vector pos);
-	list<Object*> GetBulletList() {	return m_bulletList; }
-	
-	void DestroyBullet(Object* pCreature)
-	{
-		m_bulletList.remove(pCreature);
-		DELETE_OBJECT(pCreature);
-	}
-
-	void DestroyAllBullet()
-	{
-		FOR_LIST(Object*, m_bulletList)
-		{
-			DELETE_OBJECT((*it));
-		}
-		m_bulletList.clear();
-	}
+	list<Object*> GetBulletList() { return m_bulletList; }
+	void DestroyBullet(Object* pCreature);
+	void DestroyAllBullet();
 
 	// 벙커
-	void CreateBunker() { m_bunker = new Object(OBJ_BUNKER); }
-	void DestroyBunker() { if (m_bunker != NULL) delete m_bunker; m_bunker = NULL; }
+	void CreateBunker();
+	void DestroyBunker();
+	Object* GetBunker() { return m_bunker; }
 	
 
 	// 카메라 회전에 따른 크리쳐 및 불렛의 위치 조정

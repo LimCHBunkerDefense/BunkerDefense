@@ -35,8 +35,8 @@ public:
 		m_originSize = m_bar.size;
 		m_originLeftTop = m_bar.LeftTop();
 
-		SetValue(0);
-		SetTargetValue(0);
+		SetValue(1.0f);
+		SetTargetValue(1.0f);
 	}
 
 	void SetMinMaxColor(ColorF minColor, ColorF maxColor)
@@ -63,19 +63,10 @@ public:
 
 	void Update(float deltaTime)
 	{
-		Vector mousePos = Vector(INPUT->GetMousePos().x, INPUT->GetMousePos().y);
-
 		switch (m_state)
 		{
 		case PROGRESS_STATE_NONE:
-			if (INPUT->IsMouseDown(MOUSE_LEFT))
-			{
-				if (MATH->IsCollided(mousePos, m_frame))
-				{
-					m_state = PROGRESS_STATE_DRAG;
-				}
-			}
-			else if (m_value != m_targetValue)
+			if (m_value != m_targetValue)
 			{
 				m_state = PROGRESS_STATE_CHANGE;
 			}
@@ -87,10 +78,6 @@ public:
 			break;
 
 		case PROGRESS_STATE_DRAG:
-			SetTargetValue((mousePos.x - m_originLeftTop.x) / m_originSize.x);
-			SetValue(MATH->MoveForward(m_value, m_targetValue, deltaTime));
-			//SetValue(m_targetValue);
-			if (INPUT->IsMouseUp(MOUSE_LEFT)) m_state = PROGRESS_STATE_NONE;
 			break;
 		}
 	}

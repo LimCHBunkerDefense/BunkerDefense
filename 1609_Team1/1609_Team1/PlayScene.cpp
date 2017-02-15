@@ -44,9 +44,8 @@ PlayScene::PlayScene() : m_attackedColor(ColorF::Red)
 	RENDER->LoadImageFile(TEXT("MachineOff"),	TEXT("Image/Item/Icon/ico_machine_off.png"));
 
 	// 벙커 체력 막대 생성
-	m_bunkerLife = new UIProgressBar(Vector(140, 25), Vector(120, 30), ColorF::LightGreen, ColorF::DarkSlateGray);
-
-
+	m_bunkerLife = new UIProgressBar(Vector(140, 35), Vector(240, 30), ColorF::Green, ColorF::LightYellow);
+	m_bunkerLife->SetMinMaxColor(ColorF::Red, ColorF::Green);
 
 	// 카메라 생성
 	RENDER->CreateCamera(CAM_MAIN, MAP_WIDTH, MAP_HEIGHT, VIEW_WIDTH, VIEW_HEIGHT);
@@ -91,6 +90,7 @@ void PlayScene::OnEnter()
 
 	// 벙커 생성
 	OBJECT->CreateBunker();
+	Object* pObj = OBJECT->GetBunker();
 
 	// 크리쳐 공격 연출을 위한 도구(색 저장용) 투명도 초기화
 	m_attackedColor.a = 0;
@@ -123,6 +123,8 @@ void PlayScene::OnUpdate(float deltaTime)
 	// 오브젝트 전체 업데이트
 	OBJECT->Update(deltaTime);
 
+	// 벙커 체력 UIProgressBar 업데이트(이것은 벙커 객체 소유물이 아닌 UI이므로 플레이씬에서 가지고 업데이트 하는 것이 맞아보임)
+	m_bunkerLife->SetTargetValue(OBJECT->GetBunker()->GetCurrentLife() / OBJECT->GetBunker()->GetMaxLife());
 	m_bunkerLife->Update(deltaTime);
 
 	if(m_attackedColor.a != 0) m_attackedColor.a = MATH->Clamp(m_attackedColor.a - deltaTime * 10, 0.0f, 20.0f);
@@ -163,7 +165,6 @@ void PlayScene::OnDraw()
 	DrawBG();
 
 	// 임시 미니맵 배경
-	//pMinimapCamera->Draw(m_pMinimap, Vector(0,0));
 	pMinimapCamera->Draw(m_pRadar, Vector(-24, 24));
 
 	// 미니맵 시야 각도 표시
