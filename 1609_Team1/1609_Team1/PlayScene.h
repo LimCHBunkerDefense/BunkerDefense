@@ -7,11 +7,9 @@
 #include "CreatureDB.h"
 #include "Common.h"
 #include "Math.h"
-#include "UIProgressBar.h"
 
 class PlayScene : public IScene
 {
-	UIProgressBar* m_pBar;//Ã¼·Â¹Ù
 	Sprite* m_pBg;
 
 	Sprite* m_pAim;

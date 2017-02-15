@@ -157,11 +157,6 @@ struct Box2
 		center = leftTop + Width() * 0.5f + Height() * 0.5f;
 	}
 
-	void SetLeftTop(Vector leftTop)
-	{
-		center = leftTop + Width() * 0.5f + Height() * 0.5f;
-	}
-
 	Vector Width() { return dirX * size.x; }
 	Vector Height() { return dirY * size.y; }
 
@@ -512,11 +507,5 @@ public:
 		return true;
 	}
 
-	// 값을 일정 비율로 보간
-	float Lerp(float from, float to, float rate)
-	{
-		rate = Clamp(rate, 0.0f, 1.0f);
-		return from + (to - from) * rate;
-	}
 
 };
