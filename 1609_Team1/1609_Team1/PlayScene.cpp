@@ -35,6 +35,10 @@ PlayScene::PlayScene() : m_attackedColor(ColorF::Red)
 	//Bullet 임시로 저장
 	RENDER->LoadImageFiles(TEXT("BulletIdle"), TEXT("Image/Bullet/bullet"), TEXT("png"), 1);
 
+	//Grenade 임시로 저장
+	RENDER->LoadImageFiles(TEXT("Grenade"), TEXT("Image/Item/Grenade/Grenade"), TEXT("png"), 1);
+	RENDER->LoadImageFiles(TEXT("Explode"), TEXT("Image/Item/Explode/explode"), TEXT("png"), 7);
+
 	//무기 ICON 가져오기
 	RENDER->LoadImageFile(TEXT("PistolOn"),		TEXT("Image/Item/Icon/ico_pistol_on.png"));
 	RENDER->LoadImageFile(TEXT("PistolOff"),	TEXT("Image/Item/Icon/ico_pistol_off.png"));
@@ -71,6 +75,15 @@ PlayScene::PlayScene() : m_attackedColor(ColorF::Red)
 	// 크리쳐 공격에 의한 흔들림 구현을 위해서 초기화
 	m_MainCameraPos = Vector(0, 0);
 	m_swayPos = Vector(300, 0);
+
+	// 플레이어 생성
+	OBJECT->CreatePlayer(Vector(MINI_WIDTH * 0.5F, MINI_HEIGHT), Vector(10, 10), Vector(0.5f, 1.0f));
+	Object* p = OBJECT->GetPlayer();
+	// 벙커 생성
+	OBJECT->CreateBunker();
+	Object* pObj = OBJECT->GetBunker();
+
+	m_createdCretureCount = 0;
 }
 
 
@@ -112,22 +125,13 @@ void PlayScene::OnEnter()
 	NEW_OBJECT(m_num9, Sprite(RENDER->GetImage(TEXT("Num9")), 1.0, 0,0));
 	NEW_OBJECT(m_num0, Sprite(RENDER->GetImage(TEXT("Num0")), 1.0, 0,0));
 
-	// 플레이어 생성
-	OBJECT->CreatePlayer(Vector(MINI_WIDTH * 0.5F, MINI_HEIGHT), Vector(10, 10), Vector(0.5f, 1.0f));
-
-	// 벙커 생성
-	OBJECT->CreateBunker();
-	Object* pObj = OBJECT->GetBunker();
-
 	// 크리쳐 공격 연출을 위한 도구(색 저장용) 투명도 초기화
 	m_attackedColor.a = 0;
 
 	// 카메라 세팅
 	pMainCamera->SetScreenRect(0, 0, VIEW_WIDTH, VIEW_HEIGHT);
-	pMinimapCamera->SetScreenRect(VIEW_WIDTH - MINI_WIDTH, VIEW_HEIGHT - MINI_HEIGHT * 2, MINI_WIDTH, MINI_HEIGHT * 2);
+	pMinimapCamera->SetScreenRect(VIEW_WIDTH - MINI_WIDTH - 10, VIEW_HEIGHT - MINI_HEIGHT * 2 + 50, MINI_WIDTH, MINI_HEIGHT * 2);
 	pUICamera->SetScreenRect(0, 0, VIEW_WIDTH, VIEW_HEIGHT);
-
-	m_createdCretureCount = 0;
 
 	// 테스트용 크리쳐 생성
 	//OBJECT->CreateCreature(OBJ_ENT, Vector(120, 60));
@@ -209,20 +213,20 @@ void PlayScene::OnDraw()
 	DrawBG();
 
 	// 임시 미니맵 배경
-	pMinimapCamera->Draw(m_pRadar, Vector(-24, 24));
+	pMinimapCamera->Draw(m_pRadar, Vector(-24, -23));
 
 	// 미니맵 시야 각도 표시
-	pMinimapCamera->DrawLine(MINI_WIDTH * 0.5, MINI_HEIGHT + 44, 
-		MINI_WIDTH * 0.7 - MINI_WIDTH * 0.7 * MATH->Sin(CAMERA_ANGLE * 0.5), MINI_HEIGHT - MINI_WIDTH * 0.5 * MATH->Cos(CAMERA_ANGLE * 0.5), ColorF::Yellow, 2);
-	pMinimapCamera->DrawLine(MINI_WIDTH * 0.5, MINI_HEIGHT + 44,
-		MINI_WIDTH * 0.7 + MINI_WIDTH * 0.7 * MATH->Sin(CAMERA_ANGLE * 0.5), MINI_HEIGHT - MINI_WIDTH * 0.5 * MATH->Cos(CAMERA_ANGLE * 0.5), ColorF::Yellow, 2);
+	pMinimapCamera->DrawLine(MINI_WIDTH * 0.5, MINI_HEIGHT,
+		MINI_WIDTH * 0.5 - MINI_WIDTH * 0.5 * MATH->Sin(CAMERA_ANGLE * 0.5), MINI_HEIGHT - MINI_WIDTH * 0.5 * MATH->Cos(CAMERA_ANGLE * 0.5), ColorF::Yellow, 2);
+	pMinimapCamera->DrawLine(MINI_WIDTH * 0.5, MINI_HEIGHT,
+		MINI_WIDTH * 0.5 + MINI_WIDTH * 0.5 * MATH->Sin(CAMERA_ANGLE * 0.5), MINI_HEIGHT - MINI_WIDTH * 0.5 * MATH->Cos(CAMERA_ANGLE * 0.5), ColorF::Yellow, 2);
 	// pMinimapCamera->DrawLine(MINI_WIDTH * 0.5, MINI_HEIGHT, MINI_WIDTH * 0.5, MINI_HEIGHT - MINI_WIDTH * 0.5, ColorF::Yellow, 1); 미니맵 레이더의 중앙선
 
 	// 미니맵 크리쳐 생성되는 범위 표시	
 	//pMinimapCamera->DrawCircle(Vector(MINI_WIDTH * 0.5, MINI_HEIGHT), Vector(MINI_WIDTH, MINI_WIDTH), ColorF::Yellow);
 
 	// 미니맵에 플레이어 위치 표시
-	pMinimapCamera->DrawFilledCircle(Vector(MINI_WIDTH * 0.5 , MINI_HEIGHT + 44), Vector(8, 8), ColorF::Yellow);
+	pMinimapCamera->DrawFilledCircle(Vector(MINI_WIDTH * 0.5 , MINI_HEIGHT), Vector(8, 8), ColorF::Yellow);
 
 	// 미니맵에 크리쳐 위치 표시
 	list<Object*> pList = OBJECT->GetCreatureList();
@@ -230,7 +234,7 @@ void PlayScene::OnDraw()
 	{
 		Vector pos = (*it)->Position();
 		pMinimapCamera->DrawFilledCircle(pos - 4, Vector(8, 8), ColorF::Red);
-		pMinimapCamera->DrawLine((*it)->GetStartPos().x, (*it)->GetStartPos().y, OBJECT->GetPlayer()->Position().x, OBJECT->GetPlayer()->Position().y + 44, ColorF::Red, 2);
+		pMinimapCamera->DrawLine((*it)->GetStartPos().x, (*it)->GetStartPos().y, OBJECT->GetPlayer()->Position().x, OBJECT->GetPlayer()->Position().y, ColorF::Red, 2);
 	}
 
 	//탄환 선 긋기
@@ -239,7 +243,16 @@ void PlayScene::OnDraw()
 	{
 		Vector pos = (*it)->Position();
 		pMinimapCamera->DrawFilledCircle(pos - 4, Vector(8, 8), ColorF::DeepPink);
-		pMinimapCamera->DrawLine((*it)->GetStartPos().x, (*it)->GetStartPos().y, OBJECT->GetPlayer()->Position().x, OBJECT->GetPlayer()->Position().y + 44, ColorF::DeepPink, 2);
+		//pMinimapCamera->DrawLine((*it)->GetStartPos().x, (*it)->GetStartPos().y, OBJECT->GetPlayer()->Position().x, OBJECT->GetPlayer()->Position().y, ColorF::DeepPink, 2);
+	}
+
+	//수류탄 선 긋기
+	list<Object*> pGrenadeList = OBJECT->GetGrenadeList();
+	FOR_LIST(Object*, pGrenadeList)
+	{
+		Vector pos = (*it)->Position();
+		pMinimapCamera->DrawFilledCircle(pos - 4, Vector(8, 8), ColorF::Yellow);
+		pMinimapCamera->DrawLine((*it)->GetStartPos().x, (*it)->GetStartPos().y, OBJECT->GetPlayer()->Position().x, OBJECT->GetPlayer()->Position().y, ColorF::DeepPink, 2);
 	}
 	
 	OBJECT->Draw(pMainCamera);

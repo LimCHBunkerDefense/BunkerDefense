@@ -63,7 +63,7 @@ BOOL Bullet::IdleState(float deltaTime) {
 	if (m_t == 1.0F) return true;
 
 	// 크리쳐와 식이 반대로임
-	Vector pos = m_startPos * m_t + OBJECT->GetPlayer()->Position() * (1-m_t);
+	Vector pos = GetNowPos();
 	SetPosition_Creature(pos, pos * 5);
 
 	
@@ -84,6 +84,11 @@ BOOL Bullet::Collided()
 				if (m_t + (*it)->GetMT() >= 1.0f) {
 					if (MATH->IsCollided(this->Collider(), (*it)->Collider()))
 					{
+						int money = (*it)->GetMoney();
+						OBJECT->GetPlayer()->AddMoney(money);
+						int score = (*it)->GetScore();
+						OBJECT->GetPlayer()->AddScore(score);
+						Object* p = OBJECT->GetPlayer();
 						OBJECT->DestroyCreature((*it));
 						return true;
 					}

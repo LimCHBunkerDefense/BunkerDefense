@@ -139,7 +139,7 @@ struct Box2
 {
 	Vector center, size;
 	Vector dirX, dirY;
-
+	Box2() {}
 	Box2(Vector center, Vector size, float angle = 0)
 	{
 		this->center = center;
@@ -152,7 +152,6 @@ struct Box2
 		dirX = Vector(cosf(angle * ANGLE_TO_RADIAN), -sinf(angle * ANGLE_TO_RADIAN));
 		dirY = Vector(cosf((angle - 90) * ANGLE_TO_RADIAN), -sinf((angle - 90) * ANGLE_TO_RADIAN));
 	}
-
 	void SetLeftTop(Vector leftTop)
 	{
 		center = leftTop + Width() * 0.5f + Height() * 0.5f;
@@ -507,5 +506,6 @@ public:
 
 		return true;
 	}
+
 
 };
