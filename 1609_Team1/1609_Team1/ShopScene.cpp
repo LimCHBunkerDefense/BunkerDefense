@@ -10,7 +10,8 @@ ShopScene::ShopScene()
 	RENDER->LoadImageFile(TEXT("ShopTitle"), TEXT("Image/NPC/ShopTitle.png"));
 	RENDER->LoadImageFile(TEXT("ShopBT"), TEXT("Image/NPC/shopbt.png"));
 	RENDER->LoadImageFile(TEXT("SelectBT"), TEXT("Image/NPC/shopselectbt.png"));
-	RENDER->LoadImageFile(TEXT("ClickBT"), TEXT("Image/NPC/shopclicktbt.png"));
+	RENDER->LoadImageFile(TEXT("ClickBT0"), TEXT("Image/NPC/shopclicktbt0.png"));
+	RENDER->LoadImageFile(TEXT("ClickBT1"), TEXT("Image/NPC/shopclicktbt1.png"));
 
 	IsWeaponClicked = false;
 	IsBulletClicked = false;
@@ -33,7 +34,8 @@ void ShopScene::OnEnter()
 	NEW_OBJECT(m_pShopTitleBG, Sprite(RENDER->GetImage(TEXT("ShopTitle")), 0.85f, 0, 0));
 	NEW_OBJECT(m_pShopBT, Sprite(RENDER->GetImage(TEXT("ShopBT")), 0.85f, 0, 0));
 	NEW_OBJECT(m_pSelectBT, Sprite(RENDER->GetImage(TEXT("SelectBT")), 0.85f, 0, 0));
-	NEW_OBJECT(m_pClickBT, Sprite(RENDER->GetImage(TEXT("ClickBT")), 0.85f, 0, 0));
+	NEW_OBJECT(m_pSelectBT, Sprite(RENDER->GetImage(TEXT("ClickBT0")), 0.85f, 0, 0));
+	//NEW_OBJECT(m_pSelectBT, Sprite(RENDER->GetImage(TEXT("ClickBT1")), 0.85f, 0, 0));
 
 	CreateBoxList();		// 리스트 생성
 	ShowCursor(true);		// 마우스 커서 보이게
