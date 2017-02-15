@@ -76,6 +76,9 @@
     <Filter Include="Object\Grenade">
       <UniqueIdentifier>{5d0d3396-dc64-40a6-81a2-98b21a233e66}</UniqueIdentifier>
     </Filter>
+    <Filter Include="UI">
+      <UniqueIdentifier>{08e0a3d2-6751-47c4-8412-298da5f810fa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
@@ -202,6 +205,8 @@
     <ClInclude Include="Grenade.h">
       <Filter>Object\Grenade</Filter>
     </ClInclude>
-    <ClInclude Include="ProgressBar.h" />
+    <ClInclude Include="ProgressBar.h">
+      <Filter>UI</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

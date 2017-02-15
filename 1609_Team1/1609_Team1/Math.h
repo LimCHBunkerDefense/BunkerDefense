@@ -139,7 +139,7 @@ struct Box2
 {
 	Vector center, size;
 	Vector dirX, dirY;
-
+	Box2() {}
 	Box2(Vector center, Vector size, float angle = 0)
 	{
 		this->center = center;

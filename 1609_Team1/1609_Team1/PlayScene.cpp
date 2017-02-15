@@ -78,7 +78,7 @@ PlayScene::PlayScene() : m_attackedColor(ColorF::Red)
 
 	// 플레이어 생성
 	OBJECT->CreatePlayer(Vector(MINI_WIDTH * 0.5F, MINI_HEIGHT), Vector(10, 10), Vector(0.5f, 1.0f));
-
+	Object* p = OBJECT->GetPlayer();
 	// 벙커 생성
 	OBJECT->CreateBunker();
 	Object* pObj = OBJECT->GetBunker();
@@ -130,7 +130,7 @@ void PlayScene::OnEnter()
 
 	// 카메라 세팅
 	pMainCamera->SetScreenRect(0, 0, VIEW_WIDTH, VIEW_HEIGHT);
-	pMinimapCamera->SetScreenRect(VIEW_WIDTH - MINI_WIDTH, VIEW_HEIGHT - MINI_HEIGHT * 2, MINI_WIDTH, MINI_HEIGHT * 2);
+	pMinimapCamera->SetScreenRect(VIEW_WIDTH - MINI_WIDTH - 10, VIEW_HEIGHT - MINI_HEIGHT * 2 + 50, MINI_WIDTH, MINI_HEIGHT * 2);
 	pUICamera->SetScreenRect(0, 0, VIEW_WIDTH, VIEW_HEIGHT);
 
 	// 테스트용 크리쳐 생성
@@ -213,20 +213,20 @@ void PlayScene::OnDraw()
 	DrawBG();
 
 	// 임시 미니맵 배경
-	pMinimapCamera->Draw(m_pRadar, Vector(-24, 24));
+	pMinimapCamera->Draw(m_pRadar, Vector(-24, -23));
 
 	// 미니맵 시야 각도 표시
-	pMinimapCamera->DrawLine(MINI_WIDTH * 0.5, MINI_HEIGHT + 44, 
-		MINI_WIDTH * 0.7 - MINI_WIDTH * 0.7 * MATH->Sin(CAMERA_ANGLE * 0.5), MINI_HEIGHT - MINI_WIDTH * 0.5 * MATH->Cos(CAMERA_ANGLE * 0.5), ColorF::Yellow, 2);
-	pMinimapCamera->DrawLine(MINI_WIDTH * 0.5, MINI_HEIGHT + 44,
-		MINI_WIDTH * 0.7 + MINI_WIDTH * 0.7 * MATH->Sin(CAMERA_ANGLE * 0.5), MINI_HEIGHT - MINI_WIDTH * 0.5 * MATH->Cos(CAMERA_ANGLE * 0.5), ColorF::Yellow, 2);
+	pMinimapCamera->DrawLine(MINI_WIDTH * 0.5, MINI_HEIGHT,
+		MINI_WIDTH * 0.5 - MINI_WIDTH * 0.5 * MATH->Sin(CAMERA_ANGLE * 0.5), MINI_HEIGHT - MINI_WIDTH * 0.5 * MATH->Cos(CAMERA_ANGLE * 0.5), ColorF::Yellow, 2);
+	pMinimapCamera->DrawLine(MINI_WIDTH * 0.5, MINI_HEIGHT,
+		MINI_WIDTH * 0.5 + MINI_WIDTH * 0.5 * MATH->Sin(CAMERA_ANGLE * 0.5), MINI_HEIGHT - MINI_WIDTH * 0.5 * MATH->Cos(CAMERA_ANGLE * 0.5), ColorF::Yellow, 2);
 	// pMinimapCamera->DrawLine(MINI_WIDTH * 0.5, MINI_HEIGHT, MINI_WIDTH * 0.5, MINI_HEIGHT - MINI_WIDTH * 0.5, ColorF::Yellow, 1); 미니맵 레이더의 중앙선
 
 	// 미니맵 크리쳐 생성되는 범위 표시	
 	//pMinimapCamera->DrawCircle(Vector(MINI_WIDTH * 0.5, MINI_HEIGHT), Vector(MINI_WIDTH, MINI_WIDTH), ColorF::Yellow);
 
 	// 미니맵에 플레이어 위치 표시
-	pMinimapCamera->DrawFilledCircle(Vector(MINI_WIDTH * 0.5 , MINI_HEIGHT + 44), Vector(8, 8), ColorF::Yellow);
+	pMinimapCamera->DrawFilledCircle(Vector(MINI_WIDTH * 0.5 , MINI_HEIGHT), Vector(8, 8), ColorF::Yellow);
 
 	// 미니맵에 크리쳐 위치 표시
 	list<Object*> pList = OBJECT->GetCreatureList();
@@ -234,7 +234,7 @@ void PlayScene::OnDraw()
 	{
 		Vector pos = (*it)->Position();
 		pMinimapCamera->DrawFilledCircle(pos - 4, Vector(8, 8), ColorF::Red);
-		pMinimapCamera->DrawLine((*it)->GetStartPos().x, (*it)->GetStartPos().y, OBJECT->GetPlayer()->Position().x, OBJECT->GetPlayer()->Position().y + 44, ColorF::Red, 2);
+		pMinimapCamera->DrawLine((*it)->GetStartPos().x, (*it)->GetStartPos().y, OBJECT->GetPlayer()->Position().x, OBJECT->GetPlayer()->Position().y, ColorF::Red, 2);
 	}
 
 	//탄환 선 긋기

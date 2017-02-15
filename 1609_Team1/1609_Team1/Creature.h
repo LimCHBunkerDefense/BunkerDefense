@@ -2,6 +2,7 @@
 #include "ObjectManager.h"
 #include "SceneManager.h"
 #include "CreatureDB.h"
+#include "ProgressBar.h"
 
 class Creature :
 	public Object
@@ -15,6 +16,7 @@ class Creature :
 	float m_moveSpeed;
 	int m_money;
 	int m_score;
+	UIProgressBar m_lifeBar;
 
 	Vector m_startPos;
 	float m_scale;
