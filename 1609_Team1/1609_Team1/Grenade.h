@@ -11,14 +11,15 @@ class Grenade :
 	float m_scale;
 	float m_goal;
 	float m_addHeight;
-	float m_explodetime;//폭파시간
+	float m_explodetime;
+	float m_explodeEnd; //폭파 끝나는 시간
 	float m_t;//날아간 거리 비율 소수점
 	Vector m_moveDirection;
 	Vector m_startPos;//시작 위치
 
 public:
 	Grenade();
-	Grenade(OBJ_TAG tag);
+	Grenade(OBJ_TAG tag, GRENADE_STATE gre_state);
 	~Grenade();
 
 	void Update(float deltaTime);

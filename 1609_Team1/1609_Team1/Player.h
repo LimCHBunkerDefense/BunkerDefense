@@ -16,9 +16,9 @@ class Player :
 
 	PLAYER_STATE m_state;			    	// 플레이어 상태
 	ITEM_TAG item_state;			    	// 아이템 가진 상태
+	GRENADE_STATE gre_state;				// 수류탄 가진 상태
 										   
 	Vector m_prevMousePos;				    // 이전 마우스 좌표값
-	BOOL IsThrow;							// 던지는 것 확인
 	float HitPoint;
 	//float m_sight;						// 시야 길이
 

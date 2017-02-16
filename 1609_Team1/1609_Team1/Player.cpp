@@ -28,6 +28,8 @@ Player::Player(OBJ_TAG tag) : Object(tag)
 
 	m_money = 100000;
 	m_score = 0;
+
+	gre_state = GRENADE_NONE;
 }
 
 Player::~Player()
@@ -81,13 +83,20 @@ void Player::AttackState(float deltaTime)
 
 	//ÁÂÅ¬¸¯½Ã ¹ß»ç ºÎºÐ
 	if (INPUT->IsMouseUp(MOUSE_LEFT)) {
-		if (IsThrow) {
+		if (gre_state != GRENADE_NONE) {
 			if (m_greCoolTime == 0.0f) {
 				Vector pos = MATH->ToDirection(90) * MINI_WIDTH * 0.5 + OBJECT->GetPlayer()->Position();
-				OBJECT->CreateGrenade(OBJ_GRENADE, pos);
+				switch (gre_state) {
+				case GRENADE_IDLE:				
+					OBJECT->CreateGrenade(OBJ_GRENADE, pos, GRENADE_IDLE);
+					break;
+				case FLAME_IDLE:
+					OBJECT->CreateGrenade(OBJ_GRENADE, pos, FLAME_IDLE);
+					break;
+				}
+				
 				m_greCoolTime = 2.0f;
 			}
-			//IsThrow = false;
 		}
 		else {
 			Vector pos = Vector::Up() * m_pItem->GetRange() + OBJECT->GetPlayer()->Position();
@@ -358,8 +367,15 @@ void Player::SetItem()
 	//¼ö·ùÅº ÀåÂø
 	if (INPUT->IsKeyDown(VK_Q))
 	{
-		if (IsThrow)	IsThrow = false;
-		else 			IsThrow = true;
+		if (gre_state == GRENADE_IDLE)	gre_state = GRENADE_NONE;
+		else 							gre_state = GRENADE_IDLE;
+	}
+
+	//È­¿°Åº ÀåÂø
+	if (INPUT->IsKeyDown(VK_E))
+	{
+		if (gre_state == FLAME_IDLE)	gre_state = GRENADE_NONE;
+		else 							gre_state = FLAME_IDLE;
 	}
 }
 

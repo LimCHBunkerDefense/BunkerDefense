@@ -2,7 +2,7 @@
 
 #pragma comment(linker,"/entry:WinMainCRTStartup /subsystem:console")
 #define VIEW_WIDTH		1200
-#define VIEW_HEIGHT		800
+#define VIEW_HEIGHT		900
 
 #define FPS				100		// 초당 프레임수
 
@@ -192,7 +192,7 @@ enum TEXT_ALIGN
 };
 
 enum GRENADE_STATE {
-	GRENADE_NONE=200, GRENADE_IDLE, GRENADE_EXPLODE,
+	GRENADE_NONE=200, GRENADE_IDLE, GRENADE_EXPLODE, FLAME_IDLE, FLAME_EXPLODE,
 };
 
 enum PROGRESS_STATE

@@ -179,7 +179,7 @@ public:
 	Object* GetBunker() { return m_bunker; }
 	
 	//¼ö·ùÅº
-	void CreateGrenade(OBJ_TAG tag, Vector pos);
+	void CreateGrenade(OBJ_TAG tag, Vector pos, GRENADE_STATE gre_state);
 	list<Object*> GetGrenadeList() { return m_grenadeList; }
 	void DestroyGrenade(Object* pCreature);
 	void DestroyAllGrenade();

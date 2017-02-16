@@ -240,9 +240,9 @@ void ObjectManager::DestroyBunker()
 	if (m_bunker != NULL) delete m_bunker; m_bunker = NULL; 
 }
 
-void ObjectManager::CreateGrenade(OBJ_TAG tag, Vector pos)
+void ObjectManager::CreateGrenade(OBJ_TAG tag, Vector pos, GRENADE_STATE gre_state)
 {
-	NEW_OBJECT(Object* pBullet, Grenade(tag));
+	NEW_OBJECT(Object* pBullet, Grenade(tag, gre_state));
 	float m_t = GetSightHeight() / SIGHTHEIGHT_MAX;
 	//Vector NewPos = pos * m_t + OBJECT->GetPlayer()->Position() * (1 - m_t);
 	pBullet->SetPosition_Creature(pos, pos * 5);
@@ -253,8 +253,18 @@ void ObjectManager::CreateGrenade(OBJ_TAG tag, Vector pos)
 	float scale = 0.5f;
 	colSize = Vector(20, 20) * scale;
 	anchor = Vector(0.5, 0.95f);
-	pBullet->Animation()->Register(GRENADE_IDLE, new Animation(TEXT("Grenade"), 1, 10, false, 0.2f, anchor.x, anchor.y));
-	pBullet->Animation()->Register(GRENADE_EXPLODE, new Animation(TEXT("Explode"), 7, 3,false, 1.0f, anchor.x, anchor.y));
+
+	switch (gre_state) {
+	case GRENADE_IDLE:
+		pBullet->Animation()->Register(gre_state, new Animation(TEXT("Grenade"), 1, 10, false, 0.2f, anchor.x, anchor.y));
+		pBullet->Animation()->Register(GRENADE_EXPLODE, new Animation(TEXT("Explode"), 7, 3, false, 1.0f, anchor.x, anchor.y));
+		break;
+	case FLAME_IDLE:
+		pBullet->Animation()->Register(gre_state, new Animation(TEXT("Flame_idle"), 1, 10, false, 0.2f, anchor.x, anchor.y));
+		pBullet->Animation()->Register(FLAME_EXPLODE, new Animation(TEXT("Flame_Explode"), 30, 3, false, 1.0f, anchor.x, anchor.y));
+		break;
+	}
+	
 
 	pBullet->SetCollider(colSize, anchor);
 
