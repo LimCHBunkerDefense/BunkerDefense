@@ -11,8 +11,8 @@ ShopScene::ShopScene()
 	RENDER->LoadImageFile(TEXT("ShopBT"), TEXT("Image/NPC/shopbt.png"));
 	RENDER->LoadImageFile(TEXT("SelectBT"), TEXT("Image/NPC/shopselectbt.png"));
 	RENDER->LoadImageFile(TEXT("MenuBT"), TEXT("Image/NPC/ItemMENU.png"));
-	//RENDER->LoadImageFile(TEXT("ClickBT0"), TEXT("Image/NPC/shopclicktbt0.png"));
-	//RENDER->LoadImageFile(TEXT("ClickBT1"), TEXT("Image/NPC/shopclicktbt1.png"));
+	RENDER->LoadImageFile(TEXT("ClickBT"), TEXT("Image/NPC/shopbt2.png"));
+	RENDER->LoadImageFile(TEXT("ClickedBT"), TEXT("Image/NPC/shopselectbt2.png"));
 
 	IsWeaponClicked = false;
 	IsBulletClicked = false;
@@ -37,7 +37,8 @@ void ShopScene::OnEnter()
 	NEW_OBJECT(m_pShopBT, Sprite(RENDER->GetImage(TEXT("ShopBT")), 0.85f, 0, 0));
 	NEW_OBJECT(m_pSelectBT, Sprite(RENDER->GetImage(TEXT("SelectBT")), 0.85f, 0, 0));
 	NEW_OBJECT(m_pMenuBT, Sprite(RENDER->GetImage(TEXT("MenuBT")), 0.95f, 0, 0));
-	//NEW_OBJECT(m_pClickBT, Sprite(RENDER->GetImage(TEXT("ClickBT0")), 0.85f, 0, 0));
+	NEW_OBJECT(m_pClickBT, Sprite(RENDER->GetImage(TEXT("ClickBT")), 0.85f, 0, 0));
+	NEW_OBJECT(m_pClickBT2, Sprite(RENDER->GetImage(TEXT("ClickedBT")), 0.85f, 0, 0));
 
 	CreateBoxList();		// 리스트 생성
 	ShowCursor(true);		// 마우스 커서 보이게
@@ -86,8 +87,13 @@ void ShopScene::OnDraw()
 
 
 	//버튼 이미지(테스트)
-	pMainCamera->Draw(m_pShopBT, Vector(820, 680)); // 일반 버튼
-	pMainCamera->Draw(m_pSelectBT, Vector(960, 680)); //선택 버튼
+
+	pMainCamera->Draw(m_pShopBT, Vector(820, 680)); // 일반 버튼1
+	pMainCamera->Draw(m_pClickBT, Vector(820, 730)); // 선택 버튼1
+
+	pMainCamera->Draw(m_pSelectBT, Vector(960, 680)); //일반 버튼2
+	pMainCamera->Draw(m_pClickBT2, Vector(960, 730)); //선택 버튼2
+	if (IsBuyClicked == true)
 
 	//RENDER->DrawRect(Vector(950, 450),Vector(320, 300),ColorF::AntiqueWhite, 3);
 	RENDER->DrawT(TEXT("-아이템 정보-"), 880, 335, ColorF::BlanchedAlmond, 20);
@@ -139,13 +145,13 @@ void ShopScene::ItemListWnd()
 	//아이템 종류 목차
 	//RENDER->DrawRect(Vector(550, 235), Vector(400, 220), ColorF::OrangeRed);
 	//RENDER->DrawRect(Vector(425, 234), Vector(120, 150), ColorF::Tomato);
-	RENDER->DrawT(TEXT("    ITEM\nWEAPON"), 380, 215, ColorF::WhiteSmoke, 18);
+	RENDER->DrawT(TEXT("    ITEM\nWEAPON"), 380, 215, ColorF::AntiqueWhite, 18);
 
 	//RENDER->DrawRect(Vector(556, 234), Vector(120, 150), ColorF::Khaki);
-	RENDER->DrawT(TEXT("  ITEM\nBULLET"), 520, 215, ColorF::WhiteSmoke, 18);
+	RENDER->DrawT(TEXT("  ITEM\nBULLET"), 520, 215, ColorF::AntiqueWhite, 18);
 
 	//RENDER->DrawRect(Vector(685, 234), Vector(120, 150), ColorF::HotPink);
-	RENDER->DrawT(TEXT("      ITEM\nUSINGITEM"), 632, 215, ColorF::WhiteSmoke, 18);
+	RENDER->DrawT(TEXT("      ITEM\nUSINGITEM"), 632, 215, ColorF::AntiqueWhite, 18);
 
 
 	//RENDER->DrawRect(Vector(550, 560),Vector(400, 430),ColorF::Red);
@@ -180,7 +186,7 @@ void ShopScene::ItemListWnd()
 			pItem = ((*it)->GetItemTypeTag() == ITEMTYPE_WEAPON) ? (*it) : NULL;
 			if (pItem != NULL)
 			{
-				RENDER->DrawT(pItem->GetName(), 385, 300 + weaponIndex * 60, ColorF::Tomato, 20.0f, ALIGN_CENTER);
+				RENDER->DrawT(pItem->GetName(), 385, 300 + weaponIndex * 60, ColorF::AntiqueWhite, 20.0f, ALIGN_CENTER);
 			}
 		}
 		break;
@@ -191,7 +197,7 @@ void ShopScene::ItemListWnd()
 			pItem = ((*it)->GetItemTypeTag() == ITEMTYPE_BULLET) ? (*it) : NULL;
 			if (pItem != NULL)
 			{
-				RENDER->DrawT(pItem->GetName(), 385, 300 + bulletIndex * 60, ColorF::Khaki, 20.0f, ALIGN_CENTER);
+				RENDER->DrawT(pItem->GetName(), 385, 300 + bulletIndex * 60, ColorF::AntiqueWhite, 20.0f, ALIGN_CENTER);
 			}
 		}
 		break;
@@ -202,7 +208,7 @@ void ShopScene::ItemListWnd()
 			pItem = ((*it)->GetItemTypeTag() == ITEMTYPE_USINGITEM) ? (*it) : NULL;
 			if (pItem != NULL)
 			{
-				RENDER->DrawT(pItem->GetName(), 385, 300 + usingItemIndex * 60, ColorF::HotPink, 20.0f, ALIGN_CENTER);
+				RENDER->DrawT(pItem->GetName(), 385, 300 + usingItemIndex * 60, ColorF::AntiqueWhite, 20.0f, ALIGN_CENTER);
 			}
 		}
 		break;

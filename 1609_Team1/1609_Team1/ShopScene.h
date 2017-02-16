@@ -19,6 +19,7 @@ class ShopScene :
 	Sprite* m_pShopBT;
 	Sprite* m_pSelectBT;
 	Sprite* m_pClickBT;
+	Sprite* m_pClickBT2;
 	Sprite* m_pMenuBT;
 
 	BUTTON_TAG m_currentButton;				// 현재 버튼이 무엇인지 태그값으로 확인하는 변수
