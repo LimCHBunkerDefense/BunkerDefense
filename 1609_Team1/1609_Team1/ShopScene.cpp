@@ -16,6 +16,7 @@ ShopScene::ShopScene()
 	IsWeaponClicked = false;
 	IsBulletClicked = false;
 	IsUsingItemClicked = false;
+	IsCountClicked = false;
 }
 
 
@@ -59,6 +60,7 @@ void ShopScene::OnExit()
 	IsWeaponClicked = false;		// 클릭변수 삭제
 	IsBulletClicked = false;
 	IsUsingItemClicked = false;
+	IsCountClicked = false;
 }
 
 void ShopScene::OnDraw()

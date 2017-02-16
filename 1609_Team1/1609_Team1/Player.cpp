@@ -214,6 +214,7 @@ void Player::ShopState()
 					{
 						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(1009);
 					}
+					SCENE->GetScene(SCENE_SHOP)->SetIsCountClicked(true);
 					break;
 
 				case BUTTON_SECOND:
@@ -229,6 +230,7 @@ void Player::ShopState()
 					{
 						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(1010);
 					}
+					SCENE->GetScene(SCENE_SHOP)->SetIsCountClicked(true);
 					break;
 
 				case BUTTON_THIRD:
@@ -244,6 +246,7 @@ void Player::ShopState()
 					{
 						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(1011);
 					}
+					SCENE->GetScene(SCENE_SHOP)->SetIsCountClicked(true);
 					break;
 
 				case BUTTON_FORTH:
@@ -259,10 +262,14 @@ void Player::ShopState()
 					{
 						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(1012);
 					}
+					SCENE->GetScene(SCENE_SHOP)->SetIsCountClicked(true);
 					break;
 
 				case BUTTON_COUNT:		// 수량 버튼 선택시 숫자 입력칸 활성화
-					SCENE->GetScene(SCENE_SHOP)->SetInputOnOff(true);
+					if (SCENE->GetScene(SCENE_SHOP)->GetIsCountClicked() == true)
+					{
+						SCENE->GetScene(SCENE_SHOP)->SetInputOnOff(true);
+					}
 					break;
 
 				case BUTTON_BUY:		// 샵씬에서 구매 선택하면 그 아이템이 아이템 가방에 저장됨
@@ -351,35 +358,47 @@ void Player::SetItem()
 
 void Player::AddItem(Object* pItem)
 {
-	if (pItem->GetItemTypeTag() == ITEMTYPE_WEAPON)
+	int selectedCount = SCENE->GetScene(SCENE_SHOP)->GetInputCount();
+	switch (pItem->GetItemTypeTag())
 	{
+	case ITEMTYPE_WEAPON:
 		if (pItem->GetCurrentCount() == 0)
 		{
 			m_itemBag[pItem->GetID()] = new Item(pItem->GetID());
 		}
-	}
-	if (pItem->GetItemTypeTag() == ITEMTYPE_BULLET)
-	{
-		if (pItem->GetCurrentCount() == 0)
-		{
-			m_itemBag[pItem->GetID()] = new Item(pItem->GetID());
-		}
-		if (pItem->GetCurrentCount() != 0)
-		{
-			pItem->AddCurrentCount(SCENE->GetScene(SCENE_SHOP)->GetInputCount());
-		}
-	}
-	if (pItem->GetItemTypeTag() == ITEMTYPE_USINGITEM)
-	{
-		if (pItem->GetCurrentCount() == 0)
-		{
-			m_itemBag[pItem->GetID()] = new Item(pItem->GetID());
-		}
-		if (pItem->GetCurrentCount() != 0)
-		{
-			pItem->AddCurrentCount(SCENE->GetScene(SCENE_SHOP)->GetInputCount());
-		}
-	}
-	
+		break;
 
+	case ITEMTYPE_BULLET:
+		if (pItem->GetCurrentCount() == 0)
+		{
+			if (selectedCount == 1)	m_itemBag[pItem->GetID()] = new Item(pItem->GetID());
+			else if (selectedCount > 1)
+			{
+				m_itemBag[pItem->GetID()] = new Item(pItem->GetID());
+				pItem->AddCurrentCount(selectedCount - 1);
+			}
+		}
+		if (pItem->GetCurrentCount() != 0)
+		{
+			pItem->AddCurrentCount(selectedCount);
+		}
+		break;
+
+	case ITEMTYPE_USINGITEM:
+		if (pItem->GetCurrentCount() == 0)
+		{
+			if (selectedCount == 1)	m_itemBag[pItem->GetID()] = new Item(pItem->GetID());
+			else if (selectedCount > 1)
+			{
+				m_itemBag[pItem->GetID()] = new Item(pItem->GetID());
+				pItem->AddCurrentCount(selectedCount - 1);
+			}
+		}
+		if (pItem->GetCurrentCount() != 0)
+		{
+			pItem->AddCurrentCount(selectedCount);
+		}
+		break;
+
+	}
 }
