@@ -22,4 +22,4 @@ public:
 };
 
 template <typename T>
-T* Singleton<T>::m_pInstance;
+T* Singleton<T>::m_pInstance; 
