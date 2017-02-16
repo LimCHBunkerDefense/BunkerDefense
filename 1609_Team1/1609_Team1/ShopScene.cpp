@@ -10,8 +10,9 @@ ShopScene::ShopScene()
 	RENDER->LoadImageFile(TEXT("ShopTitle"), TEXT("Image/NPC/ShopTitle.png"));
 	RENDER->LoadImageFile(TEXT("ShopBT"), TEXT("Image/NPC/shopbt.png"));
 	RENDER->LoadImageFile(TEXT("SelectBT"), TEXT("Image/NPC/shopselectbt.png"));
-	RENDER->LoadImageFile(TEXT("ClickBT0"), TEXT("Image/NPC/shopclicktbt0.png"));
-	RENDER->LoadImageFile(TEXT("ClickBT1"), TEXT("Image/NPC/shopclicktbt1.png"));
+	RENDER->LoadImageFile(TEXT("MenuBT"), TEXT("Image/NPC/ItemMENU.png"));
+	//RENDER->LoadImageFile(TEXT("ClickBT0"), TEXT("Image/NPC/shopclicktbt0.png"));
+	//RENDER->LoadImageFile(TEXT("ClickBT1"), TEXT("Image/NPC/shopclicktbt1.png"));
 
 	IsWeaponClicked = false;
 	IsBulletClicked = false;
@@ -34,8 +35,8 @@ void ShopScene::OnEnter()
 	NEW_OBJECT(m_pShopTitleBG, Sprite(RENDER->GetImage(TEXT("ShopTitle")), 0.85f, 0, 0));
 	NEW_OBJECT(m_pShopBT, Sprite(RENDER->GetImage(TEXT("ShopBT")), 0.85f, 0, 0));
 	NEW_OBJECT(m_pSelectBT, Sprite(RENDER->GetImage(TEXT("SelectBT")), 0.85f, 0, 0));
-	NEW_OBJECT(m_pClickBT, Sprite(RENDER->GetImage(TEXT("ClickBT0")), 0.85f, 0, 0));
-	//NEW_OBJECT(m_pSelectBT, Sprite(RENDER->GetImage(TEXT("ClickBT1")), 0.85f, 0, 0));
+	NEW_OBJECT(m_pMenuBT, Sprite(RENDER->GetImage(TEXT("MenuBT")), 0.95f, 0, 0));
+	//NEW_OBJECT(m_pClickBT, Sprite(RENDER->GetImage(TEXT("ClickBT0")), 0.85f, 0, 0));
 
 	CreateBoxList();		// 리스트 생성
 	ShowCursor(true);		// 마우스 커서 보이게
@@ -76,10 +77,15 @@ void ShopScene::OnDraw()
 	//RENDER->DrawT(TEXT("SHOP"), 600, 35, ColorF::BlanchedAlmond, 25);
 	pMainCamera->Draw(m_pShopTitleBG, Vector(VIEW_WIDTH * 0.45f, 20));
 
+	//아이템 매뉴
+	pMainCamera->Draw(m_pMenuBT, Vector(366, 160));
+	pMainCamera->Draw(m_pMenuBT, Vector(496, 160));
+	pMainCamera->Draw(m_pMenuBT, Vector(624, 160));
+
+
 	//버튼 이미지(테스트)
-	pMainCamera->Draw(m_pSelectBT, Vector(960, 680)); //선택 버튼
-	pMainCamera->Draw(m_pClickBT, Vector(900, 750)); // 클릭버튼
 	pMainCamera->Draw(m_pShopBT, Vector(820, 680)); // 일반 버튼
+	pMainCamera->Draw(m_pSelectBT, Vector(960, 680)); //선택 버튼
 
 	//RENDER->DrawRect(Vector(950, 450),Vector(320, 300),ColorF::AntiqueWhite, 3);
 	RENDER->DrawT(TEXT("-아이템 정보-"), 880, 335, ColorF::BlanchedAlmond, 20);
@@ -112,32 +118,33 @@ void ShopScene::OnDraw()
 void ShopScene::CreateBoxList()
 {
 	// BoxList에 Box Database 저장
-	AddBoxList(new Box(BUTTON_WEAPON, Vector(420, 235), Vector(120, 180)));	// 중분류 아이템들
-	AddBoxList(new Box(BUTTON_BULLET, Vector(550, 235), Vector(120, 180)));
-	AddBoxList(new Box(BUTTON_USINGITEM, Vector(680, 235), Vector(120, 180)));
+	AddBoxList(new Box(BUTTON_WEAPON, Vector(425, 235), Vector(120, 150)));	// 중분류 아이템들
+	AddBoxList(new Box(BUTTON_BULLET, Vector(555, 235), Vector(120, 150)));
+	AddBoxList(new Box(BUTTON_USINGITEM, Vector(685, 235), Vector(120, 150)));
 
-	AddBoxList(new Box(BUTTON_FIRST, Vector(550, 375), Vector(400, 60)));	// 소분류 아이템들 - index 3부터
-	AddBoxList(new Box(BUTTON_SECOND, Vector(550, 435), Vector(400, 60)));
-	AddBoxList(new Box(BUTTON_THIRD, Vector(550, 495), Vector(400, 60)));
-	AddBoxList(new Box(BUTTON_FORTH, Vector(550, 555), Vector(400, 60)));
+	AddBoxList(new Box(BUTTON_FIRST, Vector(560, 375), Vector(380, 60)));	// 소분류 아이템들 - index 3부터
+	AddBoxList(new Box(BUTTON_SECOND, Vector(560, 435), Vector(380, 60)));
+	AddBoxList(new Box(BUTTON_THIRD, Vector(560, 495), Vector(380, 60)));
+	AddBoxList(new Box(BUTTON_FORTH, Vector(560, 555), Vector(380, 60)));
 
-	AddBoxList(new Box(BUTTON_COUNT, Vector(940, 650), Vector(125, 35)));	// 수량 버튼 박스
-	AddBoxList(new Box(BUTTON_BUY, Vector(885, 700), Vector(125, 35)));		// 구매 버튼 박스
-	AddBoxList(new Box(BUTTON_EXIT, Vector(1025, 700), Vector(125, 35)));	// 종료 버튼 박스
+	AddBoxList(new Box(BUTTON_COUNT, Vector(945, 650), Vector(125, 35)));	// 수량 버튼 박스
+	AddBoxList(new Box(BUTTON_BUY, Vector(888, 704), Vector(128, 45)));		// 구매 버튼 박스
+	AddBoxList(new Box(BUTTON_EXIT, Vector(1028, 704), Vector(128, 45)));	// 종료 버튼 박스
 }
 
 void ShopScene::ItemListWnd()
 {
 	//아이템 종류 목차
 	//RENDER->DrawRect(Vector(550, 235), Vector(400, 220), ColorF::OrangeRed);
-	RENDER->DrawRect(Vector(418, 232), Vector(120, 180), ColorF::Tomato);
-	RENDER->DrawT(TEXT("    ITEM\nWEAPON"), 374, 215, ColorF::Tomato, 20);
+	//RENDER->DrawRect(Vector(425, 234), Vector(120, 150), ColorF::Tomato);
+	RENDER->DrawT(TEXT("    ITEM\nWEAPON"), 380, 215, ColorF::WhiteSmoke, 18);
 
-	RENDER->DrawRect(Vector(550, 232), Vector(120, 180), ColorF::Khaki);
-	RENDER->DrawT(TEXT("  ITEM\nBULLET"), 515, 215, ColorF::Khaki, 20);
+	//RENDER->DrawRect(Vector(556, 234), Vector(120, 150), ColorF::Khaki);
+	RENDER->DrawT(TEXT("  ITEM\nBULLET"), 520, 215, ColorF::WhiteSmoke, 18);
 
-	RENDER->DrawRect(Vector(680, 232), Vector(120, 180), ColorF::HotPink);
-	RENDER->DrawT(TEXT("      ITEM\nUSINGITEM"), 625, 215, ColorF::HotPink, 20);
+	//RENDER->DrawRect(Vector(685, 234), Vector(120, 150), ColorF::HotPink);
+	RENDER->DrawT(TEXT("      ITEM\nUSINGITEM"), 632, 215, ColorF::WhiteSmoke, 18);
+
 
 	//RENDER->DrawRect(Vector(550, 560),Vector(400, 430),ColorF::Red);
 	//RENDER->DrawLine(Vector(350, 408), Vector(750, 408), ColorF::Red);
