@@ -2,13 +2,13 @@
 
 
 
-Creature::Creature() : m_lifeBar(Vector(0, 0), Vector(400, 20), ColorF::Blue, ColorF::LightSlateGray)
+Creature::Creature()
 {
 	m_state = CREATURE_RUN;
 	m_dir = DIRECTION_CENTER;
 }
 
-Creature::Creature(OBJ_TAG tag) : Object(tag), m_lifeBar(Vector(0,0), Vector(400, 20), ColorF::Blue, ColorF::LightSlateGray)
+Creature::Creature(OBJ_TAG tag) : Object(tag)
 {
 	CreatureData* pData = CREATURE->GetData(tag);
 	m_state = CREATURE_RUN;
@@ -22,12 +22,20 @@ Creature::Creature(OBJ_TAG tag) : Object(tag), m_lifeBar(Vector(0,0), Vector(400
 	m_attackSpeed = pData->attackSpeed;
 	m_attackCoolTime = 0;
 	m_moveSpeed = pData->moveSpeed;
+	m_maxLife = pData->life;
+	m_currentLife = m_maxLife;
 	m_money = pData->money;
 	m_score = pData->score;
-	m_lifeBar.SetMinMaxColor(ColorF::Red, ColorF::Blue);
+
+	m_lifeBar = new UIProgressBar(Vector(0, 0), Vector(400, 20), ColorF::Blue, ColorF::LightSlateGray);
+	m_lifeBar->SetMinMaxColor(ColorF::Red, ColorF::Blue);
 
 	m_moveDirection = Vector(Position() * -1 + Vector(MINI_WIDTH * 0.5, MINI_HEIGHT)).Normalize();
 	
+	// z좌표 초기화
+	m_maxZ = 300;
+	m_minZ = m_maxZ;
+
 }
 
 
@@ -47,7 +55,11 @@ void Creature::Update(float deltaTime)
 	Vector pos = m_startPos * (1 - m_t) + OBJECT->GetPlayer()->Position() * m_t;
 	SetPosition_Creature(pos, pos * 5);
 
+	// m_lifeBar targetValue 업데이트
+	m_lifeBar->SetTargetValue(m_currentLife / m_maxLife);
 
+	// m_maxZ 및 m_minZ 업데이트
+	ZUpdate();
 
 	switch (m_state)
 	{
@@ -63,8 +75,7 @@ void Creature::Update(float deltaTime)
 
 void Creature::Draw(Camera* pCamera)
 {
-	// 크리처 스케일 변화되는 부분
-	SetCollider(Collider().size * (m_t * m_t * 3.0f) / m_scale, Collider().anchor);
+	// 이미지 출력 전 이동에 따른 이미지 스케일 키워주는 부분
 	SetScale(m_t * m_t * 3.0f);
 	m_scale = m_t * m_t * 3.0f;
 
@@ -119,4 +130,11 @@ void Creature::StartPosUpdate()
 	Vector pos = MATH->ToDirection(angle) * MINI_WIDTH * 0.5 + OBJECT->GetPlayer()->Position();
 
 	m_startPos = pos;
+}
+
+void Creature::ZUpdate()
+{
+	m_maxZ = 300 + 400 * m_t;
+	m_minZ = m_maxZ - Animation()->Current()->GetSprite()->GetHeight() * 0.7;	// Draw3D 등 이미지를 화면으로 출력해주면서 넣어준 변수에 때문에 0.7배 해주어야 보이는 스프라이트 높이가 됨
+	cout << m_maxZ << "           " << m_minZ << "           " << Animation()->Current()->GetSprite()->GetHeight()  << "           " << m_t<<endl;	// 콘솔창에서 디버깅용
 }

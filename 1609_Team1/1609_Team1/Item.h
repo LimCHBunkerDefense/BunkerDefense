@@ -17,9 +17,10 @@ class Item : public Object
 	int m_reloadBulletCount;
 	int m_currentCount;
 	int m_maxCount;
+	float m_range;
 	wstring m_name;
 	wstring m_info;
-	wstring m_range;
+	wstring m_rangeStr;
 
 	GUN_STATE m_gunState;
 
@@ -42,7 +43,8 @@ public:
 	int GetCurrentCount() { return m_currentCount; }
 	void AddCurrentCount(int addCount) { m_currentCount += addCount; }	// ÇöÀç °¹¼ö µ¡¼À ¹× »¬¼À
 	int GetMaxCount() { return m_maxCount; }
-	wstring GetRange() { return m_range; }
+	float GetRange() { return m_range; }
+	wstring GetRangeStr() { return m_rangeStr; }
 	wstring GetInfo() { return m_info; }
 	int GetItemMoney() { return m_money; }
 	ITEM_TAG GetTag() { return m_tag; }

@@ -8,6 +8,7 @@ Player::Player()
 
 Player::Player(OBJ_TAG tag) : Object(tag)
 {
+	m_greCoolTime = 0.0f;//수류탄 쿨타임
 	m_state = PLAYER_ATTACK;
 	item_state = ITEM_PISTOL;
 
@@ -19,6 +20,10 @@ Player::Player(OBJ_TAG tag) : Object(tag)
 
 	m_pItem = OBJECT->CreateItem(ITEM_PISTOL, 1001);
 	AddItem(m_pItem);
+	
+	Object* startBullet = OBJECT->CreateItem(ITEM_PSBULLET, 2001);
+	m_itemBag[startBullet->GetTag()] = startBullet;
+	startBullet->AddCurrentCount(60);
 	//SetAnimation(m_pItem->Animation());
 
 	m_money = 100000;
@@ -31,6 +36,7 @@ Player::~Player()
 
 void Player::Update(float deltaTime)
 {
+	m_greCoolTime = MATH->Clamp(m_greCoolTime - deltaTime, 0.0f, 2.0f);
 	switch (m_state)
 	{
 	case PLAYER_ATTACK: AttackState(deltaTime); break;
@@ -76,13 +82,16 @@ void Player::AttackState(float deltaTime)
 	//좌클릭시 발사 부분
 	if (INPUT->IsMouseUp(MOUSE_LEFT)) {
 		if (IsThrow) {
-			Vector pos = MATH->ToDirection(90) * MINI_WIDTH * 0.5 + OBJECT->GetPlayer()->Position();
-			OBJECT->CreateGrenade(OBJ_GRENADE, pos);
+			if (m_greCoolTime == 0.0f) {
+				Vector pos = MATH->ToDirection(90) * MINI_WIDTH * 0.5 + OBJECT->GetPlayer()->Position();
+				OBJECT->CreateGrenade(OBJ_GRENADE, pos);
+				m_greCoolTime = 2.0f;
+			}
 			//IsThrow = false;
 		}
 		else {
-			Vector pos = MATH->ToDirection(90) * MINI_WIDTH * 0.5 + OBJECT->GetPlayer()->Position();
-			OBJECT->CreateBullet(OBJ_BULLET, pos);
+			Vector pos = Vector::Up() * m_pItem->GetRange() + OBJECT->GetPlayer()->Position();
+			OBJECT->CreateBullet(OBJ_BULLET, pos, m_pItem->GetTag());
 		}
 	}
 
@@ -162,6 +171,8 @@ void Player::ShopState()
 		SCENE->SetColliderOnOff();
 	}
 
+	map<int, Object*> check;
+
 	// 마우스 왼쪽 버튼 클릭
 	if (INPUT->IsMouseUp(MOUSE_LEFT))
 	{
@@ -203,12 +214,13 @@ void Player::ShopState()
 					}
 					else if (SCENE->GetScene(SCENE_SHOP)->GetIsBulletClicked() == true)
 					{
-						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(1005);
+						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(2001);
 					}
 					else if (SCENE->GetScene(SCENE_SHOP)->GetIsUsingItemClicked() == true)
 					{
-						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(1009);
+						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(3001);
 					}
+					SCENE->GetScene(SCENE_SHOP)->SetIsCountClicked(true);
 					break;
 
 				case BUTTON_SECOND:
@@ -218,12 +230,13 @@ void Player::ShopState()
 					}
 					else if (SCENE->GetScene(SCENE_SHOP)->GetIsBulletClicked() == true)
 					{
-						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(1006);
+						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(2002);
 					}
 					else if (SCENE->GetScene(SCENE_SHOP)->GetIsUsingItemClicked() == true)
 					{
-						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(1010);
+						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(3002);
 					}
+					SCENE->GetScene(SCENE_SHOP)->SetIsCountClicked(true);
 					break;
 
 				case BUTTON_THIRD:
@@ -233,12 +246,13 @@ void Player::ShopState()
 					}
 					else if (SCENE->GetScene(SCENE_SHOP)->GetIsBulletClicked() == true)
 					{
-						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(1007);
+						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(2003);
 					}
 					else if (SCENE->GetScene(SCENE_SHOP)->GetIsUsingItemClicked() == true)
 					{
-						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(1011);
+						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(3003);
 					}
+					SCENE->GetScene(SCENE_SHOP)->SetIsCountClicked(true);
 					break;
 
 				case BUTTON_FORTH:
@@ -248,21 +262,26 @@ void Player::ShopState()
 					}
 					else if (SCENE->GetScene(SCENE_SHOP)->GetIsBulletClicked() == true)
 					{
-						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(1008);
+						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(2004);
 					}
 					else if (SCENE->GetScene(SCENE_SHOP)->GetIsUsingItemClicked() == true)
 					{
-						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(1012);
+						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(3004);
 					}
+					SCENE->GetScene(SCENE_SHOP)->SetIsCountClicked(true);
 					break;
 
 				case BUTTON_COUNT:		// 수량 버튼 선택시 숫자 입력칸 활성화
-					SCENE->GetScene(SCENE_SHOP)->SetInputOnOff(true);
+					if (SCENE->GetScene(SCENE_SHOP)->GetIsCountClicked() == true)
+					{
+						SCENE->GetScene(SCENE_SHOP)->SetInputOnOff(true);
+					}
 					break;
 
 				case BUTTON_BUY:		// 샵씬에서 구매 선택하면 그 아이템이 아이템 가방에 저장됨
 					pItem = SCENE->GetScene(SCENE_SHOP)->GetSelectedItem();
 					AddItem(pItem);
+					check = m_itemBag;
 					break;				
 
 				case BUTTON_EXIT:
@@ -346,35 +365,45 @@ void Player::SetItem()
 
 void Player::AddItem(Object* pItem)
 {
-	if (pItem->GetItemTypeTag() == ITEMTYPE_WEAPON)
+	int selectedCount;
+	switch (pItem->GetItemTypeTag())
 	{
-		if (pItem->GetCurrentCount() == 0)
+	case ITEMTYPE_WEAPON:
+		if (m_itemBag.find(pItem->GetTag()) == m_itemBag.end())
 		{
 			m_itemBag[pItem->GetID()] = new Item(pItem->GetID());
 		}
-	}
-	if (pItem->GetItemTypeTag() == ITEMTYPE_BULLET)
-	{
-		if (pItem->GetCurrentCount() == 0)
-		{
-			m_itemBag[pItem->GetID()] = new Item(pItem->GetID());
-		}
-		if (pItem->GetCurrentCount() != 0)
-		{
-			pItem->AddCurrentCount(SCENE->GetScene(SCENE_SHOP)->GetInputCount());
-		}
-	}
-	if (pItem->GetItemTypeTag() == ITEMTYPE_USINGITEM)
-	{
-		if (pItem->GetCurrentCount() == 0)
-		{
-			m_itemBag[pItem->GetID()] = new Item(pItem->GetID());
-		}
-		if (pItem->GetCurrentCount() != 0)
-		{
-			pItem->AddCurrentCount(SCENE->GetScene(SCENE_SHOP)->GetInputCount());
-		}
-	}
-	
+		break;
 
+	case ITEMTYPE_BULLET:
+		selectedCount = SCENE->GetScene(SCENE_SHOP)->GetInputCount();
+		if (m_itemBag.find(pItem->GetTag()) == m_itemBag.end())
+		{
+			m_itemBag[pItem->GetID()] = new Item(pItem->GetID());
+			m_itemBag[pItem->GetID()]->AddCurrentCount(selectedCount);
+		}
+		if (m_itemBag.find(pItem->GetTag()) != m_itemBag.end())
+		{
+			m_itemBag[pItem->GetID()]->AddCurrentCount(selectedCount);
+		}
+		break;
+
+	case ITEMTYPE_USINGITEM:
+		selectedCount = SCENE->GetScene(SCENE_SHOP)->GetInputCount();
+		if (m_itemBag.find(pItem->GetTag()) == m_itemBag.end())
+		{
+			if (selectedCount == 1)	m_itemBag[pItem->GetID()] = new Item(pItem->GetID());
+			else if (selectedCount > 1)
+			{
+				m_itemBag[pItem->GetID()] = new Item(pItem->GetID());
+				pItem->AddCurrentCount(selectedCount - 1);
+			}
+		}
+		if (m_itemBag.find(pItem->GetTag()) != m_itemBag.end())
+		{
+			pItem->AddCurrentCount(selectedCount);
+		}
+		break;
+
+	}
 }

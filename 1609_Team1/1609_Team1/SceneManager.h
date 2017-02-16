@@ -40,8 +40,10 @@ public:
 	virtual void SetIsUsingItemClicked(bool ON){} 
 	virtual bool GetBuyClicked() { return NULL; }
 	virtual void SetBuyCilcked(bool ON) {}
-
-	virtual int GetInputCount() { return NULL; }						// 상점에 있는 수량에 관련된 함수
+	
+	virtual bool GetIsCountClicked() { return NULL; }					// 상점에 있는 수량에 관련된 함수
+	virtual void SetIsCountClicked(bool ON) {}
+	virtual int GetInputCount() { return NULL; }						
 	virtual void SetInputCount(int addCount) {}
 	virtual bool GetInputOnOff() { return NULL; }
 	virtual void SetInputOnOff(bool ON) {}

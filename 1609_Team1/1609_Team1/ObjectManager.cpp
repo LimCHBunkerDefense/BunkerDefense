@@ -9,7 +9,7 @@
 ObjectManager::ObjectManager()
 {
 	m_sightHeight = SIGHTHEIGHT_DEFAULT;
-	m_aim = Vector(0,0);
+	m_sight = Vector(0,0);
 
 	// 플레이어 총 이미지 맵으로 저장
 	RENDER->LoadImageFiles(TEXT("PistolIdle"), TEXT("Image/Item/Pistol/Idle/Idle"), TEXT("png"), 2);
@@ -20,14 +20,14 @@ ObjectManager::ObjectManager()
 	m_shopItemList.push_back(new Item(1002));
 	m_shopItemList.push_back(new Item(1003));
 	m_shopItemList.push_back(new Item(1004));
-	m_shopItemList.push_back(new Item(1005));
-	m_shopItemList.push_back(new Item(1006));
-	m_shopItemList.push_back(new Item(1007));
-	m_shopItemList.push_back(new Item(1008));
-	m_shopItemList.push_back(new Item(1009));
-	m_shopItemList.push_back(new Item(1010));
-	m_shopItemList.push_back(new Item(1011));
-	m_shopItemList.push_back(new Item(1012));
+	m_shopItemList.push_back(new Item(2001));
+	m_shopItemList.push_back(new Item(2002));
+	m_shopItemList.push_back(new Item(2003));
+	m_shopItemList.push_back(new Item(2004));
+	m_shopItemList.push_back(new Item(3001));
+	m_shopItemList.push_back(new Item(3002));
+	m_shopItemList.push_back(new Item(3003));
+	m_shopItemList.push_back(new Item(3004));
 
 
 }
@@ -51,7 +51,7 @@ void ObjectManager::Update(float deltaTime)
 
 	FOR_LIST(Object*, m_bulletList)
 	{
-		if ((*it)->UpdateBool(deltaTime)) 
+		if ((*it)->UpdateBool(deltaTime))
 		{
 			OBJECT->DestroyBullet((*it));
 			break;
@@ -78,7 +78,7 @@ void ObjectManager::Draw(Camera* pCamera)
 		(*it)->Draw(pCamera);
 
 		// 충돌체 보여주는 부분인데, 미니맵의 실제 움직임과 보여지는 움직임이 다르기 때문에 충돌체 보여주는 것이 의미가 없음.
-		//if(SCENE->GetColliderOnOff()) pCamera->DrawRect((*it)->Collider().LeftTop(), (*it)->Collider().size, ColorF::Yellow, 3);
+		if(SCENE->GetColliderOnOff()) pCamera->DrawRect((*it)->Collider().LeftTop(), (*it)->Collider().size, ColorF::Yellow, 3);
 	}
 
 	FOR_LIST(Object*, m_bulletList)
@@ -120,11 +120,12 @@ void ObjectManager::CreateCreature(OBJ_TAG tag, Vector pos)
 	pCreature->SetStartPos(pos);
 
 	Vector colSize, anchor;
+	float scale;
 	switch (tag)
 	{
 	case OBJ_ENT:
-		float scale = 0.5;
-		colSize = Vector(200, 300) * scale;
+		scale = 0.5;
+		colSize = Vector(10, 10) * scale;
 		anchor = Vector(0.5, 0.95f);
 		pCreature->Animation()->Register(CREATURE_IDLE, new Animation(TEXT("EntIdle"), 2, 2, true, scale, anchor.x, anchor.y));
 		pCreature->Animation()->Register(CREATURE_RUN, new Animation(TEXT("EntRun"), 9, 7, true, scale, anchor.x, anchor.y));
@@ -179,18 +180,34 @@ Object* ObjectManager::CreateItem(ITEM_TAG tag, int itemID)
 	return pItem;
 }
 
-void ObjectManager::CreateBullet(OBJ_TAG tag, Vector pos)
+void ObjectManager::CreateBullet(OBJ_TAG tag, Vector pos, ITEM_TAG itemTag)
 {
 	NEW_OBJECT(Object* pBullet, Bullet(tag));
 	pBullet->SetPosition_Creature(pos, pos * 5);
 	pBullet->SetStartPos(pos);
 
 	Vector colSize, anchor;
-	float scale = 0.05f;
-	colSize = Vector(20, 20) * scale;
-	anchor = Vector(0.5, 0.95f);
-	pBullet->Animation()->Register(BULLET_IDLE, new Animation(TEXT("BulletIdle"), 1, 10, false, scale, anchor.x, anchor.y));
-	//pBullet->Animation()->Register(BULLET_EXPLODE, new Animation(TEXT("EntRun"), 9, 7, true, scale, anchor.x, anchor.y));
+	float scale;
+	switch (itemTag)
+	{
+	case ITEM_PISTOL:
+		scale = 0.05f;
+		colSize = Vector(5, 5) * scale;
+		anchor = Vector(0.5, 0.95f);
+		pBullet->Animation()->Register(BULLET_IDLE, new Animation(TEXT("PistolIdle"), 1, 1, false, scale, anchor.x, anchor.y));
+		pBullet->Animation()->Register(BULLET_EXPLODE, new Animation(TEXT("PistolExplode"), 1, 1, false, scale, anchor.x, anchor.y));
+		pBullet->SetMoveSpeed(5.0f);
+		break;
+	case ITEM_MACHINEGUN:
+		scale = 0.05f;
+		colSize = Vector(5, 5) * scale;
+		anchor = Vector(0.5, 0.95f);
+		pBullet->Animation()->Register(BULLET_IDLE, new Animation(TEXT("MachinegunIdle"), 1, 1, false, scale, anchor.x, anchor.y));
+		pBullet->Animation()->Register(BULLET_EXPLODE, new Animation(TEXT("MachinegunExplode"), 1, 1, false, scale, anchor.x, anchor.y));
+		pBullet->SetMoveSpeed(5.0f);
+		break;
+	}
+	
 
 	pBullet->SetCollider(colSize, anchor);
 
@@ -227,16 +244,17 @@ void ObjectManager::CreateGrenade(OBJ_TAG tag, Vector pos)
 {
 	NEW_OBJECT(Object* pBullet, Grenade(tag));
 	float m_t = GetSightHeight() / SIGHTHEIGHT_MAX;
-	Vector NewPos = pos * m_t + OBJECT->GetPlayer()->Position() * (1 - m_t);
-	pBullet->SetPosition_Creature(NewPos, NewPos * 5);
-	pBullet->SetStartPos(NewPos);
+	//Vector NewPos = pos * m_t + OBJECT->GetPlayer()->Position() * (1 - m_t);
+	pBullet->SetPosition_Creature(pos, pos * 5);
+	pBullet->SetStartPos(pos);
+	pBullet->SetGoal(m_t);
 
 	Vector colSize, anchor;
-	float scale = 1.0f;
+	float scale = 0.5f;
 	colSize = Vector(20, 20) * scale;
 	anchor = Vector(0.5, 0.95f);
-	pBullet->Animation()->Register(GRENADE_IDLE, new Animation(TEXT("Grenade"), 1, 10, false, scale, anchor.x, anchor.y));
-	pBullet->Animation()->Register(GRENADE_EXPLODE, new Animation(TEXT("Explode"), 7, 3,false, scale, anchor.x, anchor.y));
+	pBullet->Animation()->Register(GRENADE_IDLE, new Animation(TEXT("Grenade"), 1, 10, false, 0.2f, anchor.x, anchor.y));
+	pBullet->Animation()->Register(GRENADE_EXPLODE, new Animation(TEXT("Explode"), 7, 3,false, 100.0f, anchor.x, anchor.y));
 
 	pBullet->SetCollider(colSize, anchor);
 
@@ -269,9 +287,9 @@ void ObjectManager::SetPosByDeltaAngle(float deltaTime)
 	
 
 	// 카메라 이동에 따른 배경 출력 위치 변경
-	m_aim = Vector(m_aim.x - deltaPosX, m_sightHeight);
-	if (m_aim.x > 1920 * 2 * 1.8) m_aim -= Vector(1920 * 2 * 1.8, 0);
-	if (m_aim.x < 1920 * 2 * 1.8 * -1) m_aim += Vector(1920 * 2 * 1.8, 0);
+	m_sight = Vector(m_sight.x - deltaPosX, m_sightHeight);
+	if (m_sight.x > 1920 * 2 * 1.8) m_sight -= Vector(1920 * 2 * 1.8, 0);
+	if (m_sight.x < 1920 * 2 * 1.8 * -1) m_sight += Vector(1920 * 2 * 1.8, 0);
 
 	// 시야 변화 각 초기화
 	m_deltaSightAngle = 0;

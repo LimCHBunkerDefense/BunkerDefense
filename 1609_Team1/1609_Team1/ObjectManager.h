@@ -82,9 +82,13 @@ public:
 	virtual float GetMT() { return 0; }
 	virtual float GetCollideAngle() { return 0; }
 	virtual Vector GetNowPos() { return Vector(0, 0); }
+	virtual float GetMaxZ() { return NULL; }
+	virtual float GetMinZ() { return NULL; }
 
 	//Bullet용 함수
 	virtual BOOL UpdateBool(float deltaTime) { return false; }
+	virtual void SetMoveSpeed(float speed) {}
+	virtual void SetGoal(float goal) {}
 
 
 	// 아이템용 함수
@@ -98,7 +102,8 @@ public:
 	virtual int GetCurrentCount() { return NULL; }
 	virtual void AddCurrentCount(int addCount) {}
 	virtual int GetMaxCount() { return NULL; }
-	virtual wstring GetRange() { return NULL; }
+	virtual float GetRange() { return NULL; }
+	virtual wstring GetRangeStr() { return NULL; }
 	virtual wstring GetInfo() { return NULL; }
 	virtual int GetItemMoney() { return NULL; }
 	virtual ITEM_TAG GetTag() { return ITEM_NONE; }
@@ -111,6 +116,7 @@ public:
 	virtual int GetMoney() { return NULL; }		// Creature도 사용
 	virtual void AddMoney(int addMoney) { }		
 	virtual map<int, Object*> GetItemBag() { return m_trashMap; }
+	virtual Object* GetCurrentItem() { return NULL; }
 
 	// 벙커용 함수
 	virtual float GetCurrentLife() { return NULL; }
@@ -127,7 +133,7 @@ class ObjectManager : public Singleton<ObjectManager>
 	float m_deltaSightHeight;
 	float m_sightHeight;
 
-	Vector m_aim;						// 플레이어 조준점 좌표
+	Vector m_sight;						// 플레이어 조준점에 의한 배경 그려지는 좌표 수정을 위한 벡터
 
 	Object* m_pPlayer;
 	Object* m_bunker;
@@ -162,7 +168,7 @@ public:
 
 
 	// 총알
-	void CreateBullet(OBJ_TAG tag, Vector pos);
+	void CreateBullet(OBJ_TAG tag, Vector pos, ITEM_TAG itemTag);
 	list<Object*> GetBulletList() { return m_bulletList; }
 	void DestroyBullet(Object* pCreature);
 	void DestroyAllBullet();
@@ -192,11 +198,11 @@ public:
 	float GetSightHeight() { return m_sightHeight; }
 
 	// 플레이어 에임 좌표 관련
-	Vector GetAimPos() { return m_aim; }
-	void SetAimPos(Vector aim)
+	Vector GetSightPos() { return m_sight; }
+	void SetSightPos(Vector aim)
 	{ 
 		float y = MATH->Clamp(aim.y, SIGHTHEIGHT_MIN, SIGHTHEIGHT_MAX);
-		m_aim = Vector(aim.x, y); 
+		m_sight = Vector(aim.x, y);
 	}
 };
 

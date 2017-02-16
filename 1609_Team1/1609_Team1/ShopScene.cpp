@@ -17,6 +17,7 @@ ShopScene::ShopScene()
 	IsWeaponClicked = false;
 	IsBulletClicked = false;
 	IsUsingItemClicked = false;
+	IsCountClicked = false;
 }
 
 
@@ -60,6 +61,7 @@ void ShopScene::OnExit()
 	IsWeaponClicked = false;		// 클릭변수 삭제
 	IsBulletClicked = false;
 	IsUsingItemClicked = false;
+	IsCountClicked = false;
 }
 
 void ShopScene::OnDraw()
@@ -236,7 +238,7 @@ void ShopScene::ItemStatWnd()
 void ShopScene::SetInputCount(int addCount)
 {
 	if (m_inputCount == 0) m_inputCount += addCount;
-	if (m_inputCount != 0) m_inputCount = m_inputCount * 10 + addCount;
+	else if (m_inputCount != 0) m_inputCount = m_inputCount * 10 + addCount;
 
 	map<int,Object*> playerBag = OBJECT->GetPlayer()->GetItemBag();
 	Object* pItem = NULL;

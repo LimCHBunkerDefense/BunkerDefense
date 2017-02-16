@@ -48,6 +48,8 @@ public:
 		m_colorMax = maxColor;
 	}
 
+	float GetValue() { return m_value; }
+
 	void SetValue(float value)
 	{
 		m_value = MATH->Clamp(value, 0.0f, 1.0f);
@@ -57,6 +59,12 @@ public:
 		m_colorBar.g = MATH->Lerp(m_colorMin.g, m_colorMax.g, m_value);
 		m_colorBar.b = MATH->Lerp(m_colorMin.b, m_colorMax.b, m_value);
 		m_colorBar.a = MATH->Lerp(m_colorMin.a, m_colorMax.a, m_value);
+	}
+
+	void SetCenter(Vector center) 
+	{
+		m_bar.SetCenter(center);
+		m_frame.SetCenter(center);
 	}
 
 	void SetScale(float scale)

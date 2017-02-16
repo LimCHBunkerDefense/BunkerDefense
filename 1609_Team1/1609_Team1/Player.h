@@ -10,6 +10,7 @@
 class Player :
 	public Object
 {
+	float m_greCoolTime;
 	Object* m_pItem;						// 아이템
 	map<int, Object*> m_itemBag;			// 아이템 가방
 
@@ -42,6 +43,9 @@ public:
 
 	// 번호 입력시 아이템을 장착하는 함수
 	void SetItem();
+
+	// 현재 장착무기 호출
+	Object* GetCurrentItem() { return m_pItem; }
 
 	ITEM_TAG GetItemState() { return item_state; }
 

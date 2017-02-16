@@ -14,9 +14,15 @@ class Creature :
 	float m_attackCoolTime;
 	float m_attackSpeed;
 	float m_moveSpeed;
+	float m_maxLife;
+	float m_currentLife;
 	int m_money;
 	int m_score;
-	UIProgressBar m_lifeBar;
+	UIProgressBar* m_lifeBar;
+
+	// 3D화면에서 총알에 적용된 z값과 비교하여 충돌처리를 하기 위한 z의 최소값과 최대값
+	float m_minZ;
+	float m_maxZ;		// 크리쳐 z의 최하점(x,y좌표 반대이므로)으로써, 이 점을 움직이고 minZ를 보정하도록 함
 
 	Vector m_startPos;
 	float m_scale;
@@ -45,9 +51,12 @@ public:
 	Vector GetNowPos(){return  m_startPos * (1 - m_t) + OBJECT->GetPlayer()->Position() * m_t;}
 
 	void StartPosUpdate();
+	void ZUpdate();
 	void SetStartPos(Vector pos) { m_startPos = pos; }
 	Vector GetStartPos() { return m_startPos; }
 	float GetMT() { return m_t; }
+	float GetMaxZ() { return m_maxZ; }
+	float GetMinZ() { return m_minZ; }
 
 	int GetScore() { return m_score; }
 	int GetMoney() { return m_money; }

@@ -32,8 +32,11 @@ PlayScene::PlayScene() : m_attackedColor(ColorF::Red)
 	RENDER->LoadImageFile(TEXT("ScoreUI"), TEXT("Image/UI/InterfaceUI/Score.png"));
 	RENDER->LoadImageFile(TEXT("MoneyUI"), TEXT("Image/UI/InterfaceUI/money.png"));
 
-	//Bullet 임시로 저장
-	RENDER->LoadImageFiles(TEXT("BulletIdle"), TEXT("Image/Bullet/bullet"), TEXT("png"), 1);
+	//Bullet 저장
+	RENDER->LoadImageFiles(TEXT("PistolIdle"), TEXT("Image/Bullet/Pistol/Idle/Idle"), TEXT("png"), 1);
+	RENDER->LoadImageFiles(TEXT("PistolExplode"), TEXT("Image/Bullet/Pistol/Explode/Explode"), TEXT("png"), 1);
+	RENDER->LoadImageFiles(TEXT("MachinegunIdle"), TEXT("Image/Bullet/Machinegun/Idle/Idle"), TEXT("png"), 1);
+	RENDER->LoadImageFiles(TEXT("MachinegunExplode"), TEXT("Image/Bullet/Machinegun/Explode/Explode"), TEXT("png"), 1);
 
 	//Grenade 임시로 저장
 	RENDER->LoadImageFiles(TEXT("Grenade"), TEXT("Image/Item/Grenade/Grenade"), TEXT("png"), 1);
@@ -149,7 +152,7 @@ void PlayScene::OnUpdate(float deltaTime)
 	m_gameTime += deltaTime;
 
 	// 게임 시간에 따른 크리쳐 생성
-	SetCreature(deltaTime);
+	//SetCreature(deltaTime);
 	
 	// 오브젝트 전체 업데이트
 	OBJECT->Update(deltaTime);
@@ -233,8 +236,10 @@ void PlayScene::OnDraw()
 	FOR_LIST(Object*, pList)
 	{
 		Vector pos = (*it)->Position();
+		Vector colSize = (*it)->Collider().size;
 		pMinimapCamera->DrawFilledCircle(pos - 4, Vector(8, 8), ColorF::Red);
 		pMinimapCamera->DrawLine((*it)->GetStartPos().x, (*it)->GetStartPos().y, OBJECT->GetPlayer()->Position().x, OBJECT->GetPlayer()->Position().y, ColorF::Red, 2);
+		//pMinimapCamera->DrawFilledRect(pos - colSize * 0.5, colSize, ColorF::Blue);	// 미니맵 상 크리쳐의 충돌체 표시해주는 부분
 	}
 
 	//탄환 선 긋기
@@ -252,7 +257,7 @@ void PlayScene::OnDraw()
 	{
 		Vector pos = (*it)->Position();
 		pMinimapCamera->DrawFilledCircle(pos - 4, Vector(8, 8), ColorF::Yellow);
-		pMinimapCamera->DrawLine((*it)->GetStartPos().x, (*it)->GetStartPos().y, OBJECT->GetPlayer()->Position().x, OBJECT->GetPlayer()->Position().y, ColorF::DeepPink, 2);
+		//pMinimapCamera->DrawLine((*it)->GetStartPos().x, (*it)->GetStartPos().y, OBJECT->GetPlayer()->Position().x, OBJECT->GetPlayer()->Position().y, ColorF::DeepPink, 2);
 	}
 	
 	OBJECT->Draw(pMainCamera);
@@ -332,7 +337,7 @@ void PlayScene::SetCreature(float deltaTime)
 
 void PlayScene::DrawBG()
 {
-	Vector bgPos = OBJECT->GetAimPos();
+	Vector bgPos = OBJECT->GetSightPos();
 	pMainCamera->Draw(m_pBg, bgPos);
 
 	if(bgPos.x > 0) pMainCamera->Draw(m_pBg, bgPos - Vector(1920 * 2 * 1.8, 0));

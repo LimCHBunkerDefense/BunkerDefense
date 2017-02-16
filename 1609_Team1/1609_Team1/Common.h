@@ -1,5 +1,6 @@
 #pragma once
 
+#pragma comment(linker,"/entry:WinMainCRTStartup /subsystem:console")
 #define VIEW_WIDTH		1200
 #define VIEW_HEIGHT		900
 
@@ -124,7 +125,9 @@ enum SCENE_TAG
 
 enum OBJ_TAG
 {
-	OBJ_NONE, OBJ_PLAYER, OBJ_ENT, OBJ_BUNKER, OBJ_BULLET, OBJ_GRENADE,
+	OBJ_NONE, OBJ_PLAYER, 
+	OBJ_ENT, 
+	OBJ_BUNKER, OBJ_BULLET, OBJ_GRENADE,
 };
 
 enum ITEMTYPE_TAG																// 중분류 아이템 태그
@@ -133,7 +136,7 @@ enum ITEMTYPE_TAG																// 중분류 아이템 태그
 };
 
 enum ITEM_TAG																	// 소분류 아이템 태그
-{
+{ 
 	ITEM_NONE = 0, 
 	ITEM_PISTOL = 1001, ITEM_MACHINEGUN, ITEM_FIRETHROWER, ITEM_LASERGUN,
 	ITEM_PSBULLET = 2001, ITEM_MGBULLET, ITEM_FTBULLET, ITEM_LGBULLET,

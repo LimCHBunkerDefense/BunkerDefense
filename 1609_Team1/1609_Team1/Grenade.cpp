@@ -12,9 +12,11 @@ Grenade::Grenade(OBJ_TAG tag) : Object(tag)
 	CreatureData* pData = CREATURE->GetData(tag);
 	m_scale = 1.0f;
 	m_state = GRENADE_IDLE;
+	m_addHeight = 0.0F;
 	m_t = 0.0F;
+	m_goal = 1.0F;
 	m_moveSpeed = 0.5F;
-
+	m_explodetime = 0.0F;
 	m_moveDirection = Vector(Position() * -1 + Vector(MINI_WIDTH * 0.5, MINI_HEIGHT)).Normalize();
 }
 
@@ -25,6 +27,10 @@ Grenade::~Grenade()
 
 //부딪히면 삭제되게 하기 위해 BOOL 함수 추가
 BOOL Grenade::UpdateBool(float deltaTime) {
+	//렌더시 높이 변하게 하기 위해 추가
+	if		(m_t <= m_goal/2)	m_addHeight -= 30;
+	else if (m_t<=m_goal)		m_addHeight += 30;
+
 	// 플레이어의 카메라 회전에 의한 StartPos 업데이트
 	StartPosUpdate();
 
@@ -56,39 +62,41 @@ void Grenade::IdleState(float deltaTime) {
 	
 
 	Animation()->Play(GRENADE_IDLE);
-	if (m_t == 1.0F) m_state = GRENADE_EXPLODE;
+	if (m_t >= m_goal) m_state = GRENADE_EXPLODE;
 	
 }
 
-BOOL Grenade::Collided()
+void Grenade::Collided()
 {
 	list<Object*> creatureList = OBJECT->GetCreatureList();
 	FOR_LIST(Object*, creatureList) {
 		if (MATH->Distance(Position(), (*it)->GetNowPos())<= GRENADE_SIZE){
 			OBJECT->DestroyCreature((*it));
-			return true;
-		
 		}
 	}
-	return false;
 }
 BOOL Grenade::HitState(float deltaTime) {
-
+	m_explodetime = MATH->Clamp(m_explodetime + m_moveSpeed * deltaTime, 0.0f, 1.0f);
 	Animation()->Play(GRENADE_EXPLODE);
-	if (Collided()) {
-		return true;
-	}
-	return false;
+	Collided();
+	if (m_explodetime <= 0.9F)	return false;
+	else						return true;
 }
 
 void Grenade::Draw(Camera* pCamera)
 {
 	SetCollider(Collider().size * ((1 - m_t) *1.0f) / m_scale, Collider().anchor);
-	SetScale((1 - m_t) *1.0f);
-	m_scale = (1 - m_t) *1.0f;
-
+	switch (m_state)
+	{
+		case GRENADE_IDLE:		SetScale((1 - m_t) *0.2f); break;
+		case GRENADE_EXPLODE:	SetScale((1 - m_t) *6.0f); break;
+	}
+//	SetScale((m_goal - m_t) *1.0f + 0.2f) ;
+	Vector startPos = m_startPos * m_goal + OBJECT->GetPlayer()->Position() * (1 - m_goal);
 	//Vector gap = Vector(VIEW_WIDTH, VIEW_HEIGHT) - OBJECT->GetAimPos();
-	pCamera->Draw3D(Animation()->Current()->GetSprite(), Vector(m_startPos.x, m_startPos.y), (1 - m_t), OBJECT->GetSightHeight(), m_state);
+	//pCamera->Draw3D(Animation()->Current()->GetSprite(), Vector(m_startPos.x, m_startPos.y), (1 - m_t), OBJECT->GetSightHeight(), m_state);
+	//pCamera->Draw3D(Animation()->Current()->GetSprite(), startPos, (m_goal-m_t)/m_goal, OBJECT->GetSightHeight(), m_state);
+	pCamera->Draw3D(Animation()->Current()->GetSprite(), m_startPos, 1-m_t, OBJECT->GetSightHeight(), m_state, m_addHeight);
 }
 
 // 카메라 회전에 의한 StartPos 업데이트

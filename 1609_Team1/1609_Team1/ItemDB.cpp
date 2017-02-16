@@ -26,23 +26,23 @@ void ItemDB::Init()
 		TEXT("엄청난 사거리를 자랑하는 레이저건. \n 매우 비싼 가격이지만 눈물을 머금\n고 구매하기를 강추!"), TEXT("최상")));
 
 	// 상점 구매 아이템(총알)
-	Add(new ItemData(ITEMTYPE_BULLET, ITEM_PSBULLET, 1005, 0, 0, 0, 0, 0, 0, 60, 10, TEXT("권총 탄약(Pistol Bullet)"),
+	Add(new ItemData(ITEMTYPE_BULLET, ITEM_PSBULLET, 2001, 0, 0, 0, 0, 0, 0, 60, 10, TEXT("권총 탄약(Pistol Bullet)"),
 		TEXT("권총의 탄약")));
-	Add(new ItemData(ITEMTYPE_BULLET, ITEM_MGBULLET, 1006, 0, 0, 0, 0, 0, 0, 2000, 15, TEXT("기관총 탄약(Machine Gun Bullet)"),
+	Add(new ItemData(ITEMTYPE_BULLET, ITEM_MGBULLET, 2002, 0, 0, 0, 0, 0, 0, 2000, 15, TEXT("기관총 탄약(Machine Gun Bullet)"),
 		TEXT("기관총의 탄약")));
-	Add(new ItemData(ITEMTYPE_BULLET, ITEM_FTBULLET, 1007, 0, 0, 0, 0, 0, 0, 1800, 20, TEXT("화염 방사기 기름(Fire Thr' Oil)"),
+	Add(new ItemData(ITEMTYPE_BULLET, ITEM_FTBULLET, 2003, 0, 0, 0, 0, 0, 0, 1800, 20, TEXT("화염 방사기 기름(Fire Thr' Oil)"),
 		TEXT("화염 방사기 기름")));
-	Add(new ItemData(ITEMTYPE_BULLET, ITEM_LGBULLET, 1008, 0, 0, 0, 0, 0, 0, 2000, 30, TEXT("레이저 건 충전(Laser Gun char')"),
+	Add(new ItemData(ITEMTYPE_BULLET, ITEM_LGBULLET, 2004, 0, 0, 0, 0, 0, 0, 2000, 30, TEXT("레이저 건 충전(Laser Gun char')"),
 		TEXT("레이저 건 충전")));
 
 	// 상점 구매 아이템(소모품)
-	Add(new ItemData(ITEMTYPE_USINGITEM, ITEM_GRENADE, 1009, 100, 0, 5.0f,  0,   0, 0, 10, 50,   TEXT("수류탄(Grenade)"),
+	Add(new ItemData(ITEMTYPE_USINGITEM, ITEM_GRENADE, 3001, 100, 0, 5.0f,  0,   0, 0, 10, 50,   TEXT("수류탄(Grenade)"),
 		TEXT("가격이 저렴한 수류탄. \n 손에 힘이 없어서 멀리는 던지지 못한다.")));
-	Add(new ItemData(ITEMTYPE_USINGITEM, ITEM_AIRBOMB, 1010, 200, 0, 15.0f, 0,   0, 0, 3, 3000, TEXT("공중 폭격(Air Bomb"),
+	Add(new ItemData(ITEMTYPE_USINGITEM, ITEM_AIRBOMB, 3002, 200, 0, 15.0f, 0,   0, 0, 3, 3000, TEXT("공중 폭격(Air Bomb"),
 		TEXT("광범위하게 살상하는 공중폭격. \n무전기로 본부를 호출해서 지원을\n 요청한다.")));
-	Add(new ItemData(ITEMTYPE_USINGITEM, ITEM_RAVAREGION, 1011,  30, 0, 10.0f, 0,   0, 0, 5, 1000, TEXT("용암지대(Rava Region)"),
+	Add(new ItemData(ITEMTYPE_USINGITEM, ITEM_RAVAREGION, 3003,  30, 0, 10.0f, 0,   0, 0, 5, 1000, TEXT("용암지대(Rava Region)"),
 		TEXT("지속적인 화상상태를 입히는 용암지대. \n 용암이 담긴 캡슐을 던져 용암지대를\n 형성한다.")));
-	Add(new ItemData(ITEMTYPE_USINGITEM, ITEM_BUNKERREPAIR, 1012,   0, 0, 0.0f,  100, 0, 0, 10, 200,  TEXT("벙커 수리(Bunker Repair)"),
+	Add(new ItemData(ITEMTYPE_USINGITEM, ITEM_BUNKERREPAIR, 3004,   0, 0, 0.0f,  100, 0, 0, 10, 200,  TEXT("벙커 수리(Bunker Repair)"),
 		TEXT("금이 간 벙커를 수리. 몬스터로부터\n 공격당해 금이 간 벙커를 수리한다.")));
 
 
