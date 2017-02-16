@@ -38,11 +38,13 @@ PlayScene::PlayScene() : m_attackedColor(ColorF::Red)
 	RENDER->LoadImageFiles(TEXT("MachinegunIdle"), TEXT("Image/Bullet/Machinegun/Idle/Idle"), TEXT("png"), 1);
 	RENDER->LoadImageFiles(TEXT("MachinegunExplode"), TEXT("Image/Bullet/Machinegun/Explode/Explode"), TEXT("png"), 1);
 
-	//Grenade 임시로 저장
+	//Grenade 저장
 	RENDER->LoadImageFiles(TEXT("Grenade"), TEXT("Image/Item/Grenade/Grenade"), TEXT("png"), 1);
 	RENDER->LoadImageFiles(TEXT("Explode"), TEXT("Image/Item/Explode/explode"), TEXT("png"), 7);
 	RENDER->LoadImageFiles(TEXT("Flame_idle"), TEXT("Image/Item/Grenade/Napalm"), TEXT("png"), 1);
 	RENDER->LoadImageFiles(TEXT("Flame_Explode"), TEXT("Image/Item/Flame/flame"), TEXT("png"), 30);
+	RENDER->LoadImageFiles(TEXT("Plane_idle"), TEXT("Image/Item/Grenade/AirPlane"), TEXT("png"), 1);
+	RENDER->LoadImageFiles(TEXT("Plane_Explode"), TEXT("Image/Item/SkyBomb/airBomb"), TEXT("png"), 42);
 
 	//무기 ICON 가져오기
 	RENDER->LoadImageFile(TEXT("PistolOn"),		TEXT("Image/Item/Icon/ico_pistol_on.png"));

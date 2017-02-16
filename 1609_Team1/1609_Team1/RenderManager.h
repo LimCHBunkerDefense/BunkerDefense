@@ -390,9 +390,12 @@ public:
 		// y좌표 구하기
 		y = sightHeight + 130 + VIEW_WIDTH * 0.5 * t * t;
 		if (BULLET_NONE<=object_state &&object_state <=BULLET_EXPLODE) y = y - (400 * t);
-		if (GRENADE_NONE<= object_state && object_state <= GRENADE_EXPLODE) {
+		if (GRENADE_NONE<= object_state && object_state <= FLAME_EXPLODE) {
 			y += addH;
 		}
+		/*if (object_state == AIRBOMB_EXPLODE) {
+			y = 100;
+		}*/
 
 
 		return Vector(x, y);

@@ -16,12 +16,19 @@ Grenade::Grenade(OBJ_TAG tag, GRENADE_STATE gre_state) : Object(tag)
 	m_goal = 1.0F;
 	m_moveSpeed = 0.5F;
 	m_explodetime = 0.0F;
+	
 	switch (gre_state) {
 	case GRENADE_IDLE:
 		m_explodeEnd = 0.9F;
+		m_explodeSize = 10.0f;
 		break;
 	case FLAME_IDLE:
-		m_explodeEnd = 4.0F;
+		m_explodeEnd = 3.5F;
+		m_explodeSize = 15.0f;
+		break;
+	case AIRBOMB_IDLE:
+		m_explodeEnd = 10.0F;
+		m_explodeSize = 20.0f;
 		break;
 	default:
 		m_explodeEnd = 0.0F;
@@ -62,7 +69,7 @@ BOOL Grenade::UpdateBool(float deltaTime) {
 	Vector pos = GetNowPos();
 	SetPosition_Creature(pos, pos * 5);
 
-	cout << Position().x << "   " << Position().y << "       " << m_t << endl;
+	//cout << Position().x << "   " << Position().y << "       " << m_t << endl;
 
 	switch (m_state)
 	{
@@ -70,6 +77,8 @@ BOOL Grenade::UpdateBool(float deltaTime) {
 		case GRENADE_EXPLODE:	result = HitState(deltaTime); break;
 		case FLAME_IDLE:		IdleState(deltaTime); break;
 		case FLAME_EXPLODE:		result = HitState(deltaTime); break;
+		case AIRBOMB_IDLE:		IdleState(deltaTime); break;
+		case AIRBOMB_EXPLODE:	result = HitState(deltaTime); break;
 	}
 
 	Animation()->Update(deltaTime);
@@ -87,6 +96,7 @@ void Grenade::IdleState(float deltaTime) {
 	
 
 	Animation()->Play(m_state);
+	//if (m_state == AIRBOMB_IDLE) m_goal = 0.9f;
 	if (m_t >= m_goal) m_state = GetStateExplode(m_state);
 	
 }
@@ -99,6 +109,9 @@ GRENADE_STATE Grenade::GetStateExplode(GRENADE_STATE gre_state) {
 	case FLAME_IDLE:
 		return FLAME_EXPLODE;
 		break;
+	case AIRBOMB_IDLE:
+		return AIRBOMB_EXPLODE;
+		break;
 	default:
 		return GRENADE_NONE;
 		break;
@@ -109,7 +122,7 @@ void Grenade::Collided()
 {
 	list<Object*> creatureList = OBJECT->GetCreatureList();
 	FOR_LIST(Object*, creatureList) {
-		if (MATH->Distance(Position(), (*it)->GetNowPos())<= GRENADE_SIZE){
+		if (MATH->Distance(Position(), (*it)->GetNowPos())<= m_explodeSize){
 			OBJECT->DestroyCreature((*it));
 		}
 	}
@@ -131,13 +144,22 @@ void Grenade::Draw(Camera* pCamera)
 		case GRENADE_EXPLODE:	SetScale((1 - m_t) *6.0f); break;
 		case FLAME_IDLE:		SetScale((1 - m_t) *0.2f); break;
 		case FLAME_EXPLODE:		SetScale((1 - m_t) *6.0f); break;
+		case AIRBOMB_IDLE:		SetScale((1 - m_t) *2.0f); break;
+		case AIRBOMB_EXPLODE:	SetScale(3.0f); break;
 	}
-//	SetScale((m_goal - m_t) *1.0f + 0.2f) ;
-	Vector startPos = m_startPos * m_goal + OBJECT->GetPlayer()->Position() * (1 - m_goal);
-	//Vector gap = Vector(VIEW_WIDTH, VIEW_HEIGHT) - OBJECT->GetAimPos();
-	//pCamera->Draw3D(Animation()->Current()->GetSprite(), Vector(m_startPos.x, m_startPos.y), (1 - m_t), OBJECT->GetSightHeight(), m_state);
-	//pCamera->Draw3D(Animation()->Current()->GetSprite(), startPos, (m_goal-m_t)/m_goal, OBJECT->GetSightHeight(), m_state);
-	pCamera->Draw3D(Animation()->Current()->GetSprite(), m_startPos, 1-m_t, OBJECT->GetSightHeight(), m_state, m_addHeight);
+
+	//Vector startPos = m_startPos * m_goal + OBJECT->GetPlayer()->Position() * (1 - m_goal);
+
+	if (m_state == AIRBOMB_IDLE) {
+		pCamera->Draw3D(Animation()->Current()->GetSprite(), m_startPos, 1 - m_t, OBJECT->GetSightHeight()+150, m_state);
+	}
+	else if (m_state == AIRBOMB_EXPLODE) {
+		//pCamera->Draw3D(Animation()->Current()->GetSprite(), m_startPos, 1 - m_t, OBJECT->GetSightHeight(), m_state, m_addHeight);
+		pCamera->Draw3D(Animation()->Current()->GetSprite(), m_startPos, 0.5,400, m_state);
+	}
+	else {
+		pCamera->Draw3D(Animation()->Current()->GetSprite(), m_startPos, 1 - m_t, OBJECT->GetSightHeight(), m_state, m_addHeight);
+	}
 }
 
 // 카메라 회전에 의한 StartPos 업데이트

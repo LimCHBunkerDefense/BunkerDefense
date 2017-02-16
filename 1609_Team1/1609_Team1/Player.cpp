@@ -86,15 +86,7 @@ void Player::AttackState(float deltaTime)
 		if (gre_state != GRENADE_NONE) {
 			if (m_greCoolTime == 0.0f) {
 				Vector pos = MATH->ToDirection(90) * MINI_WIDTH * 0.5 + OBJECT->GetPlayer()->Position();
-				switch (gre_state) {
-				case GRENADE_IDLE:				
-					OBJECT->CreateGrenade(OBJ_GRENADE, pos, GRENADE_IDLE);
-					break;
-				case FLAME_IDLE:
-					OBJECT->CreateGrenade(OBJ_GRENADE, pos, FLAME_IDLE);
-					break;
-				}
-				
+				OBJECT->CreateGrenade(OBJ_GRENADE, pos, gre_state);
 				m_greCoolTime = 2.0f;
 			}
 		}
@@ -369,6 +361,13 @@ void Player::SetItem()
 	{
 		if (gre_state == GRENADE_IDLE)	gre_state = GRENADE_NONE;
 		else 							gre_state = GRENADE_IDLE;
+	}
+
+	//¹«Àü±â ÀåÂø
+	if (INPUT->IsKeyDown(VK_W))
+	{
+		if (gre_state == AIRBOMB_IDLE)	gre_state = GRENADE_NONE;
+		else 							gre_state = AIRBOMB_IDLE;
 	}
 
 	//È­¿°Åº ÀåÂø
