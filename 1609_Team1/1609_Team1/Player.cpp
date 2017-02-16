@@ -20,8 +20,10 @@ Player::Player(OBJ_TAG tag) : Object(tag)
 
 	m_pItem = OBJECT->CreateItem(ITEM_PISTOL, 1001);
 	AddItem(m_pItem);
-	AddItem(OBJECT->CreateItem(ITEM_PSBULLET, 1005));
-	m_itemBag[1005]->AddCurrentCount(60);   
+	
+	Object* startBullet = OBJECT->CreateItem(ITEM_PSBULLET, 1005);
+	m_itemBag[startBullet->GetTag()] = startBullet;
+	startBullet->AddCurrentCount(60);
 	//SetAnimation(m_pItem->Animation());
 
 	m_money = 100000;
