@@ -51,7 +51,11 @@ void ObjectManager::Update(float deltaTime)
 
 	FOR_LIST(Object*, m_bulletList)
 	{
-		(*it)->Update(deltaTime);
+		if ((*it)->UpdateBool(deltaTime))
+		{
+			OBJECT->DestroyBullet((*it));
+			break;
+		}
 	}
 
 	FOR_LIST(Object*, m_grenadeList)
@@ -74,7 +78,7 @@ void ObjectManager::Draw(Camera* pCamera)
 		(*it)->Draw(pCamera);
 
 		// 충돌체 보여주는 부분인데, 미니맵의 실제 움직임과 보여지는 움직임이 다르기 때문에 충돌체 보여주는 것이 의미가 없음.
-		//if(SCENE->GetColliderOnOff()) pCamera->DrawRect((*it)->Collider().LeftTop(), (*it)->Collider().size, ColorF::Yellow, 3);
+		if(SCENE->GetColliderOnOff()) pCamera->DrawRect((*it)->Collider().LeftTop(), (*it)->Collider().size, ColorF::Yellow, 3);
 	}
 
 	FOR_LIST(Object*, m_bulletList)
@@ -121,7 +125,7 @@ void ObjectManager::CreateCreature(OBJ_TAG tag, Vector pos)
 	{
 	case OBJ_ENT:
 		scale = 0.5;
-		colSize = Vector(200, 300) * scale;
+		colSize = Vector(100, 300) * scale;
 		anchor = Vector(0.5, 0.95f);
 		pCreature->Animation()->Register(CREATURE_IDLE, new Animation(TEXT("EntIdle"), 2, 2, true, scale, anchor.x, anchor.y));
 		pCreature->Animation()->Register(CREATURE_RUN, new Animation(TEXT("EntRun"), 9, 7, true, scale, anchor.x, anchor.y));
@@ -190,8 +194,16 @@ void ObjectManager::CreateBullet(OBJ_TAG tag, Vector pos, ITEM_TAG itemTag)
 		scale = 0.05f;
 		colSize = Vector(20, 20) * scale;
 		anchor = Vector(0.5, 0.95f);
-		pBullet->Animation()->Register(BULLET_IDLE, new Animation(TEXT("BulletIdle"), 1, 10, false, scale, anchor.x, anchor.y));
-		//pBullet->Animation()->Register(BULLET_EXPLODE, new Animation(TEXT("EntRun"), 9, 7, true, scale, anchor.x, anchor.y));
+		pBullet->Animation()->Register(BULLET_IDLE, new Animation(TEXT("PistolIdle"), 1, 1, false, scale, anchor.x, anchor.y));
+		pBullet->Animation()->Register(BULLET_EXPLODE, new Animation(TEXT("PistolExplode"), 1, 1, false, scale, anchor.x, anchor.y));
+		pBullet->SetMoveSpeed(5.0f);
+		break;
+	case ITEM_MACHINEGUN:
+		scale = 0.05f;
+		colSize = Vector(20, 20) * scale;
+		anchor = Vector(0.5, 0.95f);
+		pBullet->Animation()->Register(BULLET_IDLE, new Animation(TEXT("MachinegunIdle"), 1, 1, false, scale, anchor.x, anchor.y));
+		pBullet->Animation()->Register(BULLET_EXPLODE, new Animation(TEXT("MachinegunExplode"), 1, 1, false, scale, anchor.x, anchor.y));
 		pBullet->SetMoveSpeed(5.0f);
 		break;
 	}

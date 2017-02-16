@@ -32,8 +32,11 @@ PlayScene::PlayScene() : m_attackedColor(ColorF::Red)
 	RENDER->LoadImageFile(TEXT("ScoreUI"), TEXT("Image/UI/InterfaceUI/Score.png"));
 	RENDER->LoadImageFile(TEXT("MoneyUI"), TEXT("Image/UI/InterfaceUI/money.png"));
 
-	//Bullet 임시로 저장
-	RENDER->LoadImageFiles(TEXT("BulletIdle"), TEXT("Image/Bullet/bullet"), TEXT("png"), 1);
+	//Bullet 저장
+	RENDER->LoadImageFiles(TEXT("PistolIdle"), TEXT("Image/Bullet/Pistol/Idle/Idle"), TEXT("png"), 1);
+	RENDER->LoadImageFiles(TEXT("PistolExplode"), TEXT("Image/Bullet/Pistol/Explode/Explode"), TEXT("png"), 1);
+	RENDER->LoadImageFiles(TEXT("MachinegunIdle"), TEXT("Image/Bullet/Machinegun/Idle/Idle"), TEXT("png"), 1);
+	RENDER->LoadImageFiles(TEXT("MachinegunExplode"), TEXT("Image/Bullet/Machinegun/Explode/Explode"), TEXT("png"), 1);
 
 	//Grenade 임시로 저장
 	RENDER->LoadImageFiles(TEXT("Grenade"), TEXT("Image/Item/Grenade/Grenade"), TEXT("png"), 1);

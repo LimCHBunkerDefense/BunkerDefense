@@ -22,12 +22,13 @@ public:
 	~Bullet();
 
 	void Update(float deltaTime);
+	BOOL UpdateBool(float deltaTime);
 	void Draw(Camera* pCamera);
 
 	void StartPosUpdate();
 
 	void IdleState(float deltaTime);
-	void ExplodeState(float deltaTime);
+	bool ExplodeState(float deltaTime);
 
 	void SetMoveDirection(Vector vector) { m_moveDirection = vector; }
 	Vector GetMoveDirection() { return m_moveDirection; }

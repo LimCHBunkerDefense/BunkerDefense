@@ -24,19 +24,27 @@ Bullet::~Bullet()
 
 void Bullet::Update(float deltaTime)
 {
+
+}
+
+BOOL Bullet::UpdateBool(float deltaTime)
+{
 	//이동방향벡터 실시간 업데이트
 	m_moveDirection = Vector(Position() * -1 + Vector(MINI_WIDTH * 0.5, MINI_HEIGHT)).Normalize();
 	
 	// 플레이어의 카메라 회전에 의한 StartPos 업데이트
 	StartPosUpdate();
 
+	bool result = false;
 	switch (m_state)
 	{
 		case BULLET_IDLE: IdleState(deltaTime); break;
-		case BULLET_EXPLODE: ExplodeState(deltaTime); break;
+		case BULLET_EXPLODE: result = ExplodeState(deltaTime); break;
 	}
 
 	Animation()->Update(deltaTime);
+
+	return result;
 }
 
 void Bullet::Draw(Camera* pCamera)
@@ -52,8 +60,7 @@ void Bullet::Draw(Camera* pCamera)
 
 void Bullet::IdleState(float deltaTime) 
 {
-	// 사정거리 끝까지 간 m_t가 1인경우 혹은 크리쳐와 부딪힌 경우 폭발상태로 전환
-	if (m_t >= 0.9999 || Collided()) m_state = BULLET_EXPLODE;
+	Animation()->Play(BULLET_IDLE);
 
 	// 이동에 관계된 비율 (시작점에서 플레이어까지 가는 거리를 1로 봤을 때, 현재 이동한 거리의 비율)
 	m_t = MATH->Clamp(m_t + m_moveSpeed * deltaTime, 0.0f, 1.0f);
@@ -62,11 +69,17 @@ void Bullet::IdleState(float deltaTime)
 	Vector pos = GetNowPos();
 	SetPosition_Creature(pos, pos * 5);
 
-	Animation()->Play(BULLET_IDLE);
+	// 사정거리 끝까지 간 m_t가 1인경우 혹은 크리쳐와 충돌처리 되면 총알 삭제
+	if (m_t >= 0.9999 || Collided())
+	{
+		Animation()->Play(BULLET_EXPLODE);
+		m_state = BULLET_EXPLODE;
+	}
 }
 
-void Bullet::ExplodeState(float deltaTime) {
-
+bool Bullet::ExplodeState(float deltaTime) 
+{
+	return true;
 }
 
 BOOL Bullet::Collided()
