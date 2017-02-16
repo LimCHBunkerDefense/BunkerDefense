@@ -358,7 +358,7 @@ void Player::SetItem()
 
 void Player::AddItem(Object* pItem)
 {
-	int selectedCount = SCENE->GetScene(SCENE_SHOP)->GetInputCount();
+	int selectedCount;
 	switch (pItem->GetItemTypeTag())
 	{
 	case ITEMTYPE_WEAPON:
@@ -369,6 +369,7 @@ void Player::AddItem(Object* pItem)
 		break;
 
 	case ITEMTYPE_BULLET:
+		selectedCount = SCENE->GetScene(SCENE_SHOP)->GetInputCount();
 		if (pItem->GetCurrentCount() == 0)
 		{
 			if (selectedCount == 1)	m_itemBag[pItem->GetID()] = new Item(pItem->GetID());
@@ -385,6 +386,7 @@ void Player::AddItem(Object* pItem)
 		break;
 
 	case ITEMTYPE_USINGITEM:
+		selectedCount = SCENE->GetScene(SCENE_SHOP)->GetInputCount();
 		if (pItem->GetCurrentCount() == 0)
 		{
 			if (selectedCount == 1)	m_itemBag[pItem->GetID()] = new Item(pItem->GetID());
