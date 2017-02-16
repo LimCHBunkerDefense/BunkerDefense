@@ -18,20 +18,20 @@ void ItemDB::Init()
 		TEXT("기본 총이다. \n상점에서 구매할 수 없다."), TEXT("하")));
 	
 	// 상점 구매 무기
-	Add(new ItemData(ITEMTYPE_WEAPON, ITEM_MACHINEGUN, 1002, 30, 0, 100.0f, 0, 2000, 500, 1, 2000, TEXT("기관총(Machine Gun)"),
+	Add(new ItemData(ITEMTYPE_WEAPON, ITEM_SHOTGUN, 1002, 80, 0, 50.0f, 0, 24, 2, 1, 1200, TEXT("샷건(Shot Gun)"),
+		TEXT("근거리에서 사용가능한 샷건. \n 근거리에서 엄청난 화력을 자랑한다."), TEXT("하")));
+	Add(new ItemData(ITEMTYPE_WEAPON, ITEM_MACHINEGUN, 1003, 30, 0, 100.0f, 0, 2000, 500, 1, 2000, TEXT("기관총(Machine Gun)"),
 		TEXT("연사가 가능한 기관총. \n 시원한 타격감이 일품인 총이다."), TEXT("중")));
-	Add(new ItemData(ITEMTYPE_WEAPON, ITEM_FIRETHROWER, 1003, 50, 0, 50.0f,  0, 1800, 600,  1, 1500, TEXT("화염 방사기(Fire Thrower)"),
-		TEXT("근거리에서 사용가능한 화염방사기. \n 근거리에서 엄청난 화력을 자랑한다."), TEXT("하")));
 	Add(new ItemData(ITEMTYPE_WEAPON, ITEM_LASERGUN, 1004, 50, 0, 120.0f, 0, 2000, 1000, 1, 5000, TEXT("레이저 건(Laser Gun)"),
 		TEXT("엄청난 사거리를 자랑하는 레이저건. \n 매우 비싼 가격이지만 눈물을 머금\n고 구매하기를 강추!"), TEXT("최상")));
 
 	// 상점 구매 아이템(총알)
 	Add(new ItemData(ITEMTYPE_BULLET, ITEM_PSBULLET, 2001, 0, 0, 0, 0, 0, 0, 60, 10, TEXT("권총 탄약(Pistol Bullet)"),
 		TEXT("권총의 탄약")));
-	Add(new ItemData(ITEMTYPE_BULLET, ITEM_MGBULLET, 2002, 0, 0, 0, 0, 0, 0, 2000, 15, TEXT("기관총 탄약(Machine Gun Bullet)"),
+	Add(new ItemData(ITEMTYPE_BULLET, ITEM_SGBULLET, 2002, 0, 0, 0, 0, 0, 0, 1800, 20, TEXT("샷건 탄약(Shot Gun Bullet)"),
+		TEXT("샷건 탄약")));
+	Add(new ItemData(ITEMTYPE_BULLET, ITEM_MGBULLET, 2003, 0, 0, 0, 0, 0, 0, 2000, 15, TEXT("기관총 탄약(Machine Gun Bullet)"),
 		TEXT("기관총의 탄약")));
-	Add(new ItemData(ITEMTYPE_BULLET, ITEM_FTBULLET, 2003, 0, 0, 0, 0, 0, 0, 1800, 20, TEXT("화염 방사기 기름(Fire Thr' Oil)"),
-		TEXT("화염 방사기 기름")));
 	Add(new ItemData(ITEMTYPE_BULLET, ITEM_LGBULLET, 2004, 0, 0, 0, 0, 0, 0, 2000, 30, TEXT("레이저 건 충전(Laser Gun char')"),
 		TEXT("레이저 건 충전")));
 

@@ -278,6 +278,13 @@ void ShopScene::SetInputCount(int addCount)
 				{
 					m_inputCount = MATH->Clamp(m_inputCount, 0, buyCount);
 				}
+			}	
+			if (pItem->GetTag() == ITEM_SGBULLET)
+			{
+				if (playerBag.find(ITEM_SGBULLET) != playerBag.end())
+				{
+					m_inputCount = MATH->Clamp(m_inputCount, 0, buyCount);
+				}
 			}
 			if (pItem->GetTag() == ITEM_MGBULLET)
 			{
@@ -286,13 +293,7 @@ void ShopScene::SetInputCount(int addCount)
 					m_inputCount = MATH->Clamp(m_inputCount, 0, buyCount);
 				}
 			}
-			if (pItem->GetTag() == ITEM_FTBULLET)
-			{
-				if (playerBag.find(ITEM_FIRETHROWER) != playerBag.end())
-				{
-					m_inputCount = MATH->Clamp(m_inputCount, 0, buyCount);
-				}
-			}
+
 			if (pItem->GetTag() == ITEM_LGBULLET)
 			{
 				if (playerBag.find(ITEM_LASERGUN) != playerBag.end())

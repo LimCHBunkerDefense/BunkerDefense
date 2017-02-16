@@ -166,13 +166,13 @@ Object* ObjectManager::CreateItem(ITEM_TAG tag, int itemID)
 	// 	pItem->Animation()->Register(GUN_SHOT, new Animation(TEXT("PistolShot"), 3, 3, false, 1.0f, 0.5f, 1.0f));
 	//  pItem->Animation()->Register(GUN_RELOAD, new Animation(TEXT("PistolReload"), 6, 3, false, 1.0f, 0.5f, 1.0f));
 		break;
-	
+
+	case ITEM_SHOTGUN:
+		break;
+
 	case ITEM_MACHINEGUN:
-		break;
-	
-	case ITEM_FIRETHROWER:
-		break;
-	
+		break;	
+
 	case ITEM_LASERGUN:
 		break;
 	}
