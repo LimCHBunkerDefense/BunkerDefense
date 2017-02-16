@@ -28,6 +28,7 @@ public:
 
 	void IdleState(float deltaTime);
 	BOOL HitState(float deltaTime);
+	GRENADE_STATE GetStateExplode(GRENADE_STATE gre_state);
 
 	void SetMoveDirection(Vector vector) { m_moveDirection = vector; }
 	Vector GetMoveDirection() { return m_moveDirection; }

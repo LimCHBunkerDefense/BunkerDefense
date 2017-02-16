@@ -91,7 +91,7 @@ void Grenade::IdleState(float deltaTime) {
 	
 }
 
-GRENADE_STATE GetStateExplode(GRENADE_STATE gre_state) {
+GRENADE_STATE Grenade::GetStateExplode(GRENADE_STATE gre_state) {
 	switch (gre_state) {
 	case GRENADE_IDLE:
 		return GRENADE_EXPLODE;
@@ -115,11 +115,11 @@ void Grenade::Collided()
 	}
 }
 BOOL Grenade::HitState(float deltaTime) {
-	m_explodetime = MATH->Clamp(m_explodetime + m_moveSpeed * deltaTime, 0.0f, 1.0f);
+	m_explodetime = MATH->Clamp(m_explodetime + m_moveSpeed * deltaTime, 0.0f, 100.0f);
 	Animation()->Play(m_state);
 	Collided();
 	if (m_explodetime <= m_explodeEnd)	return false;
-	else						return true;
+	else								return true;
 }
 
 void Grenade::Draw(Camera* pCamera)
