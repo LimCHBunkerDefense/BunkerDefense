@@ -63,7 +63,7 @@ void Bullet::IdleState(float deltaTime)
 	Animation()->Play(BULLET_IDLE);
 
 	// 이동에 관계된 비율 (시작점에서 플레이어까지 가는 거리를 1로 봤을 때, 현재 이동한 거리의 비율)
-	m_t = MATH->Clamp(m_t + m_moveSpeed * deltaTime / OBJECT->GetPlayer()->GetCurrentItem()->GetRange(), 0.0f, 1.0f);
+	m_t = MATH->Clamp(m_t + m_moveSpeed * deltaTime, 0.0f, 1.0f);
 
 	// 크리쳐와 식이 반대로임
 	Vector pos = GetNowPos();

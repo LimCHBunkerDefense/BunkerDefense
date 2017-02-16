@@ -166,7 +166,7 @@ void Player::ShopState()
 	{
 		SCENE->SetColliderOnOff();
 	}
-
+	 
 	// 마우스 왼쪽 버튼 클릭
 	if (INPUT->IsMouseUp(MOUSE_LEFT))
 	{
