@@ -20,14 +20,14 @@ ObjectManager::ObjectManager()
 	m_shopItemList.push_back(new Item(1002));
 	m_shopItemList.push_back(new Item(1003));
 	m_shopItemList.push_back(new Item(1004));
-	m_shopItemList.push_back(new Item(1005));
-	m_shopItemList.push_back(new Item(1006));
-	m_shopItemList.push_back(new Item(1007));
-	m_shopItemList.push_back(new Item(1008));
-	m_shopItemList.push_back(new Item(1009));
-	m_shopItemList.push_back(new Item(1010));
-	m_shopItemList.push_back(new Item(1011));
-	m_shopItemList.push_back(new Item(1012));
+	m_shopItemList.push_back(new Item(2001));
+	m_shopItemList.push_back(new Item(2002));
+	m_shopItemList.push_back(new Item(2003));
+	m_shopItemList.push_back(new Item(2004));
+	m_shopItemList.push_back(new Item(3001));
+	m_shopItemList.push_back(new Item(3002));
+	m_shopItemList.push_back(new Item(3003));
+	m_shopItemList.push_back(new Item(3004));
 
 
 }

@@ -21,7 +21,7 @@ Player::Player(OBJ_TAG tag) : Object(tag)
 	m_pItem = OBJECT->CreateItem(ITEM_PISTOL, 1001);
 	AddItem(m_pItem);
 	
-	Object* startBullet = OBJECT->CreateItem(ITEM_PSBULLET, 1005);
+	Object* startBullet = OBJECT->CreateItem(ITEM_PSBULLET, 2001);
 	m_itemBag[startBullet->GetTag()] = startBullet;
 	startBullet->AddCurrentCount(60);
 	//SetAnimation(m_pItem->Animation());
@@ -214,11 +214,11 @@ void Player::ShopState()
 					}
 					else if (SCENE->GetScene(SCENE_SHOP)->GetIsBulletClicked() == true)
 					{
-						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(1005);
+						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(2001);
 					}
 					else if (SCENE->GetScene(SCENE_SHOP)->GetIsUsingItemClicked() == true)
 					{
-						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(1009);
+						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(3001);
 					}
 					SCENE->GetScene(SCENE_SHOP)->SetIsCountClicked(true);
 					break;
@@ -230,11 +230,11 @@ void Player::ShopState()
 					}
 					else if (SCENE->GetScene(SCENE_SHOP)->GetIsBulletClicked() == true)
 					{
-						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(1006);
+						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(2002);
 					}
 					else if (SCENE->GetScene(SCENE_SHOP)->GetIsUsingItemClicked() == true)
 					{
-						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(1010);
+						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(3002);
 					}
 					SCENE->GetScene(SCENE_SHOP)->SetIsCountClicked(true);
 					break;
@@ -246,11 +246,11 @@ void Player::ShopState()
 					}
 					else if (SCENE->GetScene(SCENE_SHOP)->GetIsBulletClicked() == true)
 					{
-						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(1007);
+						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(2003);
 					}
 					else if (SCENE->GetScene(SCENE_SHOP)->GetIsUsingItemClicked() == true)
 					{
-						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(1011);
+						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(3003);
 					}
 					SCENE->GetScene(SCENE_SHOP)->SetIsCountClicked(true);
 					break;
@@ -262,11 +262,11 @@ void Player::ShopState()
 					}
 					else if (SCENE->GetScene(SCENE_SHOP)->GetIsBulletClicked() == true)
 					{
-						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(1008);
+						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(2004);
 					}
 					else if (SCENE->GetScene(SCENE_SHOP)->GetIsUsingItemClicked() == true)
 					{
-						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(1012);
+						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(3004);
 					}
 					SCENE->GetScene(SCENE_SHOP)->SetIsCountClicked(true);
 					break;
