@@ -85,20 +85,20 @@ bool Bullet::ExplodeState(float deltaTime)
 BOOL Bullet::Collided()
 {
 	list<Object*> creatureList = OBJECT->GetCreatureList();
-	FOR_LIST(Object*, creatureList) {
-		if (abs(MATH->Angle(m_moveDirection, (*it)->GetMoveDirection())) < (*it)->GetCollideAngle()) {
-			if (m_t + (*it)->GetMT() >= 1.0f) {
-				if (MATH->IsCollided(this->Collider(), (*it)->Collider()))
-				{
-					int money = (*it)->GetMoney();
-					OBJECT->GetPlayer()->AddMoney(money);
-					int score = (*it)->GetScore();
-					OBJECT->GetPlayer()->AddScore(score);
-					Object* p = OBJECT->GetPlayer();
-					OBJECT->DestroyCreature((*it));
-					return true;
-				}
-			}
+	FOR_LIST(Object*, creatureList) 
+	{
+		// 크리쳐랑 충돌이 되고, z값 기준으로 높이가 맞아야 하고, 
+		if (MATH->IsCollided(this->Collider(), (*it)->Collider())
+			&& m_z <= (*it)->GetMaxZ()
+			&& m_z >= (*it)->GetMinZ())
+		{
+			int money = (*it)->GetMoney();
+			OBJECT->GetPlayer()->AddMoney(money);
+			int score = (*it)->GetScore();
+			OBJECT->GetPlayer()->AddScore(score);
+			Object* p = OBJECT->GetPlayer();
+			OBJECT->DestroyCreature((*it));
+			return true;
 		}
 	}
 	return false;

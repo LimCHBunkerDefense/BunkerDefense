@@ -82,6 +82,8 @@ public:
 	virtual float GetMT() { return 0; }
 	virtual float GetCollideAngle() { return 0; }
 	virtual Vector GetNowPos() { return Vector(0, 0); }
+	virtual float GetMaxZ() { return NULL; }
+	virtual float GetMinZ() { return NULL; }
 
 	//Bullet¿ë ÇÔ¼ö
 	virtual BOOL UpdateBool(float deltaTime) { return false; }

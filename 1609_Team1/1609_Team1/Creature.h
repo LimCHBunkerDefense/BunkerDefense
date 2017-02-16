@@ -22,7 +22,7 @@ class Creature :
 
 	// 3D화면에서 총알에 적용된 z값과 비교하여 충돌처리를 하기 위한 z의 최소값과 최대값
 	float m_minZ;
-	float m_maxZ;
+	float m_maxZ;		// 윈도우의 좌표계가 반대이기 때문에 max값이 z좌표의 아래쪽임.
 
 	Vector m_startPos;
 	float m_scale;
@@ -51,9 +51,12 @@ public:
 	Vector GetNowPos(){return  m_startPos * (1 - m_t) + OBJECT->GetPlayer()->Position() * m_t;}
 
 	void StartPosUpdate();
+	void ZUpdate();
 	void SetStartPos(Vector pos) { m_startPos = pos; }
 	Vector GetStartPos() { return m_startPos; }
 	float GetMT() { return m_t; }
+	float GetMaxZ() { return m_maxZ; }
+	float GetMinZ() { return m_minZ; }
 
 	int GetScore() { return m_score; }
 	int GetMoney() { return m_money; }

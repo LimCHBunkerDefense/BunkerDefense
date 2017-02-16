@@ -137,7 +137,7 @@ void PlayScene::OnEnter()
 	pUICamera->SetScreenRect(0, 0, VIEW_WIDTH, VIEW_HEIGHT);
 
 	// 테스트용 크리쳐 생성
-	//OBJECT->CreateCreature(OBJ_ENT, Vector(120, 60));
+	OBJECT->CreateCreature(OBJ_ENT, Vector(120, 60));
 
 	// 마우스 커서 없애기
 	ShowCursor(false);
@@ -152,7 +152,7 @@ void PlayScene::OnUpdate(float deltaTime)
 	m_gameTime += deltaTime;
 
 	// 게임 시간에 따른 크리쳐 생성
-	SetCreature(deltaTime);
+	//SetCreature(deltaTime);
 	
 	// 오브젝트 전체 업데이트
 	OBJECT->Update(deltaTime);
@@ -236,8 +236,10 @@ void PlayScene::OnDraw()
 	FOR_LIST(Object*, pList)
 	{
 		Vector pos = (*it)->Position();
+		Vector colSize = (*it)->Collider().size;
 		pMinimapCamera->DrawFilledCircle(pos - 4, Vector(8, 8), ColorF::Red);
 		pMinimapCamera->DrawLine((*it)->GetStartPos().x, (*it)->GetStartPos().y, OBJECT->GetPlayer()->Position().x, OBJECT->GetPlayer()->Position().y, ColorF::Red, 2);
+		//pMinimapCamera->DrawFilledRect(pos - colSize * 0.5, colSize, ColorF::Blue);	// 미니맵 상 크리쳐의 충돌체 표시해주는 부분
 	}
 
 	//탄환 선 긋기

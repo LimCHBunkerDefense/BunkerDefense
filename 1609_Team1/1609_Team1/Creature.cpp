@@ -32,6 +32,10 @@ Creature::Creature(OBJ_TAG tag) : Object(tag)
 
 	m_moveDirection = Vector(Position() * -1 + Vector(MINI_WIDTH * 0.5, MINI_HEIGHT)).Normalize();
 	
+	// z좌표 초기화
+	m_maxZ = 300;
+	m_minZ = m_maxZ;
+
 }
 
 
@@ -54,6 +58,9 @@ void Creature::Update(float deltaTime)
 	// m_lifeBar targetValue 업데이트
 	m_lifeBar->SetTargetValue(m_currentLife / m_maxLife);
 
+	// m_maxZ 및 m_minZ 업데이트
+	ZUpdate();
+
 	switch (m_state)
 	{
 	case CREATURE_IDLE: IdleState(deltaTime); break;
@@ -68,8 +75,7 @@ void Creature::Update(float deltaTime)
 
 void Creature::Draw(Camera* pCamera)
 {
-	// 크리처 스케일 변화되는 부분
-	SetCollider(Collider().size * (m_t * m_t * 3.0f) / m_scale, Collider().anchor);
+	// 이미지 출력 전 이동에 따른 이미지 스케일 키워주는 부분
 	SetScale(m_t * m_t * 3.0f);
 	m_scale = m_t * m_t * 3.0f;
 
@@ -124,4 +130,12 @@ void Creature::StartPosUpdate()
 	Vector pos = MATH->ToDirection(angle) * MINI_WIDTH * 0.5 + OBJECT->GetPlayer()->Position();
 
 	m_startPos = pos;
+}
+
+void Creature::ZUpdate()
+{
+	m_maxZ = 300 - 500 * m_t;
+	m_minZ = m_maxZ + Animation()->Current()->GetSprite()->GetHeight() - (300 - m_maxZ);	// m_minZ가 증가하지만, m_maxZ가 내려가는 만큼 m_mimZ도 내려가야하기 때문에 마지막에 보정해줌.
+	// Draw3D 전에 크리쳐 스프라이트 크기는 m_t * m_t * 3으로 바뀜.
+	cout << m_maxZ << "           " << m_minZ << endl;	// 콘솔창에서 디버깅용
 }
