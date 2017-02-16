@@ -116,6 +116,7 @@ public:
 	virtual int GetMoney() { return NULL; }		// Creature도 사용
 	virtual void AddMoney(int addMoney) { }		
 	virtual map<int, Object*> GetItemBag() { return m_trashMap; }
+	virtual Object* GetCurrentItem() { return NULL; }
 
 	// 벙커용 함수
 	virtual float GetCurrentLife() { return NULL; }

@@ -192,7 +192,7 @@ void ObjectManager::CreateBullet(OBJ_TAG tag, Vector pos, ITEM_TAG itemTag)
 	{
 	case ITEM_PISTOL:
 		scale = 0.05f;
-		colSize = Vector(20, 20) * scale;
+		colSize = Vector(5, 5) * scale;
 		anchor = Vector(0.5, 0.95f);
 		pBullet->Animation()->Register(BULLET_IDLE, new Animation(TEXT("PistolIdle"), 1, 1, false, scale, anchor.x, anchor.y));
 		pBullet->Animation()->Register(BULLET_EXPLODE, new Animation(TEXT("PistolExplode"), 1, 1, false, scale, anchor.x, anchor.y));
@@ -200,7 +200,7 @@ void ObjectManager::CreateBullet(OBJ_TAG tag, Vector pos, ITEM_TAG itemTag)
 		break;
 	case ITEM_MACHINEGUN:
 		scale = 0.05f;
-		colSize = Vector(20, 20) * scale;
+		colSize = Vector(5, 5) * scale;
 		anchor = Vector(0.5, 0.95f);
 		pBullet->Animation()->Register(BULLET_IDLE, new Animation(TEXT("MachinegunIdle"), 1, 1, false, scale, anchor.x, anchor.y));
 		pBullet->Animation()->Register(BULLET_EXPLODE, new Animation(TEXT("MachinegunExplode"), 1, 1, false, scale, anchor.x, anchor.y));

@@ -22,7 +22,7 @@ class Creature :
 
 	// 3D화면에서 총알에 적용된 z값과 비교하여 충돌처리를 하기 위한 z의 최소값과 최대값
 	float m_minZ;
-	float m_maxZ;		// 윈도우의 좌표계가 반대이기 때문에 max값이 z좌표의 아래쪽임.
+	float m_maxZ;		// 크리쳐 z의 최하점(x,y좌표 반대이므로)으로써, 이 점을 움직이고 minZ를 보정하도록 함
 
 	Vector m_startPos;
 	float m_scale;

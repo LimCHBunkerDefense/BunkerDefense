@@ -44,6 +44,9 @@ public:
 	// 번호 입력시 아이템을 장착하는 함수
 	void SetItem();
 
+	// 현재 장착무기 호출
+	Object* GetCurrentItem() { return m_pItem; }
+
 	ITEM_TAG GetItemState() { return item_state; }
 
 	// 플레이어의 점수 및 돈 호출/추가 함수

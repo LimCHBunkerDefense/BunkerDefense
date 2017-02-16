@@ -12,7 +12,7 @@ Bullet::Bullet(OBJ_TAG tag) : Object(tag)
 	m_scale = 1.0f;
 	m_state = BULLET_IDLE;
 	m_t = 0.0F;
-	m_z = OBJECT->GetSightHeight();
+	m_z = 600 - OBJECT->GetSightHeight();	// 화면 상하 이동 시 뒷 배경의 height가 하상으로 움직이기때문에 최대높이 600에서 sightHeight를 빼주도록 함
 
 	m_moveDirection = Vector(Position() * -1 + Vector(MINI_WIDTH * 0.5, MINI_HEIGHT)).Normalize();
 }
@@ -63,11 +63,13 @@ void Bullet::IdleState(float deltaTime)
 	Animation()->Play(BULLET_IDLE);
 
 	// 이동에 관계된 비율 (시작점에서 플레이어까지 가는 거리를 1로 봤을 때, 현재 이동한 거리의 비율)
-	m_t = MATH->Clamp(m_t + m_moveSpeed * deltaTime, 0.0f, 1.0f);
+	m_t = MATH->Clamp(m_t + m_moveSpeed * deltaTime / OBJECT->GetPlayer()->GetCurrentItem()->GetRange(), 0.0f, 1.0f);
 
 	// 크리쳐와 식이 반대로임
 	Vector pos = GetNowPos();
 	SetPosition_Creature(pos, pos * 5);
+
+	cout << Position().x << "   " << Position().y << "       " << m_t << endl;
 
 	// 사정거리 끝까지 간 m_t가 1인경우 혹은 크리쳐와 충돌처리 되면 총알 삭제
 	if (m_t >= 0.9999 || Collided())
@@ -87,7 +89,7 @@ BOOL Bullet::Collided()
 	list<Object*> creatureList = OBJECT->GetCreatureList();
 	FOR_LIST(Object*, creatureList) 
 	{
-		// 크리쳐랑 충돌이 되고, z값 기준으로 높이가 맞아야 하고, 
+		// 크리쳐 충돌체와 충돌이 되고, z값 기준으로 높이가 맞아야 하고, m_t를 기준으로 거리가 맞아야 총에 맞은 것으로 간주 
 		if (MATH->IsCollided(this->Collider(), (*it)->Collider())
 			&& m_z <= (*it)->GetMaxZ()
 			&& m_z >= (*it)->GetMinZ())

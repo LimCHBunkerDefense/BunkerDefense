@@ -134,8 +134,7 @@ void Creature::StartPosUpdate()
 
 void Creature::ZUpdate()
 {
-	m_maxZ = 300 - 500 * m_t;
-	m_minZ = m_maxZ + Animation()->Current()->GetSprite()->GetHeight() - (300 - m_maxZ);	// m_minZ가 증가하지만, m_maxZ가 내려가는 만큼 m_mimZ도 내려가야하기 때문에 마지막에 보정해줌.
-	// Draw3D 전에 크리쳐 스프라이트 크기는 m_t * m_t * 3으로 바뀜.
-	cout << m_maxZ << "           " << m_minZ << endl;	// 콘솔창에서 디버깅용
+	m_maxZ = 300 + 400 * m_t;
+	m_minZ = m_maxZ - Animation()->Current()->GetSprite()->GetHeight() * 0.7;	// Draw3D 등 이미지를 화면으로 출력해주면서 넣어준 변수에 때문에 0.7배 해주어야 보이는 스프라이트 높이가 됨
+	cout << m_maxZ << "           " << m_minZ << "           " << Animation()->Current()->GetSprite()->GetHeight()  << "           " << m_t<<endl;	// 콘솔창에서 디버깅용
 }
