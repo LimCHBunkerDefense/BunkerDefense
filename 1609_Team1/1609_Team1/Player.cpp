@@ -20,6 +20,8 @@ Player::Player(OBJ_TAG tag) : Object(tag)
 
 	m_pItem = OBJECT->CreateItem(ITEM_PISTOL, 1001);
 	AddItem(m_pItem);
+	AddItem(OBJECT->CreateItem(ITEM_PSBULLET, 1005));
+	m_itemBag[1005]->AddCurrentCount(60);
 	//SetAnimation(m_pItem->Animation());
 
 	m_money = 100000;
@@ -167,6 +169,8 @@ void Player::ShopState()
 		SCENE->SetColliderOnOff();
 	}
 
+	map<int, Object*> check;
+
 	// 마우스 왼쪽 버튼 클릭
 	if (INPUT->IsMouseUp(MOUSE_LEFT))
 	{
@@ -275,6 +279,7 @@ void Player::ShopState()
 				case BUTTON_BUY:		// 샵씬에서 구매 선택하면 그 아이템이 아이템 가방에 저장됨
 					pItem = SCENE->GetScene(SCENE_SHOP)->GetSelectedItem();
 					AddItem(pItem);
+					check = m_itemBag;
 					break;				
 
 				case BUTTON_EXIT:
@@ -362,7 +367,7 @@ void Player::AddItem(Object* pItem)
 	switch (pItem->GetItemTypeTag())
 	{
 	case ITEMTYPE_WEAPON:
-		if (pItem->GetCurrentCount() == 0)
+		if (m_itemBag.find(pItem->GetTag()) == m_itemBag.end())
 		{
 			m_itemBag[pItem->GetID()] = new Item(pItem->GetID());
 		}
@@ -370,24 +375,20 @@ void Player::AddItem(Object* pItem)
 
 	case ITEMTYPE_BULLET:
 		selectedCount = SCENE->GetScene(SCENE_SHOP)->GetInputCount();
-		if (pItem->GetCurrentCount() == 0)
+		if (m_itemBag.find(pItem->GetTag()) == m_itemBag.end())
 		{
-			if (selectedCount == 1)	m_itemBag[pItem->GetID()] = new Item(pItem->GetID());
-			else if (selectedCount > 1)
-			{
-				m_itemBag[pItem->GetID()] = new Item(pItem->GetID());
-				pItem->AddCurrentCount(selectedCount - 1);
-			}
+			m_itemBag[pItem->GetID()] = new Item(pItem->GetID());
+			m_itemBag[pItem->GetID()]->AddCurrentCount(selectedCount);
 		}
-		if (pItem->GetCurrentCount() != 0)
+		if (m_itemBag.find(pItem->GetTag()) != m_itemBag.end())
 		{
-			pItem->AddCurrentCount(selectedCount);
+			m_itemBag[pItem->GetID()]->AddCurrentCount(selectedCount);
 		}
 		break;
 
 	case ITEMTYPE_USINGITEM:
 		selectedCount = SCENE->GetScene(SCENE_SHOP)->GetInputCount();
-		if (pItem->GetCurrentCount() == 0)
+		if (m_itemBag.find(pItem->GetTag()) == m_itemBag.end())
 		{
 			if (selectedCount == 1)	m_itemBag[pItem->GetID()] = new Item(pItem->GetID());
 			else if (selectedCount > 1)
@@ -396,7 +397,7 @@ void Player::AddItem(Object* pItem)
 				pItem->AddCurrentCount(selectedCount - 1);
 			}
 		}
-		if (pItem->GetCurrentCount() != 0)
+		if (m_itemBag.find(pItem->GetTag()) != m_itemBag.end())
 		{
 			pItem->AddCurrentCount(selectedCount);
 		}

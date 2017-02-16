@@ -231,7 +231,7 @@ void ShopScene::ItemStatWnd()
 void ShopScene::SetInputCount(int addCount)
 {
 	if (m_inputCount == 0) m_inputCount += addCount;
-	if (m_inputCount != 0) m_inputCount = m_inputCount * 10 + addCount;
+	else if (m_inputCount != 0) m_inputCount = m_inputCount * 10 + addCount;
 
 	map<int,Object*> playerBag = OBJECT->GetPlayer()->GetItemBag();
 	Object* pItem = NULL;
