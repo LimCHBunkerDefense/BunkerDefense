@@ -2,7 +2,7 @@
 
 #pragma comment(linker,"/entry:WinMainCRTStartup /subsystem:console")
 #define VIEW_WIDTH		1200
-#define VIEW_HEIGHT		900
+#define VIEW_HEIGHT		800
 
 #define FPS				100		// 초당 프레임수
 

@@ -293,13 +293,15 @@ void PlayScene::OnDraw()
 	m_bunkerLife->Render(pUICamera);
 
 	//Icon
-	pUICamera->Draw(m_ico_pistol, Vector(46, 110));
-	pUICamera->Draw(m_ico_machine, Vector(108, 110));
+	pUICamera->DrawRect(Vector(20, 87), Vector(240, 45), ColorF::Blue, 1);
+
+	pUICamera->Draw(m_ico_pistol, Vector(46, VIEW_HEIGHT-110));
+	pUICamera->Draw(m_ico_machine, Vector(108, VIEW_HEIGHT - 110));
+	pUICamera->Draw(m_ico_laser, Vector(170, VIEW_HEIGHT - 110));
 	pUICamera->DrawRect(Vector(146, 85), Vector(50, 50), ColorF::Red, 1);
-	pUICamera->Draw(m_ico_laser, Vector(238, 110));
 
 
-	pUICamera->DrawRect(Vector(40, VIEW_HEIGHT - 195), Vector(320, 70), ColorF::Blue, 1);
+	
 	pUICamera->DrawRect(Vector(28, VIEW_HEIGHT - 95), Vector(70, 70), ColorF::Red, 1);
 	pUICamera->DrawRect(Vector(118, VIEW_HEIGHT - 95), Vector(70, 70), ColorF::Red, 1);
 	pUICamera->DrawRect(Vector(208, VIEW_HEIGHT - 95), Vector(70, 70), ColorF::Red,1);
