@@ -8,7 +8,6 @@ Grenade::Grenade()
 
 Grenade::Grenade(OBJ_TAG tag) : Object(tag)
 {
-	//m_angle = 10;//각도 내의 적에게만 반응
 	CreatureData* pData = CREATURE->GetData(tag);
 	m_scale = 1.0f;
 	m_state = GRENADE_IDLE;
@@ -27,19 +26,31 @@ Grenade::~Grenade()
 
 //부딪히면 삭제되게 하기 위해 BOOL 함수 추가
 BOOL Grenade::UpdateBool(float deltaTime) {
+	
 	//렌더시 높이 변하게 하기 위해 추가
-	if		(m_t <= m_goal/2)	m_addHeight -= 30;
-	else if (m_t<=m_goal)		m_addHeight += 30;
+	if (m_t <= m_goal / 2)	m_addHeight -= 30;
+	else if (m_t <= m_goal) {
+		m_addHeight += 30;
+		if (m_addHeight > 0) {
+			m_addHeight = 0;
+		}
+	}
+	
+	// 플레이어의 카메라 회전에 의한 StartPos 업데이트
+	//StartPosUpdate();
+
+	BOOL result=false;
+	m_moveDirection = Vector(m_startPos * -1 + Vector(MINI_WIDTH * 0.5, MINI_HEIGHT)).Normalize();
 
 	// 플레이어의 카메라 회전에 의한 StartPos 업데이트
 	StartPosUpdate();
 
-	BOOL result=false;
-	m_moveDirection = Vector(Position() * -1 + Vector(MINI_WIDTH * 0.5, MINI_HEIGHT)).Normalize();
 
 	// 크리쳐와 식이 반대로임
-	Vector pos = m_startPos * m_t + OBJECT->GetPlayer()->Position() * (1 - m_t);
+	Vector pos = GetNowPos();
 	SetPosition_Creature(pos, pos * 5);
+
+	cout << Position().x << "   " << Position().y << "       " << m_t << endl;
 
 	switch (m_state)
 	{

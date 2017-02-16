@@ -254,7 +254,7 @@ void ObjectManager::CreateGrenade(OBJ_TAG tag, Vector pos)
 	colSize = Vector(20, 20) * scale;
 	anchor = Vector(0.5, 0.95f);
 	pBullet->Animation()->Register(GRENADE_IDLE, new Animation(TEXT("Grenade"), 1, 10, false, 0.2f, anchor.x, anchor.y));
-	pBullet->Animation()->Register(GRENADE_EXPLODE, new Animation(TEXT("Explode"), 7, 3,false, 100.0f, anchor.x, anchor.y));
+	pBullet->Animation()->Register(GRENADE_EXPLODE, new Animation(TEXT("Explode"), 7, 3,false, 1.0f, anchor.x, anchor.y));
 
 	pBullet->SetCollider(colSize, anchor);
 
