@@ -327,20 +327,20 @@ void Player::SetItem()
 		}
 	}
 
-	// ±â°üÃÑ ÀåÂø
+	// ¼¦°Ç ÀåÂø
 	if (INPUT->IsKeyDown(VK_2))
 	{
-		item_state = ITEM_MACHINEGUN;
+		item_state = ITEM_SHOTGUN;
 		if (m_itemBag.find(1002) != m_itemBag.end())
 		{
 			m_pItem = m_itemBag[1002];
 		}
 	}
 
-	// È­¿° ¹æ»ç±â ÀåÂø
+	// ±â°üÃÑ ÀåÂø
 	if (INPUT->IsKeyDown(VK_3))
 	{
-		item_state = ITEM_LASERGUN;
+		item_state = ITEM_MACHINEGUN;
 		if (m_itemBag.find(1003) != m_itemBag.end())
 		{
 			m_pItem = m_itemBag[1003];
@@ -350,6 +350,7 @@ void Player::SetItem()
 	// ·¹ÀÌÀú °Ç ÀåÂø
 	if (INPUT->IsKeyDown(VK_4))
 	{		
+		item_state = ITEM_LASERGUN;
 		if (m_itemBag.find(1004) != m_itemBag.end())
 		{
 			m_pItem = m_itemBag[1004];
