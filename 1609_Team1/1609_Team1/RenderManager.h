@@ -377,7 +377,7 @@ public:
 	//}
 
 	// 크리쳐의 좌표 (미니맵 상의 좌표)를 전장 화면의 좌표로 바꿔주는 함수
-	Vector ChangePositionToView(Vector startPos, float sightHeight, float t, int object_state, float addH =0.0f)
+	Vector ChangePositionToView(Vector startPos, float sightHeight, float t, int object_state, float addH =0.0f, float z = 0.0f)
 	{
 		float x, y;
 
@@ -389,7 +389,7 @@ public:
 
 		// y좌표 구하기
 		y = sightHeight + 130 + VIEW_WIDTH * 0.5 * t * t;
-		if (BULLET_NONE<=object_state &&object_state <=BULLET_EXPLODE) y = y - (400 * t);
+		if (BULLET_NONE<=object_state &&object_state <=BULLET_EXPLODE) y = y + 0;
 		if (GRENADE_NONE<= object_state && object_state <= FLAME_EXPLODE) {
 			y += addH;
 		}
@@ -402,7 +402,7 @@ public:
 	}
 
 	// 크리쳐가 플레이어의 시야에 들어왔을 경우, 미니맵 상의 크리쳐를 전장 화면으로 출력해주는 함수, float 는 시작점부터 끝점까지 이동한 거리의 비율
-	void Draw3D(Sprite* sprite, Vector startPos, float t, float sightHeight, int object_state, float addH=1.0f, int dir = -1, float opacity = 1.0f) 
+	void Draw3D(Sprite* sprite, Vector startPos, float t, float sightHeight, int object_state, float addH=1.0f, float z = 0.0f, int dir = -1, float opacity = 1.0f) 
 	{
 		// 크리쳐가 플레이어의 시야 (미니맵 상의 두 파란선) 안에 들어왔는지 확인하는 단계. 플레이어의 시야는 CAMERA_ANGLE로 정의되어 있음
 		//DrawLine(VIEW_WIDTH-MINI_WIDTH+moveLine.StartPoint().x, VIEW_HEIGHT - MINI_HEIGHT + moveLine.StartPoint().y, VIEW_WIDTH - MINI_WIDTH/2, VIEW_HEIGHT - MINI_HEIGHT / 2, ColorF::Red, 1);
@@ -412,7 +412,7 @@ public:
 		{
 			m_pBitmapTarget->BeginDraw();
 
-			Vector pos = ChangePositionToView(startPos, sightHeight, t, object_state, addH);
+			Vector pos = ChangePositionToView(startPos, sightHeight, t, object_state, addH ,z);
 			sprite->SetPosition(pos.x, pos.y);
 			sprite->SetDirection(dir);
 			sprite->Render(m_pBitmapTarget);
