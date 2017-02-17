@@ -61,10 +61,12 @@ PlayScene::PlayScene() : m_attackedColor(ColorF::Red)
 	//무기 ICON 가져오기
 	RENDER->LoadImageFile(TEXT("PistolOn"),		TEXT("Image/Item/Icon/ico_pistol_on.png"));
 	RENDER->LoadImageFile(TEXT("PistolOff"),	TEXT("Image/Item/Icon/ico_pistol_off.png"));
-	RENDER->LoadImageFile(TEXT("LaserOn"),		TEXT("Image/Item/Icon/ico_laser_on.png"));
-	RENDER->LoadImageFile(TEXT("LaserOff"),		TEXT("Image/Item/Icon/ico_laser_off.png"));
-	RENDER->LoadImageFile(TEXT("MachineOn"),	TEXT("Image/Item/Icon/ico_machine_on.png"));
-	RENDER->LoadImageFile(TEXT("MachineOff"),	TEXT("Image/Item/Icon/ico_machine_off.png"));
+	RENDER->LoadImageFile(TEXT("ShotGunOn"), TEXT("Image/Item/Icon/ico_shot_on.png"));
+	RENDER->LoadImageFile(TEXT("ShotGunOff"), TEXT("Image/Item/Icon/ico_shot_off.png"));
+	RENDER->LoadImageFile(TEXT("MachineGunOn"), TEXT("Image/Item/Icon/ico_machine_on.png"));
+	RENDER->LoadImageFile(TEXT("MachineGunOff"), TEXT("Image/Item/Icon/ico_machine_off.png"));
+	RENDER->LoadImageFile(TEXT("LaserGunOn"),		TEXT("Image/Item/Icon/ico_laser_on.png"));
+	RENDER->LoadImageFile(TEXT("LaserGunOff"),		TEXT("Image/Item/Icon/ico_laser_off.png"));
 
 	// 숫자 이미지 가져오기
 	RENDER->LoadImageFile(TEXT("Num0"), TEXT("Image/UI/ScoreNUM/Num0.png"));
@@ -133,8 +135,9 @@ void PlayScene::OnEnter()
 
 	//ico pistol
 	NEW_OBJECT(m_ico_pistol, Sprite(RENDER->GetImage(TEXT("PistolOn"))));
-	NEW_OBJECT(m_ico_laser, Sprite(RENDER->GetImage(TEXT("LaserOff"))));
-	NEW_OBJECT(m_ico_machine, Sprite(RENDER->GetImage(TEXT("MachineOff"))));	
+	NEW_OBJECT(m_ico_shotGun, Sprite(RENDER->GetImage(TEXT("ShotGunOff"))));
+	NEW_OBJECT(m_ico_machineGun, Sprite(RENDER->GetImage(TEXT("MachineGunOff"))));	
+	NEW_OBJECT(m_ico_laserGun, Sprite(RENDER->GetImage(TEXT("LaserGunOff"))));
 
 	NEW_OBJECT(m_num1, Sprite(RENDER->GetImage(TEXT("Num1")), 1.0, 0,0));
 	NEW_OBJECT(m_num2, Sprite(RENDER->GetImage(TEXT("Num2")), 1.0, 0,0));
@@ -206,20 +209,30 @@ void PlayScene::ChangeIcon() {
 	switch (OBJECT->GetPlayer()->GetItemState()) {
 		case ITEM_PISTOL: {
 			NEW_OBJECT(m_ico_pistol, Sprite(RENDER->GetImage(TEXT("PistolOn"))));
-			NEW_OBJECT(m_ico_machine, Sprite(RENDER->GetImage(TEXT("MachineOff"))));
-			NEW_OBJECT(m_ico_laser, Sprite(RENDER->GetImage(TEXT("LaserOff"))));
+			NEW_OBJECT(m_ico_shotGun, Sprite(RENDER->GetImage(TEXT("ShotGunOff"))));
+			NEW_OBJECT(m_ico_machineGun, Sprite(RENDER->GetImage(TEXT("MachineGunOff"))));
+			NEW_OBJECT(m_ico_laserGun, Sprite(RENDER->GetImage(TEXT("LaserGunOff"))));
+			break;
+		}
+		case ITEM_SHOTGUN: {
+			NEW_OBJECT(m_ico_pistol, Sprite(RENDER->GetImage(TEXT("PistolOff"))));
+			NEW_OBJECT(m_ico_shotGun, Sprite(RENDER->GetImage(TEXT("ShotGunOn"))));
+			NEW_OBJECT(m_ico_machineGun, Sprite(RENDER->GetImage(TEXT("MachineGunOff"))));
+			NEW_OBJECT(m_ico_laserGun, Sprite(RENDER->GetImage(TEXT("LaserGunOff"))));
 			break;
 		}
 		case ITEM_MACHINEGUN: {
 			NEW_OBJECT(m_ico_pistol, Sprite(RENDER->GetImage(TEXT("PistolOff"))));
-			NEW_OBJECT(m_ico_machine, Sprite(RENDER->GetImage(TEXT("MachineOn"))));
-			NEW_OBJECT(m_ico_laser, Sprite(RENDER->GetImage(TEXT("LaserOff"))));
+			NEW_OBJECT(m_ico_shotGun, Sprite(RENDER->GetImage(TEXT("ShotGunOff"))));
+			NEW_OBJECT(m_ico_machineGun, Sprite(RENDER->GetImage(TEXT("MachineGunOn"))));
+			NEW_OBJECT(m_ico_laserGun, Sprite(RENDER->GetImage(TEXT("LaserGunOff"))));
 			break;
 		}
 		case ITEM_LASERGUN: {
 			NEW_OBJECT(m_ico_pistol, Sprite(RENDER->GetImage(TEXT("PistolOff"))));
-			NEW_OBJECT(m_ico_machine, Sprite(RENDER->GetImage(TEXT("MachineOff"))));
-			NEW_OBJECT(m_ico_laser, Sprite(RENDER->GetImage(TEXT("LaserOn"))));
+			NEW_OBJECT(m_ico_shotGun, Sprite(RENDER->GetImage(TEXT("ShotGunOff"))));
+			NEW_OBJECT(m_ico_machineGun, Sprite(RENDER->GetImage(TEXT("MachineGunOff"))));
+			NEW_OBJECT(m_ico_laserGun, Sprite(RENDER->GetImage(TEXT("LaserGunOn"))));
 			break;
 		}
 	}
@@ -322,8 +335,9 @@ void PlayScene::OnDraw()
 	//Icon
 
 	pUICamera->Draw(m_ico_pistol, Vector(48, VIEW_HEIGHT - 852));
-	pUICamera->Draw(m_ico_machine, Vector(172, VIEW_HEIGHT - 852));
-	pUICamera->Draw(m_ico_laser, Vector(238, VIEW_HEIGHT - 852));
+	pUICamera->Draw(m_ico_shotGun, Vector(109, VIEW_HEIGHT - 852));
+	pUICamera->Draw(m_ico_machineGun, Vector(172, VIEW_HEIGHT - 852));
+	pUICamera->Draw(m_ico_laserGun, Vector(238, VIEW_HEIGHT - 852));
 	//pUICamera->DrawRect(Vector(146, 85), Vector(50, 50), ColorF::Red, 1);
 
 

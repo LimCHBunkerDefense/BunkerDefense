@@ -19,8 +19,9 @@ class PlayScene : public IScene
 
 	//ico
 	Sprite* m_ico_pistol;
-	Sprite* m_ico_laser;
-	Sprite* m_ico_machine;
+	Sprite* m_ico_shotGun;
+	Sprite* m_ico_machineGun;
+	Sprite* m_ico_laserGun;
 
 	//ui
 	Sprite* m_stageUI;
