@@ -47,18 +47,18 @@ void Player::Update(float deltaTime)
 	case PLAYER_SHOP: ShopState(); break;
 	}
 
-	// Animation()->Update(deltaTime);
+	Animation()->Update(deltaTime);
 }
 
 void Player::Draw(Camera* pCamera)
 {
-	RENDER->FillCircle(Position() * 5, 100, ColorF::Aqua);
-	pCamera->Draw(Animation()->Current()->GetSprite(), Vector(VIEW_WIDTH / 2, VIEW_HEIGHT));
+	//RENDER->FillCircle(Position() * 5, 100, ColorF::Aqua);
+	pCamera->Draw(Animation()->Current()->GetSprite(), Vector(VIEW_WIDTH / 2, VIEW_HEIGHT), 1);
 }
 
 void Player::AttackState(float deltaTime)
 {
-	// Animation()->Play(PLAYER_ATTACK);
+	Animation()->Play(IDLE_PISTOL);
 
 
 	// ╬ю ц╓юнаЖ
