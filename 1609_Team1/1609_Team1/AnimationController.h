@@ -37,6 +37,8 @@ public:
 	float GetY() { return GetSprite()->GetTopY(); }
 	float GetWidth() { return GetSprite()->GetWidth(); }
 	float GetHeight() { return GetSprite()->GetHeight(); }
+	int GetCurrentIndex() { return m_currentIndex; }
+	int GetSpriteCount() { return m_spriteCount; }
 
 	void Reset()
 	{

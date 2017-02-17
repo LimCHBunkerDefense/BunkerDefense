@@ -45,10 +45,10 @@ public:
 	}
 
 	// 크리쳐의 위치와 충돌체의 위치를 동시에 바꾸기 위해 추가한 함수
-	void SetPosition_Creature(Vector pos, Vector colPos)
+	void SetPosition_Creature(Vector pos)
 	{
 		m_pos = pos;
-		m_collider.pos = colPos;
+		m_collider.pos = pos;
 	}
 
 	void SetCollider(Vector size, Vector anchor)
@@ -84,6 +84,7 @@ public:
 	virtual Vector GetNowPos() { return Vector(0, 0); }
 	virtual float GetMaxZ() { return NULL; }
 	virtual float GetMinZ() { return NULL; }
+	virtual bool IsDestroyed() { return false; }
 
 	//Bullet용 함수
 	virtual BOOL UpdateBool(float deltaTime) { return false; }
@@ -108,6 +109,7 @@ public:
 	virtual int GetItemMoney() { return NULL; }
 	virtual ITEM_TAG GetTag() { return ITEM_NONE; }
 	virtual ITEMTYPE_TAG GetItemTypeTag() { return ITEMTYPE_NONE; }
+	virtual float GetBulletSpeed() { return NULL; }
 
 	//Player
 	virtual ITEM_TAG GetItemState() { return ITEM_NONE; }
@@ -119,8 +121,8 @@ public:
 	virtual Object* GetCurrentItem() { return NULL; }
 
 	// 벙커용 함수
-	virtual float GetCurrentLife() { return NULL; }
-	virtual void AddCurrentLife(float addLife) {}
+	virtual float GetCurrentLife() { return NULL; }		// Creature도 사용
+	virtual void AddCurrentLife(float addLife) {}		// Creature도 사용
 	virtual float GetMaxLife() { return NULL;}
 	virtual void AddMaxLife(float addLife) {  }
 	virtual void AddDefense(float addDefense) {}

@@ -8,14 +8,15 @@ Bullet::Bullet()
 
 Bullet::Bullet(OBJ_TAG tag) : Object(tag)
 {
-	CreatureData* pData = CREATURE->GetData(tag);
 	m_scale = 1.0f;
 	m_state = BULLET_IDLE;
 	m_t = 0.0F;
 	m_z = 600 - OBJECT->GetSightHeight();	// 화면 상하 이동 시 뒷 배경의 height가 하상으로 움직이기때문에 최대높이 600에서 sightHeight를 빼주도록 함
 
-	m_moveSpeed = 25;
-	m_moveDirection = Vector(Position() * -1 + Vector(MINI_WIDTH * 0.5, MINI_HEIGHT)).Normalize();
+	m_attack = 1000;//OBJECT->GetPlayer()->GetCurrentItem()->GetAttack();
+	m_moveSpeed = OBJECT->GetPlayer()->GetCurrentItem()->GetBulletSpeed();
+	m_range = OBJECT->GetPlayer()->GetCurrentItem()->GetRange();
+	m_moveDirection = Vector(Position() * -1 + m_startPos).Normalize();
 }
 
 
@@ -31,7 +32,7 @@ void Bullet::Update(float deltaTime)
 BOOL Bullet::UpdateBool(float deltaTime)
 {
 	//이동방향벡터 실시간 업데이트
-	m_moveDirection = Vector(Position() * -1 + Vector(MINI_WIDTH * 0.5, MINI_HEIGHT)).Normalize();
+	m_moveDirection = Vector(Position() * -1 + m_startPos).Normalize();
 	
 	// 플레이어의 카메라 회전에 의한 StartPos 업데이트
 	StartPosUpdate();
@@ -50,7 +51,7 @@ BOOL Bullet::UpdateBool(float deltaTime)
 
 void Bullet::Draw(Camera* pCamera)
 {
-	SetCollider(Collider().size * ((1 - m_t) *1.0f) / m_scale, Collider().anchor);
+	// SetCollider(Collider().size * ((1 - m_t) *1.0f) / m_scale, Collider().anchor);
 	SetScale((1 - m_t) *1.0f);
 	m_scale = (1 - m_t) *1.0f;
 
@@ -67,8 +68,8 @@ void Bullet::IdleState(float deltaTime)
 	m_t = MATH->Clamp(m_t + m_moveSpeed * deltaTime , 0.0f, 1.0f);
 
 	// 크리쳐와 식이 반대로임
-	Vector pos = GetNowPos();
-	SetPosition_Creature(pos, pos * 5);
+	Vector pos = m_startPos * m_t + OBJECT->GetPlayer()->Position() * (1 - m_t);
+	SetPosition_Creature(pos);
 
 	cout << Position().x << "   " << Position().y << "       " << m_t << endl;
 
@@ -82,7 +83,8 @@ void Bullet::IdleState(float deltaTime)
 
 bool Bullet::ExplodeState(float deltaTime) 
 {
-	return true;
+	if(Animation()->Current()->GetCurrentIndex() == Animation()->Current()->GetSpriteCount() -1 )return true;
+	return false;
 }
 
 BOOL Bullet::Collided()
@@ -95,26 +97,23 @@ BOOL Bullet::Collided()
 			&& m_z <= (*it)->GetMaxZ()
 			&& m_z >= (*it)->GetMinZ())
 		{
-			int money = (*it)->GetMoney();
-			OBJECT->GetPlayer()->AddMoney(money);
-			int score = (*it)->GetScore();
-			OBJECT->GetPlayer()->AddScore(score);
+
 			Object* p = OBJECT->GetPlayer();
-			OBJECT->DestroyCreature((*it));
+			(*it)->AddCurrentLife(-m_attack);
 			return true;
 		}
 	}
 	return false;
 }
 
-// 카메라 회전에 의한 StartPos 업데이트
+// 카메라 회전에 의한 StartPos 업데이트. 실제로는 총알의 종료점
 void Bullet::StartPosUpdate()
 {
-	float angle = MATH->Angle(Vector::Right(), m_moveDirection * -1);
+	float angle = MATH->Angle(Vector::Right(), m_moveDirection);
 	angle += OBJECT->GetDeltaSightAngle();
 
 	// 점 p(0,0)를 기준으로 구해진 새로운 pos를 플레이어 위지 p'(MINI_WIDTH * 0.5, MINI_HEIGHT) 기준으로 (*it)의 좌표 보정
-	Vector pos = MATH->ToDirection(angle) * MINI_WIDTH * 0.5 + OBJECT->GetPlayer()->Position();
+	Vector pos = MATH->ToDirection(angle) * m_range + OBJECT->GetPlayer()->Position();
 
 	m_startPos = pos;
 }

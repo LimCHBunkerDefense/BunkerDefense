@@ -67,7 +67,7 @@ BOOL Grenade::UpdateBool(float deltaTime) {
 
 	// 크리쳐와 식이 반대로임
 	Vector pos = GetNowPos();
-	SetPosition_Creature(pos, pos * 5);
+	SetPosition_Creature(pos);
 
 	//cout << Position().x << "   " << Position().y << "       " << m_t << endl;
 
