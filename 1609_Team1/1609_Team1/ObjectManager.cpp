@@ -12,8 +12,15 @@ ObjectManager::ObjectManager()
 	m_sight = Vector(0,0);
 
 	// 플레이어 총 이미지 맵으로 저장
-	RENDER->LoadImageFiles(TEXT("PistolIdle"), TEXT("Image/Item/Pistol/Idle/Idle"), TEXT("png"), 2);
-	RENDER->LoadImageFiles(TEXT("PistolShot"), TEXT("Image/Item/Pistol/Attack/Attack"), TEXT("png"), 3);
+//	RENDER->LoadImageFiles(TEXT("PistolIdle"), TEXT("Image/Item/Pistol/Idle/Idle"), TEXT("png"), 2);
+//	RENDER->LoadImageFiles(TEXT("PistolShot"), TEXT("Image/Item/Pistol/Shot/Shot"), TEXT("png"), 3);
+//	RENDER->LoadImageFiles(TEXT("ShotGunIdle"), TEXT("Image/Item/ShotGun/Idle/Idle"), TEXT("png"), 2);
+//	RENDER->LoadImageFiles(TEXT("ShotGunShot"), TEXT("Image/Item/ShotGun/Shot/Shot"), TEXT("png"), 3);
+//	RENDER->LoadImageFiles(TEXT("ShotGunReload"), TEXT("Image/Item/ShotGun/Reload/Reload"), TEXT("png"), 11);
+//	RENDER->LoadImageFiles(TEXT("MachineGunIdle"), TEXT("Image/Item/MachineGun/Idle/Idle"), TEXT("png"), 2);
+//	RENDER->LoadImageFiles(TEXT("MachineGunShot"), TEXT("Image/Item/MachineGun/Shot/Shot"), TEXT("png"), 7);
+//	RENDER->LoadImageFiles(TEXT("LaserGunIdle"), TEXT("Image/Item/LaserGun/Idle/Idle"), TEXT("png"), 2);
+//	RENDER->LoadImageFiles(TEXT("LaserGunShot"), TEXT("Image/Item/LaserGun/Shot/Shot"), TEXT("png"), 21);
 
 	// ItemList에 Item Database 저장
 	m_shopItemList.push_back(new Item(1001));
@@ -182,24 +189,31 @@ void ObjectManager::DestroyAllCreature()
 Object* ObjectManager::CreateItem(ITEM_TAG tag, int itemID)
 {
 	NEW_OBJECT(Object* pItem, Item(itemID));
-	 
-	switch (tag)
-	{
-	case ITEM_PISTOL:
-	// 	pItem->Animation()->Register(GUN_IDLE, new Animation(TEXT("PistolIdle"), 2, 2, true, 1.0f, 0.5f, 1.0f));
-	// 	pItem->Animation()->Register(GUN_SHOT, new Animation(TEXT("PistolShot"), 3, 3, false, 1.0f, 0.5f, 1.0f));
-	//  pItem->Animation()->Register(GUN_RELOAD, new Animation(TEXT("PistolReload"), 6, 3, false, 1.0f, 0.5f, 1.0f));
-		break;
-
-	case ITEM_SHOTGUN:
-		break;
-
-	case ITEM_MACHINEGUN:
-		break;	
-
-	case ITEM_LASERGUN:
-		break;
-	}
+	
+	// 아이템
+//	switch (tag)
+//	{
+//	case ITEM_PISTOL:
+//		pItem->Animation()->Register(GUN_IDLE, new Animation(TEXT("PistolIdle"), 2, 2, true, 1.0f, 0.5f, 1.0f));
+//		pItem->Animation()->Register(GUN_SHOT, new Animation(TEXT("PistolShot"), 3, 3, false, 1.0f, 0.5f, 1.0f));
+//		break;
+//
+//	case ITEM_SHOTGUN:
+//		pItem->Animation()->Register(GUN_IDLE, new Animation(TEXT("ShotGunIdle"), 2, 2, true, 1.0f, 0.5f, 1.0f));
+//		pItem->Animation()->Register(GUN_SHOT, new Animation(TEXT("ShotGunShot"), 3, 3, false, 1.0f, 0.5f, 1.0f));
+//		pItem->Animation()->Register(GUN_RELOAD, new Animation(TEXT("ShotGunReload"), 11, 11, false, 1.0f, 0.5f, 1.0f));
+//		break;
+//
+//	case ITEM_MACHINEGUN:
+//		pItem->Animation()->Register(GUN_IDLE, new Animation(TEXT("MachineGunIdle"), 2, 2, true, 1.0f, 0.5f, 1.0f));
+//		pItem->Animation()->Register(GUN_SHOT, new Animation(TEXT("MachineGunShot"), 7, 7, false, 1.0f, 0.5f, 1.0f));
+//		break;	
+//
+//	case ITEM_LASERGUN:
+//		pItem->Animation()->Register(GUN_IDLE, new Animation(TEXT("LaserGunIdle"), 2, 2, true, 1.0f, 0.5f, 1.0f));
+//		pItem->Animation()->Register(GUN_SHOT, new Animation(TEXT("LaserGunShot"), 21, 21, false, 1.0f, 0.5f, 1.0f));
+//		break;
+//	}
 
 	return pItem;
 }
@@ -216,14 +230,14 @@ void ObjectManager::CreateBullet(OBJ_TAG tag, Vector pos, ITEM_TAG itemTag)
 	case ITEM_PISTOL:
 		colSize = Vector(10, 10);
 		anchor = Vector(0.5, 0.95f);
-		pBullet->Animation()->Register(BULLET_IDLE, new Animation(TEXT("PistolIdle"), 1, 1, false, 1, anchor.x, anchor.y));
-		pBullet->Animation()->Register(BULLET_EXPLODE, new Animation(TEXT("PistolExplode"), 1, 1, false, 1, anchor.x, anchor.y));
+		pBullet->Animation()->Register(BULLET_IDLE, new Animation(TEXT("PSBulletIdle"), 1, 1, false, 1, anchor.x, anchor.y));
+		pBullet->Animation()->Register(BULLET_EXPLODE, new Animation(TEXT("PSBulletExplode"), 1, 1, false, 1, anchor.x, anchor.y));
 		break;
 	case ITEM_MACHINEGUN:
 		colSize = Vector(10, 10);
 		anchor = Vector(0.5, 0.95f);
-		pBullet->Animation()->Register(BULLET_IDLE, new Animation(TEXT("MachinegunIdle"), 1, 1, false, 1, anchor.x, anchor.y));
-		pBullet->Animation()->Register(BULLET_EXPLODE, new Animation(TEXT("MachinegunExplode"), 1, 1, false, 1, anchor.x, anchor.y));
+		pBullet->Animation()->Register(BULLET_IDLE, new Animation(TEXT("MGBulletIdle"), 1, 1, false, 1, anchor.x, anchor.y));
+		pBullet->Animation()->Register(BULLET_EXPLODE, new Animation(TEXT("MGBulletExplode"), 1, 1, false, 1, anchor.x, anchor.y));
 		break;
 	}
 	

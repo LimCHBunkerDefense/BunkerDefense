@@ -19,12 +19,12 @@ Player::Player(OBJ_TAG tag) : Object(tag)
 	//m_sight = SIGHT;
 
 	m_pItem = OBJECT->CreateItem(ITEM_PISTOL, 1001);
+	// SetAnimation(m_pItem->Animation());
 	AddItem(m_pItem);
 	
 	Object* startBullet = OBJECT->CreateItem(ITEM_PSBULLET, 2001);
 	m_itemBag[startBullet->GetTag()] = startBullet;
 	startBullet->AddCurrentCount(60);
-	//SetAnimation(m_pItem->Animation());
 
 	m_money = 100000;
 	m_score = 0;
@@ -46,7 +46,7 @@ void Player::Update(float deltaTime)
 	case PLAYER_SHOP: ShopState(); break;
 	}
 
-	//Animation()->Update(deltaTime);
+	// Animation()->Update(deltaTime);
 }
 
 void Player::Draw(Camera* pCamera)
@@ -56,7 +56,7 @@ void Player::Draw(Camera* pCamera)
 
 void Player::AttackState(float deltaTime)
 {
-	//Animation()->Play(PLAYER_ATTACK);
+	// Animation()->Play(PLAYER_ATTACK);
 
 
 	// ╬ю ц╓юнаЖ

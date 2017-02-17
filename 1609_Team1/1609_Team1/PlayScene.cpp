@@ -45,10 +45,10 @@ PlayScene::PlayScene() : m_attackedColor(ColorF::Red)
 	RENDER->LoadImageFile(TEXT("MoneyUI"), TEXT("Image/UI/InterfaceUI/money.png"));
 
 	//Bullet 저장
-	RENDER->LoadImageFiles(TEXT("PistolIdle"), TEXT("Image/Bullet/Pistol/Idle/Idle"), TEXT("png"), 1);
-	RENDER->LoadImageFiles(TEXT("PistolExplode"), TEXT("Image/Bullet/Pistol/Explode/Explode"), TEXT("png"), 1);
-	RENDER->LoadImageFiles(TEXT("MachinegunIdle"), TEXT("Image/Bullet/Machinegun/Idle/Idle"), TEXT("png"), 1);
-	RENDER->LoadImageFiles(TEXT("MachinegunExplode"), TEXT("Image/Bullet/Machinegun/Explode/Explode"), TEXT("png"), 1);
+	RENDER->LoadImageFiles(TEXT("PSBulletIdle"), TEXT("Image/Bullet/Pistol/Idle/Idle"), TEXT("png"), 1);
+	RENDER->LoadImageFiles(TEXT("PSBulletExplode"), TEXT("Image/Bullet/Pistol/Explode/Explode"), TEXT("png"), 1);
+	RENDER->LoadImageFiles(TEXT("MGBulletIdle"), TEXT("Image/Bullet/Machinegun/Idle/Idle"), TEXT("png"), 1);
+	RENDER->LoadImageFiles(TEXT("MGBulletExplode"), TEXT("Image/Bullet/Machinegun/Explode/Explode"), TEXT("png"), 1);
 
 	//Grenade 저장
 	RENDER->LoadImageFiles(TEXT("Grenade"), TEXT("Image/Item/Grenade/Grenade"), TEXT("png"), 1);
@@ -282,7 +282,8 @@ void PlayScene::OnDraw()
 	
 	OBJECT->Draw(pMainCamera);
 	
-	/*pUICamera->Draw(OBJECT->GetPlayer()->Animation()->Current()->GetSprite(), Vector(VIEW_WIDTH * 0.5, VIEW_HEIGHT * 1.0f));*/
+	// 총 그려주는 부분
+	// pUICamera->Draw(OBJECT->GetPlayer()->Animation()->Current()->GetSprite(), Vector(VIEW_WIDTH * 0.5, VIEW_HEIGHT * 1.0f));
 
 	// Aim 그려주는 부분
 	pUICamera->Draw(m_pAim, Vector(VIEW_WIDTH * 0.5, VIEW_HEIGHT * 0.5f));
