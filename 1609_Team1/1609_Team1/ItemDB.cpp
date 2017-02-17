@@ -34,7 +34,7 @@ void ItemDB::Init()
 		TEXT("기관총의 탄약")));
 	Add(new ItemData(ITEMTYPE_BULLET, ITEM_LGBULLET, 2004, 0, 0, 0, 0, 0, 0, 0, 2000, 30, TEXT("레이저 건 충전(Laser Gun char')"),
 		TEXT("레이저 건 충전")));
-
+	 
 	// 상점 구매 아이템(소모품)
 	Add(new ItemData(ITEMTYPE_USINGITEM, ITEM_GRENADE, 3001, 100, 0, 50.0f, 25.0f, 0,   0, 0, 10, 50,   TEXT("수류탄(Grenade)"),
 		TEXT("가격이 저렴한 수류탄. \n 손에 힘이 없어서 멀리는 던지지 못한다.")));
