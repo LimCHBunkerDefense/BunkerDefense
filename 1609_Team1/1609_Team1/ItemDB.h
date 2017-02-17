@@ -16,6 +16,7 @@ struct ItemData
 	float attack;				// 능력치 - 공격력	
 	float defense;				// 능력치 - 방어력
 	float range;				// 능력치 - 사정거리
+	float bulletSpeed;			// 총알 속도
 	float bunkerLife;			// 벙커 체력
 	int maxBulletCount;			// 총에 장착하는 총알의 갯수
 	int reloadBulletCount;		// 장전할 수 있는 총알의 갯수
@@ -24,8 +25,8 @@ struct ItemData
 	wstring info;				// 아이템 정보
 	wstring ragestr;			// 사정거리 표시 이름
 		
-	ItemData(ITEMTYPE_TAG iTag, ITEM_TAG tag, int itemID, float attack, float defense, float range, float bunkerLife, 
-		int maxBulletCount, int reloadBulletCount, int maxCount, int money, 
+	ItemData(ITEMTYPE_TAG iTag, ITEM_TAG tag, int itemID, float attack, float defense, float range, float bulletSpeed,
+		float bunkerLife, int maxBulletCount, int reloadBulletCount, int maxCount, int money, 
 		wstring name, wstring info, wstring ragestr = TEXT(" "))
 	{
 		this->iTag = iTag;
@@ -34,6 +35,7 @@ struct ItemData
 		this->attack = attack;
 		this->defense = defense;
 		this->range = range;
+		this->bulletSpeed = bulletSpeed;
 		this->bunkerLife = bunkerLife;
 		this->maxBulletCount = maxBulletCount;
 		this->reloadBulletCount = reloadBulletCount;

@@ -12,12 +12,13 @@ class Item : public Object
 	int m_money;
 	float m_attack;
 	float m_defense;
+	float m_range;
+	float m_bulletSpeed;
 	float m_bunkerLife;
 	int m_maxBulletCount;
 	int m_reloadBulletCount;
 	int m_currentCount;
 	int m_maxCount;
-	float m_range;
 	wstring m_name;
 	wstring m_info;
 	wstring m_rangeStr;
@@ -37,13 +38,14 @@ public:
 	wstring GetName() { return m_name; }
 	float GetAttack() { return m_attack; }
 	float GetDefense() { return m_defense; }
+	float GetRange() { return m_range; }
+	float GetBulletSpeed() { return m_bulletSpeed; }
 	float GetBunkerLife() { return m_bunkerLife; }
 	int GetMaxBulletCount() { return  m_maxBulletCount; }
 	int GetReloadBulletCount() { return m_reloadBulletCount; }
 	int GetCurrentCount() { return m_currentCount; }
 	void AddCurrentCount(int addCount) { m_currentCount += addCount; }	// ÇöÀç °¹¼ö µ¡¼À ¹× »¬¼À
 	int GetMaxCount() { return m_maxCount; }
-	float GetRange() { return m_range; }
 	wstring GetRangeStr() { return m_rangeStr; }
 	wstring GetInfo() { return m_info; }
 	int GetItemMoney() { return m_money; }
