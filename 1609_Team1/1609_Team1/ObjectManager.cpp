@@ -283,7 +283,7 @@ void ObjectManager::CreateGrenade(OBJ_TAG tag, Vector pos, GRENADE_STATE gre_sta
 		break;
 	case AIRBOMB_IDLE:
 		pBullet->Animation()->Register(gre_state, new Animation(TEXT("Plane_idle"), 1, 10, false, 0.2f, anchor.x, anchor.y));
-		pBullet->Animation()->Register(AIRBOMB_EXPLODE, new Animation(TEXT("Plane_Explode"), 42, 10, false, 1.0f, anchor.x, anchor.y));
+		pBullet->Animation()->Register(AIRBOMB_EXPLODE, new Animation(TEXT("Plane_Explode"), 42, 10, false, 1.0f, anchor.x, 0));
 		break;
 	}
 	
