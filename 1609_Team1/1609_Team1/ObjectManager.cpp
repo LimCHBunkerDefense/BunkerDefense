@@ -129,7 +129,7 @@ void ObjectManager::CreateCreature(OBJ_TAG tag, Vector pos)
 	switch (tag)
 	{
 	case OBJ_ENT:
-		scale = 0.5;
+		scale = 0.5f;
 		colSize = Vector(10, 10) * scale;
 		anchor = Vector(0.5, 0.95f);
 		pCreature->Animation()->Register(CREATURE_IDLE, new Animation(TEXT("EntIdle"), 2, 2, true, scale, anchor.x, anchor.y));
@@ -138,7 +138,7 @@ void ObjectManager::CreateCreature(OBJ_TAG tag, Vector pos)
 		pCreature->Animation()->Register(CREATURE_DEAD, new Animation(TEXT("EntDie"), 7, 4, false, scale, anchor.x, anchor.y));
 		break;
 	case OBJ_LAVA:
-		scale = 0.05;
+		scale = 0.5f;
 		colSize = Vector(10, 10) * scale;
 		anchor = Vector(0.5, 0.95f);
 		pCreature->Animation()->Register(CREATURE_IDLE, new Animation(TEXT("LavaIdle"), 2, 2, true, scale, anchor.x, anchor.y));
@@ -147,7 +147,7 @@ void ObjectManager::CreateCreature(OBJ_TAG tag, Vector pos)
 		pCreature->Animation()->Register(CREATURE_DEAD, new Animation(TEXT("LavaDie"), 13, 10, false, scale, anchor.x, anchor.y));
 		break;
 	case OBJ_DARKPRIEST:
-		scale = 0.005;
+		scale = 0.5f;
 		colSize = Vector(10, 10) * scale;
 		anchor = Vector(0.5, 0.95f);
 		pCreature->Animation()->Register(CREATURE_IDLE, new Animation(TEXT("DarkpriestIdle"), 2, 2, true, scale, anchor.x, anchor.y));
