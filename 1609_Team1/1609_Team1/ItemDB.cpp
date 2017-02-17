@@ -38,7 +38,7 @@ void ItemDB::Init()
 	// 상점 구매 아이템(소모품)
 	Add(new ItemData(ITEMTYPE_USINGITEM, ITEM_GRENADE, 3001, 100, 0, 50.0f, 25.0f, 0,   0, 0, 10, 50,   TEXT("수류탄(Grenade)"),
 		TEXT("가격이 저렴한 수류탄. \n 손에 힘이 없어서 멀리는 던지지 못한다.")));
-	Add(new ItemData(ITEMTYPE_USINGITEM, ITEM_AIRBOMB, 3002, 200, 0, 120.0f, 60.0f, 0,   0, 0, 3, 3000, TEXT("공중 폭격(Air Bomb"),
+	Add(new ItemData(ITEMTYPE_USINGITEM, ITEM_AIRBOMB, 3002, 200, 0, 120.0f, 60.0f, 0,   0, 0, 3, 3000, TEXT("공중 폭격(Air Bomb)"),
 		TEXT("광범위하게 살상하는 공중폭격. \n무전기로 본부를 호출해서 지원을\n 요청한다.")));
 	Add(new ItemData(ITEMTYPE_USINGITEM, ITEM_RAVAREGION, 3003,  30, 0, 50.0f, 25.0f, 0,   0, 0, 5, 1000, TEXT("용암지대(Rava Region)"),
 		TEXT("지속적인 화상상태를 입히는 용암지대. \n 용암이 담긴 캡슐을 던져 용암지대를\n 형성한다.")));
