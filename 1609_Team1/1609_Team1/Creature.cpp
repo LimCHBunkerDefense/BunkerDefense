@@ -79,8 +79,8 @@ void Creature::Update(float deltaTime)
 void Creature::Draw(Camera* pCamera)
 {
 	// 이미지 출력 전 이동에 따른 이미지 스케일 키워주는 부분
-	SetScale(m_t * m_t * 3.0f);
-	m_scale = m_t * m_t * 3.0f;
+	SetScale(OriginScale() * m_t * m_t * 3.0f);
+	m_scale = OriginScale() * m_t * m_t * 3.0f;
 
 	pCamera->Draw3D(Animation()->Current()->GetSprite(), m_startPos, m_t, OBJECT->GetSightHeight(), m_state);
 }
