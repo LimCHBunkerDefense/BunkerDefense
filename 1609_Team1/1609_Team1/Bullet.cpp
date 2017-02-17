@@ -14,6 +14,7 @@ Bullet::Bullet(OBJ_TAG tag) : Object(tag)
 	m_t = 0.0F;
 	m_z = 600 - OBJECT->GetSightHeight();	// 화면 상하 이동 시 뒷 배경의 height가 하상으로 움직이기때문에 최대높이 600에서 sightHeight를 빼주도록 함
 
+	m_moveSpeed = 25;
 	m_moveDirection = Vector(Position() * -1 + Vector(MINI_WIDTH * 0.5, MINI_HEIGHT)).Normalize();
 }
 

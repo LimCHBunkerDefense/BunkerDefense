@@ -20,10 +20,15 @@ PlayScene::PlayScene() : m_attackedColor(ColorF::Red)
 	// 크리쳐 데이터 생성
 	CREATURE->Init();
 	
-	// 크리처 이미지 맵으로 저장
-	RENDER->LoadImageFiles(TEXT("EntIdle"), TEXT("Image/Creature/Ent/Idle/Idle"), TEXT("png"), 2);
-	RENDER->LoadImageFiles(TEXT("EntRun"), TEXT("Image/Creature/Ent/Run/Run"), TEXT("png"), 9);
-	RENDER->LoadImageFiles(TEXT("EntAttack"), TEXT("Image/Creature/Ent/Attack/Attack"), TEXT("png"), 6);
+	// 크리처 이미지 생성
+	// Ent
+	//RENDER->LoadImageFiles(TEXT("EntIdle"), TEXT("Image/Creature/Ent/Idle/Idle"), TEXT("png"), 2);스프라이트 작업 다시 해야함
+	RENDER->LoadImageFiles(TEXT("EntRun"), TEXT("Image/Creature/Ent/Run/Run"), TEXT("png"), 21);	
+	//RENDER->LoadImageFiles(TEXT("EntAttack"), TEXT("Image/Creature/Ent/Attack/Attack"), TEXT("png"), 6);
+	// Lava
+	RENDER->LoadImageFiles(TEXT("LavaIdle"), TEXT("Image/Creature/Lava/Idle/Idle"), TEXT("png"), 2);
+	RENDER->LoadImageFiles(TEXT("LavaRun"), TEXT("Image/Creature/Lava/Run/Run"), TEXT("png"), 23);
+	// RENDER->LoadImageFiles(TEXT("LavaRun"), TEXT("Image/Creature/Lava/Run/Run"), TEXT("png"), 22);
 
 	//인터페이스 UI 이미지 가져오기
 	RENDER->LoadImageFile(TEXT("StageFont_UI"), TEXT("Image/UI/InterfaceUI/stage.png"));
