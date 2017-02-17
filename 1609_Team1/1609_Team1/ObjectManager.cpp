@@ -115,6 +115,21 @@ void ObjectManager::CreatePlayer(Vector pos, Vector colSize, Vector anchor)
 	m_pPlayer->SetPosition(pos);
 	m_pPlayer->SetCollider(colSize, anchor);
 
+	float scale = 1.0;
+	colSize = Vector(20, 20) * scale;
+	anchor = Vector(0.5, 0.95f);
+
+	m_pPlayer->Animation()->Register(IDLE_PISTOL, new Animation(TEXT("Idle_Pistol"), 2, 2, true, scale, anchor.x, anchor.y));
+	m_pPlayer->Animation()->Register(SHOT_PISTOL, new Animation(TEXT("Attack_Pistol"), 3, 2, false, scale, anchor.x, anchor.y));
+	m_pPlayer->Animation()->Register(IDLE_MACHINE, new Animation(TEXT("Idle_Machine"), 2, 2, true, scale, anchor.x, anchor.y));
+	m_pPlayer->Animation()->Register(SHOT_MACHINE, new Animation(TEXT("Attack_Machine"), 7, 2, false, scale, anchor.x, anchor.y));
+	m_pPlayer->Animation()->Register(IDLE_LASER, new Animation(TEXT("Idle_Laser"), 2, 2, true, scale, anchor.x, anchor.y));
+	m_pPlayer->Animation()->Register(SHOT_LASER, new Animation(TEXT("Attack_Laser"), 7, 2, false, scale, anchor.x, anchor.y));
+	m_pPlayer->Animation()->Register(IDLE_SHOT, new Animation(TEXT("Idle_Shot"), 2, 2, true, scale, anchor.x, anchor.y));
+	m_pPlayer->Animation()->Register(SHOT_SHOT, new Animation(TEXT("Attack_Shot"), 3, 2, false, scale, anchor.x, anchor.y));
+	m_pPlayer->Animation()->Register(SHOT_SHOT, new Animation(TEXT("Reload_Shot"), 11, 2, false, scale, anchor.x, anchor.y));
+	
+
 }
 
 void ObjectManager::DestroyPlayer()

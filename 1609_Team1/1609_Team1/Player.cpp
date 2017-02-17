@@ -8,6 +8,7 @@ Player::Player()
 
 Player::Player(OBJ_TAG tag) : Object(tag)
 {
+	ani_state = IDLE_PISTOL;
 	m_greCoolTime = 0.0f;//¼ö·ùÅº ÄðÅ¸ÀÓ
 	m_state = PLAYER_ATTACK;
 	item_state = ITEM_PISTOL;
@@ -52,6 +53,7 @@ void Player::Update(float deltaTime)
 void Player::Draw(Camera* pCamera)
 {
 	RENDER->FillCircle(Position() * 5, 100, ColorF::Aqua);
+	pCamera->Draw(Animation()->Current()->GetSprite(), Vector(VIEW_WIDTH / 2, VIEW_HEIGHT));
 }
 
 void Player::AttackState(float deltaTime)
