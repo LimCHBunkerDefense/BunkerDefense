@@ -1,11 +1,8 @@
 #include "ItemDB.h"
 
-
-
 ItemDB::ItemDB()
 {
 }
-
 
 ItemDB::~ItemDB()
 {
@@ -44,8 +41,6 @@ void ItemDB::Init()
 		TEXT("지속적인 화상상태를 입히는 용암지대. \n 용암이 담긴 캡슐을 던져 용암지대를\n 형성한다.")));
 	Add(new ItemData(ITEMTYPE_USINGITEM, ITEM_BUNKERREPAIR, 3004,   0, 0, 0.0f, 0.0f, 100, 0, 0, 10, 200,  TEXT("벙커 수리(Bunker Repair)"),
 		TEXT("금이 간 벙커를 수리. 몬스터로부터\n 공격당해 금이 간 벙커를 수리한다.")));
-
-
 	}
 
 void ItemDB::Add(ItemData* pData)
