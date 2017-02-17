@@ -40,6 +40,7 @@ PlayScene::PlayScene() : m_attackedColor(ColorF::Red)
 	//인터페이스 UI 이미지 가져오기
 	RENDER->LoadImageFile(TEXT("StageFont_UI"), TEXT("Image/UI/InterfaceUI/stage.png"));
 	RENDER->LoadImageFile(TEXT("Bunker_UI"), TEXT("Image/UI/InterfaceUI/Bunker_UI.png"));
+	//RENDER->LoadImageFile(TEXT("ItemBar_UI"), TEXT("Image/UI/InterfaceUI/ItemBarUI.png"));
 	RENDER->LoadImageFile(TEXT("ItemBar_UI"), TEXT("Image/UI/InterfaceUI/ItemBarUI.png"));
 	RENDER->LoadImageFile(TEXT("ScoreUI"), TEXT("Image/UI/InterfaceUI/Score.png"));
 	RENDER->LoadImageFile(TEXT("MoneyUI"), TEXT("Image/UI/InterfaceUI/money.png"));
@@ -79,7 +80,7 @@ PlayScene::PlayScene() : m_attackedColor(ColorF::Red)
 	RENDER->LoadImageFile(TEXT("Num9"), TEXT("Image/UI/ScoreNUM/Num9.png"));
 
 	// 벙커 체력 막대 생성
-	m_bunkerLife = new UIProgressBar(Vector(20, 35), Vector(240, 30), ColorF::YellowGreen, ColorF::LightYellow);
+	m_bunkerLife = new UIProgressBar(Vector(20, 800), Vector(240, 30), ColorF::YellowGreen, ColorF::LightYellow);
 	m_bunkerLife->SetMinMaxColor(ColorF::Red, ColorF::Green);
 
 	// 카메라 생성
@@ -126,7 +127,7 @@ void PlayScene::OnEnter()
 	NEW_OBJECT(m_ScoreUI, Sprite(RENDER->GetImage(TEXT("ScoreUI")),0.8f));
 	NEW_OBJECT(m_MoneyUI, Sprite(RENDER->GetImage(TEXT("MoneyUI")), 0.8f));
 	NEW_OBJECT(m_BunkerUI, Sprite(RENDER->GetImage(TEXT("Bunker_UI"))));
-	NEW_OBJECT(m_ItemBarUI, Sprite(RENDER->GetImage(TEXT("ItemBar_UI"))));
+	NEW_OBJECT(m_ItemBarUI, Sprite(RENDER->GetImage(TEXT("Bunker_UI"))));
 
 	//ico pistol
 	NEW_OBJECT(m_ico_pistol, Sprite(RENDER->GetImage(TEXT("PistolOn"))));
@@ -294,7 +295,7 @@ void PlayScene::OnDraw()
 
 	//2.벙커UI / 스킬 UI
 	pUICamera->Draw(m_BunkerUI, Vector(146, 80));
-	pUICamera->Draw(m_ItemBarUI, Vector(200, 790));
+	pUICamera->Draw(m_ItemBarUI, Vector(146, 790));
 	
 	//3.점수 출력
 	//pUICamera->DrawT(TEXT("점수 : "), VIEW_WIDTH - 300, 30, ColorF::White, 30, ALIGN_RIGHT);
@@ -318,12 +319,6 @@ void PlayScene::OnDraw()
 	pUICamera->Draw(m_ico_laser, Vector(170, VIEW_HEIGHT - 110));
 	pUICamera->DrawRect(Vector(146, 85), Vector(50, 50), ColorF::Red, 1);
 
-
-	
-	pUICamera->DrawRect(Vector(28, VIEW_HEIGHT - 95), Vector(70, 70), ColorF::Red, 1);
-	pUICamera->DrawRect(Vector(118, VIEW_HEIGHT - 95), Vector(70, 70), ColorF::Red, 1);
-	pUICamera->DrawRect(Vector(208, VIEW_HEIGHT - 95), Vector(70, 70), ColorF::Red,1);
-	pUICamera->DrawRect(Vector(298, VIEW_HEIGHT - 95), Vector(70, 70), ColorF::Red,1);
 
 
 }
