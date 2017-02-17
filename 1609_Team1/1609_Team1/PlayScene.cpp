@@ -22,13 +22,20 @@ PlayScene::PlayScene() : m_attackedColor(ColorF::Red)
 	
 	// 크리처 이미지 생성
 	// Ent
-	//RENDER->LoadImageFiles(TEXT("EntIdle"), TEXT("Image/Creature/Ent/Idle/Idle"), TEXT("png"), 2);스프라이트 작업 다시 해야함
+	RENDER->LoadImageFiles(TEXT("EntIdle"), TEXT("Image/Creature/Ent/Idle/Idle"), TEXT("png"), 2);
 	RENDER->LoadImageFiles(TEXT("EntRun"), TEXT("Image/Creature/Ent/Run/Run"), TEXT("png"), 21);	
-	//RENDER->LoadImageFiles(TEXT("EntAttack"), TEXT("Image/Creature/Ent/Attack/Attack"), TEXT("png"), 6);
+	RENDER->LoadImageFiles(TEXT("EntAttack"), TEXT("Image/Creature/Ent/Attack/Attack"), TEXT("png"), 16);
+	RENDER->LoadImageFiles(TEXT("EntDie"), TEXT("Image/Creature/Ent/Die/Die"), TEXT("png"), 7);
 	// Lava
 	RENDER->LoadImageFiles(TEXT("LavaIdle"), TEXT("Image/Creature/Lava/Idle/Idle"), TEXT("png"), 2);
 	RENDER->LoadImageFiles(TEXT("LavaRun"), TEXT("Image/Creature/Lava/Run/Run"), TEXT("png"), 23);
-	// RENDER->LoadImageFiles(TEXT("LavaRun"), TEXT("Image/Creature/Lava/Run/Run"), TEXT("png"), 22);
+	RENDER->LoadImageFiles(TEXT("LavaAttack"), TEXT("Image/Creature/Lava/Attack/Attack"), TEXT("png"), 21);
+	RENDER->LoadImageFiles(TEXT("LavaDie"), TEXT("Image/Creature/Lava/Die/Die"), TEXT("png"), 13);
+	// DarkPriest
+	RENDER->LoadImageFiles(TEXT("DarkpriestIdle"), TEXT("Image/Creature/DarkPriest/Idle/Idle"), TEXT("png"), 2);
+	RENDER->LoadImageFiles(TEXT("DarkpriestRun"), TEXT("Image/Creature/DarkPriest/Walk/Walk"), TEXT("png"), 16);
+	RENDER->LoadImageFiles(TEXT("DarkpriestAttack"), TEXT("Image/Creature/DarkPriest/Attack/Attack"), TEXT("png"), 32);
+	RENDER->LoadImageFiles(TEXT("DarkpriestDie"), TEXT("Image/Creature/DarkPriest/Die/Die"), TEXT("png"), 23);
 
 	//인터페이스 UI 이미지 가져오기
 	RENDER->LoadImageFile(TEXT("StageFont_UI"), TEXT("Image/UI/InterfaceUI/stage.png"));
@@ -147,6 +154,8 @@ void PlayScene::OnEnter()
 
 	// 테스트용 크리쳐 생성
 	//OBJECT->CreateCreature(OBJ_ENT, Vector(120, 60));
+	OBJECT->CreateCreature(OBJ_LAVA, Vector(120, 60));
+	//OBJECT->CreateCreature(OBJ_DARKPRIEST, Vector(120, 60));
 
 	// 마우스 커서 없애기
 	ShowCursor(false);

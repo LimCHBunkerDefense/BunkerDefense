@@ -44,6 +44,11 @@ void ObjectManager::Update(float deltaTime)
 
 	FOR_LIST(Object*, m_creatureList)
 	{
+		if ((*it)->IsDestroyed())
+		{
+			OBJECT->DestroyCreature((*it));
+			break;
+		}
 		(*it)->Update(deltaTime);
 	}
 
@@ -116,7 +121,7 @@ void ObjectManager::DestroyPlayer()
 void ObjectManager::CreateCreature(OBJ_TAG tag, Vector pos)
 {
 	NEW_OBJECT(Object* pCreature, Creature(tag));
-	pCreature->SetPosition_Creature(pos, pos * 5);
+	pCreature->SetPosition_Creature(pos);
 	pCreature->SetStartPos(pos);
 
 	Vector colSize, anchor;
@@ -124,13 +129,31 @@ void ObjectManager::CreateCreature(OBJ_TAG tag, Vector pos)
 	switch (tag)
 	{
 	case OBJ_ENT:
-		scale = 0.5;
+		scale = 0.5f;
 		colSize = Vector(10, 10) * scale;
 		anchor = Vector(0.5, 0.95f);
 		pCreature->Animation()->Register(CREATURE_IDLE, new Animation(TEXT("EntIdle"), 2, 2, true, scale, anchor.x, anchor.y));
 		pCreature->Animation()->Register(CREATURE_RUN, new Animation(TEXT("EntRun"), 21, 17, true, scale, anchor.x, anchor.y));
-		pCreature->Animation()->Register(CREATURE_ATTACK, new Animation(TEXT("EntAttack"), 6, 3, false, scale, anchor.x, anchor.y));
-		// pCreture->Animation()->Register(CREATURE_DEAD, new Animation(TEXT("EntDead"), 2, 10, false, 2.0f, anchor.x, anchor.y));
+		pCreature->Animation()->Register(CREATURE_ATTACK, new Animation(TEXT("EntAttack"), 16, 8, false, scale, anchor.x, anchor.y));
+		pCreature->Animation()->Register(CREATURE_DEAD, new Animation(TEXT("EntDie"), 7, 4, false, scale, anchor.x, anchor.y));
+		break;
+	case OBJ_LAVA:
+		scale = 0.5f;
+		colSize = Vector(10, 10) * scale;
+		anchor = Vector(0.5, 0.95f);
+		pCreature->Animation()->Register(CREATURE_IDLE, new Animation(TEXT("LavaIdle"), 2, 2, true, scale, anchor.x, anchor.y));
+		pCreature->Animation()->Register(CREATURE_RUN, new Animation(TEXT("LavaRun"), 23, 17, true, scale, anchor.x, anchor.y));
+		pCreature->Animation()->Register(CREATURE_ATTACK, new Animation(TEXT("LavaAttack"), 21, 15, false, scale, anchor.x, anchor.y));
+		pCreature->Animation()->Register(CREATURE_DEAD, new Animation(TEXT("LavaDie"), 13, 10, false, scale, anchor.x, anchor.y));
+		break;
+	case OBJ_DARKPRIEST:
+		scale = 0.5f;
+		colSize = Vector(10, 10) * scale;
+		anchor = Vector(0.5, 0.95f);
+		pCreature->Animation()->Register(CREATURE_IDLE, new Animation(TEXT("DarkpriestIdle"), 2, 2, true, scale, anchor.x, anchor.y));
+		pCreature->Animation()->Register(CREATURE_RUN, new Animation(TEXT("DarkpriestRun"), 16, 10, true, scale, anchor.x, anchor.y));
+		pCreature->Animation()->Register(CREATURE_ATTACK, new Animation(TEXT("DarkpriestAttack"), 32, 17, false, scale, anchor.x, anchor.y));
+		pCreature->Animation()->Register(CREATURE_DEAD, new Animation(TEXT("DarkpriestDie"), 23, 15, false, scale, anchor.x, anchor.y));
 		break;
 	}	
 
@@ -183,28 +206,23 @@ Object* ObjectManager::CreateItem(ITEM_TAG tag, int itemID)
 void ObjectManager::CreateBullet(OBJ_TAG tag, Vector pos, ITEM_TAG itemTag)
 {
 	NEW_OBJECT(Object* pBullet, Bullet(tag));
-	pBullet->SetPosition_Creature(pos, pos * 5);
-	pBullet->SetStartPos(pos);
+	pBullet->SetPosition_Creature(m_pPlayer->Position());	// 크리쳐랑 반대라 endPos 설정이라고 보면 됨
+	pBullet->SetStartPos(pos);								// 크리쳐랑 반대라 endPos 설정이라고 보면 됨
 
 	Vector colSize, anchor;
-	float scale;
 	switch (itemTag)
 	{
 	case ITEM_PISTOL:
-		scale = 0.05f;
-		colSize = Vector(5, 5) * scale;
+		colSize = Vector(5, 5);
 		anchor = Vector(0.5, 0.95f);
-		pBullet->Animation()->Register(BULLET_IDLE, new Animation(TEXT("PistolIdle"), 1, 1, false, scale, anchor.x, anchor.y));
-		pBullet->Animation()->Register(BULLET_EXPLODE, new Animation(TEXT("PistolExplode"), 1, 1, false, scale, anchor.x, anchor.y));
-		pBullet->SetMoveSpeed(5.0f);
+		pBullet->Animation()->Register(BULLET_IDLE, new Animation(TEXT("PistolIdle"), 1, 1, false, 1, anchor.x, anchor.y));
+		pBullet->Animation()->Register(BULLET_EXPLODE, new Animation(TEXT("PistolExplode"), 1, 1, false, 1, anchor.x, anchor.y));
 		break;
 	case ITEM_MACHINEGUN:
-		scale = 0.05f;
-		colSize = Vector(5, 5) * scale;
+		colSize = Vector(5, 5);
 		anchor = Vector(0.5, 0.95f);
-		pBullet->Animation()->Register(BULLET_IDLE, new Animation(TEXT("MachinegunIdle"), 1, 1, false, scale, anchor.x, anchor.y));
-		pBullet->Animation()->Register(BULLET_EXPLODE, new Animation(TEXT("MachinegunExplode"), 1, 1, false, scale, anchor.x, anchor.y));
-		pBullet->SetMoveSpeed(5.0f);
+		pBullet->Animation()->Register(BULLET_IDLE, new Animation(TEXT("MachinegunIdle"), 1, 1, false, 1, anchor.x, anchor.y));
+		pBullet->Animation()->Register(BULLET_EXPLODE, new Animation(TEXT("MachinegunExplode"), 1, 1, false, 1, anchor.x, anchor.y));
 		break;
 	}
 	
@@ -245,7 +263,7 @@ void ObjectManager::CreateGrenade(OBJ_TAG tag, Vector pos, GRENADE_STATE gre_sta
 	NEW_OBJECT(Object* pBullet, Grenade(tag, gre_state));
 	float m_t = GetSightHeight() / SIGHTHEIGHT_MAX;
 	//Vector NewPos = pos * m_t + OBJECT->GetPlayer()->Position() * (1 - m_t);
-	pBullet->SetPosition_Creature(pos, pos * 5);
+	pBullet->SetPosition_Creature(pos);
 	pBullet->SetStartPos(pos);
 	pBullet->SetGoal(m_t);
 

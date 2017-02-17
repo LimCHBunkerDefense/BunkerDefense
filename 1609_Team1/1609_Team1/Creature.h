@@ -31,7 +31,7 @@ class Creature :
 	DIRECTION_TAG m_dir;
 	Vector m_moveDirection;
 
-	
+	bool m_isDestroyed;	//	 죽는 애니메이션 끝나면 삭제될 수 있도록 나타내는 값
 
 public:
 	Creature();
@@ -57,6 +57,9 @@ public:
 	float GetMT() { return m_t; }
 	float GetMaxZ() { return m_maxZ; }
 	float GetMinZ() { return m_minZ; }
+	void AddCurrentLife(float addLife) { m_currentLife = MATH->Clamp(m_currentLife + addLife, 0.0f, m_maxLife); }
+	float GetCurrentLife() { return m_currentLife; }
+	bool IsDestroyed() { return m_isDestroyed; }
 
 	int GetScore() { return m_score; }
 	int GetMoney() { return m_money; }
