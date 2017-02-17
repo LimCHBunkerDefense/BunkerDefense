@@ -66,8 +66,10 @@ class PlayScene : public IScene
 	// 农府媚 积己阑 困茄 霸烙 矫埃
 	float m_gameTime;
 	
-	// 农府媚 醚 积己等 荐
-	int m_createdCretureCount;
+	// 积己等 农府媚甸 荐
+	int m_createdLavaCount;
+	int m_createdEntCount;
+	int m_createdDarkpriestCount;
 	
 public:
 	PlayScene();

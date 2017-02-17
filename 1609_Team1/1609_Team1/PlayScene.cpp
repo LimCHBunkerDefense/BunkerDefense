@@ -117,7 +117,9 @@ PlayScene::PlayScene() : m_attackedColor(ColorF::Red)
 	OBJECT->CreateBunker();
 	Object* pObj = OBJECT->GetBunker();
 
-	m_createdCretureCount = 0;
+	m_createdLavaCount = 0;
+	m_createdEntCount = 0;
+	m_createdDarkpriestCount = 0;
 
 	//손 모양 출력
 }
@@ -364,76 +366,33 @@ void PlayScene::OnDraw()
 
 void PlayScene::SetCreature(float deltaTime)
 {
-
-	int score = OBJECT->GetPlayer()->GetScore();
+	int randDegree;
 
 	// 스테이지 1
-	if(m_createdCretureCount < m_gameTime / 3)
+	if(m_gameTime / 3 > m_createdLavaCount)
 	{
-		int x = rand() % MINI_WIDTH * 0.5;
-		if (rand() % 2 == 0) x *= -1;
-
-		int y = sqrt(pow(MINI_WIDTH * 0.5f, 2) - pow(x, 2));
-		if (rand() % 2 == 0) y *= -1;
-
-		if (y >= 0)
-		{
-			y = MINI_HEIGHT - y;
-		}
-		else
-		{
-			y = MINI_HEIGHT + y;
-		}
-
-		x = x + MINI_WIDTH * 0.5;
-		OBJECT->CreateCreature(OBJ_LAVA, Vector(x, y));
-		m_createdCretureCount++;
+		randDegree = rand() % 360;
+		Vector pos = MATH->ToDirection(randDegree) * MINI_WIDTH * 0.5 + OBJECT->GetPlayer()->Position();
+		OBJECT->CreateCreature(OBJ_LAVA, pos);
+		m_createdLavaCount++;
 	}
 
 	// 스테이지 2
-	if (score >= 2000 &&  m_createdCretureCount < m_gameTime / 5)
+	if ((m_gameTime -  20) / 5 > m_createdEntCount)
 	{
-		int x = rand() % MINI_WIDTH * 0.5;
-		if (rand() % 2 == 0) x *= -1;
-
-		int y = sqrt(pow(MINI_WIDTH * 0.5f, 2) - pow(x, 2));
-		if (rand() % 2 == 0) y *= -1;
-
-		if (y >= 0)
-		{
-			y = MINI_HEIGHT - y;
-		}
-		else
-		{
-			y = MINI_HEIGHT + y;
-		}
-
-		x = x + MINI_WIDTH * 0.5;
-		OBJECT->CreateCreature(OBJ_ENT, Vector(x, y));
-		m_createdCretureCount++;
+		randDegree = rand() % 360;
+		Vector pos = MATH->ToDirection(randDegree) * MINI_WIDTH * 0.5 + OBJECT->GetPlayer()->Position();
+		OBJECT->CreateCreature(OBJ_ENT, pos);
+		m_createdEntCount++;
 	}
 
 	// 대빵
-	if (score >= 4000 && m_createdCretureCount < m_gameTime / 12)
+	if (m_gameTime>100 && m_createdDarkpriestCount < 1)
 	{
-		int x = rand() % MINI_WIDTH * 0.5;
-		if (rand() % 2 == 0) x *= -1;
-
-		int y = sqrt(pow(MINI_WIDTH * 0.5f, 2) - pow(x, 2));
-		if (rand() % 2 == 0) y *= -1;
-
-		if (y >= 0)
-		{
-			y = MINI_HEIGHT - y;
-		}
-		else
-		{
-			y = MINI_HEIGHT + y;
-		}
-
-		x = x + MINI_WIDTH * 0.5;
-		OBJECT->CreateCreature(OBJ_DARKPRIEST, Vector(x, y));
-		m_createdCretureCount++;
+		randDegree = rand() % 360;
+		Vector pos = MATH->ToDirection(randDegree) * MINI_WIDTH * 0.5 + OBJECT->GetPlayer()->Position();
+		OBJECT->CreateCreature(OBJ_DARKPRIEST, pos);
+		m_createdDarkpriestCount++;
 	}
 
 }

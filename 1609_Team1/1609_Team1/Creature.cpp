@@ -92,7 +92,17 @@ void Creature::IdleState(float deltaTime)
 
 void Creature::RunState(float deltaTime)
 {
+	// m_t가 0.9이하면 공격모드로
 	if(m_t >= 0.9) m_state = CREATURE_ATTACK;
+
+	// 체력 0이하면 죽음
+	if (m_currentLife <= 0.0f)
+	{
+		Animation()->Play(CREATURE_DEAD);
+		OBJECT->GetPlayer()->AddMoney(m_money);
+		OBJECT->GetPlayer()->AddScore(m_score);
+		m_state = CREATURE_DEAD;
+	}
 
 	// 크리쳐 이동에 관계된 비율 (시작점에서 플레이어까지 가는 거리를 1로 봤을 때, 현재 이동한 거리의 비율)
 	m_t = MATH->Clamp(m_t + m_moveSpeed * deltaTime, 0.0f, 1.0f);
