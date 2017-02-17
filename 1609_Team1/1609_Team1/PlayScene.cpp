@@ -7,6 +7,16 @@ PlayScene::PlayScene() : m_attackedColor(ColorF::Red)
 	// 크리쳐 생성되는 높이h값 생성. 추후 마우스에 따라 실시간 변화
 	//m_heightOfCreature = 600;
 
+	//캐릭터 나타내는 이미지
+	RENDER->LoadImageFiles(TEXT("Idle_Pistol"), TEXT("Image/Item/Pistol/Idle/Idle"), TEXT("png"), 2);
+	RENDER->LoadImageFiles(TEXT("Attack_Pistol"), TEXT("Image/Item/Pistol/Attack/Attack"), TEXT("png"), 3);
+	RENDER->LoadImageFiles(TEXT("Idle_Machine"), TEXT("Image/Item/MachineGun/Idle/MachineGunIdle"), TEXT("png"), 2);
+	RENDER->LoadImageFiles(TEXT("Attack_Machine"), TEXT("Image/Item/MachineGun/Shot/MachineGunShot"), TEXT("png"), 7);
+	RENDER->LoadImageFiles(TEXT("Idle_Laser"), TEXT("Image/Item/LaserGun/Idle/Idle"), TEXT("png"), 2);
+	RENDER->LoadImageFiles(TEXT("Attack_Laser"), TEXT("Image/Item/LaserGun/Shot/Shot"), TEXT("png"), 21);
+	RENDER->LoadImageFiles(TEXT("Idle_Shot"), TEXT("Image/Item/ShotGun/Idle/Idle"), TEXT("png"), 2);
+	RENDER->LoadImageFiles(TEXT("Attack_Shot"), TEXT("Image/Item/ShotGun/Shot/Shot"), TEXT("png"), 3);
+	RENDER->LoadImageFiles(TEXT("Reload_Shot"), TEXT("Image/Item/ShotGun/Reload/Reload"), TEXT("png"), 11);
 
 	// 배경 이미지 맵으로 저장
 	RENDER->LoadImageFile(TEXT("ForestBG"), TEXT("Image/BackGround/ForestBG.jpg")); 
@@ -108,6 +118,8 @@ PlayScene::PlayScene() : m_attackedColor(ColorF::Red)
 	Object* pObj = OBJECT->GetBunker();
 
 	m_createdCretureCount = 0;
+
+	//손 모양 출력
 }
 
 
