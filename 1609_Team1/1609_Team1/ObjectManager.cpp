@@ -128,7 +128,7 @@ void ObjectManager::CreateCreature(OBJ_TAG tag, Vector pos)
 		colSize = Vector(10, 10) * scale;
 		anchor = Vector(0.5, 0.95f);
 		pCreature->Animation()->Register(CREATURE_IDLE, new Animation(TEXT("EntIdle"), 2, 2, true, scale, anchor.x, anchor.y));
-		pCreature->Animation()->Register(CREATURE_RUN, new Animation(TEXT("EntRun"), 9, 7, true, scale, anchor.x, anchor.y));
+		pCreature->Animation()->Register(CREATURE_RUN, new Animation(TEXT("EntRun"), 21, 17, true, scale, anchor.x, anchor.y));
 		pCreature->Animation()->Register(CREATURE_ATTACK, new Animation(TEXT("EntAttack"), 6, 3, false, scale, anchor.x, anchor.y));
 		// pCreture->Animation()->Register(CREATURE_DEAD, new Animation(TEXT("EntDead"), 2, 10, false, 2.0f, anchor.x, anchor.y));
 		break;
