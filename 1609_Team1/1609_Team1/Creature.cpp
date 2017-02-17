@@ -79,8 +79,8 @@ void Creature::Update(float deltaTime)
 void Creature::Draw(Camera* pCamera)
 {
 	// 이미지 출력 전 이동에 따른 이미지 스케일 키워주는 부분
-	SetScale(m_t * m_t * 3.0f);
-	m_scale = m_t * m_t * 3.0f;
+	SetScale(OriginScale() * m_t * m_t * 3.0f);
+	m_scale = OriginScale() * m_t * m_t * 3.0f;
 
 	pCamera->Draw3D(Animation()->Current()->GetSprite(), m_startPos, m_t, OBJECT->GetSightHeight(), m_state);
 }
@@ -115,6 +115,7 @@ void Creature::AttackState(float deltaTime)
 		float addLife = OBJECT->GetBunker()->GetDefense() - m_attack;
 		OBJECT->GetBunker()->AddCurrentLife(addLife);
 		m_attackCoolTime = m_attackSpeed;
+		SCENE->GetScene(SCENE_PLAY)->SetAttackedColor();
 		switch (Tag())
 		{
 		case OBJ_ENT:

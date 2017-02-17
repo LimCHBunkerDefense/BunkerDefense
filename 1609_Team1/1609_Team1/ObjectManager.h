@@ -15,6 +15,7 @@ class Object
 	Vector m_pos;
 	Box m_collider;
 	map<int, Object*> m_trashMap;
+	float m_originScale;
 
 public:
 	Object() {}
@@ -36,7 +37,8 @@ public:
 	Box Collider() { return m_collider; }
 
 	
-
+	void SetOriginScale(float scale) { m_originScale = scale; }
+	float OriginScale() { return m_originScale; }
 
 	void SetPosition(Vector pos)
 	{
