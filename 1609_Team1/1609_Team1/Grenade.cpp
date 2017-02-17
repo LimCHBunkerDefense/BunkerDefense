@@ -13,6 +13,7 @@ Grenade::Grenade(OBJ_TAG tag, GRENADE_STATE gre_state) : Object(tag)
 	m_state = gre_state;
 	m_addHeight = 0.0F;
 	m_t = 0.0F;
+	m_t2 = 0.0F;
 	m_goal = 1.0F;
 	m_moveSpeed = 0.5F;
 	m_explodetime = 0.0F;
@@ -27,7 +28,7 @@ Grenade::Grenade(OBJ_TAG tag, GRENADE_STATE gre_state) : Object(tag)
 		m_explodeSize = 15.0f;
 		break;
 	case AIRBOMB_IDLE:
-		m_explodeEnd = 10.0F;
+		m_explodeEnd = 2.0F;
 		m_explodeSize = 20.0f;
 		break;
 	default:
@@ -138,15 +139,7 @@ BOOL Grenade::HitState(float deltaTime) {
 void Grenade::Draw(Camera* pCamera)
 {
 	SetCollider(Collider().size * ((1 - m_t) *1.0f) / m_scale, Collider().anchor);
-	switch (m_state)
-	{
-		case GRENADE_IDLE:		SetScale((1 - m_t) *0.2f); break;
-		case GRENADE_EXPLODE:	SetScale((1 - m_t) *6.0f); break;
-		case FLAME_IDLE:		SetScale((1 - m_t) *0.2f); break;
-		case FLAME_EXPLODE:		SetScale((1 - m_t) *6.0f); break;
-		case AIRBOMB_IDLE:		SetScale((1 - m_t) *2.0f); break;
-		case AIRBOMB_EXPLODE:	SetScale(3.0f); break;
-	}
+	
 
 	//Vector startPos = m_startPos * m_goal + OBJECT->GetPlayer()->Position() * (1 - m_goal);
 
@@ -155,10 +148,19 @@ void Grenade::Draw(Camera* pCamera)
 	}
 	else if (m_state == AIRBOMB_EXPLODE) {
 		//pCamera->Draw3D(Animation()->Current()->GetSprite(), m_startPos, 1 - m_t, OBJECT->GetSightHeight(), m_state, m_addHeight);
-		pCamera->Draw3D(Animation()->Current()->GetSprite(), m_startPos, 0.5,400, m_state);
+		pCamera->Draw3D(Animation()->Current()->GetSprite(), m_startPos, 1,-VIEW_HEIGHT, m_state);
 	}
 	else {
 		pCamera->Draw3D(Animation()->Current()->GetSprite(), m_startPos, 1 - m_t, OBJECT->GetSightHeight(), m_state, m_addHeight);
+	}
+	switch (m_state)
+	{
+	case GRENADE_IDLE:		SetScale((1 - m_t) *0.2f); break;
+	case GRENADE_EXPLODE:	SetScale((1 - m_t) *6.0f); break;
+	case FLAME_IDLE:		SetScale((1 - m_t) *0.2f); break;
+	case FLAME_EXPLODE:		SetScale((1 - m_t) *6.0f); break;
+	case AIRBOMB_IDLE:		SetScale((1 - m_t) *2.0f); break;
+	case AIRBOMB_EXPLODE:	SetScale(6.0f); break;
 	}
 }
 
