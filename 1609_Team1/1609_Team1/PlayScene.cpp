@@ -49,8 +49,8 @@ PlayScene::PlayScene() : m_attackedColor(ColorF::Red)
 
 	//인터페이스 UI 이미지 가져오기
 	RENDER->LoadImageFile(TEXT("StageFont_UI"), TEXT("Image/UI/InterfaceUI/stage.png"));
-	RENDER->LoadImageFile(TEXT("ItemBar_UI"), TEXT("Image/UI/InterfaceUI/Bunker_UI.png"));
-	RENDER->LoadImageFile(TEXT("Bunker_UI"), TEXT("Image/UI/InterfaceUI/ItemBarUI.png"));
+	RENDER->LoadImageFile(TEXT("ItemBar_UI"), TEXT("Image/UI/InterfaceUI/ItemBarUI.png"));
+	RENDER->LoadImageFile(TEXT("Bunker_UI"), TEXT("Image/UI/InterfaceUI/Bunker_UI.png"));
 	RENDER->LoadImageFile(TEXT("ScoreUI"), TEXT("Image/UI/InterfaceUI/Score.png"));
 	RENDER->LoadImageFile(TEXT("MoneyUI"), TEXT("Image/UI/InterfaceUI/money.png"));
 
@@ -91,11 +91,11 @@ PlayScene::PlayScene() : m_attackedColor(ColorF::Red)
 	RENDER->LoadImageFile(TEXT("Num9"), TEXT("Image/UI/ScoreNUM/Num9.png"));
 
 	// 벙커 체력 막대 생성
-	m_bunkerLife = new UIProgressBar(Vector(24, 830), Vector(320, 45), ColorF::YellowGreen, ColorF::Wheat);
-	m_bunkerLife->SetMinMaxColor(ColorF::Red, ColorF::Green);
+	m_bunkerLife = new UIProgressBar(Vector(24, 830), Vector(320, 45), ColorF::YellowGreen, ColorF::LightGoldenrodYellow);
+	m_bunkerLife->SetMinMaxColor(ColorF::Red, ColorF::YellowGreen);
 
 	// 총알 게이지 막대 생성
-	m_bulletGage = new UIBulletBar(Vector(24, 794), Vector(320, 30), ColorF::DarkBlue, ColorF::LightBlue);
+	m_bulletGage = new UIBulletBar(Vector(24, 770), Vector(320, 45), ColorF::DarkBlue, ColorF::LightBlue);
 
 	// 카메라 생성
 	RENDER->CreateCamera(CAM_MAIN, MAP_WIDTH, MAP_HEIGHT, VIEW_WIDTH, VIEW_HEIGHT);
@@ -145,7 +145,7 @@ void PlayScene::OnEnter()
 	NEW_OBJECT(m_ScoreUI, Sprite(RENDER->GetImage(TEXT("ScoreUI")),0.8f));
 	NEW_OBJECT(m_MoneyUI, Sprite(RENDER->GetImage(TEXT("MoneyUI")), 0.8f));
 	NEW_OBJECT(m_BunkerUI, Sprite(RENDER->GetImage(TEXT("Bunker_UI"))));
-	NEW_OBJECT(m_ItemBarUI, Sprite(RENDER->GetImage(TEXT("Bunker_UI"))));
+	NEW_OBJECT(m_ItemBarUI, Sprite(RENDER->GetImage(TEXT("ItemBar_UI"))));
 
 	//ico pistol
 	NEW_OBJECT(m_ico_pistol, Sprite(RENDER->GetImage(TEXT("PistolOn"))));
@@ -326,8 +326,8 @@ void PlayScene::OnDraw()
 	//pUICamera->DrawT(TEXT("Stage 1"), VIEW_WIDTH / 2 - 50, 40, ColorF::White, 30, ALIGN_CENTER);
 
 	//2.벙커UI / 스킬 UI
-	pUICamera->Draw(m_BunkerUI, Vector(146, 80));
-	pUICamera->Draw(m_ItemBarUI, Vector(186, 820));
+	pUICamera->Draw(m_ItemBarUI, Vector(146, 80));
+	pUICamera->Draw(m_BunkerUI, Vector(186, 820));
 	
 	//3.점수 출력
 	//pUICamera->DrawT(TEXT("점수 : "), VIEW_WIDTH - 300, 30, ColorF::White, 30, ALIGN_RIGHT);
