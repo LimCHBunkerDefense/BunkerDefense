@@ -29,7 +29,13 @@ PlayScene::PlayScene() : m_attackedColor(ColorF::Red)
 	// Lava
 	RENDER->LoadImageFiles(TEXT("LavaIdle"), TEXT("Image/Creature/Lava/Idle/Idle"), TEXT("png"), 2);
 	RENDER->LoadImageFiles(TEXT("LavaRun"), TEXT("Image/Creature/Lava/Run/Run"), TEXT("png"), 23);
-	// RENDER->LoadImageFiles(TEXT("LavaRun"), TEXT("Image/Creature/Lava/Run/Run"), TEXT("png"), 22);
+	RENDER->LoadImageFiles(TEXT("LavaAttack"), TEXT("Image/Creature/Lava/Attack/Attack"), TEXT("png"), 21);
+	RENDER->LoadImageFiles(TEXT("LavaDie"), TEXT("Image/Creature/Lava/Die/Die"), TEXT("png"), 13);
+	// DarkPriest
+	RENDER->LoadImageFiles(TEXT("DarkpriestIdle"), TEXT("Image/Creature/DarkPriest/Idle/Idle"), TEXT("png"), 2);
+	RENDER->LoadImageFiles(TEXT("DarkpriestRun"), TEXT("Image/Creature/DarkPriest/Walk/Walk"), TEXT("png"), 16);
+	RENDER->LoadImageFiles(TEXT("DarkpriestAttack"), TEXT("Image/Creature/DarkPriest/Attack/Attack"), TEXT("png"), 32);
+	RENDER->LoadImageFiles(TEXT("DarkpriestDie"), TEXT("Image/Creature/DarkPriest/Die/Die"), TEXT("png"), 23);
 
 	//인터페이스 UI 이미지 가져오기
 	RENDER->LoadImageFile(TEXT("StageFont_UI"), TEXT("Image/UI/InterfaceUI/stage.png"));
@@ -147,7 +153,9 @@ void PlayScene::OnEnter()
 	pUICamera->SetScreenRect(0, 0, VIEW_WIDTH, VIEW_HEIGHT);
 
 	// 테스트용 크리쳐 생성
-	//OBJECT->CreateCreature(OBJ_ENT, Vector(120, 60));
+	OBJECT->CreateCreature(OBJ_ENT, Vector(120, 60));
+	//OBJECT->CreateCreature(OBJ_LAVA, Vector(120, 60));
+	//OBJECT->CreateCreature(OBJ_DARKPRIEST, Vector(120, 60));
 
 	// 마우스 커서 없애기
 	ShowCursor(false);
@@ -162,7 +170,7 @@ void PlayScene::OnUpdate(float deltaTime)
 	m_gameTime += deltaTime;
 
 	// 게임 시간에 따른 크리쳐 생성
-	SetCreature(deltaTime);
+	//SetCreature(deltaTime);
 	
 	// 오브젝트 전체 업데이트
 	OBJECT->Update(deltaTime);

@@ -137,6 +137,24 @@ void ObjectManager::CreateCreature(OBJ_TAG tag, Vector pos)
 		pCreature->Animation()->Register(CREATURE_ATTACK, new Animation(TEXT("EntAttack"), 16, 8, false, scale, anchor.x, anchor.y));
 		pCreature->Animation()->Register(CREATURE_DEAD, new Animation(TEXT("EntDie"), 7, 4, false, scale, anchor.x, anchor.y));
 		break;
+	case OBJ_LAVA:
+		scale = 0.05;
+		colSize = Vector(10, 10) * scale;
+		anchor = Vector(0.5, 0.95f);
+		pCreature->Animation()->Register(CREATURE_IDLE, new Animation(TEXT("LavaIdle"), 2, 2, true, scale, anchor.x, anchor.y));
+		pCreature->Animation()->Register(CREATURE_RUN, new Animation(TEXT("LavaRun"), 23, 17, true, scale, anchor.x, anchor.y));
+		pCreature->Animation()->Register(CREATURE_ATTACK, new Animation(TEXT("LavaAttack"), 21, 15, false, scale, anchor.x, anchor.y));
+		pCreature->Animation()->Register(CREATURE_DEAD, new Animation(TEXT("LavaDie"), 13, 10, false, scale, anchor.x, anchor.y));
+		break;
+	case OBJ_DARKPRIEST:
+		scale = 0.005;
+		colSize = Vector(10, 10) * scale;
+		anchor = Vector(0.5, 0.95f);
+		pCreature->Animation()->Register(CREATURE_IDLE, new Animation(TEXT("DarkpriestIdle"), 2, 2, true, scale, anchor.x, anchor.y));
+		pCreature->Animation()->Register(CREATURE_RUN, new Animation(TEXT("DarkpriestRun"), 16, 10, true, scale, anchor.x, anchor.y));
+		pCreature->Animation()->Register(CREATURE_ATTACK, new Animation(TEXT("DarkpriestAttack"), 32, 17, false, scale, anchor.x, anchor.y));
+		pCreature->Animation()->Register(CREATURE_DEAD, new Animation(TEXT("DarkpriestDie"), 23, 15, false, scale, anchor.x, anchor.y));
+		break;
 	}	
 
 	pCreature->SetCollider(colSize, anchor);
