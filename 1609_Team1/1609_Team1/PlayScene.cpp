@@ -39,8 +39,8 @@ PlayScene::PlayScene() : m_attackedColor(ColorF::Red)
 
 	//인터페이스 UI 이미지 가져오기
 	RENDER->LoadImageFile(TEXT("StageFont_UI"), TEXT("Image/UI/InterfaceUI/stage.png"));
-	RENDER->LoadImageFile(TEXT("Bunker_UI"), TEXT("Image/UI/InterfaceUI/Bunker_UI.png"));
-	RENDER->LoadImageFile(TEXT("ItemBar_UI"), TEXT("Image/UI/InterfaceUI/ItemBarUI.png"));
+	RENDER->LoadImageFile(TEXT("ItemBar_UI"), TEXT("Image/UI/InterfaceUI/Bunker_UI.png"));
+	RENDER->LoadImageFile(TEXT("Bunker_UI"), TEXT("Image/UI/InterfaceUI/ItemBarUI.png"));
 	RENDER->LoadImageFile(TEXT("ScoreUI"), TEXT("Image/UI/InterfaceUI/Score.png"));
 	RENDER->LoadImageFile(TEXT("MoneyUI"), TEXT("Image/UI/InterfaceUI/money.png"));
 
@@ -79,7 +79,7 @@ PlayScene::PlayScene() : m_attackedColor(ColorF::Red)
 	RENDER->LoadImageFile(TEXT("Num9"), TEXT("Image/UI/ScoreNUM/Num9.png"));
 
 	// 벙커 체력 막대 생성
-	m_bunkerLife = new UIProgressBar(Vector(20, 35), Vector(240, 30), ColorF::YellowGreen, ColorF::LightYellow);
+	m_bunkerLife = new UIProgressBar(Vector(24, 830), Vector(320, 45), ColorF::YellowGreen, ColorF::Wheat);
 	m_bunkerLife->SetMinMaxColor(ColorF::Red, ColorF::Green);
 
 	// 카메라 생성
@@ -294,7 +294,7 @@ void PlayScene::OnDraw()
 
 	//2.벙커UI / 스킬 UI
 	pUICamera->Draw(m_BunkerUI, Vector(146, 80));
-	pUICamera->Draw(m_ItemBarUI, Vector(200, 790));
+	pUICamera->Draw(m_ItemBarUI, Vector(186, 820));
 	
 	//3.점수 출력
 	//pUICamera->DrawT(TEXT("점수 : "), VIEW_WIDTH - 300, 30, ColorF::White, 30, ALIGN_RIGHT);
@@ -311,19 +311,19 @@ void PlayScene::OnDraw()
 	m_bunkerLife->Render(pUICamera);
 
 	//Icon
-	pUICamera->DrawRect(Vector(20, 87), Vector(240, 45), ColorF::Blue, 1);
 
-	pUICamera->Draw(m_ico_pistol, Vector(46, VIEW_HEIGHT-110));
-	pUICamera->Draw(m_ico_machine, Vector(108, VIEW_HEIGHT - 110));
-	pUICamera->Draw(m_ico_laser, Vector(170, VIEW_HEIGHT - 110));
-	pUICamera->DrawRect(Vector(146, 85), Vector(50, 50), ColorF::Red, 1);
+	pUICamera->Draw(m_ico_pistol, Vector(48, VIEW_HEIGHT - 852));
+	pUICamera->Draw(m_ico_machine, Vector(172, VIEW_HEIGHT - 852));
+	pUICamera->Draw(m_ico_laser, Vector(238, VIEW_HEIGHT - 852));
+	//pUICamera->DrawRect(Vector(146, 85), Vector(50, 50), ColorF::Red, 1);
 
 
 	
-	pUICamera->DrawRect(Vector(28, VIEW_HEIGHT - 95), Vector(70, 70), ColorF::Red, 1);
-	pUICamera->DrawRect(Vector(118, VIEW_HEIGHT - 95), Vector(70, 70), ColorF::Red, 1);
-	pUICamera->DrawRect(Vector(208, VIEW_HEIGHT - 95), Vector(70, 70), ColorF::Red,1);
-	pUICamera->DrawRect(Vector(298, VIEW_HEIGHT - 95), Vector(70, 70), ColorF::Red,1);
+	pUICamera->DrawRect(Vector(24, VIEW_HEIGHT - 130), Vector(320, 45), ColorF::Blue, 2);
+	//pUICamera->DrawRect(Vector(28, VIEW_HEIGHT - 95), Vector(70, 70), ColorF::Red, 1);
+	//pUICamera->DrawRect(Vector(118, VIEW_HEIGHT - 95), Vector(70, 70), ColorF::Red, 1);
+	//pUICamera->DrawRect(Vector(208, VIEW_HEIGHT - 95), Vector(70, 70), ColorF::Red,1);
+	//pUICamera->DrawRect(Vector(298, VIEW_HEIGHT - 95), Vector(70, 70), ColorF::Red,1);
 
 
 }
