@@ -36,6 +36,7 @@ Creature::Creature(OBJ_TAG tag) : Object(tag)
 	m_maxZ = 300;
 	m_minZ = m_maxZ;
 
+	m_isDestroyed = false;
 }
 
 
@@ -45,6 +46,8 @@ Creature::~Creature()
 
 void Creature::Update(float deltaTime)
 {
+	// cout << m_maxZ << "           " << m_minZ << "           " << Animation()->Current()->GetSprite()->GetHeight()  << "           " << m_t<<endl;	// 콘솔창에서 디버깅용
+	// cout << m_currentLife << endl;
 	// 크리쳐 이동방향벡터 실시간 업데이트
 	m_moveDirection = Vector(Position() * -1 + Vector(MINI_WIDTH * 0.5, MINI_HEIGHT)).Normalize();
 
@@ -53,7 +56,7 @@ void Creature::Update(float deltaTime)
 
 	// 카메라 회전에 따른 크리쳐의 현재 위치를 미니맵 상에서 이동
 	Vector pos = m_startPos * (1 - m_t) + OBJECT->GetPlayer()->Position() * m_t;
-	SetPosition_Creature(pos, pos * 5);
+	SetPosition_Creature(pos);
 
 	// m_lifeBar targetValue 업데이트
 	m_lifeBar->SetTargetValue(m_currentLife / m_maxLife);
@@ -99,13 +102,25 @@ void Creature::RunState(float deltaTime)
 
 void Creature::AttackState(float deltaTime)
 {
+	if (m_currentLife <= 0.0f)
+	{
+		Animation()->Play(CREATURE_DEAD);
+		OBJECT->GetPlayer()->AddMoney(m_money);
+		OBJECT->GetPlayer()->AddScore(m_score);
+		m_state = CREATURE_DEAD;
+	}
 	if (m_attackCoolTime <= 0.0f) // 공격 쿨타임이 0이하이면 공격 애니메이션 발동 및 벙커 체력에 손실을 입히고, 새로 쿨타임 설정
 	{
 		Animation()->Play(CREATURE_ATTACK);
 		float addLife = OBJECT->GetBunker()->GetDefense() - m_attack;
 		OBJECT->GetBunker()->AddCurrentLife(addLife);
 		m_attackCoolTime = m_attackSpeed;
-		SCENE->GetScene(SCENE_PLAY)->SetAttackedColor();
+		switch (Tag())
+		{
+		case OBJ_ENT:
+			if(Animation()->Current()->GetCurrentIndex() == 7) SCENE->GetScene(SCENE_PLAY)->SetAttackedColor();
+			break;
+		}
 	}
 
 	else
@@ -117,7 +132,7 @@ void Creature::AttackState(float deltaTime)
 
 void Creature::DeadState(float deltaTime)
 {
-	Animation()->Play(CREATURE_DEAD);
+	if (Animation()->Current()->GetCurrentIndex() == Animation()->Current()->GetSpriteCount() -1) m_isDestroyed = true;
 }
 
 // 카메라 회전에 의한 StartPos 업데이트
@@ -136,5 +151,4 @@ void Creature::ZUpdate()
 {
 	m_maxZ = 300 + 400 * m_t;
 	m_minZ = m_maxZ - Animation()->Current()->GetSprite()->GetHeight() * 0.7;	// Draw3D 등 이미지를 화면으로 출력해주면서 넣어준 변수에 때문에 0.7배 해주어야 보이는 스프라이트 높이가 됨
-	cout << m_maxZ << "           " << m_minZ << "           " << Animation()->Current()->GetSprite()->GetHeight()  << "           " << m_t<<endl;	// 콘솔창에서 디버깅용
 }

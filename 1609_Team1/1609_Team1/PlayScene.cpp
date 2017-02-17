@@ -22,9 +22,10 @@ PlayScene::PlayScene() : m_attackedColor(ColorF::Red)
 	
 	// 크리처 이미지 생성
 	// Ent
-	//RENDER->LoadImageFiles(TEXT("EntIdle"), TEXT("Image/Creature/Ent/Idle/Idle"), TEXT("png"), 2);스프라이트 작업 다시 해야함
+	RENDER->LoadImageFiles(TEXT("EntIdle"), TEXT("Image/Creature/Ent/Idle/Idle"), TEXT("png"), 2);
 	RENDER->LoadImageFiles(TEXT("EntRun"), TEXT("Image/Creature/Ent/Run/Run"), TEXT("png"), 21);	
-	//RENDER->LoadImageFiles(TEXT("EntAttack"), TEXT("Image/Creature/Ent/Attack/Attack"), TEXT("png"), 6);
+	RENDER->LoadImageFiles(TEXT("EntAttack"), TEXT("Image/Creature/Ent/Attack/Attack"), TEXT("png"), 16);
+	RENDER->LoadImageFiles(TEXT("EntDie"), TEXT("Image/Creature/Ent/Die/Die"), TEXT("png"), 7);
 	// Lava
 	RENDER->LoadImageFiles(TEXT("LavaIdle"), TEXT("Image/Creature/Lava/Idle/Idle"), TEXT("png"), 2);
 	RENDER->LoadImageFiles(TEXT("LavaRun"), TEXT("Image/Creature/Lava/Run/Run"), TEXT("png"), 23);
@@ -161,7 +162,7 @@ void PlayScene::OnUpdate(float deltaTime)
 	m_gameTime += deltaTime;
 
 	// 게임 시간에 따른 크리쳐 생성
-	//SetCreature(deltaTime);
+	SetCreature(deltaTime);
 	
 	// 오브젝트 전체 업데이트
 	OBJECT->Update(deltaTime);
