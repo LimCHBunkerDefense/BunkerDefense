@@ -298,10 +298,7 @@ void Player::ShopState()
 	{
 		int num = 0; 
 		if (INPUT->IsKeyDown(VK_0)) num = 0;
-		if (INPUT->IsKeyDown(VK_1))
-		{
-			num = 1;
-		}
+		if (INPUT->IsKeyDown(VK_1))	num = 1;
 		if (INPUT->IsKeyDown(VK_2)) num = 2;
 		if (INPUT->IsKeyDown(VK_3)) num = 3;
 		if (INPUT->IsKeyDown(VK_4)) num = 4;
