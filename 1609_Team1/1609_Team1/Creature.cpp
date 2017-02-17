@@ -115,6 +115,7 @@ void Creature::AttackState(float deltaTime)
 		float addLife = OBJECT->GetBunker()->GetDefense() - m_attack;
 		OBJECT->GetBunker()->AddCurrentLife(addLife);
 		m_attackCoolTime = m_attackSpeed;
+		SCENE->GetScene(SCENE_PLAY)->SetAttackedColor();
 		switch (Tag())
 		{
 		case OBJ_ENT:
