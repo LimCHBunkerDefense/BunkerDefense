@@ -15,8 +15,8 @@
 class GameManager : public Singleton<GameManager>
 {
 	float m_frameTime;			// 한 프레임당 시간
-	float m_currentTime;		// 현재 프레임의 시간
-	float m_prevTime;			// 이전 프레임의 시간
+	int m_currentTime;		// 현재 프레임의 시간
+	int m_prevTime;			// 이전 프레임의 시간
 
 public:
 	GameManager();

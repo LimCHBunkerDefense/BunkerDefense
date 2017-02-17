@@ -14,8 +14,8 @@ GameManager::~GameManager()
 void GameManager::Init()
 {
 	m_frameTime = 1.0f / (float)FPS;
-	m_currentTime = (float)timeGetTime() * 0.001f;
-	m_prevTime = (float)timeGetTime() * 0.001f;
+	m_currentTime = timeGetTime();
+	m_prevTime = timeGetTime();
 
 	WINDOW->RegisterData(TEXT("Main"), CS_HREDRAW | CS_VREDRAW, RGB(255, 255, 255), WndProc);
 	WINDOW->Create(WND_MAIN, TEXT("Main"), TEXT("BunkerDefense_Team 1"), 0, 0, VIEW_WIDTH, VIEW_HEIGHT);
@@ -40,8 +40,8 @@ void GameManager::Release()
 
 void GameManager::Update()
 {
-	m_currentTime = (float)timeGetTime() * 0.001f;
-	float deltaTime = m_currentTime - m_prevTime;	// 실제 한 프레임 시간
+	m_currentTime = timeGetTime();
+	float deltaTime = (m_currentTime - m_prevTime) * 0.001f;	// 실제 한 프레임 시간
 
 	if (deltaTime >= m_frameTime)
 	{
