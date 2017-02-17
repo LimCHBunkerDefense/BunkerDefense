@@ -130,7 +130,7 @@ void ObjectManager::CreateCreature(OBJ_TAG tag, Vector pos)
 	{
 	case OBJ_ENT:
 		scale = 1.0;
-		colSize = Vector(10, 10) * scale;
+		colSize = Vector(20, 20) * scale;
 		anchor = Vector(0.5, 0.95f);
 		pCreature->Animation()->Register(CREATURE_IDLE, new Animation(TEXT("EntIdle"), 2, 2, true, scale, anchor.x, anchor.y));
 		pCreature->Animation()->Register(CREATURE_RUN, new Animation(TEXT("EntRun"), 21, 17, true, scale, anchor.x, anchor.y));
@@ -139,7 +139,7 @@ void ObjectManager::CreateCreature(OBJ_TAG tag, Vector pos)
 		break;
 	case OBJ_LAVA:
 		scale = 0.3;
-		colSize = Vector(10, 10) * scale;
+		colSize = Vector(20, 20) * scale;
 		anchor = Vector(0.5, 0.95f);
 		pCreature->Animation()->Register(CREATURE_IDLE, new Animation(TEXT("LavaIdle"), 2, 2, true, scale, anchor.x, anchor.y));
 		pCreature->Animation()->Register(CREATURE_RUN, new Animation(TEXT("LavaRun"), 23, 17, true, scale, anchor.x, anchor.y));
@@ -148,7 +148,7 @@ void ObjectManager::CreateCreature(OBJ_TAG tag, Vector pos)
 		break;
 	case OBJ_DARKPRIEST:
 		scale = 0.4;
-		colSize = Vector(10, 10) * scale;
+		colSize = Vector(20, 20) * scale;
 		anchor = Vector(0.5, 0.95f);
 		pCreature->Animation()->Register(CREATURE_IDLE, new Animation(TEXT("DarkpriestIdle"), 2, 2, true, scale, anchor.x, anchor.y));
 		pCreature->Animation()->Register(CREATURE_RUN, new Animation(TEXT("DarkpriestRun"), 16, 10, true, scale, anchor.x, anchor.y));
@@ -214,13 +214,13 @@ void ObjectManager::CreateBullet(OBJ_TAG tag, Vector pos, ITEM_TAG itemTag)
 	switch (itemTag)
 	{
 	case ITEM_PISTOL:
-		colSize = Vector(5, 5);
+		colSize = Vector(10, 10);
 		anchor = Vector(0.5, 0.95f);
 		pBullet->Animation()->Register(BULLET_IDLE, new Animation(TEXT("PistolIdle"), 1, 1, false, 1, anchor.x, anchor.y));
 		pBullet->Animation()->Register(BULLET_EXPLODE, new Animation(TEXT("PistolExplode"), 1, 1, false, 1, anchor.x, anchor.y));
 		break;
 	case ITEM_MACHINEGUN:
-		colSize = Vector(5, 5);
+		colSize = Vector(10, 10);
 		anchor = Vector(0.5, 0.95f);
 		pBullet->Animation()->Register(BULLET_IDLE, new Animation(TEXT("MachinegunIdle"), 1, 1, false, 1, anchor.x, anchor.y));
 		pBullet->Animation()->Register(BULLET_EXPLODE, new Animation(TEXT("MachinegunExplode"), 1, 1, false, 1, anchor.x, anchor.y));

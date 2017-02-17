@@ -62,6 +62,8 @@ void Bullet::Draw(Camera* pCamera)
 
 void Bullet::IdleState(float deltaTime) 
 {
+	//cout << Position().x << "   " << Position().y << "       " << m_t << endl;	총알 위치 디버깅용
+
 	Animation()->Play(BULLET_IDLE);
 	
 	// 이동에 관계된 비율 (시작점에서 플레이어까지 가는 거리를 1로 봤을 때, 현재 이동한 거리의 비율)
@@ -70,8 +72,6 @@ void Bullet::IdleState(float deltaTime)
 	// 크리쳐와 식이 반대로임
 	Vector pos = m_startPos * m_t + OBJECT->GetPlayer()->Position() * (1 - m_t);
 	SetPosition_Creature(pos);
-
-	cout << Position().x << "   " << Position().y << "       " << m_t << endl;
 
 	// 사정거리 끝까지 간 m_t가 1인경우 혹은 크리쳐와 충돌처리 되면 총알 삭제
 	if (m_t >= 0.9999 || Collided())
@@ -100,6 +100,7 @@ BOOL Bullet::Collided()
 
 			Object* p = OBJECT->GetPlayer();
 			(*it)->AddCurrentLife(-m_attack);
+			
 			return true;
 		}
 	}
