@@ -4,6 +4,7 @@
 #include "RenderManager.h"
 #include "ObjectManager.h"
 #include "ProgressBar.h"
+#include "BulletBar.h"
 #include "CreatureDB.h"
 #include "Common.h"
 #include "Math.h"
@@ -36,6 +37,8 @@ class PlayScene : public IScene
 	Vector m_swayPos;
 
 	UIProgressBar* m_bunkerLife;
+	UIBulletBar* m_bulletGage;
+
 
 	// 숫자 스프라이트 생성해놓기
 	Sprite* m_num1;

@@ -82,6 +82,9 @@ PlayScene::PlayScene() : m_attackedColor(ColorF::Red)
 	m_bunkerLife = new UIProgressBar(Vector(24, 830), Vector(320, 45), ColorF::YellowGreen, ColorF::Wheat);
 	m_bunkerLife->SetMinMaxColor(ColorF::Red, ColorF::Green);
 
+	// 총알 게이지 막대 생성
+	m_bulletGage = new UIBulletBar(Vector(24, 794), Vector(320, 30), ColorF::DarkBlue, ColorF::LightBlue);
+
 	// 카메라 생성
 	RENDER->CreateCamera(CAM_MAIN, MAP_WIDTH, MAP_HEIGHT, VIEW_WIDTH, VIEW_HEIGHT);
 	RENDER->CreateCamera(CAM_MINIMAP, MINI_WIDTH, MINI_HEIGHT* 5, MINI_WIDTH, MINI_HEIGHT * 2);
@@ -312,6 +315,9 @@ void PlayScene::OnDraw()
 
 	//Bunker 체력
 	m_bunkerLife->Render(pUICamera);
+
+	// 총알 게이지
+	m_bulletGage->Render(pUICamera);
 
 	//Icon
 
