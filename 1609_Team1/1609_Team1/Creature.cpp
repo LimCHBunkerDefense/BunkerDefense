@@ -46,8 +46,8 @@ Creature::~Creature()
 
 void Creature::Update(float deltaTime)
 {
-	// cout << m_maxZ << "           " << m_minZ << "           " << Animation()->Current()->GetSprite()->GetHeight()  << "           " << m_t<<endl;	// 콘솔창에서 디버깅용
-	// cout << m_currentLife << endl;
+	 cout << m_maxZ << "           " << m_minZ << "           " << Animation()->Current()->GetSprite()->GetHeight()  << "           " << m_t<<endl;	// 콘솔창에서 디버깅용
+	 cout << m_currentLife << endl;
 	// 크리쳐 이동방향벡터 실시간 업데이트
 	m_moveDirection = Vector(Position() * -1 + Vector(MINI_WIDTH * 0.5, MINI_HEIGHT)).Normalize();
 
@@ -92,7 +92,7 @@ void Creature::IdleState(float deltaTime)
 
 void Creature::RunState(float deltaTime)
 {
-	if(m_t >= 0.95) m_state = CREATURE_ATTACK;
+	if(m_t >= 0.9) m_state = CREATURE_ATTACK;
 
 	// 크리쳐 이동에 관계된 비율 (시작점에서 플레이어까지 가는 거리를 1로 봤을 때, 현재 이동한 거리의 비율)
 	m_t = MATH->Clamp(m_t + m_moveSpeed * deltaTime, 0.0f, 1.0f);

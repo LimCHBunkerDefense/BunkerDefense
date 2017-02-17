@@ -126,7 +126,7 @@ void PlayScene::OnEnter()
 	NEW_OBJECT(m_ScoreUI, Sprite(RENDER->GetImage(TEXT("ScoreUI")),0.8f));
 	NEW_OBJECT(m_MoneyUI, Sprite(RENDER->GetImage(TEXT("MoneyUI")), 0.8f));
 	NEW_OBJECT(m_BunkerUI, Sprite(RENDER->GetImage(TEXT("Bunker_UI"))));
-	NEW_OBJECT(m_ItemBarUI, Sprite(RENDER->GetImage(TEXT("ItemBar_UI"))));
+	NEW_OBJECT(m_ItemBarUI, Sprite(RENDER->GetImage(TEXT("Bunker_UI"))));
 
 	//ico pistol
 	NEW_OBJECT(m_ico_pistol, Sprite(RENDER->GetImage(TEXT("PistolOn"))));
@@ -154,8 +154,8 @@ void PlayScene::OnEnter()
 
 	// 테스트용 크리쳐 생성
 	//OBJECT->CreateCreature(OBJ_ENT, Vector(120, 60));
-	OBJECT->CreateCreature(OBJ_LAVA, Vector(120, 60));
-	OBJECT->CreateCreature(OBJ_DARKPRIEST, Vector(120, 240));
+	//OBJECT->CreateCreature(OBJ_LAVA, Vector(120, 60));
+	//OBJECT->CreateCreature(OBJ_DARKPRIEST, Vector(120, 240));
 
 	// 마우스 커서 없애기
 	ShowCursor(false);
@@ -170,7 +170,7 @@ void PlayScene::OnUpdate(float deltaTime)
 	m_gameTime += deltaTime;
 
 	// 게임 시간에 따른 크리쳐 생성
-	//SetCreature(deltaTime);
+	SetCreature(deltaTime);
 	
 	// 오브젝트 전체 업데이트
 	OBJECT->Update(deltaTime);
@@ -265,8 +265,10 @@ void PlayScene::OnDraw()
 	FOR_LIST(Object*, pBulletList)
 	{
 		Vector pos = (*it)->Position();
+		Vector colSize = (*it)->Collider().size;
 		pMinimapCamera->DrawFilledCircle(pos - 4, Vector(8, 8), ColorF::DeepPink);
 		//pMinimapCamera->DrawLine((*it)->GetStartPos().x, (*it)->GetStartPos().y, OBJECT->GetPlayer()->Position().x, OBJECT->GetPlayer()->Position().y, ColorF::DeepPink, 2);
+		//pMinimapCamera->DrawFilledRect(pos - colSize * 0.5, colSize, ColorF::Blue);	// 미니맵 상 총알의 충돌체 표시해주는 부분
 	}
 
 	//수류탄 선 긋기
@@ -325,13 +327,38 @@ void PlayScene::OnDraw()
 	//pUICamera->DrawRect(Vector(208, VIEW_HEIGHT - 95), Vector(70, 70), ColorF::Red,1);
 	//pUICamera->DrawRect(Vector(298, VIEW_HEIGHT - 95), Vector(70, 70), ColorF::Red,1);
 
-
 }
 
 void PlayScene::SetCreature(float deltaTime)
 {
-	int creatureLimit = m_gameTime / 4;
-	if (m_createdCretureCount < creatureLimit)
+
+	int score = OBJECT->GetPlayer()->GetScore();
+
+	// 스테이지 1
+	if(m_createdCretureCount < m_gameTime / 3)
+	{
+		int x = rand() % MINI_WIDTH * 0.5;
+		if (rand() % 2 == 0) x *= -1;
+
+		int y = sqrt(pow(MINI_WIDTH * 0.5f, 2) - pow(x, 2));
+		if (rand() % 2 == 0) y *= -1;
+
+		if (y >= 0)
+		{
+			y = MINI_HEIGHT - y;
+		}
+		else
+		{
+			y = MINI_HEIGHT + y;
+		}
+
+		x = x + MINI_WIDTH * 0.5;
+		OBJECT->CreateCreature(OBJ_LAVA, Vector(x, y));
+		m_createdCretureCount++;
+	}
+
+	// 스테이지 2
+	if (score >= 2000 &&  m_createdCretureCount < m_gameTime / 5)
 	{
 		int x = rand() % MINI_WIDTH * 0.5;
 		if (rand() % 2 == 0) x *= -1;
@@ -350,6 +377,29 @@ void PlayScene::SetCreature(float deltaTime)
 
 		x = x + MINI_WIDTH * 0.5;
 		OBJECT->CreateCreature(OBJ_ENT, Vector(x, y));
+		m_createdCretureCount++;
+	}
+
+	// 대빵
+	if (score >= 4000 && m_createdCretureCount < m_gameTime / 12)
+	{
+		int x = rand() % MINI_WIDTH * 0.5;
+		if (rand() % 2 == 0) x *= -1;
+
+		int y = sqrt(pow(MINI_WIDTH * 0.5f, 2) - pow(x, 2));
+		if (rand() % 2 == 0) y *= -1;
+
+		if (y >= 0)
+		{
+			y = MINI_HEIGHT - y;
+		}
+		else
+		{
+			y = MINI_HEIGHT + y;
+		}
+
+		x = x + MINI_WIDTH * 0.5;
+		OBJECT->CreateCreature(OBJ_DARKPRIEST, Vector(x, y));
 		m_createdCretureCount++;
 	}
 
