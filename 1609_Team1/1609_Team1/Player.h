@@ -49,6 +49,7 @@ public:
 	Object* GetCurrentItem() { return m_pItem; }
 
 	ITEM_TAG GetItemState() { return item_state; }
+	GRENADE_STATE GetGreState() { return gre_state; }
 
 	// 플레이어의 점수 및 돈 호출/추가 함수
 	int GetScore() { return m_score; }
