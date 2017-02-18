@@ -25,6 +25,8 @@ void GameManager::Init()
 
 	// itemDB 생성
 	ITEM->Init();
+	// 크리쳐 데이터 생성
+	CREATURE->Init();
 
 	SCENE->Register(SCENE_PLAY, new PlayScene());
 	SCENE->Register(SCENE_SHOP, new ShopScene()); // *김윤중 추가

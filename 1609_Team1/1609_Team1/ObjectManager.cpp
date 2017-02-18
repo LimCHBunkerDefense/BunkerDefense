@@ -240,23 +240,26 @@ void ObjectManager::CreateBullet(OBJ_TAG tag, Vector pos, ITEM_TAG itemTag)
 	pBullet->SetStartPos(pos);								// 크리쳐랑 반대라 endPos 설정이라고 보면 됨
 
 	Vector colSize, anchor;
+	float range;
 	switch (itemTag)
 	{
 	case ITEM_PISTOL:
 		colSize = Vector(10, 10);
 		anchor = Vector(0.5, 0.95f);
+		range = ITEM->GetData(itemTag)->range;
 		pBullet->Animation()->Register(BULLET_IDLE, new Animation(TEXT("PSBulletIdle"), 1, 1, false, 1, anchor.x, anchor.y));
 		pBullet->Animation()->Register(BULLET_EXPLODE, new Animation(TEXT("PSBulletExplode"), 1, 1, false, 1, anchor.x, anchor.y));
 		break;
 	case ITEM_MACHINEGUN:
 		colSize = Vector(10, 10);
 		anchor = Vector(0.5, 0.95f);
+		range = ITEM->GetData(itemTag)->range;
 		pBullet->Animation()->Register(BULLET_IDLE, new Animation(TEXT("MGBulletIdle"), 1, 1, false, 1, anchor.x, anchor.y));
 		pBullet->Animation()->Register(BULLET_EXPLODE, new Animation(TEXT("MGBulletExplode"), 1, 1, false, 1, anchor.x, anchor.y));
 		break;
 	}
 	
-
+	pBullet->SetRange();
 	pBullet->SetCollider(colSize, anchor);
 
 	m_bulletList.push_front(pBullet);

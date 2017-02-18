@@ -14,7 +14,7 @@
 #define CAMERA_ANGLE			60
 #define SIGHTHEIGHT_MIN			0.0f		// 플레이어의 상하 시야각의 최소값
 #define SIGHTHEIGHT_MAX			600.0f		// 플레이어의 상하 시야각의 최대값
-#define SIGHTHEIGHT_DEFAULT		500.0f		// 플레이어의 상하 시야각의 초기 시작값
+#define SIGHTHEIGHT_DEFAULT		350		// 플레이어의 상하 시야각의 초기 시작값
 #define MAP_WIDTH				1920
 #define MAP_HEIGHT				1080
 #define MINI_WIDTH				VIEW_WIDTH/5

@@ -26,9 +26,6 @@ PlayScene::PlayScene() : m_attackedColor(ColorF::Red)
 	RENDER->LoadImageFile(TEXT("Aim"), TEXT("Image/UI/Aim/Aim.png"));
 	//RENDER->LoadImageFile(TEXT("Minimap"), TEXT("Image/UI/Minimap/Minimap.png"));
 	RENDER->LoadImageFile(TEXT("Radar"), TEXT("Image/UI/Minimap/RadarBG.png"));
-
-	// 크리쳐 데이터 생성
-	CREATURE->Init();
 	
 	// 크리처 이미지 생성
 	// Ent
@@ -190,7 +187,7 @@ void PlayScene::OnUpdate(float deltaTime)
 	m_gameTime += deltaTime;
 
 	// 게임 시간에 따른 크리쳐 생성  
-	SetCreature(deltaTime);
+	//SetCreature(deltaTime);
 	
 	// 오브젝트 전체 업데이트
 	OBJECT->Update(deltaTime);

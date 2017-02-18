@@ -93,7 +93,9 @@ void Player::AttackState(float deltaTime)
 			}
 		}
 		else {
-			Vector pos = Vector::Up() * m_pItem->GetRange() + OBJECT->GetPlayer()->Position();
+			float sightHeightDefault = SIGHTHEIGHT_DEFAULT;
+			float rate = 1 + MATH->Clamp(OBJECT->GetSightHeight() - sightHeightDefault, sightHeightDefault / 2 * -1, 0.0f) / sightHeightDefault;
+			Vector pos = Vector::Up() * m_pItem->GetRange() * rate + OBJECT->GetPlayer()->Position();
 			OBJECT->CreateBullet(OBJ_BULLET, pos, m_pItem->GetTag());
 		}
 	}

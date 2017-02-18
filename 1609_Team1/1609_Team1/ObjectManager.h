@@ -92,6 +92,7 @@ public:
 	virtual BOOL UpdateBool(float deltaTime) { return false; }
 	virtual void SetMoveSpeed(float speed) {}
 	virtual void SetGoal(float goal) {}
+	virtual void SetRange() {}
 
 
 	// 아이템용 함수
@@ -203,10 +204,10 @@ public:
 
 	// 플레이어 에임 좌표 관련
 	Vector GetSightPos() { return m_sight; }
-	void SetSightPos(Vector aim)
-	{ 
-		float y = MATH->Clamp(aim.y, SIGHTHEIGHT_MIN, SIGHTHEIGHT_MAX);
-		m_sight = Vector(aim.x, y);
-	}
+	//void SetSightPos(Vector aim)
+	//{ 
+	//	float y = MATH->Clamp(aim.y, SIGHTHEIGHT_MIN, SIGHTHEIGHT_MAX);
+	//	m_sight = Vector(aim.x, y);
+	//}
 };
 
