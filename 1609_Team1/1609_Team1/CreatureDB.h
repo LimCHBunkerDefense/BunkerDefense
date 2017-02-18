@@ -15,7 +15,7 @@ struct CreatureData
 	float attack;
 	float defense;
 	wstring name;
-	float attackSpeed;	//	(attackSpeed)초에 한 번씩 공격함
+	float attackSpeed;	//	(attackSpeed)초에 한 번씩 공격함 
 	float moveSpeed;
 	int money;
 	int score;
