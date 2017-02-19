@@ -84,8 +84,8 @@ PlayScene::PlayScene() : m_attackedColor(ColorF::Red)
 	RENDER->LoadImageFile(TEXT("GrenadeOff"), TEXT("Image/Item/Icon/ico_grenade_off.png"));
 	RENDER->LoadImageFile(TEXT("PlaneOn"), TEXT("Image/Item/Icon/ico_plane_on.png"));
 	RENDER->LoadImageFile(TEXT("PlaneOff"), TEXT("Image/Item/Icon/ico_plane_off.png"));
-	RENDER->LoadImageFile(TEXT("NapalmOn"), TEXT("Image/Item/Icon/ico_napalm_on.png"));
-	RENDER->LoadImageFile(TEXT("NapalmOff"), TEXT("Image/Item/Icon/ico_napalm_off.png"));
+	RENDER->LoadImageFile(TEXT("NapalmOn"), TEXT("Image/Item/Icon/ico_capsule_on.png"));
+	RENDER->LoadImageFile(TEXT("NapalmOff"), TEXT("Image/Item/Icon/ico_capsule_off.png"));
 
 	// 숫자 이미지 가져오기
 	RENDER->LoadImageFile(TEXT("Num0"), TEXT("Image/UI/ScoreNUM/Num0.png"));
