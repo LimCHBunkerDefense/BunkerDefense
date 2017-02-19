@@ -3,6 +3,7 @@
 #include "RenderManager.h"
 #include "ObjectManager.h"
 #include "InputManager.h"
+#include "SoundManager.h"
 #include "Common.h"
 #include "Item.h"
 
@@ -99,6 +100,7 @@ public:
 	void SetIsCountClicked(bool ON) { IsCountClicked = ON; }
 	int GetInputCount() { return m_inputCount; }
 	void SetInputCount(int addCount);
+	void InputCountClear();
 	bool GetInputOnOff() { return m_inputOnOff; }
 	void SetInputOnOff(bool ON) { m_inputOnOff = ON; }
 	
