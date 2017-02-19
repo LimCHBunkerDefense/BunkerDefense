@@ -24,6 +24,24 @@ class Player :
 	float HitPoint;
 	//float m_sight;						// 시야 길이
 
+	//전체 가진 양
+	INT PistolBullet;
+	INT ShotGunBullet;
+	INT LaserBullet;
+	INT MachineBullet;
+
+	//장전돼있던 양
+	INT bullet_pistol;
+	INT bullet_shot;
+	INT bullet_laser;
+	INT bullet_machine;
+
+
+	INT Count_Grenade;
+	INT Count_Radio;
+	INT Count_Napalm;
+	INT Count_Repair;
+
 	INT intBulletCount;
 	INT MaxBulletCount;
 	INT FullBulletCount;
@@ -89,6 +107,7 @@ public:
 	INT getFullBullet() { return FullBulletCount; }
 	void BulletUse() { intBulletCount-=1; }
 	void BulletReload();
+	void SaveBullet(ITEM_TAG item_tag);
 
 	UIProgressBar* GetLaserChargerBar() { return m_lasergunCharger; }
 };

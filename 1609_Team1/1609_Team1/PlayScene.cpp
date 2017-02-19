@@ -50,6 +50,8 @@ PlayScene::PlayScene() : m_attackedColor(ColorF::Red)
 	RENDER->LoadImageFile(TEXT("Bunker_UI"), TEXT("Image/UI/InterfaceUI/Bunker_UI.png"));
 	RENDER->LoadImageFile(TEXT("ScoreUI"), TEXT("Image/UI/InterfaceUI/Score.png"));
 	RENDER->LoadImageFile(TEXT("MoneyUI"), TEXT("Image/UI/InterfaceUI/money.png"));
+	RENDER->LoadImageFile(TEXT("ProgressBarIcon_UI"), TEXT("Image/UI/InterfaceUI/ProgressBar.png"));
+	RENDER->LoadImageFile(TEXT("BulletBarIcon_UI"), TEXT("Image/UI/InterfaceUI/BulletBar.png"));
 
 	//Bullet 저장
 	RENDER->LoadImageFiles(TEXT("PSBulletIdle"), TEXT("Image/Bullet/Pistol/Idle/Idle"), TEXT("png"), 1);
@@ -161,6 +163,8 @@ void PlayScene::OnEnter()
 	NEW_OBJECT(m_MoneyUI, Sprite(RENDER->GetImage(TEXT("MoneyUI")), 0.8f));
 	NEW_OBJECT(m_BunkerUI, Sprite(RENDER->GetImage(TEXT("Bunker_UI"))));
 	NEW_OBJECT(m_ItemBarUI, Sprite(RENDER->GetImage(TEXT("ItemBar_UI"))));
+	NEW_OBJECT(m_ProgressBarIconUI, Sprite(RENDER->GetImage(TEXT("ProgressBarIcon_UI")), 1.1f));
+	NEW_OBJECT(m_BulletBarIconUI, Sprite(RENDER->GetImage(TEXT("BulletBarIcon_UI"))));
 
 	// PlayScene BGM 생성
 	// SOUND->Play("MainBGM_0", 1.0f);			// 후보군 1
@@ -376,17 +380,21 @@ void PlayScene::OnDraw()
 	pUICamera->Draw(m_pAim, Vector(VIEW_WIDTH * 0.5, VIEW_HEIGHT * 0.5f));
 
 	//플레이 UI출력
-	//1.Stage UI 출력
+	// 1.Stage UI 출력
 	pUICamera->Draw(m_stageUI, Vector(600, 100));
 	pUICamera->DrawRect(Vector(565, 125), Vector(70, 70), ColorF::Red, 3);
 	pUICamera->DrawT(TEXT("1"), 590, 140, ColorF::Red, 30, ALIGN_RIGHT);
 	//pUICamera->DrawT(TEXT("Stage 1"), VIEW_WIDTH / 2 - 50, 40, ColorF::White, 30, ALIGN_CENTER);
 
-	//2.벙커UI / 스킬 UI
+	// 2.벙커UI / 스킬 UI
 	pUICamera->Draw(m_ItemBarUI, Vector(146, 80));
 	pUICamera->Draw(m_BunkerUI, Vector(186, 820));
+
+	// 3.Bar 옆에 아이콘 UI
+	pUICamera->Draw(m_ProgressBarIconUI, Vector(390, 850));
+	pUICamera->Draw(m_BulletBarIconUI, Vector(390, 790));
 	
-	//3.점수 출력
+	// 4.점수 출력
 	//pUICamera->DrawT(TEXT("점수 : "), VIEW_WIDTH - 300, 30, ColorF::White, 30, ALIGN_RIGHT);
 	//pUICamera->DrawT(TEXT("골드 : "), VIEW_WIDTH - 300, 70, ColorF::White, 30, ALIGN_RIGHT);
 	pUICamera->Draw(m_ScoreUI, Vector(VIEW_WIDTH - 300, 45));

@@ -46,9 +46,26 @@ Player::Player(OBJ_TAG tag) : Object(tag)
 	m_lasergunCharger->SetValue(0.0f);
 	m_laserGunShot = false;
 
+	//전체 탄수
+	PistolBullet = 50;
+	ShotGunBullet = 0;
+	LaserBullet = 0;
+	MachineBullet = 0;
+
+	//장전 돼있던 탄수
+	bullet_pistol = 0;
+	bullet_shot=0;
+	bullet_laser=0;
+	bullet_machine=0;
+
+	Count_Grenade=1;
+	Count_Radio=0;
+	Count_Napalm=0;
+	Count_Repair=0;
+
 	intBulletCount = 10;
 	FullBulletCount = 10;
-	MaxBulletCount = 60;
+	MaxBulletCount = PistolBullet;
 }
 
 Player::~Player()
@@ -242,27 +259,22 @@ void Player::AttackState(float deltaTime)
 }
 
 void  Player::BulletReload() {
-	switch (item_state) {
-	case ITEM_PISTOL:
-		intBulletCount = 10;
-		FullBulletCount = 10;
-		MaxBulletCount = 60;
-		break;
-	case ITEM_SHOTGUN:
-		intBulletCount = 2;
-		FullBulletCount = 2;
-		MaxBulletCount = 24;
-		break;
-	case ITEM_MACHINEGUN:
-		intBulletCount = 500;
-		FullBulletCount = 500;
-		MaxBulletCount = 2000;
-		break;
-	case ITEM_LASERGUN:
-		intBulletCount = 1000;
-		FullBulletCount = 1000;
-		MaxBulletCount = 2000;
-		break;
+	if (MaxBulletCount > 0) {
+		if (MaxBulletCount >= FullBulletCount) {
+			MaxBulletCount -= (FullBulletCount - intBulletCount);
+			intBulletCount = FullBulletCount;
+		}
+		else {
+			if (MaxBulletCount + intBulletCount >= FullBulletCount) {
+				MaxBulletCount = MaxBulletCount + intBulletCount - FullBulletCount;
+				intBulletCount = FullBulletCount;	
+			}
+			else {
+				intBulletCount += MaxBulletCount;
+				MaxBulletCount = 0;
+			}
+			
+		}
 	}
 }
 
@@ -443,6 +455,10 @@ void Player::SetItem()
 	{
 		if (m_itemBag.find(1001) != m_itemBag.end())
 		{
+			SaveBullet(item_state);
+			intBulletCount = bullet_pistol;
+			MaxBulletCount = PistolBullet;
+			FullBulletCount = 10;
 			m_pItem = m_itemBag[1001];
 			item_state = ITEM_PISTOL;
 			ani_state = IDLE_PISTOL;
@@ -454,6 +470,10 @@ void Player::SetItem()
 	{
 		if (m_itemBag.find(1002) != m_itemBag.end())
 		{
+			SaveBullet(item_state);
+			intBulletCount = bullet_shot;
+			MaxBulletCount = ShotGunBullet;
+			FullBulletCount = 2;
 			m_pItem = m_itemBag[1002];
 			item_state = ITEM_SHOTGUN;
 			ani_state = IDLE_SHOT;
@@ -463,10 +483,12 @@ void Player::SetItem()
 	// 기관총 장착
 	if (INPUT->IsKeyDown(VK_3))
 	{
-		item_state = ITEM_MACHINEGUN;
-		BulletReload();
 		if (m_itemBag.find(1003) != m_itemBag.end())
 		{
+			SaveBullet(item_state);
+			intBulletCount = bullet_machine;
+			MaxBulletCount = MachineBullet;
+			FullBulletCount = 500;
 			m_pItem = m_itemBag[1003];
 			item_state = ITEM_MACHINEGUN;
 			ani_state = IDLE_MACHINE;
@@ -478,6 +500,10 @@ void Player::SetItem()
 	{		
 		if (m_itemBag.find(1004) != m_itemBag.end())
 		{
+			SaveBullet(item_state);
+			intBulletCount = bullet_laser;
+			MaxBulletCount = LaserBullet;
+			FullBulletCount = 1000;
 			m_pItem = m_itemBag[1004];
 			item_state = ITEM_LASERGUN;
 			ani_state = IDLE_LASER;
@@ -515,8 +541,32 @@ void Player::SetItem()
 		/*if (gre_state == FLAME_IDLE)	gre_state = GRENADE_NONE;
 		else 							gre_state = FLAME_IDLE;*/
 	}
-}
 
+	if (INPUT->IsKeyDown(VK_F))
+	{
+		BulletReload();
+	}
+}
+void Player::SaveBullet(ITEM_TAG item_tag) {
+	switch (item_tag) {
+	case ITEM_PISTOL:
+		PistolBullet = MaxBulletCount;
+		bullet_pistol = intBulletCount;
+		break;
+	case ITEM_MACHINEGUN:
+		MachineBullet = MaxBulletCount;
+		bullet_machine = intBulletCount;
+		break;
+	case ITEM_LASERGUN:
+		LaserBullet = MaxBulletCount;
+		bullet_laser = intBulletCount;
+		break;
+	case ITEM_SHOTGUN:
+		ShotGunBullet = MaxBulletCount;
+		bullet_shot = intBulletCount;
+		break;
+	}
+}
 void Player::SetIdleAnimation()
 {
 	// 총 쏘는 애니메이션의 마지막 스프라이트이면 그 총의 Idle상태로 돌리기. 이거 위해서 총쏘는 스프라이트 마지막 장은 1장 더 넣어놓음.

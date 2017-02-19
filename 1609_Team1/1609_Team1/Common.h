@@ -29,6 +29,10 @@
 
 #define EPSILON					0.001
 
+#define LIMIT_PISTOL	60
+#define LIMIT_SHOTGUN	24
+#define LIMIT_LASER		2000
+#define LIMIT_MACHINE	2000
 
 #define NEW_OBJECT(p, type) p = new type
 #define DELETE_OBJECT(p) if ((p) != NULL) { delete (p); (p) = NULL; }
