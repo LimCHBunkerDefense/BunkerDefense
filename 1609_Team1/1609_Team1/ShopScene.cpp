@@ -53,6 +53,7 @@ ShopScene::ShopScene()
 	IsBulletClicked = false;
 	IsUsingItemClicked = false;
 	IsCountClicked = false;
+
 }
 
 
@@ -80,8 +81,8 @@ void ShopScene::OnEnter()
 	SOUND->Play("ShopBGM_0", 1.0f);
 
 	CreateBoxList();		// 리스트 생성
-	ShowCursor(true);		// 마우스 커서 보이게
-
+	ShowCursor(true);		// 마우스 커서 보이게.
+	
 	m_inputCount = 0;
 	m_inputOnOff = false;
 }
