@@ -98,18 +98,8 @@ void ShopScene::OnDraw()
 	//RENDER->DrawRect(Vector(950, 450),Vector(320, 300),ColorF::AntiqueWhite, 3);
 	RENDER->DrawT(TEXT("-아이템 정보-"), 880, 335, ColorF::BlanchedAlmond, 20);
 	//pMainCamera->DrawT(TEXT("ATK:"), 800, 495, ColorF::AntiqueWhite, 15);
-	if (m_selectedItem != NULL)
-	{
-		pMainCamera->DrawT(m_selectedItem->GetName(), 870, 330, ColorF::AntiqueWhite, 15);
-		pMainCamera->DrawT(m_selectedItem->GetInfo(), 810, 365, ColorF::AntiqueWhite, 15);
-		
-		// float 값 사용해서 text 출력
-		TCHAR number[50] = {};
-		swprintf_s(number, TEXT("ATK: %.1f"), m_selectedItem->GetAttack());
-		pMainCamera->DrawT(number, 850, 495, ColorF::AntiqueWhite, 15);
-		swprintf_s(number, TEXT("DEF: %.1f"), m_selectedItem->GetDefense());
-		pMainCamera->DrawT(number, 930, 495, ColorF::AntiqueWhite, 15);
-	}
+
+	ShowText();
 
 	//RENDER->DrawRect(Vector(135, 450), Vector(150, 150), ColorF::Aqua, 3);
 	//RENDER->DrawCircle(Vector(135, 450), 50, ColorF::Aqua, 3);
@@ -308,4 +298,61 @@ void ShopScene::SetInputCount(int addCount)
 		m_inputCount = MATH->Clamp(m_inputCount, 0, buyCount);
 		break;
 	}	
+}
+
+void ShopScene::ShowText()
+{
+	Camera* pMainCamera = RENDER->GetCamera(CAM_MAIN);
+
+	if (m_selectedItem != NULL)
+	{
+		pMainCamera->DrawT(m_selectedItem->GetName(), 870, 330, ColorF::AntiqueWhite, 15);
+		pMainCamera->DrawT(m_selectedItem->GetInfo(), 810, 365, ColorF::AntiqueWhite, 15);
+		TCHAR number[50] = {};
+
+		switch (m_selectedItem->GetItemTypeTag())
+		{
+		case ITEMTYPE_WEAPON:
+			// 공격력
+			swprintf_s(number, TEXT("ATK: %.1f"), m_selectedItem->GetAttack());
+			pMainCamera->DrawT(number, 820, 440, ColorF::AntiqueWhite, 15);
+
+			// 사정거리
+			pMainCamera->DrawT(m_selectedItem->GetRangeStr(), 950, 440, ColorF::AntiqueWhite, 15);
+
+			// 구매비용
+			wsprintf(number, TEXT("Money : %d"), m_selectedItem->GetMoney());
+			pMainCamera->DrawT(number, 820, 465, ColorF::AntiqueWhite, 15);
+			break;
+
+		case ITEMTYPE_BULLET:
+			break;
+
+		case ITEMTYPE_USINGITEM:
+			if (m_selectedItem->GetTag() != ITEM_BUNKERREPAIR)
+			{
+				// 공격력
+				swprintf_s(number, TEXT("ATK: %.1f"), m_selectedItem->GetAttack());
+				pMainCamera->DrawT(number, 820, 440, ColorF::AntiqueWhite, 15);
+
+				// 사정거리
+				pMainCamera->DrawT(m_selectedItem->GetRangeStr(), 950, 465, ColorF::AntiqueWhite, 15);
+
+				// 구매비용
+				wsprintf(number, TEXT("Money : %d"), m_selectedItem->GetMoney());
+				pMainCamera->DrawT(number, 820, 465, ColorF::AntiqueWhite, 15);
+				break;
+			}
+			else
+			{
+				// 수리량
+				swprintf_s(number, TEXT("Repair: %.1f"), m_selectedItem->GetRepair());
+				pMainCamera->DrawT(number, 820, 440, ColorF::AntiqueWhite, 15);
+			}
+			break;
+
+		}
+
+
+	}
 }

@@ -11,8 +11,8 @@ class Item : public Object
 	int m_itemID;
 	int m_money;
 	float m_attack;
-	float m_defense;
 	float m_range;
+	float m_repair;
 	float m_bulletSpeed;
 	float m_bunkerLife;
 	int m_maxBulletCount;
@@ -37,8 +37,8 @@ public:
 	int GetID() { return m_itemID; }
 	wstring GetName() { return m_name; }
 	float GetAttack() { return m_attack; }
-	float GetDefense() { return m_defense; }
 	float GetRange() { return m_range; }
+	float GetRepair() { return m_repair; }
 	float GetBulletSpeed() { return m_bulletSpeed; }
 	float GetBunkerLife() { return m_bunkerLife; }
 	int GetMaxBulletCount() { return  m_maxBulletCount; }

@@ -20,8 +20,8 @@ Item::Item(int itemID)
 	m_itemID = pData->itemID;
 	m_money = pData->money;
 	m_attack = pData->attack;
-	m_defense = pData->defense;
 	m_range = pData->range;
+	m_repair = pData->repair;
 	m_bulletSpeed = pData->bulletSpeed;
 	m_bunkerLife = pData->bunkerLife;
 	m_maxBulletCount = pData->maxBulletCount;
