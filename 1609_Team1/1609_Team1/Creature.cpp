@@ -91,6 +91,11 @@ void Creature::IdleState(float deltaTime)
 
 void Creature::RunState(float deltaTime)
 {
+	Animation()->Play(CREATURE_RUN);
+
+	// 크리쳐 이동에 관계된 비율 (시작점에서 플레이어까지 가는 거리를 1로 봤을 때, 현재 이동한 거리의 비율)
+	m_t = MATH->Clamp(m_t + m_moveSpeed * deltaTime, 0.0f, 1.0f);
+
 	// m_t가 0.9이하면 공격모드로
 	if(m_t >= 0.9) m_state = CREATURE_ATTACK;
 
@@ -103,10 +108,7 @@ void Creature::RunState(float deltaTime)
 		m_state = CREATURE_DEAD;
 	}
 
-	// 크리쳐 이동에 관계된 비율 (시작점에서 플레이어까지 가는 거리를 1로 봤을 때, 현재 이동한 거리의 비율)
-	m_t = MATH->Clamp(m_t + m_moveSpeed * deltaTime, 0.0f, 1.0f);
 
-	Animation()->Play(CREATURE_RUN);
 }
 
 void Creature::AttackState(float deltaTime)
@@ -118,7 +120,7 @@ void Creature::AttackState(float deltaTime)
 		OBJECT->GetPlayer()->AddScore(m_score);
 		m_state = CREATURE_DEAD;
 	}
-	if (m_attackCoolTime <= 0.0f) // 공격 쿨타임이 0이하이면 공격 애니메이션 발동 및 벙커 체력에 손실을 입히고, 새로 쿨타임 설정
+	else if (m_attackCoolTime <= 0.0f) // 공격 쿨타임이 0이하이면 공격 애니메이션 발동 및 벙커 체력에 손실을 입히고, 새로 쿨타임 설정
 	{
 		Animation()->Play(CREATURE_ATTACK);
 		float addLife = OBJECT->GetBunker()->GetDefense() - m_attack;
@@ -142,7 +144,19 @@ void Creature::AttackState(float deltaTime)
 
 void Creature::DeadState(float deltaTime)
 {
-	if (Animation()->Current()->GetCurrentIndex() == Animation()->Current()->GetSpriteCount() -1) m_isDestroyed = true;
+	switch (Tag())
+	{
+	case OBJ_LAVA:
+		if (Animation()->Current()->GetCurrentIndex() == 12) m_isDestroyed = true;
+		break;
+	case OBJ_ENT:
+		if (Animation()->Current()->GetCurrentIndex() == 6) m_isDestroyed = true;
+		break;
+	case OBJ_DARKPRIEST:
+		if (Animation()->Current()->GetCurrentIndex() == 22) m_isDestroyed = true;
+		break;
+	}
+	
 }
 
 // 카메라 회전에 의한 StartPos 업데이트
@@ -165,7 +179,7 @@ void Creature::ZUpdate()
 	switch (Tag())
 	{
 	case OBJ_LAVA:
-		gap = 0.38;
+		gap = 0.45;
 		break;
 	case OBJ_ENT:
 		gap = 0.55;
