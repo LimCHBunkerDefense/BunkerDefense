@@ -226,7 +226,7 @@ void PlayScene::OnUpdate(float deltaTime)
 
 	m_bulletGage->SetTargetValue((float)(OBJECT->GetPlayer()->getBulletCount()) / (float)(OBJECT->GetPlayer()->getFullBullet()));
 	m_bulletGage->Update(deltaTime);
-	ShowBullet(pUICamera, OBJECT->GetPlayer()->getBulletCount(), Vector(24,720));
+	ShowBullet(pUICamera, OBJECT->GetPlayer()->getBulletCount(), Vector(38, 720));
 	ShowBullet(pUICamera, OBJECT->GetPlayer()->getMaxBullet(), Vector(260, 720));
 	
 
