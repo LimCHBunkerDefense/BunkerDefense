@@ -65,7 +65,7 @@ public:
 	void ItemListWnd();											// 아이템 리스트 창
 	void ItemStatWnd();											// 아이템 정보 창
 	void ShowText();											// 아이템 정보 창에 정보를 보여주는 함수 (선택된 아이템마다 다른 정보를 뜨게함)
-	Sprite* ShowIcon() { return NULL; }											// 아이템 정보 창에서 아이템 아이콘을 보여주는 함수
+	Sprite* ShowIcon();											// 아이템 정보 창에서 아이템 아이콘을 보여주는 함수
 
 	Object* GetSelectedItem() { return m_selectedItem; }
 	void SetSelectedItem(int itemID)

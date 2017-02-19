@@ -387,7 +387,7 @@ void ShopScene::ShowText()
 
 Sprite* ShopScene::ShowIcon()
 {
-	Sprite* pSprite;
+	Sprite* pSprite = NULL;
 
 	switch (m_selectedItem->GetTag())
 	{
