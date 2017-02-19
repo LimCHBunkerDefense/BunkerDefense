@@ -30,6 +30,8 @@ Player::Player(OBJ_TAG tag) : Object(tag)
 	m_money = 100000;
 	m_score = 0;
 
+	m_mousePressTime = 0;
+
 	gre_state = GRENADE_NONE;
 }
 
@@ -105,8 +107,8 @@ void Player::AttackState(float deltaTime)
 		SCENE->SetColliderOnOff();
 	}
 
-	//좌클릭시 발사 부분
-	if (INPUT->IsMouseUp(MOUSE_LEFT)) {
+	//좌클릭시 발사 부분 ( Down ) 
+	if (INPUT->IsMouseDown(MOUSE_LEFT)) {
 		if (gre_state != GRENADE_NONE) {
 			if (m_greCoolTime == 0.0f) {
 				Vector pos = MATH->ToDirection(90) * MINI_WIDTH * 0.5 + OBJECT->GetPlayer()->Position();
@@ -115,14 +117,55 @@ void Player::AttackState(float deltaTime)
 			}
 		}
 		else {
-			if (m_pItem->GetTag() != ITEM_LASERGUN)		// 레이저건은 Press로 충전을 해야된다고 하여 예외처리함
+			SetShotAnimation();
+			if (m_pItem->GetTag() != ITEM_LASERGUN)	//	레이저건은 3초 Press하고 쏘기 때문에 press쪽에 bullet 생성하는 거 넣어둠
 			{
 				float sightHeightDefault = SIGHTHEIGHT_DEFAULT;
 				float rate = 1 + MATH->Clamp(OBJECT->GetSightHeight() - sightHeightDefault, sightHeightDefault / 2 * -1, 0.0f) / sightHeightDefault;
 				Vector pos = Vector::Up() * m_pItem->GetRange() * rate + OBJECT->GetPlayer()->Position();
 				OBJECT->CreateBullet(OBJ_BULLET, pos, m_pItem->GetTag());
-				SetShotAnimation();
+			}			
+		}
+	}
+
+	// 좌클릭 후 Press
+	if (INPUT->IsMousePress(MOUSE_LEFT))
+	{
+		if (m_pItem->GetTag() == ITEM_LASERGUN)		// 레이저건은 Press로 충전을 해야된다고 하여 예외처리함 ( Press이면 레이저 충전 3초하고, 그거 지나면 레이저 발사하도록)
+		{
+			if (Animation()->Current()->GetCurrentIndex() == 15)
+			{
+				float sightHeightDefault = SIGHTHEIGHT_DEFAULT;
+				float rate = 1 + MATH->Clamp(OBJECT->GetSightHeight() - sightHeightDefault, sightHeightDefault / 2 * -1, 0.0f) / sightHeightDefault;
+				Vector pos = Vector::Up() * m_pItem->GetRange() * rate + OBJECT->GetPlayer()->Position();
+				OBJECT->CreateBullet(OBJ_BULLET, pos, m_pItem->GetTag());
 			}
+		}
+	}
+
+	// 좌클릭 후 Up
+	if (INPUT->IsMouseUp(MOUSE_LEFT))
+	{
+		if (m_pItem->GetTag() == ITEM_LASERGUN)		// 레이저건은 Press로 충전을 해야된다고 하여 예외처리함
+		{
+			ani_state = IDLE_LASER;
+		}
+	}
+
+	// 좌클릭 후 Press이면 레이저 충전 3초하고, 그거 지나면 레이저 발사하도록
+	if (INPUT->IsMousePress(MOUSE_LEFT))
+	{
+		if (m_pItem->GetTag() == ITEM_LASERGUN)		// 레이저건은 Press로 충전을 해야된다고 하여 예외처리함
+		{
+			m_mousePressTime += deltaTime;
+			if (m_mousePressTime >= 3.0f)
+			{
+				float sightHeightDefault = SIGHTHEIGHT_DEFAULT;
+				float rate = 1 + MATH->Clamp(OBJECT->GetSightHeight() - sightHeightDefault, sightHeightDefault / 2 * -1, 0.0f) / sightHeightDefault;
+				Vector pos = Vector::Up() * m_pItem->GetRange() * rate + OBJECT->GetPlayer()->Position();
+				OBJECT->CreateBullet(OBJ_BULLET, pos, m_pItem->GetTag());
+			}
+
 		}
 	}
 

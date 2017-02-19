@@ -26,6 +26,8 @@ class Player :
 	int m_money;
 	int m_score;
 
+	float m_mousePressTime;					// Laser 총 쏠 떄 press 시간 측정 위한 변수.
+
 
 public:
 	Player();
