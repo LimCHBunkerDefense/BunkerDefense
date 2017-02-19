@@ -67,9 +67,6 @@
     <Filter Include="Object\Item">
       <UniqueIdentifier>{bf5198ca-baa8-4b67-8b32-939d22039856}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Object\Button">
-      <UniqueIdentifier>{d4317b8e-6984-408a-b1df-4273c3161d94}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Object\Bullet">
       <UniqueIdentifier>{902e043d-e981-4d06-af03-4ec3172b5fa1}</UniqueIdentifier>
     </Filter>
@@ -120,9 +117,6 @@
     </ClCompile>
     <ClCompile Include="Bunker.cpp">
       <Filter>Object\Bunker</Filter>
-    </ClCompile>
-    <ClCompile Include="Button.cpp">
-      <Filter>Object\Button</Filter>
     </ClCompile>
     <ClCompile Include="Bullet.cpp">
       <Filter>Object\Bullet</Filter>
@@ -183,9 +177,6 @@
     </ClInclude>
     <ClInclude Include="Bunker.h">
       <Filter>Object\Bunker</Filter>
-    </ClInclude>
-    <ClInclude Include="Button.h">
-      <Filter>Object\Button</Filter>
     </ClInclude>
     <ClInclude Include="SceneManager.h">
       <Filter>Manager\SceneManager</Filter>
