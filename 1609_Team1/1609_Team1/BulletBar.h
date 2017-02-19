@@ -89,7 +89,7 @@ public:
 			break;
 
 		case PROGRESS_STATE_CHANGE:
-			// SetValue(MATH->MoveForward(m_value, m_targetValue, deltaTime));
+			//SetValue(MATH->MoveForward(m_value, m_targetValue, deltaTime));
 			SetValue(m_targetValue);
 			if (m_value == m_targetValue) m_state = PROGRESS_STATE_NONE;
 			break;
