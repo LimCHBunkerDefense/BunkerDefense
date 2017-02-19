@@ -103,11 +103,12 @@ public:
 
 	//현재 탄약 리턴
 	INT getBulletCount() { return InBulletCount; }
+	INT getAllBullet() { return AllBulletCount; }
 	INT getMaxBullet() { return MaxBulletCount; }
-	INT getFullBullet() { return AllBulletCount; }
-	void BulletUse() { InBulletCount-=1; }
+	void BulletUse(INT state);
 	void BulletReload();
 	void SaveBullet(INT item_tag);
+	void CheckBullet();
 
 	UIProgressBar* GetLaserChargerBar() { return m_lasergunCharger; }
 };

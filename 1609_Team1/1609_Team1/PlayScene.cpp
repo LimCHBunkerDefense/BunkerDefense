@@ -228,10 +228,10 @@ void PlayScene::OnUpdate(float deltaTime)
 	m_bunkerLife->SetTargetValue(OBJECT->GetBunker()->GetCurrentLife() / OBJECT->GetBunker()->GetMaxLife());
 	m_bunkerLife->Update(deltaTime);
 
-	m_bulletGage->SetTargetValue((float)(OBJECT->GetPlayer()->getBulletCount()) / (float)(OBJECT->GetPlayer()->getFullBullet()));
+	m_bulletGage->SetTargetValue((float)(OBJECT->GetPlayer()->getBulletCount()) / (float)(OBJECT->GetPlayer()->getMaxBullet()));
 	m_bulletGage->Update(deltaTime);
 	ShowBullet(pUICamera, OBJECT->GetPlayer()->getBulletCount(), Vector(38, 720));
-	ShowBullet(pUICamera, OBJECT->GetPlayer()->getMaxBullet(), Vector(260, 720));
+	ShowBullet(pUICamera, OBJECT->GetPlayer()->getAllBullet(), Vector(260, 720));
 	
 
 	// m_attackedColor 투명도 조정하여 공격당함 연출 부분으로 투명도를 점점 높여주는 부분

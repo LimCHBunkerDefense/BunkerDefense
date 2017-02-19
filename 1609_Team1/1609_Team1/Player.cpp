@@ -33,6 +33,7 @@ Player::Player(OBJ_TAG tag) : Object(tag)
 	Object* startBullet = OBJECT->CreateItem(ITEM_PSBULLET, 2001);
 	m_itemBag[startBullet->GetTag()] = startBullet;
 	startBullet->AddCurrentCount(60);
+
 	
 
 	m_money = 10000;
@@ -65,8 +66,8 @@ Player::Player(OBJ_TAG tag) : Object(tag)
 	Count_Repair=0;
 
 	InBulletCount = 10;
-	AllBulletCount = 10;
-	MaxBulletCount = All_Bullet_Pistol;
+	MaxBulletCount = 10;
+	AllBulletCount = All_Bullet_Pistol;
 }
 
 Player::~Player()
@@ -120,7 +121,8 @@ void Player::AttackState(float deltaTime)
 	Animation()->Play(ani_state);	// 현재 아이템에 대한 애니메이션 재생
 	LaserChargerUpdate(deltaTime);	// 레이저건 충전 막대 업데이트
 	
-
+	CheckBullet();
+	
 	// 씬 채인지
 	if (INPUT->IsKeyDown(VK_F3))
 	{
@@ -146,10 +148,9 @@ void Player::AttackState(float deltaTime)
 	//좌클릭시 발사 부분 ( Down ) 
 	if (INPUT->IsMouseDown(MOUSE_LEFT)) {
 		if (InBulletCount > 0) {
-			BulletUse();
-			m_itemBag[ITEM_PSBULLET]->AddCurrentCount(All_Bullet_Pistol + InBulletCount);
 			if (gre_state != GRENADE_NONE) {
 				if (m_greCoolTime == 0.0f) {
+					BulletUse(gre_state);
 					Vector pos = MATH->ToDirection(90) * MINI_WIDTH * 0.5 + OBJECT->GetPlayer()->Position();
 					OBJECT->CreateGrenade(OBJ_GRENADE, pos, gre_state);
 					m_greCoolTime = 2.0f;
@@ -160,6 +161,7 @@ void Player::AttackState(float deltaTime)
 				SetShotAnimation();
 				if (m_pItem->GetTag() != ITEM_LASERGUN)	//	레이저건은 3초 Press하고 쏘기 때문에 press쪽에 bullet 생성하는 거 넣어둠
 				{
+					BulletUse(m_pItem->GetTag());
 					float sightHeightDefault = SIGHTHEIGHT_DEFAULT;
 					float rate = 1 + MATH->Clamp(OBJECT->GetSightHeight() - sightHeightDefault, sightHeightDefault / 2 * -1, 0.0f) / sightHeightDefault;
 					Vector pos = Vector::Up() * m_pItem->GetRange() * rate + OBJECT->GetPlayer()->Position();
@@ -261,19 +263,19 @@ void Player::AttackState(float deltaTime)
 }
 
 void  Player::BulletReload() {
-	if (MaxBulletCount > 0) {
-		if (MaxBulletCount >= AllBulletCount) {
-			MaxBulletCount -= (AllBulletCount - InBulletCount);
-			InBulletCount = AllBulletCount;
+	if (AllBulletCount > 0) {
+		if (AllBulletCount >= MaxBulletCount) {
+			AllBulletCount -= (MaxBulletCount - InBulletCount);
+			InBulletCount = MaxBulletCount;
 		}
 		else {
-			if (MaxBulletCount + InBulletCount >= AllBulletCount) {
-				MaxBulletCount = MaxBulletCount + InBulletCount - AllBulletCount;
-				InBulletCount = AllBulletCount;	
+			if (AllBulletCount + InBulletCount >= MaxBulletCount) {
+				AllBulletCount = AllBulletCount + InBulletCount - MaxBulletCount;
+				InBulletCount = MaxBulletCount;
 			}
 			else {
-				InBulletCount += MaxBulletCount;
-				MaxBulletCount = 0;
+				InBulletCount += AllBulletCount;
+				AllBulletCount = 0;
 			}
 			
 		}
@@ -459,8 +461,8 @@ void Player::SetItem()
 		{
 			SaveBullet(item_state);
 			InBulletCount = In_Bullet_Pistol;
-			MaxBulletCount = All_Bullet_Pistol;
-			AllBulletCount = 10;
+			AllBulletCount = All_Bullet_Pistol;
+			MaxBulletCount = 10;
 			m_pItem = m_itemBag[1001];
 			item_state = ITEM_PISTOL;
 			ani_state = IDLE_PISTOL;
@@ -474,8 +476,8 @@ void Player::SetItem()
 		{
 			SaveBullet(item_state);
 			InBulletCount = In_Bullet_Shot;
-			MaxBulletCount = All_Bullet_Shot;
-			AllBulletCount = 2;
+			AllBulletCount = All_Bullet_Shot;
+			MaxBulletCount = 2;
 			m_pItem = m_itemBag[1002];
 			item_state = ITEM_SHOTGUN;
 			ani_state = IDLE_SHOT;
@@ -489,8 +491,8 @@ void Player::SetItem()
 		{
 			SaveBullet(item_state);
 			InBulletCount = In_Bullet_Machine;
-			MaxBulletCount = All_Bullet_Machine;
-			AllBulletCount = 500;
+			AllBulletCount = All_Bullet_Machine;
+			MaxBulletCount = 500;
 			m_pItem = m_itemBag[1003];
 			item_state = ITEM_MACHINEGUN;
 			ani_state = IDLE_MACHINE;
@@ -504,8 +506,8 @@ void Player::SetItem()
 		{
 			SaveBullet(item_state);
 			InBulletCount = In_Bullet_Laser;
-			MaxBulletCount = All_Bullet_Laser;
-			AllBulletCount = 1000;
+			AllBulletCount = All_Bullet_Laser;
+			MaxBulletCount = 1000;
 			m_pItem = m_itemBag[1004];
 			item_state = ITEM_LASERGUN;
 			ani_state = IDLE_LASER;
@@ -561,19 +563,19 @@ void Player::SetItem()
 void Player::SaveBullet(INT item_tag) {
 	switch (item_tag) {
 	case ITEM_PISTOL:
-		All_Bullet_Pistol = MaxBulletCount;
+		All_Bullet_Pistol = AllBulletCount;
 		In_Bullet_Pistol = InBulletCount;
 		break;
 	case ITEM_MACHINEGUN:
-		All_Bullet_Machine = MaxBulletCount;
+		All_Bullet_Machine = AllBulletCount;
 		In_Bullet_Machine = InBulletCount;
 		break;
 	case ITEM_LASERGUN:
-		All_Bullet_Laser = MaxBulletCount;
+		All_Bullet_Laser = AllBulletCount;
 		In_Bullet_Laser = InBulletCount;
 		break;
 	case ITEM_SHOTGUN:
-		All_Bullet_Shot = MaxBulletCount;
+		All_Bullet_Shot = AllBulletCount;
 		In_Bullet_Shot = InBulletCount;
 		break;
 	case GRENADE_IDLE:
@@ -707,4 +709,66 @@ void Player::AddItem(Object* pItem)
 		break;
 
 	}
+}
+
+void Player::CheckBullet() {
+	if (gre_state == GRENADE_NONE) {
+		switch (item_state) {
+		case ITEM_PISTOL:
+			AllBulletCount = m_itemBag[ITEM_PSBULLET]->GetCurrentCount() - InBulletCount;
+			break;
+		case ITEM_MACHINEGUN:
+			AllBulletCount = m_itemBag[ITEM_MGBULLET]->GetCurrentCount() - InBulletCount;
+			break;
+		case ITEM_LASERGUN:
+			AllBulletCount = m_itemBag[ITEM_LGBULLET]->GetCurrentCount() - InBulletCount;
+			break;
+		case ITEM_SHOTGUN:
+			AllBulletCount = m_itemBag[ITEM_SGBULLET]->GetCurrentCount() - InBulletCount;
+			break;
+		}
+	}
+	else {
+		switch (gre_state) {
+		case GRENADE_IDLE:
+			AllBulletCount = m_itemBag[ITEM_SGBULLET]->GetCurrentCount() - InBulletCount;
+			break;
+		case AIRBOMB_IDLE:
+			AllBulletCount = m_itemBag[ITEM_AIRBOMB]->GetCurrentCount() - InBulletCount;
+			break;
+		case FLAME_IDLE:
+			AllBulletCount = m_itemBag[ITEM_FIRECAPSULE]->GetCurrentCount() - InBulletCount;
+			break;
+		}
+	}
+	
+}
+
+void Player::BulletUse(INT item_tag) {
+	InBulletCount -= 1;
+	//INT BulletCount=AllBulletCount + InBulletCount;
+	
+	switch (item_tag) {
+	case ITEM_PISTOL:
+		m_itemBag[ITEM_PSBULLET]->AddCurrentCount(-1);
+		break;
+	case ITEM_MACHINEGUN:
+		m_itemBag[ITEM_MGBULLET]->AddCurrentCount(-1);
+		break;
+	case ITEM_LASERGUN:
+		m_itemBag[ITEM_LGBULLET]->AddCurrentCount(-1);
+		break;
+	case ITEM_SHOTGUN:
+		m_itemBag[ITEM_SGBULLET]->AddCurrentCount(-1);
+		break;
+	case GRENADE_IDLE:
+		m_itemBag[ITEM_GRENADE]->AddCurrentCount(-1);
+		break;
+	case AIRBOMB_IDLE:
+		m_itemBag[ITEM_AIRBOMB]->AddCurrentCount(-1);
+		break;
+	case FLAME_IDLE:
+		m_itemBag[ITEM_FIRECAPSULE]->AddCurrentCount(-1);
+		break;
+	}	
 }
