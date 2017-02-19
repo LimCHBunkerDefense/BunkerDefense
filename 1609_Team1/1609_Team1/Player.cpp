@@ -46,9 +46,14 @@ Player::Player(OBJ_TAG tag) : Object(tag)
 	m_lasergunCharger->SetValue(0.0f);
 	m_laserGunShot = false;
 
+	PistolBullet = 60;
+	ShotGunBullet = 0;
+	LaserBullet = 0;
+	MachineBullet = 0;
+
 	intBulletCount = 10;
 	FullBulletCount = 10;
-	MaxBulletCount = 60;
+	MaxBulletCount = PistolBullet;
 }
 
 Player::~Player()
@@ -242,27 +247,15 @@ void Player::AttackState(float deltaTime)
 }
 
 void  Player::BulletReload() {
-	switch (item_state) {
-	case ITEM_PISTOL:
-		intBulletCount = 10;
-		FullBulletCount = 10;
-		MaxBulletCount = 60;
-		break;
-	case ITEM_SHOTGUN:
-		intBulletCount = 2;
-		FullBulletCount = 2;
-		MaxBulletCount = 24;
-		break;
-	case ITEM_MACHINEGUN:
-		intBulletCount = 500;
-		FullBulletCount = 500;
-		MaxBulletCount = 2000;
-		break;
-	case ITEM_LASERGUN:
-		intBulletCount = 1000;
-		FullBulletCount = 1000;
-		MaxBulletCount = 2000;
-		break;
+	if (MaxBulletCount > 0) {
+		if (MaxBulletCount >= FullBulletCount) {
+			intBulletCount = FullBulletCount;
+			MaxBulletCount -= intBulletCount;
+		}
+		else {
+			intBulletCount = MaxBulletCount;
+			MaxBulletCount = 0;
+		}
 	}
 }
 
@@ -443,6 +436,8 @@ void Player::SetItem()
 	{
 		if (m_itemBag.find(1001) != m_itemBag.end())
 		{
+			MaxBulletCount = PistolBullet;
+			FullBulletCount = 10;
 			m_pItem = m_itemBag[1001];
 			item_state = ITEM_PISTOL;
 			ani_state = IDLE_PISTOL;
@@ -454,6 +449,8 @@ void Player::SetItem()
 	{
 		if (m_itemBag.find(1002) != m_itemBag.end())
 		{
+			MaxBulletCount = ShotGunBullet;
+			FullBulletCount = 2;
 			m_pItem = m_itemBag[1002];
 			item_state = ITEM_SHOTGUN;
 			ani_state = IDLE_SHOT;
@@ -464,9 +461,10 @@ void Player::SetItem()
 	if (INPUT->IsKeyDown(VK_3))
 	{
 		item_state = ITEM_MACHINEGUN;
-		BulletReload();
 		if (m_itemBag.find(1003) != m_itemBag.end())
 		{
+			MaxBulletCount = MachineBullet;
+			FullBulletCount = 500;
 			m_pItem = m_itemBag[1003];
 			item_state = ITEM_MACHINEGUN;
 			ani_state = IDLE_MACHINE;
@@ -478,6 +476,8 @@ void Player::SetItem()
 	{		
 		if (m_itemBag.find(1004) != m_itemBag.end())
 		{
+			MaxBulletCount = LaserBullet;
+			FullBulletCount = 1000;
 			m_pItem = m_itemBag[1004];
 			item_state = ITEM_LASERGUN;
 			ani_state = IDLE_LASER;
@@ -514,6 +514,11 @@ void Player::SetItem()
 		//item_state = ITEM_BUNKERREPAIR;
 		/*if (gre_state == FLAME_IDLE)	gre_state = GRENADE_NONE;
 		else 							gre_state = FLAME_IDLE;*/
+	}
+
+	if (INPUT->IsKeyDown(VK_F))
+	{
+		BulletReload();
 	}
 }
 

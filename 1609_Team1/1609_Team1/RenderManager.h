@@ -424,6 +424,12 @@ public:
 		}
 	}
 
+	// 크리쳐 체력 막대 표시 함수
+	void Draw3D_lifeBar(Box2 frame, Box2 bar, float scale, ColorF colorBG, ColorF colorBar, ColorF colorFrame)
+	{
+
+	}
+
 	//void Draw3DLine(Sprite* sprite, Line line, int dir = -1, float opacity = 1.0f)
 	//{
 	//	// 크리쳐가 플레이어의 시야 (미니맵 상의 두 파란선) 안에 들어왔는지 확인하는 단계. 플레이어의 시야는 CAMERA_ANGLE로 정의되어 있음
