@@ -19,7 +19,7 @@ void ItemDB::Init()
 		TEXT("근거리에서 사용가능한 샷건. \n근거리에서 엄청난 화력을 자랑한다."), TEXT("하")));
 	Add(new ItemData(ITEMTYPE_WEAPON, ITEM_MACHINEGUN, 1003, 30,100.0f, 0, 50.0f, 0, 2000, 500, 1, 2000, TEXT("기관총(Machine Gun)"),
 		TEXT("연사가 가능한 기관총. \n시원한 타격감이 일품인 총이다."), TEXT("중")));
-	Add(new ItemData(ITEMTYPE_WEAPON, ITEM_LASERGUN, 1004, 50, 120.0f, 0, 120.0f, 0, 2000, 1000, 1, 5000, TEXT("레이저 건(Laser Gun)"),
+	Add(new ItemData(ITEMTYPE_WEAPON, ITEM_LASERGUN, 1004, 50, 120.0f, 0, 40.0f, 0, 2000, 1000, 1, 5000, TEXT("레이저 건(Laser Gun)"),
 		TEXT("엄청난 사거리를 자랑하는 레이저건. \n매우 비싼 가격이지만 눈물을 머금고\n 구매하기를 강추!"), TEXT("최상")));
 
 	// 상점 구매 아이템(총알)

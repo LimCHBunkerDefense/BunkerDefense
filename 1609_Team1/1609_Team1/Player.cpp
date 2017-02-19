@@ -53,7 +53,29 @@ void Player::Update(float deltaTime)
 void Player::Draw(Camera* pCamera)
 {
 	//RENDER->FillCircle(Position() * 5, 100, ColorF::Aqua);
-	pCamera->Draw(Animation()->Current()->GetSprite(), Vector(VIEW_WIDTH / 2, VIEW_HEIGHT), 1);
+	Vector pos = DrawPos();
+	pCamera->Draw(Animation()->Current()->GetSprite(), pos, 1);
+}
+
+Vector Player::DrawPos()
+{
+	Vector pos;
+	switch (m_pItem->GetTag())
+	{
+	case ITEM_PISTOL:
+		pos = Vector(VIEW_WIDTH / 2 + 50, VIEW_HEIGHT);
+		break;
+	case ITEM_SHOTGUN:
+		pos = Vector(VIEW_WIDTH / 2 + 30, VIEW_HEIGHT);
+		break;
+	case ITEM_MACHINEGUN:
+		pos = Vector(VIEW_WIDTH / 2, VIEW_HEIGHT);
+		break;
+	case ITEM_LASERGUN:
+		pos = Vector(VIEW_WIDTH / 2 + 30, VIEW_HEIGHT);
+		break;
+	}
+	return pos;
 }
 
 void Player::AttackState(float deltaTime)
@@ -96,7 +118,7 @@ void Player::AttackState(float deltaTime)
 			float sightHeightDefault = SIGHTHEIGHT_DEFAULT;
 			float rate = 1 + MATH->Clamp(OBJECT->GetSightHeight() - sightHeightDefault, sightHeightDefault / 2 * -1, 0.0f) / sightHeightDefault;
 			Vector pos = Vector::Up() * m_pItem->GetRange() * rate + OBJECT->GetPlayer()->Position();
-			//OBJECT->CreateBullet(OBJ_BULLET, pos, m_pItem->GetTag());
+			OBJECT->CreateBullet(OBJ_BULLET, pos, m_pItem->GetTag());
 			SetShotAnimation();
 		}
 	}

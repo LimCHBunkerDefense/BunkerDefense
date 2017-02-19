@@ -15,7 +15,7 @@ Bullet::Bullet(OBJ_TAG tag) : Object(tag)
 	m_addH = 0;
 
 	m_attack = 1000;//OBJECT->GetPlayer()->GetCurrentItem()->GetAttack();
-	m_moveSpeed = 1;;// OBJECT->GetPlayer()->GetCurrentItem()->GetBulletSpeed();
+	m_moveSpeed = OBJECT->GetPlayer()->GetCurrentItem()->GetBulletSpeed();
 	m_moveDirection = Vector(Position() * -1 + m_startPos).Normalize();
 }
 

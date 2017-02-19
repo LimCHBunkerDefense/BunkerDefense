@@ -257,6 +257,20 @@ void ObjectManager::CreateBullet(OBJ_TAG tag, Vector pos, ITEM_TAG itemTag)
 		pBullet->Animation()->Register(BULLET_IDLE, new Animation(TEXT("MGBulletIdle"), 1, 1, false, 1, anchor.x, anchor.y));
 		pBullet->Animation()->Register(BULLET_EXPLODE, new Animation(TEXT("MGBulletExplode"), 1, 1, false, 1, anchor.x, anchor.y));
 		break;
+	case ITEM_SHOTGUN:
+		colSize = Vector(10, 10);
+		anchor = Vector(0.5, 0.95f);
+		range = ITEM->GetData(itemTag)->range;
+		pBullet->Animation()->Register(BULLET_IDLE, new Animation(TEXT("SGBulletIdle"), 1, 1, false, 1, anchor.x, anchor.y));
+		pBullet->Animation()->Register(BULLET_EXPLODE, new Animation(TEXT("SGBulletExplode"), 1, 1, false, 1, anchor.x, anchor.y));
+		break;
+	case ITEM_LASERGUN:
+		colSize = Vector(10, 10);
+		anchor = Vector(0.5, 0.95f);
+		range = ITEM->GetData(itemTag)->range;
+		pBullet->Animation()->Register(BULLET_IDLE, new Animation(TEXT("LGBulletIdle"), 1, 1, false, 1, anchor.x, anchor.y));
+		pBullet->Animation()->Register(BULLET_EXPLODE, new Animation(TEXT("LGBulletExplode"), 1, 1, false, 1, anchor.x, anchor.y));
+		break;
 	}
 	
 	pBullet->SetRange();

@@ -35,6 +35,9 @@ public:
 	void Update(float deltaTime);
 	void Draw(Camera* pCamera);
 
+	// 총 이미지에 따라 그려주는 위치 새로 설정
+	Vector DrawPos();
+
 //	void ThrowState(float deltaTime);
 	void AttackState(float deltaTime);
 	void ShopState();
