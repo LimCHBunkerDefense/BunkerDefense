@@ -49,7 +49,9 @@ public:
 	ColorF GetBarColor() { return m_colorBar; }
 	ColorF GetFrameColor() { return m_colorFrame; }
 	ColorF GetBGColor() { return m_colorBg; }
-
+	Box2 GetBar() { return m_bar;}
+	Box2 GetFrame() { return m_frame; }
+	float GetScale() { return m_scale; }
 
 	void SetMinMaxColor(ColorF minColor, ColorF maxColor)
 	{

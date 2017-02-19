@@ -45,7 +45,7 @@ Creature::~Creature()
 
 void Creature::Update(float deltaTime)
 {
-	// cout << m_maxZ << "           " << m_minZ << "           " << Animation()->Current()->GetSprite()->GetHeight()  << "           " << m_t<<endl;	// 콘솔창에서 디버깅용
+	//cout << m_maxZ << "           " << m_minZ << "           " << Animation()->Current()->GetSprite()->GetHeight()  << "           " << m_t<<endl;	// 콘솔창에서 디버깅용
 
 	// 크리쳐 이동방향벡터 실시간 업데이트
 	m_moveDirection = Vector(Position() * -1 + Vector(MINI_WIDTH * 0.5, MINI_HEIGHT)).Normalize();
@@ -59,6 +59,7 @@ void Creature::Update(float deltaTime)
 
 	// m_lifeBar targetValue 업데이트
 	m_lifeBar->SetTargetValue(m_currentLife / m_maxLife);
+	m_lifeBar->SetCenter(Position() - Vector(0, Animation()->Current()->GetHeight()));
 
 	// m_maxZ 및 m_minZ 업데이트
 	ZUpdate();
@@ -80,6 +81,7 @@ void Creature::Draw(Camera* pCamera)
 	// 이미지 출력 전 이동에 따른 이미지 스케일 키워주는 부분
 	SetScale(OriginScale() * m_t * m_t * 3.0f);
 	m_scale = OriginScale() * m_t * m_t * 3.0f;
+
 
 	pCamera->Draw3D(Animation()->Current()->GetSprite(), m_startPos, m_t, OBJECT->GetSightHeight(), m_state);
 }
@@ -179,7 +181,7 @@ void Creature::ZUpdate()
 	switch (Tag())
 	{
 	case OBJ_LAVA:
-		gap = 0.45;
+		gap = 0.5;
 		break;
 	case OBJ_ENT:
 		gap = 0.55;
@@ -188,6 +190,6 @@ void Creature::ZUpdate()
 		gap = 0.6;
 		break;
 	}
-	m_minZ = m_maxZ - Animation()->Current()->GetSprite()->GetHeight() * gap;
+	m_minZ = m_maxZ - (Animation()->Current()->GetSprite()->GetHeight() * gap);
 
 }

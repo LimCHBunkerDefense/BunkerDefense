@@ -226,7 +226,7 @@ void PlayScene::OnUpdate(float deltaTime)
 
 	m_bulletGage->SetTargetValue((float)(OBJECT->GetPlayer()->getBulletCount()) / (float)(OBJECT->GetPlayer()->getFullBullet()));
 	m_bulletGage->Update(deltaTime);
-	ShowBullet(pUICamera, OBJECT->GetPlayer()->getBulletCount(), Vector(24,720));
+	ShowBullet(pUICamera, OBJECT->GetPlayer()->getBulletCount(), Vector(38, 720));
 	ShowBullet(pUICamera, OBJECT->GetPlayer()->getMaxBullet(), Vector(260, 720));
 	
 
@@ -358,7 +358,7 @@ void PlayScene::OnDraw()
 		Vector colSize = (*it)->Collider().size;
 		pMinimapCamera->DrawFilledCircle(pos - 4, Vector(8, 8), ColorF::DeepPink);
 		//pMinimapCamera->DrawLine((*it)->GetStartPos().x, (*it)->GetStartPos().y, OBJECT->GetPlayer()->Position().x, OBJECT->GetPlayer()->Position().y, ColorF::DeepPink, 2);
-		//pMinimapCamera->DrawFilledRect(pos - colSize * 0.5, colSize, ColorF::Blue);	// 미니맵 상 총알의 충돌체 표시해주는 부분
+		pMinimapCamera->DrawFilledRect(pos - colSize * 0.5, colSize, ColorF::Blue);	// 미니맵 상 총알의 충돌체 표시해주는 부분
 	}
 
 	//수류탄 선 긋기

@@ -34,7 +34,7 @@ Player::Player(OBJ_TAG tag) : Object(tag)
 	m_itemBag[startBullet->GetTag()] = startBullet;
 	startBullet->AddCurrentCount(60);
 
-	m_money = 100000;
+	m_money = 10000;
 	m_score = 0;
 
 	gre_state = GRENADE_NONE;
@@ -391,8 +391,14 @@ void Player::ShopState()
 					if (SCENE->GetScene(SCENE_SHOP)->GetInputCount() != 0)
 					{
 						pItem = SCENE->GetScene(SCENE_SHOP)->GetSelectedItem();
-						AddItem(pItem);
-						SCENE->GetScene(SCENE_SHOP)->InputCountClear();
+						int	pItemMoney = pItem->GetItemMoney() * SCENE->GetScene(SCENE_SHOP)->GetInputCount();
+
+						if (OBJECT->GetPlayer()->GetMoney() >= pItemMoney)
+						{
+							AddItem(pItem);
+							OBJECT->GetPlayer()->AddMoney(-pItemMoney);
+							SCENE->GetScene(SCENE_SHOP)->InputCountClear();
+						}
 					}
 					break;				
 
