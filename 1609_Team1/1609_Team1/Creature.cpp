@@ -27,7 +27,7 @@ Creature::Creature(OBJ_TAG tag) : Object(tag)
 	m_score = pData->score;
 
 	m_lifeBar = new UIProgressBar(Vector(0, 0), Vector(400, 20), ColorF::Blue, ColorF::LightSlateGray);
-	m_lifeBar->SetMinMaxColor(ColorF::Red, ColorF::Blue);
+	m_lifeBar->SetMinMaxColor(ColorF::DarkRed, ColorF::DarkOliveGreen);
 
 	m_moveDirection = Vector(Position() * -1 + Vector(MINI_WIDTH * 0.5, MINI_HEIGHT)).Normalize();
 	
@@ -45,7 +45,7 @@ Creature::~Creature()
 
 void Creature::Update(float deltaTime)
 {
-	 cout << m_maxZ << "           " << m_minZ << "           " << Animation()->Current()->GetSprite()->GetHeight()  << "           " << m_t<<endl;	// 콘솔창에서 디버깅용
+	// cout << m_maxZ << "           " << m_minZ << "           " << Animation()->Current()->GetSprite()->GetHeight()  << "           " << m_t<<endl;	// 콘솔창에서 디버깅용
 
 	// 크리쳐 이동방향벡터 실시간 업데이트
 	m_moveDirection = Vector(Position() * -1 + Vector(MINI_WIDTH * 0.5, MINI_HEIGHT)).Normalize();
