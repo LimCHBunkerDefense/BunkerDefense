@@ -24,6 +24,11 @@ class Player :
 	float HitPoint;
 	//float m_sight;						// 시야 길이
 
+	INT PistolBullet;
+	INT ShotGunBullet;
+	INT LaserBullet;
+	INT MachineBullet;
+
 	INT intBulletCount;
 	INT MaxBulletCount;
 	INT FullBulletCount;
