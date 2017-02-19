@@ -129,8 +129,6 @@ PlayScene::PlayScene() : m_attackedColor(ColorF::Red)
 	m_createdLavaCount = 0;
 	m_createdEntCount = 0;
 	m_createdDarkpriestCount = 0;
-
-	//손 모양 출력
 }
 
 
@@ -187,9 +185,9 @@ void PlayScene::OnEnter()
 	pUICamera->SetScreenRect(0, 0, VIEW_WIDTH, VIEW_HEIGHT);
 
 	// 테스트용 크리쳐 생성
-	//OBJECT->CreateCreature(OBJ_ENT, Vector(120, 60));
-	//OBJECT->CreateCreature(OBJ_LAVA, Vector(120, 60));
-	//OBJECT->CreateCreature(OBJ_DARKPRIEST, Vector(120, 240));
+	OBJECT->CreateCreature(OBJ_ENT, Vector(120, 60));
+	OBJECT->CreateCreature(OBJ_LAVA, Vector(120, 60));
+	OBJECT->CreateCreature(OBJ_DARKPRIEST, Vector(120, 240));
 
 	// 마우스 커서 없애기
 	ShowCursor(false);
@@ -325,7 +323,7 @@ void PlayScene::OnDraw()
 		Vector colSize = (*it)->Collider().size;
 		pMinimapCamera->DrawFilledCircle(pos - 4, Vector(8, 8), ColorF::Red);
 		pMinimapCamera->DrawLine((*it)->GetStartPos().x, (*it)->GetStartPos().y, OBJECT->GetPlayer()->Position().x, OBJECT->GetPlayer()->Position().y, ColorF::Red, 2);
-		//pMinimapCamera->DrawFilledRect(pos - colSize * 0.5, colSize, ColorF::Blue);	// 미니맵 상 크리쳐의 충돌체 표시해주는 부분
+		pMinimapCamera->DrawFilledRect(pos - colSize * 0.5, colSize, ColorF::Blue);	// 미니맵 상 크리쳐의 충돌체 표시해주는 부분
 	}
 
 	//탄환 선 긋기
@@ -349,9 +347,6 @@ void PlayScene::OnDraw()
 	}
 	
 	OBJECT->Draw(pMainCamera);
-	
-	// 총 그려주는 부분
-	// pUICamera->Draw(OBJECT->GetPlayer()->Animation()->Current()->GetSprite(), Vector(VIEW_WIDTH * 0.5, VIEW_HEIGHT * 1.0f));
 
 	// Aim 그려주는 부분
 	pUICamera->Draw(m_pAim, Vector(VIEW_WIDTH * 0.5, VIEW_HEIGHT * 0.5f));
@@ -404,6 +399,11 @@ void PlayScene::OnDraw()
 	//pUICamera->DrawRect(Vector(208, VIEW_HEIGHT - 95), Vector(70, 70), ColorF::Red,1);
 	//pUICamera->DrawRect(Vector(298, VIEW_HEIGHT - 95), Vector(70, 70), ColorF::Red,1);
 
+	// 레이저건 충전 막대 출력
+	if (OBJECT->GetPlayer()->GetCurrentItem()->GetTag() == ITEM_LASERGUN)
+	{
+		OBJECT->GetPlayer()->GetLaserChargerBar()->Render(pUICamera);
+	}
 }
 
 void PlayScene::SetCreature(float deltaTime)
