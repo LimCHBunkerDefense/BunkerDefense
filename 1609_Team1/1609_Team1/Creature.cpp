@@ -14,7 +14,6 @@ Creature::Creature(OBJ_TAG tag) : Object(tag)
 	m_state = CREATURE_RUN;
 	m_dir = DIRECTION_CENTER;
 
-	m_scale = 0.5f;
 	m_t = 0.0f;
 	m_attack = pData->attack;
 	m_defense = pData->defense;
@@ -161,5 +160,5 @@ void Creature::StartPosUpdate()
 void Creature::ZUpdate()
 {
 	m_maxZ = 300 + 400 * m_t;
-	m_minZ = m_maxZ - Animation()->Current()->GetSprite()->GetHeight() * 0.7;	// Draw3D 등 이미지를 화면으로 출력해주면서 넣어준 변수에 때문에 0.7배 해주어야 보이는 스프라이트 높이가 됨
+	m_minZ = m_maxZ - Animation()->Current()->GetSprite()->GetHeight() * m_scale;
 }
