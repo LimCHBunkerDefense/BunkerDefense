@@ -56,6 +56,10 @@ PlayScene::PlayScene() : m_attackedColor(ColorF::Red)
 	RENDER->LoadImageFiles(TEXT("PSBulletExplode"), TEXT("Image/Bullet/Pistol/Explode/Explode"), TEXT("png"), 1);
 	RENDER->LoadImageFiles(TEXT("MGBulletIdle"), TEXT("Image/Bullet/Machinegun/Idle/Idle"), TEXT("png"), 1);
 	RENDER->LoadImageFiles(TEXT("MGBulletExplode"), TEXT("Image/Bullet/Machinegun/Explode/Explode"), TEXT("png"), 1);
+	RENDER->LoadImageFiles(TEXT("SGBulletIdle"), TEXT("Image/Bullet/Shotgun/Idle/Idle"), TEXT("png"), 1);
+	RENDER->LoadImageFiles(TEXT("SGBulletExplode"), TEXT("Image/Bullet/Shotgun/Explode/Explode"), TEXT("png"), 1);
+	RENDER->LoadImageFiles(TEXT("LGBulletIdle"), TEXT("Image/Bullet/Lasergun/Idle/Idle"), TEXT("png"), 1);
+	RENDER->LoadImageFiles(TEXT("LGBulletExplode"), TEXT("Image/Bullet/Lasergun/Explode/Explode"), TEXT("png"), 1);
 
 	//Grenade ÀúÀå
 	RENDER->LoadImageFiles(TEXT("Grenade"), TEXT("Image/Item/Grenade/Grenade"), TEXT("png"), 1);
