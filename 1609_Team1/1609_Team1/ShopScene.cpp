@@ -348,9 +348,13 @@ void ShopScene::ShowText()
 			wsprintf(number, TEXT("사정거리: %s"), m_selectedItem->GetRangeStr().c_str());
 			pMainCamera->DrawT(number, 950, 440, ColorF::AntiqueWhite, 15);
 
+			// 총알 보유가능량
+			// wsprintf(number, TEXT("보유할 수 있는 총알수: %s"), m_selectedItem->GetMaxBulletCount());
+			// pMainCamera->DrawT(number, 820, 465, ColorF::AntiqueWhite, 15);
+
 			// 구매비용
 			wsprintf(number, TEXT("Money : %dGold"), m_selectedItem->GetItemMoney());
-			pMainCamera->DrawT(number, 820, 465, ColorF::AntiqueWhite, 15);
+			pMainCamera->DrawT(number, 950, 465, ColorF::AntiqueWhite, 15);
 			break;
 
 		case ITEMTYPE_BULLET:
