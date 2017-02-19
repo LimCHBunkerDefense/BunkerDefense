@@ -28,7 +28,7 @@ class PlayScene : public IScene
 	Sprite* m_ico_fix;
 
 	//ui
-	Sprite* m_stageUI;
+	Sprite* m_stageUI;	
 	Sprite* m_BunkerUI;
 	Sprite* m_ItemBarUI;
 	Sprite* m_ScoreUI;
@@ -99,6 +99,7 @@ public:
 	// 플레이어의 돈과 점수 출력해주는 함수
 	void ShowMoney(Camera* pCamera);
 	void ShowScore(Camera* pCamera);
+	void ShowBullet(Camera* pCamera, INT bullet, Vector startPos);
 
 	// 숫자를 스프라이트로 출력해주는 함수
 	void DrawNum(Camera* pCamera, int num, Vector leftTop);

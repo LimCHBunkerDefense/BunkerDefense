@@ -105,6 +105,8 @@ PlayScene::PlayScene() : m_attackedColor(ColorF::Red)
 
 	// 총알 게이지 막대 생성
 	m_bulletGage = new UIBulletBar(Vector(24, 770), Vector(320, 45), ColorF::DarkBlue, ColorF::LightBlue);
+	//m_bulletGage = new UIBulletBar(Vector(24, 300), Vector(320, 45), ColorF::DarkBlue, ColorF::LightBlue);
+	m_bulletGage->SetMinMaxColor(ColorF::Red, ColorF::YellowGreen);
 
 	// 카메라 생성
 	RENDER->CreateCamera(CAM_MAIN, MAP_WIDTH, MAP_HEIGHT, VIEW_WIDTH, VIEW_HEIGHT);
@@ -210,6 +212,12 @@ void PlayScene::OnUpdate(float deltaTime)
 	// 벙커 체력 UIProgressBar 업데이트(이것은 벙커 객체 소유물이 아닌 UI이므로 플레이씬에서 가지고 업데이트 하는 것이 맞아보임)
 	m_bunkerLife->SetTargetValue(OBJECT->GetBunker()->GetCurrentLife() / OBJECT->GetBunker()->GetMaxLife());
 	m_bunkerLife->Update(deltaTime);
+
+	m_bulletGage->SetTargetValue((float)(OBJECT->GetPlayer()->getBulletCount()) / (float)(OBJECT->GetPlayer()->getFullBullet()));
+	m_bulletGage->Update(deltaTime);
+	ShowBullet(pUICamera, OBJECT->GetPlayer()->getBulletCount(), Vector(24,720));
+	ShowBullet(pUICamera, OBJECT->GetPlayer()->getMaxBullet(), Vector(260, 720));
+	
 
 	// m_attackedColor 투명도 조정하여 공격당함 연출 부분으로 투명도를 점점 높여주는 부분
 	if (m_attackedColor.a != 0)
@@ -393,7 +401,7 @@ void PlayScene::OnDraw()
 	//pUICamera->DrawRect(Vector(146, 85), Vector(50, 50), ColorF::Red, 1);
 
 	
-	pUICamera->DrawRect(Vector(24, VIEW_HEIGHT - 130), Vector(320, 45), ColorF::Blue, 2);
+	//pUICamera->DrawRect(Vector(24, VIEW_HEIGHT - 130), Vector(320, 45), ColorF::Blue, 2);
 	//pUICamera->DrawRect(Vector(28, VIEW_HEIGHT - 95), Vector(70, 70), ColorF::Red, 1);
 	//pUICamera->DrawRect(Vector(118, VIEW_HEIGHT - 95), Vector(70, 70), ColorF::Red, 1);
 	//pUICamera->DrawRect(Vector(208, VIEW_HEIGHT - 95), Vector(70, 70), ColorF::Red,1);
@@ -457,7 +465,31 @@ void PlayScene::SwayScreen(float deltaTime)
 
 	pMainCamera->SetScreenRect(m_MainCameraPos.x, m_MainCameraPos.y, VIEW_WIDTH, VIEW_HEIGHT);
 }
-
+void PlayScene::ShowBullet(Camera* pCamera, INT bullet, Vector startPos) {
+	if (bullet / 1000 != 0) {
+		DrawNum(pCamera, bullet / 1000, startPos);
+		DrawNum(pCamera, bullet % 1000 / 100, Vector(startPos.x + 20, startPos.y));
+		DrawNum(pCamera, bullet % 100 / 10, Vector(startPos.x + 40, startPos.y));
+		DrawNum(pCamera, bullet % 10, Vector(startPos.x + 60, startPos.y));
+	}
+	else {
+		if (bullet / 100 != 0) {
+			DrawNum(pCamera, bullet / 100, Vector(startPos.x, startPos.y));
+			DrawNum(pCamera, bullet % 100 / 10, Vector(startPos.x + 20, startPos.y));
+			DrawNum(pCamera, bullet % 10, Vector(startPos.x + 40, startPos.y));
+		}
+		else {
+			if (bullet / 10 != 0) {
+				DrawNum(pCamera, bullet / 10, Vector(startPos.x, startPos.y));
+				DrawNum(pCamera, bullet % 10, Vector(startPos.x + 20, startPos.y));
+			}
+			else {
+				DrawNum(pCamera, bullet % 10, Vector(startPos.x, startPos.y));
+			}
+			
+		}
+	}
+}
 void PlayScene::ShowMoney(Camera* pCamera)
 {
 	int money = OBJECT->GetPlayer()->GetMoney();
