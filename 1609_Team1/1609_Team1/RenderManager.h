@@ -425,9 +425,17 @@ public:
 	}
 
 	// 크리쳐 체력 막대 표시 함수
-	void Draw3D_lifeBar(Box2 frame, Box2 bar, float scale, ColorF colorBG, ColorF colorBar, ColorF colorFrame)
+	void Draw3D_lifeBar(Box2 frame, Box2 bar, float scale, ColorF colorBg, ColorF colorBar, ColorF colorFrame, Vector startPos, float sightHeight, float t, int object_state, float addH)
 	{
+		Vector pos = ChangePositionToView(startPos, sightHeight, t, object_state) + Vector(0, addH);
 
+		frame.SetCenter(pos);
+		bar.SetLeftTop(frame.LeftTop());
+
+		DrawFilledRect(frame.LeftTop(), frame.size * scale, colorBg);
+		DrawFilledRect(bar.LeftTop(), bar.size * scale, colorBar);
+		DrawRect(bar.LeftTop(), bar.size * scale, ColorF(1, 1, 1, 0.3f), 2);
+		DrawRect(frame.LeftTop(), frame.size * scale, colorFrame, 3);
 	}
 
 	//void Draw3DLine(Sprite* sprite, Line line, int dir = -1, float opacity = 1.0f)
