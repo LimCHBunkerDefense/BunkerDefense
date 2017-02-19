@@ -199,7 +199,7 @@ void PlayScene::OnEnter()
 
 	// 테스트용 크리쳐 생성
 	//OBJECT->CreateCreature(OBJ_ENT, Vector(120, 60));
-	//OBJECT->CreateCreature(OBJ_LAVA, Vector(0, 180));
+	OBJECT->CreateCreature(OBJ_LAVA, Vector(0, 180));
 	//OBJECT->CreateCreature(OBJ_DARKPRIEST, Vector(120, 240));
 
 	// 마우스 커서 없애기
@@ -215,7 +215,7 @@ void PlayScene::OnUpdate(float deltaTime)
 	m_gameTime += deltaTime;
 
 	// 게임 시간에 따른 크리쳐 생성  
-	SetCreature(deltaTime);
+	//SetCreature(deltaTime);
 	
 	// 오브젝트 전체 업데이트
 	OBJECT->Update(deltaTime);
