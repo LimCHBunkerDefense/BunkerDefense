@@ -34,6 +34,8 @@ class PlayScene : public IScene
 	Sprite* m_ItemBarUI;
 	Sprite* m_ScoreUI;
 	Sprite* m_MoneyUI;
+	Sprite* m_ProgressBarIconUI;
+	Sprite* m_BulletBarIconUI;
 
 
 	Camera* pMainCamera;
