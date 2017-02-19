@@ -12,8 +12,8 @@ Player::Player(OBJ_TAG tag) : Object(tag)
 	SOUND->LoadFile("PistolShot", "Sound/Gun/Pistol.mp3", false);
 	SOUND->LoadFile("ShotGunShot", "Sound/Gun/ShotGun.mp3", false);
 	SOUND->LoadFile("MachineGunShot", "Sound/Gun/MachineGun.mp3", false);
-	SOUND->LoadFile("LaserGunShot", "Sound/Gun/LaserGun.mp3", false);
-	SOUND->LoadFile("LaserGunShot", "Sound/Gun/LaserGun.mp3", false);
+	SOUND->LoadFile("LaserGunCharging", "Sound/Gun/LaserGunCharging.mp3", false);
+	SOUND->LoadFile("LaserGunShot", "Sound/Gun/LaserGunShot.mp3", false);
 
 	ani_state = IDLE_PISTOL;
 	m_greCoolTime = 0.0f;//수류탄 쿨타임
@@ -150,11 +150,14 @@ void Player::AttackState(float deltaTime)
 	{
 		if (m_pItem->GetTag() == ITEM_LASERGUN)		// 레이저건은 Press로 충전을 해야된다고 하여 예외처리함 ( Press이면 레이저 충전 3초하고, 그거 지나면 레이저 발사하도록)
 		{
+			SetShotSound();
 			m_lagerChargerTime = MATH->Clamp(m_lagerChargerTime + deltaTime, 0.0f, 3.0f);
 
 			if (Animation()->Current()->GetCurrentIndex() == 15
 				&& !m_laserGunShot)
 			{
+				SOUND->Stop("LasergunCharging");
+				SOUND->Play("LasergunShot", 1.0f);
 				float sightHeightDefault = SIGHTHEIGHT_DEFAULT;
 				float rate = 1 + MATH->Clamp(OBJECT->GetSightHeight() - sightHeightDefault, sightHeightDefault / 2 * -1, 0.0f) / sightHeightDefault;
 				Vector pos = Vector::Up() * m_pItem->GetRange() * rate + OBJECT->GetPlayer()->Position();
@@ -553,7 +556,7 @@ void Player::SetShotSound()
 		break;
 
 	case ITEM_LASERGUN:
-		SOUND->Play("LaserGunShot", 1.0f);
+		SOUND->Play("LaserGunCharging", 1.0f);
 		break;
 	}
 }
