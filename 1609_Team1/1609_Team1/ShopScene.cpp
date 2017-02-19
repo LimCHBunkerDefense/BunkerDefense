@@ -326,6 +326,9 @@ void ShopScene::ShowText()
 			break;
 
 		case ITEMTYPE_BULLET:
+			// 구매비용
+			wsprintf(number, TEXT("Money : %d"), m_selectedItem->GetMoney());
+			pMainCamera->DrawT(number, 820, 440, ColorF::AntiqueWhite, 15);
 			break;
 
 		case ITEMTYPE_USINGITEM:
@@ -336,7 +339,7 @@ void ShopScene::ShowText()
 				pMainCamera->DrawT(number, 820, 440, ColorF::AntiqueWhite, 15);
 
 				// 사정거리
-				pMainCamera->DrawT(m_selectedItem->GetRangeStr(), 950, 465, ColorF::AntiqueWhite, 15);
+				pMainCamera->DrawT(m_selectedItem->GetRangeStr(), 950, 440, ColorF::AntiqueWhite, 15);
 
 				// 구매비용
 				wsprintf(number, TEXT("Money : %d"), m_selectedItem->GetMoney());
