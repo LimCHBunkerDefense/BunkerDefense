@@ -98,11 +98,9 @@ BOOL Bullet::Collided()
 			&& m_z <= (*it)->GetMaxZ()
 			&& m_z >= (*it)->GetMinZ())
 		{
-
-			Object* p = OBJECT->GetPlayer();
 			(*it)->AddCurrentLife(-m_attack);
 			
-			return true;
+			if(m_attack < 190) return true;
 		}
 	}
 	return false;
