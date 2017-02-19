@@ -83,7 +83,6 @@ void Creature::Draw(Camera* pCamera)
 	m_scale = OriginScale() * m_t * m_t * 3.0f;
 
 
-
 	pCamera->Draw3D(Animation()->Current()->GetSprite(), m_startPos, m_t, OBJECT->GetSightHeight(), m_state);
 }
 
