@@ -159,6 +159,21 @@ void Creature::StartPosUpdate()
 
 void Creature::ZUpdate()
 {
-	m_maxZ = 300 + 400 * m_t;
-	m_minZ = m_maxZ - Animation()->Current()->GetSprite()->GetHeight() * m_scale;
+	m_maxZ = 300 + 350 * m_t;
+	
+	float gap;
+	switch (Tag())
+	{
+	case OBJ_LAVA:
+		gap = 0.38;
+		break;
+	case OBJ_ENT:
+		gap = 0.55;
+		break;
+	case OBJ_DARKPRIEST:
+		gap = 0.6;
+		break;
+	}
+	m_minZ = m_maxZ - Animation()->Current()->GetSprite()->GetHeight() * gap;
+
 }

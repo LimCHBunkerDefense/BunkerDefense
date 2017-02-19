@@ -99,6 +99,13 @@ PlayScene::PlayScene() : m_attackedColor(ColorF::Red)
 	RENDER->LoadImageFile(TEXT("Num8"), TEXT("Image/UI/ScoreNUM/Num8.png"));
 	RENDER->LoadImageFile(TEXT("Num9"), TEXT("Image/UI/ScoreNUM/Num9.png"));
 
+	// BGM 사운드
+	SOUND->LoadFile("MainBGM_0", "Sound/BGM/Main/Main_0.mp3", true);
+	SOUND->LoadFile("MainBGM_1", "Sound/BGM/Main/Main_1.mp3", true);
+	SOUND->LoadFile("MainBGM_2", "Sound/BGM/Main/Main_2.mp3", true);
+	SOUND->LoadFile("ShopBGM_0", "Sound/BGM/Shop/Shop_0.mp3", true);
+
+
 	// 벙커 체력 막대 생성
 	m_bunkerLife = new UIProgressBar(Vector(24, 830), Vector(320, 45), ColorF::YellowGreen, ColorF::LightGoldenrodYellow);
 	m_bunkerLife->SetMinMaxColor(ColorF::Red, ColorF::YellowGreen);
@@ -154,6 +161,11 @@ void PlayScene::OnEnter()
 	NEW_OBJECT(m_BunkerUI, Sprite(RENDER->GetImage(TEXT("Bunker_UI"))));
 	NEW_OBJECT(m_ItemBarUI, Sprite(RENDER->GetImage(TEXT("ItemBar_UI"))));
 
+	// PlayScene BGM 생성
+	SOUND->Play("MainBGM_0", 1.0f);			// 후보군 1
+	// SOUND->Play("MainBGM_1", 0.5f);		// 후보군 2
+	// SOUND->Play("MainBGM_2", 0.5f);		// 후보군 3
+
 	//ico pistol
 	NEW_OBJECT(m_ico_pistol, Sprite(RENDER->GetImage(TEXT("PistolOn"))));
 	NEW_OBJECT(m_ico_shotGun, Sprite(RENDER->GetImage(TEXT("ShotGunOff"))));
@@ -185,9 +197,9 @@ void PlayScene::OnEnter()
 	pUICamera->SetScreenRect(0, 0, VIEW_WIDTH, VIEW_HEIGHT);
 
 	// 테스트용 크리쳐 생성
-	OBJECT->CreateCreature(OBJ_ENT, Vector(120, 60));
+	//OBJECT->CreateCreature(OBJ_ENT, Vector(120, 60));
 	//OBJECT->CreateCreature(OBJ_LAVA, Vector(0, 180));
-	//OBJECT->CreateCreature(OBJ_DARKPRIEST, Vector(120, 240));
+	OBJECT->CreateCreature(OBJ_DARKPRIEST, Vector(120, 240));
 
 	// 마우스 커서 없애기
 	ShowCursor(false);
@@ -291,6 +303,11 @@ void PlayScene::ChangeIcon() {
 void PlayScene::OnExit()
 {
 	//Exit	
+
+	// PlayScene 나갈 때 Pause 상태
+	SOUND->Pause("MainBGM_0");			// 후보군 1
+	// SOUND->Pause("MainBGM_1");		// 후보군 2
+	// SOUND->Pause("MainBGM_2");		// 후보군 3
 }
 
 void PlayScene::OnDraw()
