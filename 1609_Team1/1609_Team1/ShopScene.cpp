@@ -13,6 +13,8 @@ ShopScene::ShopScene()
 	RENDER->LoadImageFile(TEXT("MenuBT"), TEXT("Image/NPC/ItemMENU.png"));
 	RENDER->LoadImageFile(TEXT("ClickBT"), TEXT("Image/NPC/shopbt2.png"));
 	RENDER->LoadImageFile(TEXT("ClickedBT"), TEXT("Image/NPC/shopselectbt2.png"));
+	RENDER->LoadImageFile(TEXT("ListBar"), TEXT("Image/NPC/ItemListBar.png"));
+	RENDER->LoadImageFile(TEXT("ListBarBG"), TEXT("Image/NPC/ItemListBarBG.png"));
 
 	//무기 아이콘
 	RENDER->LoadImageFile(TEXT("PistolIcon"), TEXT("Image/Item/Shop_Icon/Pistol.png"));
@@ -72,6 +74,8 @@ void ShopScene::OnEnter()
 	NEW_OBJECT(m_pMenuBT, Sprite(RENDER->GetImage(TEXT("MenuBT")), 0.95f, 0, 0));
 	NEW_OBJECT(m_pClickBT, Sprite(RENDER->GetImage(TEXT("ClickBT")), 0.85f, 0, 0));
 	NEW_OBJECT(m_pClickBT2, Sprite(RENDER->GetImage(TEXT("ClickedBT")), 0.85f, 0, 0));
+	NEW_OBJECT(m_pListBar, Sprite(RENDER->GetImage(TEXT("ListBar")), 0.95, 0, 0));
+	NEW_OBJECT(m_pListBarBG, Sprite(RENDER->GetImage(TEXT("ListBarBG")), 0.95, 0, 0));
 
 	SOUND->Play("ShopBGM_0", 1.0f);
 
@@ -117,10 +121,18 @@ void ShopScene::OnDraw()
 	//RENDER->DrawT(TEXT("SHOP"), 600, 35, ColorF::BlanchedAlmond, 25);
 	pMainCamera->Draw(m_pShopTitleBG, Vector(VIEW_WIDTH * 0.45f, 20));
 
-	//아이템 매뉴
+	//중분류 메뉴
 	pMainCamera->Draw(m_pMenuBT, Vector(366, 160));
 	pMainCamera->Draw(m_pMenuBT, Vector(496, 160));
 	pMainCamera->Draw(m_pMenuBT, Vector(624, 160));
+
+	//소분류 메뉴
+	pMainCamera->Draw(m_pListBarBG, Vector(368, 346));
+	pMainCamera->Draw(m_pListBar, Vector(370, 344));
+	pMainCamera->Draw(m_pListBar, Vector(370, 404));
+	pMainCamera->Draw(m_pListBar, Vector(370, 464));
+	pMainCamera->Draw(m_pListBar, Vector(370, 524));
+
 
 
 	//버튼 이미지(테스트)
