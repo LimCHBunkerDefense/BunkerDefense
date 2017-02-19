@@ -14,30 +14,33 @@ ShopScene::ShopScene()
 	RENDER->LoadImageFile(TEXT("ClickBT"), TEXT("Image/NPC/shopbt2.png"));
 	RENDER->LoadImageFile(TEXT("ClickedBT"), TEXT("Image/NPC/shopselectbt2.png"));
 
+	//무기 아이콘
 	RENDER->LoadImageFile(TEXT("PistolIcon"), TEXT("Image/Item/Shop_Icon/Pistol.png"));
 	RENDER->LoadImageFile(TEXT("ShotGunIcon"), TEXT("Image/Item/Shop_Icon/ShotGun.png"));
 	RENDER->LoadImageFile(TEXT("MachineGunIcon"), TEXT("Image/Item/Shop_Icon/MachineGun.png"));
 	RENDER->LoadImageFile(TEXT("LaserGunIcon"), TEXT("Image/Item/Shop_Icon/LaserGun.png"));
+	//소비 아이콘
 	RENDER->LoadImageFile(TEXT("PSBulletIcon"), TEXT("Image/Item/Shop_Icon/PistolBullet.png"));
 	RENDER->LoadImageFile(TEXT("SGBulletIcon"), TEXT("Image/Item/Shop_Icon/ShotGunBullet.png"));
 	RENDER->LoadImageFile(TEXT("MGBulletIcon"), TEXT("Image/Item/Shop_Icon/MachineGunBullet.png"));
 	RENDER->LoadImageFile(TEXT("LGBulletIcon"), TEXT("Image/Item/Shop_Icon/LaserGunBullet.png"));
+	//특수 아이콘
 	RENDER->LoadImageFile(TEXT("GrenadeIcon"), TEXT("Image/Item/Shop_Icon/Grenade.png"));
 	RENDER->LoadImageFile(TEXT("AirBombIcon"), TEXT("Image/Item/Shop_Icon/AirBomb.png"));
 	RENDER->LoadImageFile(TEXT("FireCapsuleIcon"), TEXT("Image/Item/Shop_Icon/FireCapsule.png"));
 	RENDER->LoadImageFile(TEXT("RepairIcon"), TEXT("Image/Item/Shop_Icon/Repair.png"));
 
-	m_pPistol = NEW_OBJECT(m_pPistol, Sprite(RENDER->GetImage(TEXT("PistolIcon")), 0.7f));
-	m_pShotGun = NEW_OBJECT(m_pShotGun, Sprite(RENDER->GetImage(TEXT("ShotGunIcon")), 0.7f));
-	m_pMachineGun = NEW_OBJECT(m_pMachineGun, Sprite(RENDER->GetImage(TEXT("MachineGunIcon")), 0.3f));
-	m_pLaserGun = NEW_OBJECT(m_pLaserGun, Sprite(RENDER->GetImage(TEXT("LaserGunIcon")), 0.7f));
-	m_pPistolBullet = NEW_OBJECT(m_pPistolBullet, Sprite(RENDER->GetImage(TEXT("PSBulletIcon")), 0.9f));
-	m_pShotGunBullet = NEW_OBJECT(m_pShotGunBullet, Sprite(RENDER->GetImage(TEXT("SGBulletIcon")), 0.6f));
-	m_pMachineGunBullet = NEW_OBJECT(m_pMachineGunBullet, Sprite(RENDER->GetImage(TEXT("MGBulletIcon")), 0.6f));
-	m_pLaserGunBullet = NEW_OBJECT(m_pLaserGunBullet, Sprite(RENDER->GetImage(TEXT("LGBulletIcon")), 0.6f, 0.5f, 0.55f));
-	m_pGrenade = NEW_OBJECT(m_pGrenade, Sprite(RENDER->GetImage(TEXT("GrenadeIcon")), 0.5f, 0.5f, 0.6f));
-	m_pAirBomb = NEW_OBJECT(m_pAirBomb, Sprite(RENDER->GetImage(TEXT("AirBombIcon")), 0.8f, 0.5f, 0.55f));
-	m_pFireCapsule = NEW_OBJECT(m_pFireCapsule, Sprite(RENDER->GetImage(TEXT("FireCapsuleIcon")), 0.6f));
+	m_pPistol = NEW_OBJECT(m_pPistol, Sprite(RENDER->GetImage(TEXT("PistolIcon")), 0.6f, 0.5f, 0.6f));
+	m_pShotGun = NEW_OBJECT(m_pShotGun, Sprite(RENDER->GetImage(TEXT("ShotGunIcon")), 0.6f, 0.5f, 0.6f));
+	m_pMachineGun = NEW_OBJECT(m_pMachineGun, Sprite(RENDER->GetImage(TEXT("MachineGunIcon")), 0.6f, 0.5f, 0.6f));
+	m_pLaserGun = NEW_OBJECT(m_pLaserGun, Sprite(RENDER->GetImage(TEXT("LaserGunIcon")), 0.6f, 0.5f, 0.6f));
+	m_pPistolBullet = NEW_OBJECT(m_pPistolBullet, Sprite(RENDER->GetImage(TEXT("PSBulletIcon")), 0.6f, 0.5f, 0.6f));
+	m_pShotGunBullet = NEW_OBJECT(m_pShotGunBullet, Sprite(RENDER->GetImage(TEXT("SGBulletIcon")), 0.6f, 0.5f, 0.6f));
+	m_pMachineGunBullet = NEW_OBJECT(m_pMachineGunBullet, Sprite(RENDER->GetImage(TEXT("MGBulletIcon")), 0.6f, 0.5f, 0.6f));
+	m_pLaserGunBullet = NEW_OBJECT(m_pLaserGunBullet, Sprite(RENDER->GetImage(TEXT("LGBulletIcon")), 0.6f, 0.5f, 0.6f));
+	m_pGrenade = NEW_OBJECT(m_pGrenade, Sprite(RENDER->GetImage(TEXT("GrenadeIcon")), 0.6f, 0.5f, 0.6f));
+	m_pAirBomb = NEW_OBJECT(m_pAirBomb, Sprite(RENDER->GetImage(TEXT("AirBombIcon")), 0.6f, 0.5f, 0.6f));
+	m_pFireCapsule = NEW_OBJECT(m_pFireCapsule, Sprite(RENDER->GetImage(TEXT("FireCapsuleIcon")), 0.6f, 0.5f, 0.6f));
 	m_pRepair = NEW_OBJECT(m_pRepair, Sprite(RENDER->GetImage(TEXT("RepairIcon")), 0.6f, 0.5f, 0.6f));
 
 	IsWeaponClicked = false;
@@ -115,10 +118,11 @@ void ShopScene::OnDraw()
 	//버튼 이미지(테스트)
 
 	pMainCamera->Draw(m_pShopBT, Vector(820, 680)); // 일반 버튼1
-	pMainCamera->Draw(m_pClickBT, Vector(820, 730)); // 선택 버튼1
-
 	pMainCamera->Draw(m_pSelectBT, Vector(960, 680)); //일반 버튼2
-	pMainCamera->Draw(m_pClickBT2, Vector(960, 730)); //선택 버튼2
+
+	//pMainCamera->Draw(m_pClickBT, Vector(820, 730)); // 선택 버튼1
+	//pMainCamera->Draw(m_pClickBT2, Vector(960, 730)); //선택 버튼2
+
 	if (IsBuyClicked == true)
 
 	//RENDER->DrawRect(Vector(950, 450),Vector(320, 300),ColorF::AntiqueWhite, 3);
