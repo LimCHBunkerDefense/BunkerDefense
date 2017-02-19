@@ -42,6 +42,15 @@ public:
 		SetTargetValue(1.0f);
 	}
 
+	Vector GetLeftTop() { return m_bar.LeftTop(); }
+	Vector GetCenter() { return m_bar.Center(); }
+	Vector GetBarSize() { return m_bar.size; }
+	Vector GetFrameSize() { return m_frame.size; }
+	ColorF GetBarColor() { return m_colorBar; }
+	ColorF GetFrameColor() { return m_colorFrame; }
+	ColorF GetBGColor() { return m_colorBg; }
+
+
 	void SetMinMaxColor(ColorF minColor, ColorF maxColor)
 	{
 		m_colorMin = minColor;

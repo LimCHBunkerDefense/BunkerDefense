@@ -129,8 +129,6 @@ PlayScene::PlayScene() : m_attackedColor(ColorF::Red)
 	m_createdLavaCount = 0;
 	m_createdEntCount = 0;
 	m_createdDarkpriestCount = 0;
-
-	//손 모양 출력
 }
 
 
@@ -404,6 +402,11 @@ void PlayScene::OnDraw()
 	//pUICamera->DrawRect(Vector(208, VIEW_HEIGHT - 95), Vector(70, 70), ColorF::Red,1);
 	//pUICamera->DrawRect(Vector(298, VIEW_HEIGHT - 95), Vector(70, 70), ColorF::Red,1);
 
+	// 레이저건 충전 막대 출력
+//	if (OBJECT->GetPlayer()->GetCurrentItem()->GetTag() == ITEM_LASERGUN)
+//	{
+//		pUICamera->DrawRect(m_lasergunCharger->GetLeftTop(), m_lasergunCharger->)
+//	}
 }
 
 void PlayScene::SetCreature(float deltaTime)
