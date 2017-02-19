@@ -9,6 +9,7 @@ class Grenade :
 	Sprite* m_pSprite;
 	float m_moveSpeed;
 	float m_scale;
+	float m_attack;
 	float m_goal;
 	float m_addHeight;
 	float m_explodetime;

@@ -22,17 +22,22 @@ Grenade::Grenade(OBJ_TAG tag, GRENADE_STATE gre_state) : Object(tag)
 	case GRENADE_IDLE:
 		m_explodeEnd = 0.9F;
 		m_explodeSize = 10.0f;
+		m_attack = 100;
 		break;
 	case FLAME_IDLE:
 		m_explodeEnd = 3.5F;
 		m_explodeSize = 15.0f;
+		m_attack = 50;
 		break;
 	case AIRBOMB_IDLE:
 		m_explodeEnd = 2.0F;
 		m_explodeSize = 20.0f;
+		m_attack = 2000;
 		break;
 	default:
 		m_explodeEnd = 0.0F;
+		m_explodeSize = 0.0F;
+		m_attack = 0.0F;
 		break;
 	}
 	
@@ -124,7 +129,8 @@ void Grenade::Collided()
 	list<Object*> creatureList = OBJECT->GetCreatureList();
 	FOR_LIST(Object*, creatureList) {
 		if (MATH->Distance(Position(), (*it)->GetNowPos())<= m_explodeSize){
-			OBJECT->DestroyCreature((*it));
+			Object* p = OBJECT->GetPlayer();
+			(*it)->AddCurrentLife(-m_attack);
 		}
 	}
 }

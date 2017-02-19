@@ -116,6 +116,7 @@ public:
 
 	//Player
 	virtual ITEM_TAG GetItemState() { return ITEM_NONE; }
+	virtual GRENADE_STATE GetGreState() { return GRENADE_NONE; }
 	virtual int GetScore() { return NULL; }		// Creature도 사용
 	virtual void AddScore(int addScore) { }		
 	virtual int GetMoney() { return NULL; }		// Creature도 사용

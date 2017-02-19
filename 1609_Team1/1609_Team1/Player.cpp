@@ -361,6 +361,7 @@ void Player::SetItem()
 	//¼ö·ùÅº ÀåÂø
 	if (INPUT->IsKeyDown(VK_Q))
 	{
+		//item_state = ITEM_GRENADE;
 		if (gre_state == GRENADE_IDLE)	gre_state = GRENADE_NONE;
 		else 							gre_state = GRENADE_IDLE;
 	}
@@ -368,6 +369,7 @@ void Player::SetItem()
 	//¹«Àü±â ÀåÂø
 	if (INPUT->IsKeyDown(VK_W))
 	{
+		//item_state = ITEM_AIRBOMB;
 		if (gre_state == AIRBOMB_IDLE)	gre_state = GRENADE_NONE;
 		else 							gre_state = AIRBOMB_IDLE;
 	}
@@ -375,8 +377,17 @@ void Player::SetItem()
 	//È­¿°Åº ÀåÂø
 	if (INPUT->IsKeyDown(VK_E))
 	{
+		//item_state = ITEM_RAVAREGION;
 		if (gre_state == FLAME_IDLE)	gre_state = GRENADE_NONE;
 		else 							gre_state = FLAME_IDLE;
+	}
+
+	//È­¿°Åº ÀåÂø
+	if (INPUT->IsKeyDown(VK_R))
+	{
+		//item_state = ITEM_BUNKERREPAIR;
+		/*if (gre_state == FLAME_IDLE)	gre_state = GRENADE_NONE;
+		else 							gre_state = FLAME_IDLE;*/
 	}
 }
 

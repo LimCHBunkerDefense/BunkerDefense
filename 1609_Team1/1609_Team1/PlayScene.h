@@ -22,6 +22,10 @@ class PlayScene : public IScene
 	Sprite* m_ico_shotGun;
 	Sprite* m_ico_machineGun;
 	Sprite* m_ico_laserGun;
+	Sprite* m_ico_grenade;
+	Sprite* m_ico_plane;
+	Sprite* m_ico_napalm;
+	Sprite* m_ico_fix;
 
 	//ui
 	Sprite* m_stageUI;

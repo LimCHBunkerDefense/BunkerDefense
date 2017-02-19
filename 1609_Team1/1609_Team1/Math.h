@@ -23,7 +23,7 @@ struct Vector
 	{
 		float mag = Magnitude();
 		if (mag == 0) return Zero();
-		return *this / mag;
+		return *this / mag; 
 	}
 
 	

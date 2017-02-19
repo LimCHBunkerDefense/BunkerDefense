@@ -74,6 +74,14 @@ PlayScene::PlayScene() : m_attackedColor(ColorF::Red)
 	RENDER->LoadImageFile(TEXT("MachineGunOff"), TEXT("Image/Item/Icon/ico_machine_off.png"));
 	RENDER->LoadImageFile(TEXT("LaserGunOn"),		TEXT("Image/Item/Icon/ico_laser_on.png"));
 	RENDER->LoadImageFile(TEXT("LaserGunOff"),		TEXT("Image/Item/Icon/ico_laser_off.png"));
+	RENDER->LoadImageFile(TEXT("FixOn"), TEXT("Image/Item/Icon/ico_fix_on.png"));
+	RENDER->LoadImageFile(TEXT("FixOff"), TEXT("Image/Item/Icon/ico_fix_off.png"));
+	RENDER->LoadImageFile(TEXT("GrenadeOn"), TEXT("Image/Item/Icon/ico_grenade_on.png"));
+	RENDER->LoadImageFile(TEXT("GrenadeOff"), TEXT("Image/Item/Icon/ico_grenade_off.png"));
+	RENDER->LoadImageFile(TEXT("PlaneOn"), TEXT("Image/Item/Icon/ico_plane_on.png"));
+	RENDER->LoadImageFile(TEXT("PlaneOff"), TEXT("Image/Item/Icon/ico_plane_off.png"));
+	RENDER->LoadImageFile(TEXT("NapalmOn"), TEXT("Image/Item/Icon/ico_napalm_on.png"));
+	RENDER->LoadImageFile(TEXT("NapalmOff"), TEXT("Image/Item/Icon/ico_napalm_off.png"));
 
 	// 숫자 이미지 가져오기
 	RENDER->LoadImageFile(TEXT("Num0"), TEXT("Image/UI/ScoreNUM/Num0.png"));
@@ -150,6 +158,11 @@ void PlayScene::OnEnter()
 	NEW_OBJECT(m_ico_machineGun, Sprite(RENDER->GetImage(TEXT("MachineGunOff"))));	
 	NEW_OBJECT(m_ico_laserGun, Sprite(RENDER->GetImage(TEXT("LaserGunOff"))));
 
+	NEW_OBJECT(m_ico_grenade, Sprite(RENDER->GetImage(TEXT("GrenadeOff"))));
+	NEW_OBJECT(m_ico_plane, Sprite(RENDER->GetImage(TEXT("PlaneOff"))));
+	NEW_OBJECT(m_ico_napalm, Sprite(RENDER->GetImage(TEXT("NapalmOff"))));
+	NEW_OBJECT(m_ico_fix, Sprite(RENDER->GetImage(TEXT("FixOn"))));
+
 	NEW_OBJECT(m_num1, Sprite(RENDER->GetImage(TEXT("Num1")), 1.0, 0,0));
 	NEW_OBJECT(m_num2, Sprite(RENDER->GetImage(TEXT("Num2")), 1.0, 0,0));
 	NEW_OBJECT(m_num3, Sprite(RENDER->GetImage(TEXT("Num3")), 1.0, 0,0));
@@ -217,6 +230,30 @@ void PlayScene::OnUpdate(float deltaTime)
 }
 
 void PlayScene::ChangeIcon() {
+	ITEM_TAG item_tag = OBJECT->GetPlayer()->GetItemState();
+	GRENADE_STATE gre_state = OBJECT->GetPlayer()->GetGreState();
+	if (item_tag == ITEM_PISTOL) {	NEW_OBJECT(m_ico_pistol, Sprite(RENDER->GetImage(TEXT("PistolOn"))));	}
+	else { NEW_OBJECT(m_ico_pistol, Sprite(RENDER->GetImage(TEXT("PistolOff")))); }
+	if (item_tag == ITEM_SHOTGUN) { NEW_OBJECT(m_ico_shotGun, Sprite(RENDER->GetImage(TEXT("ShotGunOn")))); }
+	else { NEW_OBJECT(m_ico_shotGun, Sprite(RENDER->GetImage(TEXT("ShotGunOff")))); }
+	if (item_tag == ITEM_MACHINEGUN) { NEW_OBJECT(m_ico_machineGun, Sprite(RENDER->GetImage(TEXT("MachineGunOn")))); }
+	else { NEW_OBJECT(m_ico_machineGun, Sprite(RENDER->GetImage(TEXT("MachineGunOff")))); }
+	if (item_tag == ITEM_LASERGUN) { NEW_OBJECT(m_ico_laserGun, Sprite(RENDER->GetImage(TEXT("LaserGunOn")))); }
+	else { NEW_OBJECT(m_ico_laserGun, Sprite(RENDER->GetImage(TEXT("LaserGunOff")))); }
+
+	if (gre_state == GRENADE_IDLE) { NEW_OBJECT(m_ico_grenade, Sprite(RENDER->GetImage(TEXT("GrenadeOn")))); }
+	else { NEW_OBJECT(m_ico_grenade, Sprite(RENDER->GetImage(TEXT("GrenadeOff")))); }
+	if (gre_state == AIRBOMB_IDLE) { NEW_OBJECT(m_ico_plane, Sprite(RENDER->GetImage(TEXT("PlaneOn")))); }
+	else { NEW_OBJECT(m_ico_plane, Sprite(RENDER->GetImage(TEXT("PlaneOff")))); }
+	if (gre_state == FLAME_IDLE) { NEW_OBJECT(m_ico_napalm, Sprite(RENDER->GetImage(TEXT("NapalmOn")))); }
+	else { NEW_OBJECT(m_ico_napalm, Sprite(RENDER->GetImage(TEXT("NapalmOff")))); }
+	NEW_OBJECT(m_ico_fix, Sprite(RENDER->GetImage(TEXT("FixOn"))));
+
+	/*if (gre_state == GRENADE_IDLE) { NEW_OBJECT(m_ico_fix, Sprite(RENDER->GetImage(TEXT("PistolOn")))); }
+	else { NEW_OBJECT(m_ico_fix, Sprite(RENDER->GetImage(TEXT("PistolOff")))); */
+
+
+	/* Too Long
 	switch (OBJECT->GetPlayer()->GetItemState()) {
 		case ITEM_PISTOL: {
 			NEW_OBJECT(m_ico_pistol, Sprite(RENDER->GetImage(TEXT("PistolOn"))));
@@ -246,7 +283,7 @@ void PlayScene::ChangeIcon() {
 			NEW_OBJECT(m_ico_laserGun, Sprite(RENDER->GetImage(TEXT("LaserGunOn"))));
 			break;
 		}
-	}
+	}*/
 }
 
 void PlayScene::OnExit()
@@ -349,8 +386,12 @@ void PlayScene::OnDraw()
 	pUICamera->Draw(m_ico_shotGun, Vector(109, VIEW_HEIGHT - 852));
 	pUICamera->Draw(m_ico_machineGun, Vector(172, VIEW_HEIGHT - 852));
 	pUICamera->Draw(m_ico_laserGun, Vector(238, VIEW_HEIGHT - 852));
-	//pUICamera->DrawRect(Vector(146, 85), Vector(50, 50), ColorF::Red, 1);
 
+	pUICamera->Draw(m_ico_grenade, Vector(48, VIEW_HEIGHT - 792));
+	pUICamera->Draw(m_ico_plane, Vector(109, VIEW_HEIGHT - 792));
+	pUICamera->Draw(m_ico_napalm, Vector(172, VIEW_HEIGHT - 792));
+	pUICamera->Draw(m_ico_fix, Vector(238, VIEW_HEIGHT - 792));
+	//pUICamera->DrawRect(Vector(146, 85), Vector(50, 50), ColorF::Red, 1);
 
 	
 	pUICamera->DrawRect(Vector(24, VIEW_HEIGHT - 130), Vector(320, 45), ColorF::Blue, 2);
