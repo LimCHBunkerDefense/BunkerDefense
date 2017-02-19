@@ -33,6 +33,7 @@ Player::Player(OBJ_TAG tag) : Object(tag)
 	Object* startBullet = OBJECT->CreateItem(ITEM_PSBULLET, 2001);
 	m_itemBag[startBullet->GetTag()] = startBullet;
 	startBullet->AddCurrentCount(60);
+	
 
 	m_money = 10000;
 	m_score = 0;
@@ -146,6 +147,7 @@ void Player::AttackState(float deltaTime)
 	if (INPUT->IsMouseDown(MOUSE_LEFT)) {
 		if (InBulletCount > 0) {
 			BulletUse();
+			m_itemBag[ITEM_PSBULLET]->AddCurrentCount(All_Bullet_Pistol + InBulletCount);
 			if (gre_state != GRENADE_NONE) {
 				if (m_greCoolTime == 0.0f) {
 					Vector pos = MATH->ToDirection(90) * MINI_WIDTH * 0.5 + OBJECT->GetPlayer()->Position();
