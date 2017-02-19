@@ -34,8 +34,9 @@ Player::Player(OBJ_TAG tag) : Object(tag)
 
 	m_lagerChargerTime = 0;
 	// 레이저건 충전 나타낼 바
-	m_lasergunCharger = new UIProgressBar(Vector(VIEW_WIDTH*0.5 - 200, VIEW_HEIGHT - 50), Vector(400, 100), ColorF::Green, ColorF::YellowGreen);
+	m_lasergunCharger = new UIProgressBar(Vector(VIEW_WIDTH*0.5 - 90, VIEW_HEIGHT - 15), Vector(240, 30), ColorF::Green, ColorF::Gray);
 	m_lasergunCharger->SetMinMaxColor(ColorF::Red, ColorF::Green);
+	m_lasergunCharger->SetValue(0.0f);
 }
 
 Player::~Player()
@@ -77,7 +78,7 @@ Vector Player::DrawPos()
 		pos = Vector(VIEW_WIDTH / 2, VIEW_HEIGHT);
 		break;
 	case ITEM_LASERGUN:
-		pos = Vector(VIEW_WIDTH / 2 + 30, VIEW_HEIGHT);
+		pos = Vector(VIEW_WIDTH / 2 + 30, VIEW_HEIGHT - 15);
 		break;
 	}
 	return pos;
@@ -85,8 +86,10 @@ Vector Player::DrawPos()
 
 void Player::AttackState(float deltaTime)
 {
-	SetIdleAnimation();
-	Animation()->Play(ani_state);
+	SetIdleAnimation();				// 총의 Shot 애니메이션 끝나면 그 총의 Idle 애니메이션으로 돌리는 함수
+	Animation()->Play(ani_state);	// 현재 아이템에 대한 애니메이션 재생
+	LaserChargerUpdate(deltaTime);	// 레이저건 충전 막대 업데이트
+	
 
 	// 씬 채인지
 	if (INPUT->IsKeyDown(VK_F3))
@@ -136,6 +139,8 @@ void Player::AttackState(float deltaTime)
 	{
 		if (m_pItem->GetTag() == ITEM_LASERGUN)		// 레이저건은 Press로 충전을 해야된다고 하여 예외처리함 ( Press이면 레이저 충전 3초하고, 그거 지나면 레이저 발사하도록)
 		{
+			m_lagerChargerTime = MATH->Clamp(m_lagerChargerTime + deltaTime, 0.0f, 3.0f);
+
 			if (Animation()->Current()->GetCurrentIndex() == 15)
 			{
 				float sightHeightDefault = SIGHTHEIGHT_DEFAULT;
@@ -151,6 +156,7 @@ void Player::AttackState(float deltaTime)
 	{
 		if (m_pItem->GetTag() == ITEM_LASERGUN)		// 레이저건은 Press로 충전을 해야된다고 하여 예외처리함
 		{
+			m_lagerChargerTime = 0.0f;
 			ani_state = IDLE_LASER;
 		}
 	}
@@ -487,6 +493,20 @@ void Player::SetShotAnimation()
 	case ITEM_LASERGUN:
 		ani_state = SHOT_LASER;
 		break;
+	}
+}
+
+void Player::LaserChargerUpdate(float deltaTime)
+{
+	if (m_pItem->GetTag() == ITEM_LASERGUN)
+	{
+		if (Animation()->Current()->GetCurrentIndex() == 21)
+		{
+			m_lagerChargerTime = 0.0f;
+			m_lasergunCharger->SetValue(0.0f);
+		}
+		m_lasergunCharger->SetTargetValue(m_lagerChargerTime / 3.0f);
+		m_lasergunCharger->Update(deltaTime);
 	}
 }
 

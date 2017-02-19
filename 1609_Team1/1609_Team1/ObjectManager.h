@@ -125,6 +125,7 @@ public:
 	virtual void AddMoney(int addMoney) { }		
 	virtual map<int, Object*> GetItemBag() { return m_trashMap; }
 	virtual Object* GetCurrentItem() { return NULL; }
+	virtual UIProgressBar* GetLaserChargerBar() { return NULL; }
 
 	// 벙커용 함수
 	virtual float GetCurrentLife() { return NULL; }		// Creature도 사용

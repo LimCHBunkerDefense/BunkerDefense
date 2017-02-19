@@ -58,6 +58,9 @@ public:
 	// 총 쏠 때 애니메이션 변경해주는 함수
 	void SetShotAnimation();
 
+	// 레이저건 충전 막대 업데이트 해주는 함수
+	void LaserChargerUpdate(float deltaTime);
+
 	// 현재 장착무기 호출
 	Object* GetCurrentItem() { return m_pItem; }
 
@@ -69,6 +72,9 @@ public:
 	void AddScore(int addScore) { m_score += addScore; }
 	int GetMoney() { return m_money; }
 	void AddMoney(int addMoney) { m_money += addMoney; }
+
 	map<int, Object*> GetItemBag() { return m_itemBag; }
+
+	UIProgressBar* GetLaserChargerBar() { return m_lasergunCharger; }
 };
 

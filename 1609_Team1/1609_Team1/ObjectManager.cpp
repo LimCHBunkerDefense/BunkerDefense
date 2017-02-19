@@ -117,7 +117,7 @@ void ObjectManager::CreatePlayer(Vector pos, Vector colSize, Vector anchor)
 
 	float scale = 1.0;
 	colSize = Vector(20, 20) * scale;
-	anchor = Vector(0.5, 0.95f);
+	anchor = Vector(0.5, 1.0f);
 
 	m_pPlayer->Animation()->Register(IDLE_PISTOL, new Animation(TEXT("Idle_Pistol"), 2, 2, true, scale, anchor.x, anchor.y));
 	m_pPlayer->Animation()->Register(SHOT_PISTOL, new Animation(TEXT("Attack_Pistol"), 4, 20, false, scale, anchor.x, anchor.y));
