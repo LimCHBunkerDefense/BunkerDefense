@@ -117,17 +117,17 @@ void ObjectManager::CreatePlayer(Vector pos, Vector colSize, Vector anchor)
 
 	float scale = 1.0;
 	colSize = Vector(20, 20) * scale;
-	anchor = Vector(0.5, 0.95f);
+	anchor = Vector(0.5, 1.0f);
 
 	m_pPlayer->Animation()->Register(IDLE_PISTOL, new Animation(TEXT("Idle_Pistol"), 2, 2, true, scale, anchor.x, anchor.y));
-	m_pPlayer->Animation()->Register(SHOT_PISTOL, new Animation(TEXT("Attack_Pistol"), 3, 2, false, scale, anchor.x, anchor.y));
+	m_pPlayer->Animation()->Register(SHOT_PISTOL, new Animation(TEXT("Attack_Pistol"), 4, 20, false, scale, anchor.x, anchor.y));
 	m_pPlayer->Animation()->Register(IDLE_MACHINE, new Animation(TEXT("Idle_Machine"), 2, 2, true, scale, anchor.x, anchor.y));
-	m_pPlayer->Animation()->Register(SHOT_MACHINE, new Animation(TEXT("Attack_Machine"), 7, 2, false, scale, anchor.x, anchor.y));
+	m_pPlayer->Animation()->Register(SHOT_MACHINE, new Animation(TEXT("Attack_Machine"), 8, 20, false, scale, anchor.x, anchor.y));
 	m_pPlayer->Animation()->Register(IDLE_LASER, new Animation(TEXT("Idle_Laser"), 2, 2, true, scale, anchor.x, anchor.y));
-	m_pPlayer->Animation()->Register(SHOT_LASER, new Animation(TEXT("Attack_Laser"), 7, 2, false, scale, anchor.x, anchor.y));
+	m_pPlayer->Animation()->Register(SHOT_LASER, new Animation(TEXT("Attack_Laser"), 22, 5, false, scale, anchor.x, anchor.y));
 	m_pPlayer->Animation()->Register(IDLE_SHOT, new Animation(TEXT("Idle_Shot"), 2, 2, true, scale, anchor.x, anchor.y));
-	m_pPlayer->Animation()->Register(SHOT_SHOT, new Animation(TEXT("Attack_Shot"), 3, 2, false, scale, anchor.x, anchor.y));
-	m_pPlayer->Animation()->Register(SHOT_SHOT, new Animation(TEXT("Reload_Shot"), 11, 2, false, scale, anchor.x, anchor.y));
+	m_pPlayer->Animation()->Register(SHOT_SHOT, new Animation(TEXT("Attack_Shot"), 4, 10, false, scale, anchor.x, anchor.y));
+	m_pPlayer->Animation()->Register(RELOAD_SHOT, new Animation(TEXT("Reload_Shot"), 11, 2, false, scale, anchor.x, anchor.y));
 	
 
 }
@@ -152,7 +152,7 @@ void ObjectManager::CreateCreature(OBJ_TAG tag, Vector pos)
 	{
 	case OBJ_ENT:
 		scale = 1.0;
-		colSize = Vector(20, 20) * scale;
+		colSize = Vector(10, 60);
 		anchor = Vector(0.5, 0.95f);
 		pCreature->Animation()->Register(CREATURE_IDLE, new Animation(TEXT("EntIdle"), 2, 2, true, scale, anchor.x, anchor.y));
 		pCreature->Animation()->Register(CREATURE_RUN, new Animation(TEXT("EntRun"), 21, 17, true, scale, anchor.x, anchor.y));
@@ -161,7 +161,7 @@ void ObjectManager::CreateCreature(OBJ_TAG tag, Vector pos)
 		break;
 	case OBJ_LAVA:
 		scale = 0.3;
-		colSize = Vector(20, 20) * scale;
+		colSize = Vector(10, 60);
 		anchor = Vector(0.5, 0.95f);
 		pCreature->Animation()->Register(CREATURE_IDLE, new Animation(TEXT("LavaIdle"), 2, 2, true, scale, anchor.x, anchor.y));
 		pCreature->Animation()->Register(CREATURE_RUN, new Animation(TEXT("LavaRun"), 23, 17, true, scale, anchor.x, anchor.y));
@@ -170,7 +170,7 @@ void ObjectManager::CreateCreature(OBJ_TAG tag, Vector pos)
 		break;
 	case OBJ_DARKPRIEST:
 		scale = 0.4;
-		colSize = Vector(20, 20) * scale;
+		colSize = Vector(10, 60);
 		anchor = Vector(0.5, 0.95f);
 		pCreature->Animation()->Register(CREATURE_IDLE, new Animation(TEXT("DarkpriestIdle"), 2, 2, true, scale, anchor.x, anchor.y));
 		pCreature->Animation()->Register(CREATURE_RUN, new Animation(TEXT("DarkpriestRun"), 16, 10, true, scale, anchor.x, anchor.y));
@@ -256,6 +256,20 @@ void ObjectManager::CreateBullet(OBJ_TAG tag, Vector pos, ITEM_TAG itemTag)
 		range = ITEM->GetData(itemTag)->range;
 		pBullet->Animation()->Register(BULLET_IDLE, new Animation(TEXT("MGBulletIdle"), 1, 1, false, 1, anchor.x, anchor.y));
 		pBullet->Animation()->Register(BULLET_EXPLODE, new Animation(TEXT("MGBulletExplode"), 1, 1, false, 1, anchor.x, anchor.y));
+		break;
+	case ITEM_SHOTGUN:
+		colSize = Vector(10, 10);
+		anchor = Vector(0.5, 0.95f);
+		range = ITEM->GetData(itemTag)->range;
+		pBullet->Animation()->Register(BULLET_IDLE, new Animation(TEXT("SGBulletIdle"), 1, 1, false, 1, anchor.x, anchor.y));
+		pBullet->Animation()->Register(BULLET_EXPLODE, new Animation(TEXT("SGBulletExplode"), 1, 1, false, 1, anchor.x, anchor.y));
+		break;
+	case ITEM_LASERGUN:
+		colSize = Vector(10, 10);
+		anchor = Vector(0.5, 0.95f);
+		range = ITEM->GetData(itemTag)->range;
+		pBullet->Animation()->Register(BULLET_IDLE, new Animation(TEXT("LGBulletIdle"), 1, 1, false, 1, anchor.x, anchor.y));
+		pBullet->Animation()->Register(BULLET_EXPLODE, new Animation(TEXT("LGBulletExplode"), 1, 1, false, 1, anchor.x, anchor.y));
 		break;
 	}
 	

@@ -32,6 +32,12 @@ Player::Player(OBJ_TAG tag) : Object(tag)
 
 	gre_state = GRENADE_NONE;
 
+	m_lagerChargerTime = 0;
+	// 레이저건 충전 나타낼 바
+	m_lasergunCharger = new UIProgressBar(Vector(VIEW_WIDTH*0.5 - 90, VIEW_HEIGHT - 15), Vector(240, 30), ColorF::Green, ColorF::Gray);
+	m_lasergunCharger->SetMinMaxColor(ColorF::Red, ColorF::Green);
+	m_lasergunCharger->SetValue(0.0f);
+
 	intBulletCount = 12;
 }
 
@@ -55,13 +61,37 @@ void Player::Update(float deltaTime)
 void Player::Draw(Camera* pCamera)
 {
 	//RENDER->FillCircle(Position() * 5, 100, ColorF::Aqua);
-	pCamera->Draw(Animation()->Current()->GetSprite(), Vector(VIEW_WIDTH / 2, VIEW_HEIGHT), 1);
+	Vector pos = DrawPos();
+	pCamera->Draw(Animation()->Current()->GetSprite(), pos, 1);
+}
+
+Vector Player::DrawPos()
+{
+	Vector pos;
+	switch (m_pItem->GetTag())
+	{
+	case ITEM_PISTOL:
+		pos = Vector(VIEW_WIDTH / 2 + 50, VIEW_HEIGHT);
+		break;
+	case ITEM_SHOTGUN:
+		pos = Vector(VIEW_WIDTH / 2 + 30, VIEW_HEIGHT);
+		break;
+	case ITEM_MACHINEGUN:
+		pos = Vector(VIEW_WIDTH / 2, VIEW_HEIGHT);
+		break;
+	case ITEM_LASERGUN:
+		pos = Vector(VIEW_WIDTH / 2 + 30, VIEW_HEIGHT - 15);
+		break;
+	}
+	return pos;
 }
 
 void Player::AttackState(float deltaTime)
 {
-	Animation()->Play(IDLE_PISTOL);
-
+	SetIdleAnimation();				// 총의 Shot 애니메이션 끝나면 그 총의 Idle 애니메이션으로 돌리는 함수
+	Animation()->Play(ani_state);	// 현재 아이템에 대한 애니메이션 재생
+	LaserChargerUpdate(deltaTime);	// 레이저건 충전 막대 업데이트
+	
 
 	// 씬 채인지
 	if (INPUT->IsKeyDown(VK_F3))
@@ -85,19 +115,36 @@ void Player::AttackState(float deltaTime)
 		SCENE->SetColliderOnOff();
 	}
 
-	//좌클릭시 발사 부분
-	if (INPUT->IsMouseUp(MOUSE_LEFT)) {
-		if (intBulletCount > 0) {
-			BulletUse();
-			if (gre_state != GRENADE_NONE) {
-				if (m_greCoolTime == 0.0f) {
-					Vector pos = MATH->ToDirection(90) * MINI_WIDTH * 0.5 + OBJECT->GetPlayer()->Position();
-					OBJECT->CreateGrenade(OBJ_GRENADE, pos, gre_state);
-					
-					m_greCoolTime = 2.0f;
-				}
+	//좌클릭시 발사 부분 ( Down ) 
+	if (INPUT->IsMouseDown(MOUSE_LEFT)) {
+		if (gre_state != GRENADE_NONE) {
+			if (m_greCoolTime == 0.0f) {
+				Vector pos = MATH->ToDirection(90) * MINI_WIDTH * 0.5 + OBJECT->GetPlayer()->Position();
+				OBJECT->CreateGrenade(OBJ_GRENADE, pos, gre_state);
+				m_greCoolTime = 2.0f;
 			}
-			else {
+		}
+		else {
+			SetShotAnimation();
+			if (m_pItem->GetTag() != ITEM_LASERGUN)	//	레이저건은 3초 Press하고 쏘기 때문에 press쪽에 bullet 생성하는 거 넣어둠
+			{
+				float sightHeightDefault = SIGHTHEIGHT_DEFAULT;
+				float rate = 1 + MATH->Clamp(OBJECT->GetSightHeight() - sightHeightDefault, sightHeightDefault / 2 * -1, 0.0f) / sightHeightDefault;
+				Vector pos = Vector::Up() * m_pItem->GetRange() * rate + OBJECT->GetPlayer()->Position();
+				OBJECT->CreateBullet(OBJ_BULLET, pos, m_pItem->GetTag());
+			}			
+		}
+	}
+
+	// 좌클릭 후 Press
+	if (INPUT->IsMousePress(MOUSE_LEFT))
+	{
+		if (m_pItem->GetTag() == ITEM_LASERGUN)		// 레이저건은 Press로 충전을 해야된다고 하여 예외처리함 ( Press이면 레이저 충전 3초하고, 그거 지나면 레이저 발사하도록)
+		{
+			m_lagerChargerTime = MATH->Clamp(m_lagerChargerTime + deltaTime, 0.0f, 3.0f);
+
+			if (Animation()->Current()->GetCurrentIndex() == 15)
+			{
 				float sightHeightDefault = SIGHTHEIGHT_DEFAULT;
 				float rate = 1 + MATH->Clamp(OBJECT->GetSightHeight() - sightHeightDefault, sightHeightDefault / 2 * -1, 0.0f) / sightHeightDefault;
 				Vector pos = Vector::Up() * m_pItem->GetRange() * rate + OBJECT->GetPlayer()->Position();
@@ -106,6 +153,15 @@ void Player::AttackState(float deltaTime)
 		}
 	}
 
+	// 좌클릭 후 Up
+	if (INPUT->IsMouseUp(MOUSE_LEFT))
+	{
+		if (m_pItem->GetTag() == ITEM_LASERGUN)		// 레이저건은 Press로 충전을 해야된다고 하여 예외처리함
+		{
+			m_lagerChargerTime = 0.0f;
+			ani_state = IDLE_LASER;
+		}
+	}
 	
 	// 마우스 움직이면 모든 오브젝트들이 플레이어 중심으로 회전하는 처리 시작---------------------------------------------------
 	// 커서 화면 밖으로 나가지 않도록 보정. 이게 앞으로 마우스 이전좌표와 현재좌표를 가지고 계산하는 부분의 앞에 있어야 함.
@@ -344,22 +400,22 @@ void Player::SetItem()
 	// 권총 장착
 	if (INPUT->IsKeyDown(VK_1))
 	{
-		item_state = ITEM_PISTOL;
-		BulletReload();
 		if (m_itemBag.find(1001) != m_itemBag.end())
 		{
 			m_pItem = m_itemBag[1001];
+			item_state = ITEM_PISTOL;
+			ani_state = IDLE_PISTOL;
 		}
 	}
 
 	// 샷건 장착
 	if (INPUT->IsKeyDown(VK_2))
 	{
-		item_state = ITEM_SHOTGUN;
-		BulletReload();
 		if (m_itemBag.find(1002) != m_itemBag.end())
 		{
 			m_pItem = m_itemBag[1002];
+			item_state = ITEM_SHOTGUN;
+			ani_state = IDLE_SHOT;
 		}
 	}
 
@@ -371,17 +427,19 @@ void Player::SetItem()
 		if (m_itemBag.find(1003) != m_itemBag.end())
 		{
 			m_pItem = m_itemBag[1003];
+			item_state = ITEM_MACHINEGUN;
+			ani_state = IDLE_MACHINE;
 		}
 	}
 
 	// 레이저 건 장착
 	if (INPUT->IsKeyDown(VK_4))
 	{		
-		item_state = ITEM_LASERGUN;
-		BulletReload();
 		if (m_itemBag.find(1004) != m_itemBag.end())
 		{
 			m_pItem = m_itemBag[1004];
+			item_state = ITEM_LASERGUN;
+			ani_state = IDLE_LASER;
 		}
 	}
 
@@ -415,6 +473,61 @@ void Player::SetItem()
 		//item_state = ITEM_BUNKERREPAIR;
 		/*if (gre_state == FLAME_IDLE)	gre_state = GRENADE_NONE;
 		else 							gre_state = FLAME_IDLE;*/
+	}
+}
+
+void Player::SetIdleAnimation()
+{
+	// 총 쏘는 애니메이션의 마지막 스프라이트이면 그 총의 Idle상태로 돌리기. 이거 위해서 총쏘는 스프라이트 마지막 장은 1장 더 넣어놓음.
+		switch (m_pItem->GetTag())
+		{
+		case ITEM_PISTOL:
+			if(Animation()->Current()->GetCurrentIndex() == 3) ani_state = IDLE_PISTOL;
+			break;
+		case ITEM_SHOTGUN:
+			if (Animation()->Current()->GetCurrentIndex() == 3) ani_state = IDLE_SHOT;
+			break;
+		case ITEM_MACHINEGUN:
+			if (Animation()->Current()->GetCurrentIndex() == 7) ani_state = IDLE_MACHINE;
+			break;
+		case ITEM_LASERGUN:
+			if (Animation()->Current()->GetCurrentIndex() == 21) ani_state = IDLE_LASER;
+			break;
+		}
+
+
+}
+
+void Player::SetShotAnimation()
+{
+	switch (m_pItem->GetTag())
+	{
+	case ITEM_PISTOL:
+		ani_state = SHOT_PISTOL;
+		break;
+	case ITEM_SHOTGUN:
+		ani_state = SHOT_SHOT;
+		break;
+	case ITEM_MACHINEGUN:
+		ani_state = SHOT_MACHINE;
+		break;
+	case ITEM_LASERGUN:
+		ani_state = SHOT_LASER;
+		break;
+	}
+}
+
+void Player::LaserChargerUpdate(float deltaTime)
+{
+	if (m_pItem->GetTag() == ITEM_LASERGUN)
+	{
+		if (Animation()->Current()->GetCurrentIndex() == 21)
+		{
+			m_lagerChargerTime = 0.0f;
+			m_lasergunCharger->SetValue(0.0f);
+		}
+		m_lasergunCharger->SetTargetValue(m_lagerChargerTime / 3.0f);
+		m_lasergunCharger->Update(deltaTime);
 	}
 }
 

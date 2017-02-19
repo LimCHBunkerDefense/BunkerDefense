@@ -2,6 +2,7 @@
 #include "Singleton.h"
 #include "RenderManager.h"
 #include "AnimationController.h"
+#include "ProgressBar.h"
 #include <list>
 #include "Common.h"
 using namespace std;
@@ -99,7 +100,8 @@ public:
 	virtual int GetID() { return NULL; }
 	virtual wstring GetName() { return NULL; }
 	virtual float GetAttack() { return NULL; }
-	virtual float GetDefense() { return NULL; }		// 벙커에서도 사용함
+	virtual float GetDefense() { return NULL; }		// 벙커에서만 사용
+	virtual float GetRepair() { return NULL; }
 	virtual float GetBunkerLife() { return NULL; }
 	virtual int GetMaxBulletCount() { return  NULL; }
 	virtual int GetReloadBulletCount() { return NULL; }
@@ -126,6 +128,7 @@ public:
 	virtual INT getBulletCount() { return 0; }
 	virtual void BulletUse() {  }
 	virtual void BulletReload(){}
+	virtual UIProgressBar* GetLaserChargerBar() { return NULL; }
 
 	// 벙커용 함수
 	virtual float GetCurrentLife() { return NULL; }		// Creature도 사용

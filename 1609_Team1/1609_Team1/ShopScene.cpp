@@ -14,6 +14,35 @@ ShopScene::ShopScene()
 	RENDER->LoadImageFile(TEXT("ClickBT"), TEXT("Image/NPC/shopbt2.png"));
 	RENDER->LoadImageFile(TEXT("ClickedBT"), TEXT("Image/NPC/shopselectbt2.png"));
 
+	//무기 아이콘
+	RENDER->LoadImageFile(TEXT("PistolIcon"), TEXT("Image/Item/Shop_Icon/Pistol.png"));
+	RENDER->LoadImageFile(TEXT("ShotGunIcon"), TEXT("Image/Item/Shop_Icon/ShotGun.png"));
+	RENDER->LoadImageFile(TEXT("MachineGunIcon"), TEXT("Image/Item/Shop_Icon/MachineGun.png"));
+	RENDER->LoadImageFile(TEXT("LaserGunIcon"), TEXT("Image/Item/Shop_Icon/LaserGun.png"));
+	//소비 아이콘
+	RENDER->LoadImageFile(TEXT("PSBulletIcon"), TEXT("Image/Item/Shop_Icon/PistolBullet.png"));
+	RENDER->LoadImageFile(TEXT("SGBulletIcon"), TEXT("Image/Item/Shop_Icon/ShotGunBullet.png"));
+	RENDER->LoadImageFile(TEXT("MGBulletIcon"), TEXT("Image/Item/Shop_Icon/MachineGunBullet.png"));
+	RENDER->LoadImageFile(TEXT("LGBulletIcon"), TEXT("Image/Item/Shop_Icon/LaserGunBullet.png"));
+	//특수 아이콘
+	RENDER->LoadImageFile(TEXT("GrenadeIcon"), TEXT("Image/Item/Shop_Icon/Grenade.png"));
+	RENDER->LoadImageFile(TEXT("AirBombIcon"), TEXT("Image/Item/Shop_Icon/AirBomb.png"));
+	RENDER->LoadImageFile(TEXT("FireCapsuleIcon"), TEXT("Image/Item/Shop_Icon/FireCapsule.png"));
+	RENDER->LoadImageFile(TEXT("RepairIcon"), TEXT("Image/Item/Shop_Icon/Repair.png"));
+
+	m_pPistol = NEW_OBJECT(m_pPistol, Sprite(RENDER->GetImage(TEXT("PistolIcon")), 0.6f, 0.5f, 0.6f));
+	m_pShotGun = NEW_OBJECT(m_pShotGun, Sprite(RENDER->GetImage(TEXT("ShotGunIcon")), 0.6f, 0.5f, 0.6f));
+	m_pMachineGun = NEW_OBJECT(m_pMachineGun, Sprite(RENDER->GetImage(TEXT("MachineGunIcon")), 0.6f, 0.5f, 0.6f));
+	m_pLaserGun = NEW_OBJECT(m_pLaserGun, Sprite(RENDER->GetImage(TEXT("LaserGunIcon")), 0.6f, 0.5f, 0.6f));
+	m_pPistolBullet = NEW_OBJECT(m_pPistolBullet, Sprite(RENDER->GetImage(TEXT("PSBulletIcon")), 0.6f, 0.5f, 0.6f));
+	m_pShotGunBullet = NEW_OBJECT(m_pShotGunBullet, Sprite(RENDER->GetImage(TEXT("SGBulletIcon")), 0.6f, 0.5f, 0.6f));
+	m_pMachineGunBullet = NEW_OBJECT(m_pMachineGunBullet, Sprite(RENDER->GetImage(TEXT("MGBulletIcon")), 0.6f, 0.5f, 0.6f));
+	m_pLaserGunBullet = NEW_OBJECT(m_pLaserGunBullet, Sprite(RENDER->GetImage(TEXT("LGBulletIcon")), 0.6f, 0.5f, 0.6f));
+	m_pGrenade = NEW_OBJECT(m_pGrenade, Sprite(RENDER->GetImage(TEXT("GrenadeIcon")), 0.6f, 0.5f, 0.6f));
+	m_pAirBomb = NEW_OBJECT(m_pAirBomb, Sprite(RENDER->GetImage(TEXT("AirBombIcon")), 0.6f, 0.5f, 0.6f));
+	m_pFireCapsule = NEW_OBJECT(m_pFireCapsule, Sprite(RENDER->GetImage(TEXT("FireCapsuleIcon")), 0.6f, 0.5f, 0.6f));
+	m_pRepair = NEW_OBJECT(m_pRepair, Sprite(RENDER->GetImage(TEXT("RepairIcon")), 0.6f, 0.5f, 0.6f));
+
 	IsWeaponClicked = false;
 	IsBulletClicked = false;
 	IsUsingItemClicked = false;
@@ -89,27 +118,18 @@ void ShopScene::OnDraw()
 	//버튼 이미지(테스트)
 
 	pMainCamera->Draw(m_pShopBT, Vector(820, 680)); // 일반 버튼1
-	pMainCamera->Draw(m_pClickBT, Vector(820, 730)); // 선택 버튼1
-
 	pMainCamera->Draw(m_pSelectBT, Vector(960, 680)); //일반 버튼2
-	pMainCamera->Draw(m_pClickBT2, Vector(960, 730)); //선택 버튼2
+
+	//pMainCamera->Draw(m_pClickBT, Vector(820, 730)); // 선택 버튼1
+	//pMainCamera->Draw(m_pClickBT2, Vector(960, 730)); //선택 버튼2
+
 	if (IsBuyClicked == true)
 
 	//RENDER->DrawRect(Vector(950, 450),Vector(320, 300),ColorF::AntiqueWhite, 3);
 	RENDER->DrawT(TEXT("-아이템 정보-"), 880, 335, ColorF::BlanchedAlmond, 20);
 	//pMainCamera->DrawT(TEXT("ATK:"), 800, 495, ColorF::AntiqueWhite, 15);
-	if (m_selectedItem != NULL)
-	{
-		pMainCamera->DrawT(m_selectedItem->GetName(), 870, 395, ColorF::AntiqueWhite, 15);
-		pMainCamera->DrawT(m_selectedItem->GetInfo(), 830, 420, ColorF::AntiqueWhite, 15);
-		
-		// float 값 사용해서 text 출력
-		TCHAR number[50] = {};
-		swprintf_s(number, TEXT("ATK: %.1f"), m_selectedItem->GetAttack());
-		pMainCamera->DrawT(number, 850, 495, ColorF::AntiqueWhite, 15);
-		swprintf_s(number, TEXT("DEF: %.1f"), m_selectedItem->GetDefense());
-		pMainCamera->DrawT(number, 930, 495, ColorF::AntiqueWhite, 15);
-	}
+
+	ShowText();
 
 	//RENDER->DrawRect(Vector(135, 450), Vector(150, 150), ColorF::Aqua, 3);
 	//RENDER->DrawCircle(Vector(135, 450), 50, ColorF::Aqua, 3);
@@ -121,6 +141,7 @@ void ShopScene::OnDraw()
 	ItemListWnd();
 	ItemStatWnd();
 
+	if(m_selectedItem != NULL)	pMainCamera->Draw(ShowIcon(), Vector(950, 240));
 }
 
 void ShopScene::CreateBoxList()
@@ -308,4 +329,131 @@ void ShopScene::SetInputCount(int addCount)
 		m_inputCount = MATH->Clamp(m_inputCount, 0, buyCount);
 		break;
 	}	
+}
+
+void ShopScene::ShowText()
+{
+	Camera* pMainCamera = RENDER->GetCamera(CAM_MAIN);
+
+	if (m_selectedItem != NULL)
+	{
+		pMainCamera->DrawT(m_selectedItem->GetName(), 870, 330, ColorF::AntiqueWhite, 15);
+		pMainCamera->DrawT(m_selectedItem->GetInfo(), 810, 365, ColorF::AntiqueWhite, 15);
+		TCHAR number[100] = {};
+
+		switch (m_selectedItem->GetItemTypeTag())
+		{
+		case ITEMTYPE_WEAPON:
+			// 공격력
+			swprintf_s(number, TEXT("ATK : %.1f"), m_selectedItem->GetAttack());
+			pMainCamera->DrawT(number, 820, 440, ColorF::AntiqueWhite, 15);
+
+			// 사정거리
+			wsprintf(number, TEXT("사정거리: %s"), m_selectedItem->GetRangeStr().c_str());
+			pMainCamera->DrawT(number, 950, 440, ColorF::AntiqueWhite, 15);
+
+			// 총알 보유가능량
+			// wsprintf(number, TEXT("보유할 수 있는 총알수: %s"), m_selectedItem->GetMaxBulletCount());
+			// pMainCamera->DrawT(number, 820, 465, ColorF::AntiqueWhite, 15);
+
+			// 구매비용
+			wsprintf(number, TEXT("Money : %dGold"), m_selectedItem->GetItemMoney());
+			pMainCamera->DrawT(number, 950, 465, ColorF::AntiqueWhite, 15);
+			break;
+
+		case ITEMTYPE_BULLET:
+			// 구매비용
+			wsprintf(number, TEXT("Money : %dGold"), m_selectedItem->GetItemMoney());
+			pMainCamera->DrawT(number, 820, 440, ColorF::AntiqueWhite, 15);
+			break;
+
+		case ITEMTYPE_USINGITEM:
+			if (m_selectedItem->GetTag() != ITEM_BUNKERREPAIR)
+			{
+				// 공격력
+				swprintf_s(number, TEXT("ATK : %.1f"), m_selectedItem->GetAttack());
+				pMainCamera->DrawT(number, 820, 440, ColorF::AntiqueWhite, 15);
+
+				// 사정거리
+				wsprintf(number, TEXT("사정거리: %s"), m_selectedItem->GetRangeStr().c_str());
+				pMainCamera->DrawT(number, 950, 440, ColorF::AntiqueWhite, 15);
+
+				// 구매비용
+				wsprintf(number, TEXT("Money : %dGold"), m_selectedItem->GetItemMoney());
+				pMainCamera->DrawT(number, 820, 465, ColorF::AntiqueWhite, 15);
+				break;
+			}
+			else
+			{
+				// 수리량
+				swprintf_s(number, TEXT("Repair: %.1f"), m_selectedItem->GetRepair());
+				pMainCamera->DrawT(number, 820, 440, ColorF::AntiqueWhite, 15);
+
+				// 구매비용
+				wsprintf(number, TEXT("Money : %dGold"), m_selectedItem->GetItemMoney());
+				pMainCamera->DrawT(number, 820, 465, ColorF::AntiqueWhite, 15);
+				break;
+			}
+			break;
+
+		}
+	}
+}
+
+Sprite* ShopScene::ShowIcon()
+{
+	Sprite* pSprite = NULL;
+
+	switch (m_selectedItem->GetTag())
+	{
+	case ITEM_PISTOL:
+		pSprite = m_pPistol;
+		break;
+
+	case ITEM_SHOTGUN:
+		pSprite = m_pShotGun;
+		break;
+
+	case ITEM_MACHINEGUN:
+		pSprite = m_pMachineGun;
+		break;
+
+	case ITEM_LASERGUN:
+		pSprite = m_pLaserGun;
+		break;
+
+	case ITEM_PSBULLET:
+		pSprite = m_pPistolBullet;
+		break;
+
+	case ITEM_SGBULLET:
+		pSprite = m_pShotGunBullet;
+		break;
+
+	case ITEM_MGBULLET:
+		pSprite = m_pMachineGunBullet;
+		break;
+
+	case ITEM_LGBULLET:
+		pSprite = m_pLaserGunBullet;
+		break;
+
+	case ITEM_GRENADE:
+		pSprite = m_pGrenade;
+		break;
+
+	case ITEM_AIRBOMB:
+		pSprite = m_pAirBomb;
+		break;
+
+	case ITEM_FIRECAPSULE:
+		pSprite = m_pFireCapsule;
+		break;
+
+	case ITEM_BUNKERREPAIR:
+		pSprite = m_pRepair;
+		break;
+	}
+
+	return pSprite;
 }

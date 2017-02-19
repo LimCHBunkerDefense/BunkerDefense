@@ -20,8 +20,9 @@ Item::Item(int itemID)
 	m_itemID = pData->itemID;
 	m_money = pData->money;
 	m_attack = pData->attack;
-	m_defense = pData->defense;
 	m_range = pData->range;
+	m_rangeStr = pData->ragestr;
+	m_repair = pData->repair;
 	m_bulletSpeed = pData->bulletSpeed;
 	m_bunkerLife = pData->bunkerLife;
 	m_maxBulletCount = pData->maxBulletCount;
@@ -29,6 +30,7 @@ Item::Item(int itemID)
 	m_maxCount = pData->maxCount;
 	m_name = pData->name;
 	m_info = pData->info;
+	m_gunState = GUN_IDLE;
 }
 
 void Item::Update(float deltaTime)

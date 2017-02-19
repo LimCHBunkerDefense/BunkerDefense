@@ -27,6 +27,10 @@ class Player :
 	int m_money;
 	int m_score;
 
+	float m_lagerChargerTime;				// 레이저건 충전 시간
+	UIProgressBar* m_lasergunCharger;		//레이저건 충전 보여줄 막대.
+
+
 
 public:
 	Player();
@@ -35,6 +39,9 @@ public:
 	
 	void Update(float deltaTime);
 	void Draw(Camera* pCamera);
+
+	// 총 이미지에 따라 그려주는 위치 새로 설정
+	Vector DrawPos();
 
 //	void ThrowState(float deltaTime);
 	void AttackState(float deltaTime);
@@ -45,6 +52,15 @@ public:
 
 	// 번호 입력시 아이템을 장착하는 함수
 	void SetItem();
+
+	// 총쏘는 애니메이션 끝나면 현재 아이템의 Idle애니메이션으로 돌려주는 함수
+	void SetIdleAnimation();
+
+	// 총 쏠 때 애니메이션 변경해주는 함수
+	void SetShotAnimation();
+
+	// 레이저건 충전 막대 업데이트 해주는 함수
+	void LaserChargerUpdate(float deltaTime);
 
 	// 현재 장착무기 호출
 	Object* GetCurrentItem() { return m_pItem; }
@@ -57,11 +73,14 @@ public:
 	void AddScore(int addScore) { m_score += addScore; }
 	int GetMoney() { return m_money; }
 	void AddMoney(int addMoney) { m_money += addMoney; }
+
 	map<int, Object*> GetItemBag() { return m_itemBag; }
 
 	//현재 탄약 리턴
 	INT getBulletCount() { return intBulletCount; }
 	void BulletUse() { intBulletCount-=1; }
 	void BulletReload();
+
+	UIProgressBar* GetLaserChargerBar() { return m_lasergunCharger; }
 };
 

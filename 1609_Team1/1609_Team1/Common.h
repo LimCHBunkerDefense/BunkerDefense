@@ -1,6 +1,6 @@
 #pragma once
 
-//#pragma comment(linker,"/entry:WinMainCRTStartup /subsystem:console")
+#pragma comment(linker,"/entry:WinMainCRTStartup /subsystem:console")
 #define VIEW_WIDTH		1200
 #define VIEW_HEIGHT		900
 
@@ -140,7 +140,7 @@ enum ITEM_TAG																	// 소분류 아이템 태그
 	ITEM_NONE = 0, 
 	ITEM_PISTOL = 1001, ITEM_SHOTGUN, ITEM_MACHINEGUN,  ITEM_LASERGUN,
 	ITEM_PSBULLET = 2001, ITEM_SGBULLET, ITEM_MGBULLET, ITEM_LGBULLET,
-	ITEM_GRENADE = 3001, ITEM_AIRBOMB, ITEM_RAVAREGION, ITEM_BUNKERREPAIR,
+	ITEM_GRENADE = 3001, ITEM_AIRBOMB, ITEM_FIRECAPSULE, ITEM_BUNKERREPAIR,
 };
 
 enum BUTTON_TAG

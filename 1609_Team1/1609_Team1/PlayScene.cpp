@@ -9,13 +9,13 @@ PlayScene::PlayScene() : m_attackedColor(ColorF::Red)
 
 	//캐릭터 나타내는 이미지
 	RENDER->LoadImageFiles(TEXT("Idle_Pistol"), TEXT("Image/Item/Pistol/Idle/Idle"), TEXT("png"), 2);
-	RENDER->LoadImageFiles(TEXT("Attack_Pistol"), TEXT("Image/Item/Pistol/Attack/Attack"), TEXT("png"), 3);
+	RENDER->LoadImageFiles(TEXT("Attack_Pistol"), TEXT("Image/Item/Pistol/Attack/Attack"), TEXT("png"), 4);
 	RENDER->LoadImageFiles(TEXT("Idle_Machine"), TEXT("Image/Item/MachineGun/Idle/MachineGunIdle"), TEXT("png"), 2);
-	RENDER->LoadImageFiles(TEXT("Attack_Machine"), TEXT("Image/Item/MachineGun/Shot/MachineGunShot"), TEXT("png"), 7);
+	RENDER->LoadImageFiles(TEXT("Attack_Machine"), TEXT("Image/Item/MachineGun/Shot/MachineGunShot"), TEXT("png"), 8);
 	RENDER->LoadImageFiles(TEXT("Idle_Laser"), TEXT("Image/Item/LaserGun/Idle/Idle"), TEXT("png"), 2);
-	RENDER->LoadImageFiles(TEXT("Attack_Laser"), TEXT("Image/Item/LaserGun/Shot/Shot"), TEXT("png"), 21);
+	RENDER->LoadImageFiles(TEXT("Attack_Laser"), TEXT("Image/Item/LaserGun/Shot/Shot"), TEXT("png"), 22);
 	RENDER->LoadImageFiles(TEXT("Idle_Shot"), TEXT("Image/Item/ShotGun/Idle/Idle"), TEXT("png"), 2);
-	RENDER->LoadImageFiles(TEXT("Attack_Shot"), TEXT("Image/Item/ShotGun/Shot/Shot"), TEXT("png"), 3);
+	RENDER->LoadImageFiles(TEXT("Attack_Shot"), TEXT("Image/Item/ShotGun/Shot/Shot"), TEXT("png"), 4);
 	RENDER->LoadImageFiles(TEXT("Reload_Shot"), TEXT("Image/Item/ShotGun/Reload/Reload"), TEXT("png"), 11);
 
 	// 배경 이미지 맵으로 저장
@@ -56,6 +56,10 @@ PlayScene::PlayScene() : m_attackedColor(ColorF::Red)
 	RENDER->LoadImageFiles(TEXT("PSBulletExplode"), TEXT("Image/Bullet/Pistol/Explode/Explode"), TEXT("png"), 1);
 	RENDER->LoadImageFiles(TEXT("MGBulletIdle"), TEXT("Image/Bullet/Machinegun/Idle/Idle"), TEXT("png"), 1);
 	RENDER->LoadImageFiles(TEXT("MGBulletExplode"), TEXT("Image/Bullet/Machinegun/Explode/Explode"), TEXT("png"), 1);
+	RENDER->LoadImageFiles(TEXT("SGBulletIdle"), TEXT("Image/Bullet/Shotgun/Idle/Idle"), TEXT("png"), 1);
+	RENDER->LoadImageFiles(TEXT("SGBulletExplode"), TEXT("Image/Bullet/Shotgun/Explode/Explode"), TEXT("png"), 1);
+	RENDER->LoadImageFiles(TEXT("LGBulletIdle"), TEXT("Image/Bullet/Lasergun/Idle/Idle"), TEXT("png"), 1);
+	RENDER->LoadImageFiles(TEXT("LGBulletExplode"), TEXT("Image/Bullet/Lasergun/Explode/Explode"), TEXT("png"), 1);
 
 	//Grenade 저장
 	RENDER->LoadImageFiles(TEXT("Grenade"), TEXT("Image/Item/Grenade/Grenade"), TEXT("png"), 1);
@@ -80,8 +84,8 @@ PlayScene::PlayScene() : m_attackedColor(ColorF::Red)
 	RENDER->LoadImageFile(TEXT("GrenadeOff"), TEXT("Image/Item/Icon/ico_grenade_off.png"));
 	RENDER->LoadImageFile(TEXT("PlaneOn"), TEXT("Image/Item/Icon/ico_plane_on.png"));
 	RENDER->LoadImageFile(TEXT("PlaneOff"), TEXT("Image/Item/Icon/ico_plane_off.png"));
-	RENDER->LoadImageFile(TEXT("NapalmOn"), TEXT("Image/Item/Icon/ico_napalm_on.png"));
-	RENDER->LoadImageFile(TEXT("NapalmOff"), TEXT("Image/Item/Icon/ico_napalm_off.png"));
+	RENDER->LoadImageFile(TEXT("NapalmOn"), TEXT("Image/Item/Icon/ico_capsule_on.png"));
+	RENDER->LoadImageFile(TEXT("NapalmOff"), TEXT("Image/Item/Icon/ico_capsule_off.png"));
 
 	// 숫자 이미지 가져오기
 	RENDER->LoadImageFile(TEXT("Num0"), TEXT("Image/UI/ScoreNUM/Num0.png"));
@@ -125,8 +129,6 @@ PlayScene::PlayScene() : m_attackedColor(ColorF::Red)
 	m_createdLavaCount = 0;
 	m_createdEntCount = 0;
 	m_createdDarkpriestCount = 0;
-
-	//손 모양 출력
 }
 
 
@@ -183,9 +185,9 @@ void PlayScene::OnEnter()
 	pUICamera->SetScreenRect(0, 0, VIEW_WIDTH, VIEW_HEIGHT);
 
 	// 테스트용 크리쳐 생성
-	//OBJECT->CreateCreature(OBJ_ENT, Vector(120, 60));
-	//OBJECT->CreateCreature(OBJ_LAVA, Vector(120, 60));
-	//OBJECT->CreateCreature(OBJ_DARKPRIEST, Vector(120, 240));
+	OBJECT->CreateCreature(OBJ_ENT, Vector(120, 60));
+	OBJECT->CreateCreature(OBJ_LAVA, Vector(120, 60));
+	OBJECT->CreateCreature(OBJ_DARKPRIEST, Vector(120, 240));
 
 	// 마우스 커서 없애기
 	ShowCursor(false);
@@ -321,7 +323,7 @@ void PlayScene::OnDraw()
 		Vector colSize = (*it)->Collider().size;
 		pMinimapCamera->DrawFilledCircle(pos - 4, Vector(8, 8), ColorF::Red);
 		pMinimapCamera->DrawLine((*it)->GetStartPos().x, (*it)->GetStartPos().y, OBJECT->GetPlayer()->Position().x, OBJECT->GetPlayer()->Position().y, ColorF::Red, 2);
-		//pMinimapCamera->DrawFilledRect(pos - colSize * 0.5, colSize, ColorF::Blue);	// 미니맵 상 크리쳐의 충돌체 표시해주는 부분
+		pMinimapCamera->DrawFilledRect(pos - colSize * 0.5, colSize, ColorF::Blue);	// 미니맵 상 크리쳐의 충돌체 표시해주는 부분
 	}
 
 	//탄환 선 긋기
@@ -345,9 +347,6 @@ void PlayScene::OnDraw()
 	}
 	
 	OBJECT->Draw(pMainCamera);
-	
-	// 총 그려주는 부분
-	// pUICamera->Draw(OBJECT->GetPlayer()->Animation()->Current()->GetSprite(), Vector(VIEW_WIDTH * 0.5, VIEW_HEIGHT * 1.0f));
 
 	// Aim 그려주는 부분
 	pUICamera->Draw(m_pAim, Vector(VIEW_WIDTH * 0.5, VIEW_HEIGHT * 0.5f));
@@ -400,6 +399,11 @@ void PlayScene::OnDraw()
 	//pUICamera->DrawRect(Vector(208, VIEW_HEIGHT - 95), Vector(70, 70), ColorF::Red,1);
 	//pUICamera->DrawRect(Vector(298, VIEW_HEIGHT - 95), Vector(70, 70), ColorF::Red,1);
 
+	// 레이저건 충전 막대 출력
+	if (OBJECT->GetPlayer()->GetCurrentItem()->GetTag() == ITEM_LASERGUN)
+	{
+		OBJECT->GetPlayer()->GetLaserChargerBar()->Render(pUICamera);
+	}
 }
 
 void PlayScene::SetCreature(float deltaTime)
