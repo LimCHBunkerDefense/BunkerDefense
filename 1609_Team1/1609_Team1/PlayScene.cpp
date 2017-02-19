@@ -199,7 +199,7 @@ void PlayScene::OnEnter()
 	// 테스트용 크리쳐 생성
 	//OBJECT->CreateCreature(OBJ_ENT, Vector(120, 60));
 	//OBJECT->CreateCreature(OBJ_LAVA, Vector(0, 180));
-	OBJECT->CreateCreature(OBJ_DARKPRIEST, Vector(120, 240));
+	//OBJECT->CreateCreature(OBJ_DARKPRIEST, Vector(120, 240));
 
 	// 마우스 커서 없애기
 	ShowCursor(false);
@@ -214,7 +214,7 @@ void PlayScene::OnUpdate(float deltaTime)
 	m_gameTime += deltaTime;
 
 	// 게임 시간에 따른 크리쳐 생성  
-	//SetCreature(deltaTime);
+	SetCreature(deltaTime);
 	
 	// 오브젝트 전체 업데이트
 	OBJECT->Update(deltaTime);
@@ -446,7 +446,7 @@ void PlayScene::SetCreature(float deltaTime)
 	}
 
 	// 대빵
-	if (m_gameTime>100 && m_createdDarkpriestCount < 1)
+	if ((m_gameTime - 100) / 7 > m_createdDarkpriestCount)
 	{
 		randDegree = rand() % 360;
 		Vector pos = MATH->ToDirection(randDegree) * MINI_WIDTH * 0.5 + OBJECT->GetPlayer()->Position();
