@@ -97,7 +97,6 @@ Vector Player::DrawPos()
 void Player::AttackState(float deltaTime)
 {
 	SetIdleAnimation();				// 총의 Shot 애니메이션 끝나면 그 총의 Idle 애니메이션으로 돌리는 함수
-	SetShotSound();					// 총 소리
 	Animation()->Play(ani_state);	// 현재 아이템에 대한 애니메이션 재생
 	LaserChargerUpdate(deltaTime);	// 레이저건 충전 막대 업데이트
 	
@@ -134,6 +133,7 @@ void Player::AttackState(float deltaTime)
 			}
 		}
 		else {
+			SetShotSound();							// 총 소리
 			SetShotAnimation();
 			if (m_pItem->GetTag() != ITEM_LASERGUN)	//	레이저건은 3초 Press하고 쏘기 때문에 press쪽에 bullet 생성하는 거 넣어둠
 			{
