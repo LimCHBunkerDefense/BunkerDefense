@@ -186,8 +186,8 @@ void PlayScene::OnEnter()
 
 	// 테스트용 크리쳐 생성
 	OBJECT->CreateCreature(OBJ_ENT, Vector(120, 60));
-	OBJECT->CreateCreature(OBJ_LAVA, Vector(120, 60));
-	OBJECT->CreateCreature(OBJ_DARKPRIEST, Vector(120, 240));
+	//OBJECT->CreateCreature(OBJ_LAVA, Vector(120, 60));
+	//OBJECT->CreateCreature(OBJ_DARKPRIEST, Vector(120, 240));
 
 	// 마우스 커서 없애기
 	ShowCursor(false);
@@ -323,7 +323,7 @@ void PlayScene::OnDraw()
 		Vector colSize = (*it)->Collider().size;
 		pMinimapCamera->DrawFilledCircle(pos - 4, Vector(8, 8), ColorF::Red);
 		pMinimapCamera->DrawLine((*it)->GetStartPos().x, (*it)->GetStartPos().y, OBJECT->GetPlayer()->Position().x, OBJECT->GetPlayer()->Position().y, ColorF::Red, 2);
-		pMinimapCamera->DrawFilledRect(pos - colSize * 0.5, colSize, ColorF::Blue);	// 미니맵 상 크리쳐의 충돌체 표시해주는 부분
+		pMinimapCamera->DrawFilledRect(Vector(pos.x - colSize.x * 0.5, pos.y - colSize.y), colSize, ColorF::Blue);	// 미니맵 상 크리쳐의 충돌체 표시해주는 부분
 	}
 
 	//탄환 선 긋기

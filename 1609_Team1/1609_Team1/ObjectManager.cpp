@@ -244,28 +244,28 @@ void ObjectManager::CreateBullet(OBJ_TAG tag, Vector pos, ITEM_TAG itemTag)
 	switch (itemTag)
 	{
 	case ITEM_PISTOL:
-		colSize = Vector(10, 10);
-		anchor = Vector(0.5, 0.95f);
+		colSize = Vector(10, 1);
+		anchor = Vector(0.5, 1);
 		range = ITEM->GetData(itemTag)->range;
 		pBullet->Animation()->Register(BULLET_IDLE, new Animation(TEXT("PSBulletIdle"), 1, 1, false, 1, anchor.x, anchor.y));
 		pBullet->Animation()->Register(BULLET_EXPLODE, new Animation(TEXT("PSBulletExplode"), 1, 1, false, 1, anchor.x, anchor.y));
 		break;
 	case ITEM_MACHINEGUN:
-		colSize = Vector(10, 10);
-		anchor = Vector(0.5, 0.95f);
+		colSize = Vector(10, 1);
+		anchor = Vector(0.5, 1);
 		range = ITEM->GetData(itemTag)->range;
 		pBullet->Animation()->Register(BULLET_IDLE, new Animation(TEXT("MGBulletIdle"), 1, 1, false, 1, anchor.x, anchor.y));
 		pBullet->Animation()->Register(BULLET_EXPLODE, new Animation(TEXT("MGBulletExplode"), 1, 1, false, 1, anchor.x, anchor.y));
 		break;
 	case ITEM_SHOTGUN:
-		colSize = Vector(10, 10);
-		anchor = Vector(0.5, 0.95f);
+		colSize = Vector(10, 1);
+		anchor = Vector(0.5, 1);
 		range = ITEM->GetData(itemTag)->range;
 		pBullet->Animation()->Register(BULLET_IDLE, new Animation(TEXT("SGBulletIdle"), 1, 1, false, 1, anchor.x, anchor.y));
 		pBullet->Animation()->Register(BULLET_EXPLODE, new Animation(TEXT("SGBulletExplode"), 1, 1, false, 1, anchor.x, anchor.y));
 		break;
 	case ITEM_LASERGUN:
-		colSize = Vector(10, 10);
+		colSize = Vector(10, 1);
 		anchor = Vector(0.5, 0.95f);
 		range = ITEM->GetData(itemTag)->range;
 		pBullet->Animation()->Register(BULLET_IDLE, new Animation(TEXT("LGBulletIdle"), 1, 1, false, 1, anchor.x, anchor.y));

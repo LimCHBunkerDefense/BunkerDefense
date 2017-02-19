@@ -47,7 +47,7 @@ Creature::~Creature()
 void Creature::Update(float deltaTime)
 {
 	 cout << m_maxZ << "           " << m_minZ << "           " << Animation()->Current()->GetSprite()->GetHeight()  << "           " << m_t<<endl;	// 콘솔창에서 디버깅용
-	 cout << m_currentLife << endl;
+
 	// 크리쳐 이동방향벡터 실시간 업데이트
 	m_moveDirection = Vector(Position() * -1 + Vector(MINI_WIDTH * 0.5, MINI_HEIGHT)).Normalize();
 
