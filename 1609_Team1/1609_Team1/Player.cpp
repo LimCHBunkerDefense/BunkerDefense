@@ -37,6 +37,8 @@ Player::Player(OBJ_TAG tag) : Object(tag)
 	m_lasergunCharger = new UIProgressBar(Vector(VIEW_WIDTH*0.5 - 90, VIEW_HEIGHT - 15), Vector(240, 30), ColorF::Green, ColorF::Gray);
 	m_lasergunCharger->SetMinMaxColor(ColorF::Red, ColorF::Green);
 	m_lasergunCharger->SetValue(0.0f);
+
+	intBulletCount = 12;
 }
 
 Player::~Player()
@@ -217,6 +219,23 @@ void Player::AttackState(float deltaTime)
 
 	// ¸¶¿ì½º ¿òÁ÷ÀÌ¸é ¸ðµç ¿ÀºêÁ§Æ®µéÀÌ ÇÃ·¹ÀÌ¾î Áß½ÉÀ¸·Î È¸ÀüÇÏ´Â Ã³¸® ³¡---------------------------------------------------
 
+}
+
+void  Player::BulletReload() {
+	switch (item_state) {
+	case ITEM_PISTOL:
+		intBulletCount = 12;
+		break;
+	case ITEM_SHOTGUN:
+		intBulletCount = 8;
+		break;
+	case ITEM_MACHINEGUN:
+		intBulletCount = 100;
+		break;
+	case ITEM_LASERGUN:
+		intBulletCount = 200;
+		break;
+	}
 }
 
 void Player::ShopState()
@@ -410,6 +429,8 @@ void Player::SetItem()
 	// ±â°üÃÑ ÀåÂø
 	if (INPUT->IsKeyDown(VK_3))
 	{
+		item_state = ITEM_MACHINEGUN;
+		BulletReload();
 		if (m_itemBag.find(1003) != m_itemBag.end())
 		{
 			m_pItem = m_itemBag[1003];
@@ -432,7 +453,7 @@ void Player::SetItem()
 	//¼ö·ùÅº ÀåÂø
 	if (INPUT->IsKeyDown(VK_Q))
 	{
-		//item_state = ITEM_GRENADE;
+		intBulletCount = 5;
 		if (gre_state == GRENADE_IDLE)	gre_state = GRENADE_NONE;
 		else 							gre_state = GRENADE_IDLE;
 	}
@@ -440,7 +461,7 @@ void Player::SetItem()
 	//¹«Àü±â ÀåÂø
 	if (INPUT->IsKeyDown(VK_W))
 	{
-		//item_state = ITEM_AIRBOMB;
+		intBulletCount = 1;
 		if (gre_state == AIRBOMB_IDLE)	gre_state = GRENADE_NONE;
 		else 							gre_state = AIRBOMB_IDLE;
 	}
@@ -448,12 +469,12 @@ void Player::SetItem()
 	//È­¿°Åº ÀåÂø
 	if (INPUT->IsKeyDown(VK_E))
 	{
-		//item_state = ITEM_RAVAREGION;
+		intBulletCount = 3;
 		if (gre_state == FLAME_IDLE)	gre_state = GRENADE_NONE;
 		else 							gre_state = FLAME_IDLE;
 	}
 
-	//È­¿°Åº ÀåÂø
+	//¼ö¸® ÀåÂø
 	if (INPUT->IsKeyDown(VK_R))
 	{
 		//item_state = ITEM_BUNKERREPAIR;

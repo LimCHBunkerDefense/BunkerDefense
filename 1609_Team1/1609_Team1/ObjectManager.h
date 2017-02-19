@@ -125,6 +125,9 @@ public:
 	virtual void AddMoney(int addMoney) { }		
 	virtual map<int, Object*> GetItemBag() { return m_trashMap; }
 	virtual Object* GetCurrentItem() { return NULL; }
+	virtual INT getBulletCount() { return 0; }
+	virtual void BulletUse() {  }
+	virtual void BulletReload(){}
 	virtual UIProgressBar* GetLaserChargerBar() { return NULL; }
 
 	// º¡Ä¿¿ë ÇÔ¼ö
