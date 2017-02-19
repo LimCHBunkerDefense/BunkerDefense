@@ -22,6 +22,20 @@ class ShopScene :
 	Sprite* m_pClickBT2;
 	Sprite* m_pMenuBT;
 
+	Sprite* m_pPistol;
+	Sprite* m_pShotGun;
+	Sprite* m_pMachineGun;
+	Sprite* m_pLaserGun;
+	Sprite* m_pPistolBullet;
+	Sprite* m_pShotGunBullet;
+	Sprite* m_pMachineGunBullet;
+	Sprite* m_pLaserGunBullet;
+	Sprite* m_pGrenade;
+	Sprite* m_pAirBomb;
+	Sprite* m_pFireCapsule;
+	Sprite* m_pRepair;
+
+
 	BUTTON_TAG m_currentButton;				// 현재 버튼이 무엇인지 태그값으로 확인하는 변수
 	Item* m_selectedButton;					// 선택된 버튼이 무엇인지를 나나태는 변수
 	Item* m_currentItem;					// 현재 아이템이 무엇인지를 나타내는 변수
@@ -51,6 +65,7 @@ public:
 	void ItemListWnd();											// 아이템 리스트 창
 	void ItemStatWnd();											// 아이템 정보 창
 	void ShowText();											// 아이템 정보 창에 정보를 보여주는 함수 (선택된 아이템마다 다른 정보를 뜨게함)
+	Sprite* ShowIcon() { return NULL; }											// 아이템 정보 창에서 아이템 아이콘을 보여주는 함수
 
 	Object* GetSelectedItem() { return m_selectedItem; }
 	void SetSelectedItem(int itemID)

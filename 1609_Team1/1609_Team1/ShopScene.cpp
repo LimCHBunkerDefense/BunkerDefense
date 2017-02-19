@@ -14,6 +14,32 @@ ShopScene::ShopScene()
 	RENDER->LoadImageFile(TEXT("ClickBT"), TEXT("Image/NPC/shopbt2.png"));
 	RENDER->LoadImageFile(TEXT("ClickedBT"), TEXT("Image/NPC/shopselectbt2.png"));
 
+	RENDER->LoadImageFile(TEXT("PistolIcon"), TEXT("Image/Item/Shop_Icon/Pistol.png"));
+	RENDER->LoadImageFile(TEXT("ShotGunIcon"), TEXT("Image/Item/Shop_Icon/ShotGun.png"));
+	RENDER->LoadImageFile(TEXT("MachineGunIcon"), TEXT("Image/Item/Shop_Icon/MachineGun.png"));
+	RENDER->LoadImageFile(TEXT("LaserGunIcon"), TEXT("Image/Item/Shop_Icon/LaserGun.png"));
+	RENDER->LoadImageFile(TEXT("PSBulletIcon"), TEXT("Image/Item/Shop_Icon/PistolBullet.png"));
+	RENDER->LoadImageFile(TEXT("SGBulletIcon"), TEXT("Image/Item/Shop_Icon/ShotGunBullet.png"));
+	RENDER->LoadImageFile(TEXT("MGBulletIcon"), TEXT("Image/Item/Shop_Icon/MachineGunBullet.png"));
+	RENDER->LoadImageFile(TEXT("LGBulletIcon"), TEXT("Image/Item/Shop_Icon/LaserGunBullet.png"));
+	RENDER->LoadImageFile(TEXT("GrenadeIcon"), TEXT("Image/Item/Shop_Icon/Grenade.png"));
+	RENDER->LoadImageFile(TEXT("AirBombIcon"), TEXT("Image/Item/Shop_Icon/AirBomb.png"));
+	RENDER->LoadImageFile(TEXT("FireCapsuleIcon"), TEXT("Image/Item/Shop_Icon/FireCapsule.png"));
+	RENDER->LoadImageFile(TEXT("RepairIcon"), TEXT("Image/Item/Shop_Icon/Repair.png"));
+
+	m_pPistol = NEW_OBJECT(m_pPistol, Sprite(RENDER->GetImage(TEXT("PistolIcon"))));
+	m_pShotGun = NEW_OBJECT(m_pShotGun, Sprite(RENDER->GetImage(TEXT("ShotGunIcon"))));
+	m_pMachineGun = NEW_OBJECT(m_pMachineGun, Sprite(RENDER->GetImage(TEXT("MachineGunIcon"))));
+	m_pLaserGun = NEW_OBJECT(m_pLaserGun, Sprite(RENDER->GetImage(TEXT("LaserGunIcon"))));
+	m_pPistolBullet = NEW_OBJECT(m_pPistolBullet, Sprite(RENDER->GetImage(TEXT("PSBulletIcon"))));
+	m_pShotGunBullet = NEW_OBJECT(m_pShotGunBullet, Sprite(RENDER->GetImage(TEXT("SGBulletIcon"))));
+	m_pMachineGunBullet = NEW_OBJECT(m_pMachineGunBullet, Sprite(RENDER->GetImage(TEXT("MGBulletIcon"))));
+	m_pLaserGunBullet = NEW_OBJECT(m_pLaserGunBullet, Sprite(RENDER->GetImage(TEXT("LGBulletIcon"))));
+	m_pGrenade = NEW_OBJECT(m_pGrenade, Sprite(RENDER->GetImage(TEXT("GrenadeIcon"))));
+	m_pAirBomb = NEW_OBJECT(m_pAirBomb, Sprite(RENDER->GetImage(TEXT("AirBombIcon"))));
+	m_pFireCapsule = NEW_OBJECT(m_pFireCapsule, Sprite(RENDER->GetImage(TEXT("FireCapsuleIcon"))));
+	m_pRepair = NEW_OBJECT(m_pRepair, Sprite(RENDER->GetImage(TEXT("RepairIcon"))));
+
 	IsWeaponClicked = false;
 	IsBulletClicked = false;
 	IsUsingItemClicked = false;
@@ -111,6 +137,7 @@ void ShopScene::OnDraw()
 	ItemListWnd();
 	ItemStatWnd();
 
+	pMainCamera->Draw(ShowIcon(), Vector(900, 220));
 }
 
 void ShopScene::CreateBoxList()
@@ -355,7 +382,63 @@ void ShopScene::ShowText()
 			break;
 
 		}
-
-
 	}
+}
+
+Sprite* ShopScene::ShowIcon()
+{
+	Sprite* pSprite;
+
+	switch (m_selectedItem->GetTag())
+	{
+	case ITEM_PISTOL:
+		pSprite = m_pPistol;
+		break;
+
+	case ITEM_SHOTGUN:
+		pSprite = m_pShotGun;
+		break;
+
+	case ITEM_MACHINEGUN:
+		pSprite = m_pMachineGun;
+		break;
+
+	case ITEM_LASERGUN:
+		pSprite = m_pLaserGun;
+		break;
+
+	case ITEM_PSBULLET:
+		pSprite = m_pPistolBullet;
+		break;
+
+	case ITEM_SGBULLET:
+		pSprite = m_pShotGunBullet;
+		break;
+
+	case ITEM_MGBULLET:
+		pSprite = m_pMachineGunBullet;
+		break;
+
+	case ITEM_LGBULLET:
+		pSprite = m_pLaserGunBullet;
+		break;
+
+	case ITEM_GRENADE:
+		pSprite = m_pGrenade;
+		break;
+
+	case ITEM_AIRBOMB:
+		pSprite = m_pAirBomb;
+		break;
+
+	case ITEM_FIRECAPSULE:
+		pSprite = m_pFireCapsule;
+		break;
+
+	case ITEM_BUNKERREPAIR:
+		pSprite = m_pRepair;
+		break;
+	}
+
+	return pSprite;
 }
