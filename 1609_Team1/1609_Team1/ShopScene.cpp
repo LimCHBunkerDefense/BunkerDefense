@@ -100,8 +100,8 @@ void ShopScene::OnDraw()
 	//pMainCamera->DrawT(TEXT("ATK:"), 800, 495, ColorF::AntiqueWhite, 15);
 	if (m_selectedItem != NULL)
 	{
-		pMainCamera->DrawT(m_selectedItem->GetName(), 870, 395, ColorF::AntiqueWhite, 15);
-		pMainCamera->DrawT(m_selectedItem->GetInfo(), 830, 420, ColorF::AntiqueWhite, 15);
+		pMainCamera->DrawT(m_selectedItem->GetName(), 870, 330, ColorF::AntiqueWhite, 15);
+		pMainCamera->DrawT(m_selectedItem->GetInfo(), 810, 365, ColorF::AntiqueWhite, 15);
 		
 		// float 값 사용해서 text 출력
 		TCHAR number[50] = {};
