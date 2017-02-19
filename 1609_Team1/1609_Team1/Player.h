@@ -45,6 +45,12 @@ public:
 	// 번호 입력시 아이템을 장착하는 함수
 	void SetItem();
 
+	// 총쏘는 애니메이션 끝나면 현재 아이템의 Idle애니메이션으로 돌려주는 함수
+	void SetIdleAnimation();
+
+	// 총 쏠 때 애니메이션 변경해주는 함수
+	void SetShotAnimation();
+
 	// 현재 장착무기 호출
 	Object* GetCurrentItem() { return m_pItem; }
 

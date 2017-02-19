@@ -58,8 +58,8 @@ void Player::Draw(Camera* pCamera)
 
 void Player::AttackState(float deltaTime)
 {
+	SetIdleAnimation();
 	Animation()->Play(ani_state);
-
 
 	// 씬 채인지
 	if (INPUT->IsKeyDown(VK_F3))
@@ -96,7 +96,8 @@ void Player::AttackState(float deltaTime)
 			float sightHeightDefault = SIGHTHEIGHT_DEFAULT;
 			float rate = 1 + MATH->Clamp(OBJECT->GetSightHeight() - sightHeightDefault, sightHeightDefault / 2 * -1, 0.0f) / sightHeightDefault;
 			Vector pos = Vector::Up() * m_pItem->GetRange() * rate + OBJECT->GetPlayer()->Position();
-			OBJECT->CreateBullet(OBJ_BULLET, pos, m_pItem->GetTag());
+			//OBJECT->CreateBullet(OBJ_BULLET, pos, m_pItem->GetTag());
+			SetShotAnimation();
 		}
 	}
 
@@ -325,6 +326,7 @@ void Player::SetItem()
 		if (m_itemBag.find(1001) != m_itemBag.end())
 		{
 			m_pItem = m_itemBag[1001];
+			ani_state = IDLE_PISTOL;
 		}
 	}
 
@@ -335,6 +337,7 @@ void Player::SetItem()
 		if (m_itemBag.find(1002) != m_itemBag.end())
 		{
 			m_pItem = m_itemBag[1002];
+			ani_state = IDLE_SHOT;
 		}
 	}
 
@@ -345,6 +348,7 @@ void Player::SetItem()
 		if (m_itemBag.find(1003) != m_itemBag.end())
 		{
 			m_pItem = m_itemBag[1003];
+			ani_state = IDLE_MACHINE;
 		}
 	}
 
@@ -355,6 +359,7 @@ void Player::SetItem()
 		if (m_itemBag.find(1004) != m_itemBag.end())
 		{
 			m_pItem = m_itemBag[1004];
+			ani_state = IDLE_LASER;
 		}
 	}
 
@@ -388,6 +393,47 @@ void Player::SetItem()
 		//item_state = ITEM_BUNKERREPAIR;
 		/*if (gre_state == FLAME_IDLE)	gre_state = GRENADE_NONE;
 		else 							gre_state = FLAME_IDLE;*/
+	}
+}
+
+void Player::SetIdleAnimation()
+{
+	// 총 쏘는 애니메이션의 마지막 스프라이트이면 그 총의 Idle상태로 돌리기. 이거 위해서 총쏘는 스프라이트 마지막 장은 1장 더 넣어놓음.
+		switch (m_pItem->GetTag())
+		{
+		case ITEM_PISTOL:
+			if(Animation()->Current()->GetCurrentIndex() == 3) ani_state = IDLE_PISTOL;
+			break;
+		case ITEM_SHOTGUN:
+			if (Animation()->Current()->GetCurrentIndex() == 3) ani_state = IDLE_SHOT;
+			break;
+		case ITEM_MACHINEGUN:
+			if (Animation()->Current()->GetCurrentIndex() == 7) ani_state = IDLE_MACHINE;
+			break;
+		case ITEM_LASERGUN:
+			if (Animation()->Current()->GetCurrentIndex() == 21) ani_state = IDLE_LASER;
+			break;
+		}
+
+
+}
+
+void Player::SetShotAnimation()
+{
+	switch (m_pItem->GetTag())
+	{
+	case ITEM_PISTOL:
+		ani_state = SHOT_PISTOL;
+		break;
+	case ITEM_SHOTGUN:
+		ani_state = SHOT_SHOT;
+		break;
+	case ITEM_MACHINEGUN:
+		ani_state = SHOT_MACHINE;
+		break;
+	case ITEM_LASERGUN:
+		ani_state = SHOT_LASER;
+		break;
 	}
 }
 

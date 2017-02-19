@@ -9,13 +9,13 @@ PlayScene::PlayScene() : m_attackedColor(ColorF::Red)
 
 	//캐릭터 나타내는 이미지
 	RENDER->LoadImageFiles(TEXT("Idle_Pistol"), TEXT("Image/Item/Pistol/Idle/Idle"), TEXT("png"), 2);
-	RENDER->LoadImageFiles(TEXT("Attack_Pistol"), TEXT("Image/Item/Pistol/Attack/Attack"), TEXT("png"), 3);
+	RENDER->LoadImageFiles(TEXT("Attack_Pistol"), TEXT("Image/Item/Pistol/Attack/Attack"), TEXT("png"), 4);
 	RENDER->LoadImageFiles(TEXT("Idle_Machine"), TEXT("Image/Item/MachineGun/Idle/MachineGunIdle"), TEXT("png"), 2);
-	RENDER->LoadImageFiles(TEXT("Attack_Machine"), TEXT("Image/Item/MachineGun/Shot/MachineGunShot"), TEXT("png"), 7);
+	RENDER->LoadImageFiles(TEXT("Attack_Machine"), TEXT("Image/Item/MachineGun/Shot/MachineGunShot"), TEXT("png"), 8);
 	RENDER->LoadImageFiles(TEXT("Idle_Laser"), TEXT("Image/Item/LaserGun/Idle/Idle"), TEXT("png"), 2);
-	RENDER->LoadImageFiles(TEXT("Attack_Laser"), TEXT("Image/Item/LaserGun/Shot/Shot"), TEXT("png"), 21);
+	RENDER->LoadImageFiles(TEXT("Attack_Laser"), TEXT("Image/Item/LaserGun/Shot/Shot"), TEXT("png"), 22);
 	RENDER->LoadImageFiles(TEXT("Idle_Shot"), TEXT("Image/Item/ShotGun/Idle/Idle"), TEXT("png"), 2);
-	RENDER->LoadImageFiles(TEXT("Attack_Shot"), TEXT("Image/Item/ShotGun/Shot/Shot"), TEXT("png"), 3);
+	RENDER->LoadImageFiles(TEXT("Attack_Shot"), TEXT("Image/Item/ShotGun/Shot/Shot"), TEXT("png"), 4);
 	RENDER->LoadImageFiles(TEXT("Reload_Shot"), TEXT("Image/Item/ShotGun/Reload/Reload"), TEXT("png"), 11);
 
 	// 배경 이미지 맵으로 저장
