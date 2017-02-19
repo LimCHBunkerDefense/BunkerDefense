@@ -37,6 +37,8 @@ Player::Player(OBJ_TAG tag) : Object(tag)
 	m_lasergunCharger = new UIProgressBar(Vector(VIEW_WIDTH*0.5 - 90, VIEW_HEIGHT - 15), Vector(240, 30), ColorF::Green, ColorF::Gray);
 	m_lasergunCharger->SetMinMaxColor(ColorF::Red, ColorF::Green);
 	m_lasergunCharger->SetValue(0.0f);
+
+	intBulletCount = 12;
 }
 
 Player::~Player()
@@ -219,6 +221,23 @@ void Player::AttackState(float deltaTime)
 
 }
 
+void  Player::BulletReload() {
+	switch (item_state) {
+	case ITEM_PISTOL:
+		intBulletCount = 12;
+		break;
+	case ITEM_SHOTGUN:
+		intBulletCount = 8;
+		break;
+	case ITEM_MACHINEGUN:
+		intBulletCount = 100;
+		break;
+	case ITEM_LASERGUN:
+		intBulletCount = 200;
+		break;
+	}
+}
+
 void Player::ShopState()
 {
 	//Animation()->Play(PLAYER_SHOP);
@@ -286,6 +305,7 @@ void Player::ShopState()
 						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(3001);
 					}
 					SCENE->GetScene(SCENE_SHOP)->SetIsCountClicked(true);
+					SCENE->GetScene(SCENE_SHOP)->SetInputOnOff(false);
 					break;
 
 				case BUTTON_SECOND:
@@ -302,6 +322,7 @@ void Player::ShopState()
 						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(3002);
 					}
 					SCENE->GetScene(SCENE_SHOP)->SetIsCountClicked(true);
+					SCENE->GetScene(SCENE_SHOP)->SetInputOnOff(false);
 					break;
 
 				case BUTTON_THIRD:
@@ -318,6 +339,7 @@ void Player::ShopState()
 						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(3003);
 					}
 					SCENE->GetScene(SCENE_SHOP)->SetIsCountClicked(true);
+					SCENE->GetScene(SCENE_SHOP)->SetInputOnOff(false);
 					break;
 
 				case BUTTON_FORTH:
@@ -334,6 +356,7 @@ void Player::ShopState()
 						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(3004);
 					}
 					SCENE->GetScene(SCENE_SHOP)->SetIsCountClicked(true);
+					SCENE->GetScene(SCENE_SHOP)->SetInputOnOff(false);
 					break;
 
 				case BUTTON_COUNT:		// ¼ö·® ¹öÆ° ¼±ÅÃ½Ã ¼ýÀÚ ÀÔ·ÂÄ­ È°¼ºÈ­
@@ -344,9 +367,12 @@ void Player::ShopState()
 					break;
 
 				case BUTTON_BUY:		// ¼¥¾À¿¡¼­ ±¸¸Å ¼±ÅÃÇÏ¸é ±× ¾ÆÀÌÅÛÀÌ ¾ÆÀÌÅÛ °¡¹æ¿¡ ÀúÀåµÊ
-					pItem = SCENE->GetScene(SCENE_SHOP)->GetSelectedItem();
-					AddItem(pItem);
-					check = m_itemBag;
+					if (SCENE->GetScene(SCENE_SHOP)->GetInputCount() != 0)
+					{
+						pItem = SCENE->GetScene(SCENE_SHOP)->GetSelectedItem();
+						AddItem(pItem);
+						SCENE->GetScene(SCENE_SHOP)->SetInputOnOff(false);
+					}
 					break;				
 
 				case BUTTON_EXIT:
@@ -403,6 +429,8 @@ void Player::SetItem()
 	// ±â°üÃÑ ÀåÂø
 	if (INPUT->IsKeyDown(VK_3))
 	{
+		item_state = ITEM_MACHINEGUN;
+		BulletReload();
 		if (m_itemBag.find(1003) != m_itemBag.end())
 		{
 			m_pItem = m_itemBag[1003];
@@ -425,7 +453,7 @@ void Player::SetItem()
 	//¼ö·ùÅº ÀåÂø
 	if (INPUT->IsKeyDown(VK_Q))
 	{
-		//item_state = ITEM_GRENADE;
+		intBulletCount = 5;
 		if (gre_state == GRENADE_IDLE)	gre_state = GRENADE_NONE;
 		else 							gre_state = GRENADE_IDLE;
 	}
@@ -433,7 +461,7 @@ void Player::SetItem()
 	//¹«Àü±â ÀåÂø
 	if (INPUT->IsKeyDown(VK_W))
 	{
-		//item_state = ITEM_AIRBOMB;
+		intBulletCount = 1;
 		if (gre_state == AIRBOMB_IDLE)	gre_state = GRENADE_NONE;
 		else 							gre_state = AIRBOMB_IDLE;
 	}
@@ -441,12 +469,12 @@ void Player::SetItem()
 	//È­¿°Åº ÀåÂø
 	if (INPUT->IsKeyDown(VK_E))
 	{
-		//item_state = ITEM_RAVAREGION;
+		intBulletCount = 3;
 		if (gre_state == FLAME_IDLE)	gre_state = GRENADE_NONE;
 		else 							gre_state = FLAME_IDLE;
 	}
 
-	//È­¿°Åº ÀåÂø
+	//¼ö¸® ÀåÂø
 	if (INPUT->IsKeyDown(VK_R))
 	{
 		//item_state = ITEM_BUNKERREPAIR;
