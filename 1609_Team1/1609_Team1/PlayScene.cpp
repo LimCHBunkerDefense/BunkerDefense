@@ -105,13 +105,14 @@ PlayScene::PlayScene() : m_attackedColor(ColorF::Red)
 	SOUND->LoadFile("MainBGM_2", "Sound/BGM/Main/Main_2.mp3", true);
 	SOUND->LoadFile("ShopBGM_0", "Sound/BGM/Shop/Shop_0.mp3", true);
 
-
 	// 벙커 체력 막대 생성
 	m_bunkerLife = new UIProgressBar(Vector(24, 830), Vector(320, 45), ColorF::YellowGreen, ColorF::LightGoldenrodYellow);
 	m_bunkerLife->SetMinMaxColor(ColorF::Red, ColorF::YellowGreen);
 
 	// 총알 게이지 막대 생성
 	m_bulletGage = new UIBulletBar(Vector(24, 770), Vector(320, 45), ColorF::DarkBlue, ColorF::LightBlue);
+	//m_bulletGage = new UIBulletBar(Vector(24, 300), Vector(320, 45), ColorF::DarkBlue, ColorF::LightBlue);
+	m_bulletGage->SetMinMaxColor(ColorF::Red, ColorF::YellowGreen);
 
 	// 카메라 생성
 	RENDER->CreateCamera(CAM_MAIN, MAP_WIDTH, MAP_HEIGHT, VIEW_WIDTH, VIEW_HEIGHT);
@@ -162,8 +163,8 @@ void PlayScene::OnEnter()
 	NEW_OBJECT(m_ItemBarUI, Sprite(RENDER->GetImage(TEXT("ItemBar_UI"))));
 
 	// PlayScene BGM 생성
-	SOUND->Play("MainBGM_0", 1.0f);			// 후보군 1
-	// SOUND->Play("MainBGM_1", 0.5f);		// 후보군 2
+	// SOUND->Play("MainBGM_0", 1.0f);			// 후보군 1
+	SOUND->Play("MainBGM_1", 0.5f);		// 후보군 2
 	// SOUND->Play("MainBGM_2", 0.5f);		// 후보군 3
 
 	//ico pistol
@@ -198,8 +199,8 @@ void PlayScene::OnEnter()
 
 	// 테스트용 크리쳐 생성
 	//OBJECT->CreateCreature(OBJ_ENT, Vector(120, 60));
-	//OBJECT->CreateCreature(OBJ_LAVA, Vector(0, 180));
-	OBJECT->CreateCreature(OBJ_DARKPRIEST, Vector(120, 240));
+	OBJECT->CreateCreature(OBJ_LAVA, Vector(0, 180));
+	//OBJECT->CreateCreature(OBJ_DARKPRIEST, Vector(120, 240));
 
 	// 마우스 커서 없애기
 	ShowCursor(false);
@@ -222,6 +223,12 @@ void PlayScene::OnUpdate(float deltaTime)
 	// 벙커 체력 UIProgressBar 업데이트(이것은 벙커 객체 소유물이 아닌 UI이므로 플레이씬에서 가지고 업데이트 하는 것이 맞아보임)
 	m_bunkerLife->SetTargetValue(OBJECT->GetBunker()->GetCurrentLife() / OBJECT->GetBunker()->GetMaxLife());
 	m_bunkerLife->Update(deltaTime);
+
+	m_bulletGage->SetTargetValue((float)(OBJECT->GetPlayer()->getBulletCount()) / (float)(OBJECT->GetPlayer()->getFullBullet()));
+	m_bulletGage->Update(deltaTime);
+	ShowBullet(pUICamera, OBJECT->GetPlayer()->getBulletCount(), Vector(24,720));
+	ShowBullet(pUICamera, OBJECT->GetPlayer()->getMaxBullet(), Vector(260, 720));
+	
 
 	// m_attackedColor 투명도 조정하여 공격당함 연출 부분으로 투명도를 점점 높여주는 부분
 	if (m_attackedColor.a != 0)
@@ -305,8 +312,8 @@ void PlayScene::OnExit()
 	//Exit	
 
 	// PlayScene 나갈 때 Pause 상태
-	SOUND->Pause("MainBGM_0");			// 후보군 1
-	// SOUND->Pause("MainBGM_1");		// 후보군 2
+	// SOUND->Pause("MainBGM_0");			// 후보군 1
+	SOUND->Pause("MainBGM_1");		// 후보군 2
 	// SOUND->Pause("MainBGM_2");		// 후보군 3
 }
 
@@ -340,7 +347,7 @@ void PlayScene::OnDraw()
 		Vector colSize = (*it)->Collider().size;
 		pMinimapCamera->DrawFilledCircle(pos - 4, Vector(8, 8), ColorF::Red);
 		pMinimapCamera->DrawLine((*it)->GetStartPos().x, (*it)->GetStartPos().y, OBJECT->GetPlayer()->Position().x, OBJECT->GetPlayer()->Position().y, ColorF::Red, 2);
-		pMinimapCamera->DrawFilledRect(Vector(pos.x - colSize.x * 0.5, pos.y - colSize.y), colSize, ColorF::Blue);	// 미니맵 상 크리쳐의 충돌체 표시해주는 부분
+		//pMinimapCamera->DrawFilledRect(Vector(pos.x - colSize.x * 0.5, pos.y - colSize.y), colSize, ColorF::Blue);	// 미니맵 상 크리쳐의 충돌체 표시해주는 부분
 	}
 
 	//탄환 선 긋기
@@ -410,7 +417,7 @@ void PlayScene::OnDraw()
 	//pUICamera->DrawRect(Vector(146, 85), Vector(50, 50), ColorF::Red, 1);
 
 	
-	pUICamera->DrawRect(Vector(24, VIEW_HEIGHT - 130), Vector(320, 45), ColorF::Blue, 2);
+	//pUICamera->DrawRect(Vector(24, VIEW_HEIGHT - 130), Vector(320, 45), ColorF::Blue, 2);
 	//pUICamera->DrawRect(Vector(28, VIEW_HEIGHT - 95), Vector(70, 70), ColorF::Red, 1);
 	//pUICamera->DrawRect(Vector(118, VIEW_HEIGHT - 95), Vector(70, 70), ColorF::Red, 1);
 	//pUICamera->DrawRect(Vector(208, VIEW_HEIGHT - 95), Vector(70, 70), ColorF::Red,1);
@@ -428,7 +435,7 @@ void PlayScene::SetCreature(float deltaTime)
 	int randDegree;
 
 	// 스테이지 1
-	if(m_gameTime / 3 > m_createdLavaCount)
+	if(m_gameTime / 5 > m_createdLavaCount)
 	{
 		randDegree = rand() % 360;
 		Vector pos = MATH->ToDirection(randDegree) * MINI_WIDTH * 0.5 + OBJECT->GetPlayer()->Position();
@@ -437,7 +444,7 @@ void PlayScene::SetCreature(float deltaTime)
 	}
 
 	// 스테이지 2
-	if ((m_gameTime -  20) / 5 > m_createdEntCount)
+	if ((m_gameTime -  20) / 7 > m_createdEntCount)
 	{
 		randDegree = rand() % 360;
 		Vector pos = MATH->ToDirection(randDegree) * MINI_WIDTH * 0.5 + OBJECT->GetPlayer()->Position();
@@ -446,7 +453,7 @@ void PlayScene::SetCreature(float deltaTime)
 	}
 
 	// 대빵
-	if (m_gameTime>100 && m_createdDarkpriestCount < 1)
+	if ((m_gameTime - 100) / 11 > m_createdDarkpriestCount)
 	{
 		randDegree = rand() % 360;
 		Vector pos = MATH->ToDirection(randDegree) * MINI_WIDTH * 0.5 + OBJECT->GetPlayer()->Position();
@@ -474,7 +481,31 @@ void PlayScene::SwayScreen(float deltaTime)
 
 	pMainCamera->SetScreenRect(m_MainCameraPos.x, m_MainCameraPos.y, VIEW_WIDTH, VIEW_HEIGHT);
 }
-
+void PlayScene::ShowBullet(Camera* pCamera, INT bullet, Vector startPos) {
+	if (bullet / 1000 != 0) {
+		DrawNum(pCamera, bullet / 1000, startPos);
+		DrawNum(pCamera, bullet % 1000 / 100, Vector(startPos.x + 20, startPos.y));
+		DrawNum(pCamera, bullet % 100 / 10, Vector(startPos.x + 40, startPos.y));
+		DrawNum(pCamera, bullet % 10, Vector(startPos.x + 60, startPos.y));
+	}
+	else {
+		if (bullet / 100 != 0) {
+			DrawNum(pCamera, bullet / 100, Vector(startPos.x, startPos.y));
+			DrawNum(pCamera, bullet % 100 / 10, Vector(startPos.x + 20, startPos.y));
+			DrawNum(pCamera, bullet % 10, Vector(startPos.x + 40, startPos.y));
+		}
+		else {
+			if (bullet / 10 != 0) {
+				DrawNum(pCamera, bullet / 10, Vector(startPos.x, startPos.y));
+				DrawNum(pCamera, bullet % 10, Vector(startPos.x + 20, startPos.y));
+			}
+			else {
+				DrawNum(pCamera, bullet % 10, Vector(startPos.x, startPos.y));
+			}
+			
+		}
+	}
+}
 void PlayScene::ShowMoney(Camera* pCamera)
 {
 	int money = OBJECT->GetPlayer()->GetMoney();

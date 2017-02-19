@@ -2,6 +2,7 @@
 #include "ObjectManager.h"
 #include "InputManager.h"
 #include "SceneManager.h"
+#include "SoundManager.h"
 #include "Item.h"
 #include "InputManager.h"
 #include "Math.h"
@@ -24,11 +25,14 @@ class Player :
 	//float m_sight;						// 시야 길이
 
 	INT intBulletCount;
+	INT MaxBulletCount;
+	INT FullBulletCount;
 	int m_money;
 	int m_score;
 
 	float m_lagerChargerTime;				// 레이저건 충전 시간
 	UIProgressBar* m_lasergunCharger;		//레이저건 충전 보여줄 막대.
+	bool m_laserGunShot;
 
 
 
@@ -59,6 +63,9 @@ public:
 	// 총 쏠 때 애니메이션 변경해주는 함수
 	void SetShotAnimation();
 
+	// 총 쏠 때 소리 출력하는 함수
+	void SetShotSound();
+
 	// 레이저건 충전 막대 업데이트 해주는 함수
 	void LaserChargerUpdate(float deltaTime);
 
@@ -78,6 +85,8 @@ public:
 
 	//현재 탄약 리턴
 	INT getBulletCount() { return intBulletCount; }
+	INT getMaxBullet() { return MaxBulletCount; }
+	INT getFullBullet() { return FullBulletCount; }
 	void BulletUse() { intBulletCount-=1; }
 	void BulletReload();
 

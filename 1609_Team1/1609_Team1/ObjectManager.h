@@ -129,6 +129,8 @@ public:
 	virtual void BulletUse() {  }
 	virtual void BulletReload(){}
 	virtual UIProgressBar* GetLaserChargerBar() { return NULL; }
+	virtual INT getMaxBullet() { return 0; }
+	virtual INT getFullBullet() { return 0; }
 
 	// 벙커용 함수
 	virtual float GetCurrentLife() { return NULL; }		// Creature도 사용
