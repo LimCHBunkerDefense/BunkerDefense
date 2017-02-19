@@ -26,7 +26,7 @@ Creature::Creature(OBJ_TAG tag) : Object(tag)
 	m_money = pData->money;
 	m_score = pData->score;
 
-	m_lifeBar = new UIProgressBar(Vector(0, 0), Vector(400, 20), ColorF::Blue, ColorF::LightSlateGray);
+	m_lifeBar = new UIProgressBar(Vector(0, 0), Vector(100, 10), ColorF::Blue, ColorF::LightSlateGray);
 	m_lifeBar->SetMinMaxColor(ColorF::DarkRed, ColorF::DarkOliveGreen);
 
 	m_moveDirection = Vector(Position() * -1 + Vector(MINI_WIDTH * 0.5, MINI_HEIGHT)).Normalize();
@@ -59,7 +59,7 @@ void Creature::Update(float deltaTime)
 
 	// m_lifeBar targetValue 업데이트
 	m_lifeBar->SetTargetValue(m_currentLife / m_maxLife);
-	m_lifeBar->SetCenter(Position() - Vector(0, Animation()->Current()->GetHeight()));
+	m_lifeBar->Update(deltaTime);
 
 	// m_maxZ 및 m_minZ 업데이트
 	ZUpdate();
@@ -82,7 +82,8 @@ void Creature::Draw(Camera* pCamera)
 	SetScale(OriginScale() * m_t * m_t * 3.0f);
 	m_scale = OriginScale() * m_t * m_t * 3.0f;
 
-
+	pCamera->Draw3D_lifeBar(m_lifeBar->GetFrame(), m_lifeBar->GetBar(), m_lifeBar->GetScale(), m_lifeBar->GetBGColor(), m_lifeBar->GetBarColor(), m_lifeBar->GetFrameColor()
+	, m_startPos, OBJECT->GetSightHeight(), m_t, m_state, Animation()->Current()->GetHeight() * -1);
 	pCamera->Draw3D(Animation()->Current()->GetSprite(), m_startPos, m_t, OBJECT->GetSightHeight(), m_state);
 }
 

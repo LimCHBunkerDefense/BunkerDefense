@@ -42,6 +42,7 @@ public:
 		SetTargetValue(1.0f);
 	}
 
+	Vector GetOriginLeftTop() { return m_originLeftTop; }
 	Vector GetLeftTop() { return m_bar.LeftTop(); }
 	Vector GetCenter() { return m_bar.Center(); }
 	Vector GetBarSize() { return m_bar.size; }
