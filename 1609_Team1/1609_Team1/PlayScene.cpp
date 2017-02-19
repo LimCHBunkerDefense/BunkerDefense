@@ -339,7 +339,7 @@ void PlayScene::OnDraw()
 		Vector colSize = (*it)->Collider().size;
 		pMinimapCamera->DrawFilledCircle(pos - 4, Vector(8, 8), ColorF::Red);
 		pMinimapCamera->DrawLine((*it)->GetStartPos().x, (*it)->GetStartPos().y, OBJECT->GetPlayer()->Position().x, OBJECT->GetPlayer()->Position().y, ColorF::Red, 2);
-		pMinimapCamera->DrawFilledRect(Vector(pos.x - colSize.x * 0.5, pos.y - colSize.y), colSize, ColorF::Blue);	// 미니맵 상 크리쳐의 충돌체 표시해주는 부분
+		//pMinimapCamera->DrawFilledRect(Vector(pos.x - colSize.x * 0.5, pos.y - colSize.y), colSize, ColorF::Blue);	// 미니맵 상 크리쳐의 충돌체 표시해주는 부분
 	}
 
 	//탄환 선 긋기
@@ -427,7 +427,7 @@ void PlayScene::SetCreature(float deltaTime)
 	int randDegree;
 
 	// 스테이지 1
-	if(m_gameTime / 3 > m_createdLavaCount)
+	if(m_gameTime / 5 > m_createdLavaCount)
 	{
 		randDegree = rand() % 360;
 		Vector pos = MATH->ToDirection(randDegree) * MINI_WIDTH * 0.5 + OBJECT->GetPlayer()->Position();
@@ -436,7 +436,7 @@ void PlayScene::SetCreature(float deltaTime)
 	}
 
 	// 스테이지 2
-	if ((m_gameTime -  20) / 5 > m_createdEntCount)
+	if ((m_gameTime -  20) / 7 > m_createdEntCount)
 	{
 		randDegree = rand() % 360;
 		Vector pos = MATH->ToDirection(randDegree) * MINI_WIDTH * 0.5 + OBJECT->GetPlayer()->Position();
@@ -445,7 +445,7 @@ void PlayScene::SetCreature(float deltaTime)
 	}
 
 	// 대빵
-	if ((m_gameTime - 100) / 7 > m_createdDarkpriestCount)
+	if ((m_gameTime - 100) / 11 > m_createdDarkpriestCount)
 	{
 		randDegree = rand() % 360;
 		Vector pos = MATH->ToDirection(randDegree) * MINI_WIDTH * 0.5 + OBJECT->GetPlayer()->Position();
