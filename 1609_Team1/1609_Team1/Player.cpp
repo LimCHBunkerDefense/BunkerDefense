@@ -31,6 +31,8 @@ Player::Player(OBJ_TAG tag) : Object(tag)
 	m_score = 0;
 
 	gre_state = GRENADE_NONE;
+
+	intBulletCount = 12;
 }
 
 Player::~Player()
@@ -85,18 +87,22 @@ void Player::AttackState(float deltaTime)
 
 	//좌클릭시 발사 부분
 	if (INPUT->IsMouseUp(MOUSE_LEFT)) {
-		if (gre_state != GRENADE_NONE) {
-			if (m_greCoolTime == 0.0f) {
-				Vector pos = MATH->ToDirection(90) * MINI_WIDTH * 0.5 + OBJECT->GetPlayer()->Position();
-				OBJECT->CreateGrenade(OBJ_GRENADE, pos, gre_state);
-				m_greCoolTime = 2.0f;
+		if (intBulletCount > 0) {
+			BulletUse();
+			if (gre_state != GRENADE_NONE) {
+				if (m_greCoolTime == 0.0f) {
+					Vector pos = MATH->ToDirection(90) * MINI_WIDTH * 0.5 + OBJECT->GetPlayer()->Position();
+					OBJECT->CreateGrenade(OBJ_GRENADE, pos, gre_state);
+					
+					m_greCoolTime = 2.0f;
+				}
 			}
-		}
-		else {
-			float sightHeightDefault = SIGHTHEIGHT_DEFAULT;
-			float rate = 1 + MATH->Clamp(OBJECT->GetSightHeight() - sightHeightDefault, sightHeightDefault / 2 * -1, 0.0f) / sightHeightDefault;
-			Vector pos = Vector::Up() * m_pItem->GetRange() * rate + OBJECT->GetPlayer()->Position();
-			OBJECT->CreateBullet(OBJ_BULLET, pos, m_pItem->GetTag());
+			else {
+				float sightHeightDefault = SIGHTHEIGHT_DEFAULT;
+				float rate = 1 + MATH->Clamp(OBJECT->GetSightHeight() - sightHeightDefault, sightHeightDefault / 2 * -1, 0.0f) / sightHeightDefault;
+				Vector pos = Vector::Up() * m_pItem->GetRange() * rate + OBJECT->GetPlayer()->Position();
+				OBJECT->CreateBullet(OBJ_BULLET, pos, m_pItem->GetTag());
+			}
 		}
 	}
 
@@ -157,6 +163,23 @@ void Player::AttackState(float deltaTime)
 
 	// 마우스 움직이면 모든 오브젝트들이 플레이어 중심으로 회전하는 처리 끝---------------------------------------------------
 
+}
+
+void  Player::BulletReload() {
+	switch (item_state) {
+	case ITEM_PISTOL:
+		intBulletCount = 12;
+		break;
+	case ITEM_SHOTGUN:
+		intBulletCount = 8;
+		break;
+	case ITEM_MACHINEGUN:
+		intBulletCount = 100;
+		break;
+	case ITEM_LASERGUN:
+		intBulletCount = 200;
+		break;
+	}
 }
 
 void Player::ShopState()
@@ -322,6 +345,7 @@ void Player::SetItem()
 	if (INPUT->IsKeyDown(VK_1))
 	{
 		item_state = ITEM_PISTOL;
+		BulletReload();
 		if (m_itemBag.find(1001) != m_itemBag.end())
 		{
 			m_pItem = m_itemBag[1001];
@@ -332,6 +356,7 @@ void Player::SetItem()
 	if (INPUT->IsKeyDown(VK_2))
 	{
 		item_state = ITEM_SHOTGUN;
+		BulletReload();
 		if (m_itemBag.find(1002) != m_itemBag.end())
 		{
 			m_pItem = m_itemBag[1002];
@@ -342,6 +367,7 @@ void Player::SetItem()
 	if (INPUT->IsKeyDown(VK_3))
 	{
 		item_state = ITEM_MACHINEGUN;
+		BulletReload();
 		if (m_itemBag.find(1003) != m_itemBag.end())
 		{
 			m_pItem = m_itemBag[1003];
@@ -352,6 +378,7 @@ void Player::SetItem()
 	if (INPUT->IsKeyDown(VK_4))
 	{		
 		item_state = ITEM_LASERGUN;
+		BulletReload();
 		if (m_itemBag.find(1004) != m_itemBag.end())
 		{
 			m_pItem = m_itemBag[1004];
@@ -361,7 +388,7 @@ void Player::SetItem()
 	//수류탄 장착
 	if (INPUT->IsKeyDown(VK_Q))
 	{
-		//item_state = ITEM_GRENADE;
+		intBulletCount = 5;
 		if (gre_state == GRENADE_IDLE)	gre_state = GRENADE_NONE;
 		else 							gre_state = GRENADE_IDLE;
 	}
@@ -369,7 +396,7 @@ void Player::SetItem()
 	//무전기 장착
 	if (INPUT->IsKeyDown(VK_W))
 	{
-		//item_state = ITEM_AIRBOMB;
+		intBulletCount = 1;
 		if (gre_state == AIRBOMB_IDLE)	gre_state = GRENADE_NONE;
 		else 							gre_state = AIRBOMB_IDLE;
 	}
@@ -377,12 +404,12 @@ void Player::SetItem()
 	//화염탄 장착
 	if (INPUT->IsKeyDown(VK_E))
 	{
-		//item_state = ITEM_RAVAREGION;
+		intBulletCount = 3;
 		if (gre_state == FLAME_IDLE)	gre_state = GRENADE_NONE;
 		else 							gre_state = FLAME_IDLE;
 	}
 
-	//화염탄 장착
+	//수리 장착
 	if (INPUT->IsKeyDown(VK_R))
 	{
 		//item_state = ITEM_BUNKERREPAIR;

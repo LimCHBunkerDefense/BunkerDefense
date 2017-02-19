@@ -23,6 +23,7 @@ class Player :
 	float HitPoint;
 	//float m_sight;						// 시야 길이
 
+	INT intBulletCount;
 	int m_money;
 	int m_score;
 
@@ -57,5 +58,10 @@ public:
 	int GetMoney() { return m_money; }
 	void AddMoney(int addMoney) { m_money += addMoney; }
 	map<int, Object*> GetItemBag() { return m_itemBag; }
+
+	//현재 탄약 리턴
+	INT getBulletCount() { return intBulletCount; }
+	void BulletUse() { intBulletCount-=1; }
+	void BulletReload();
 };
 

@@ -123,6 +123,9 @@ public:
 	virtual void AddMoney(int addMoney) { }		
 	virtual map<int, Object*> GetItemBag() { return m_trashMap; }
 	virtual Object* GetCurrentItem() { return NULL; }
+	virtual INT getBulletCount() { return 0; }
+	virtual void BulletUse() {  }
+	virtual void BulletReload(){}
 
 	// 벙커용 함수
 	virtual float GetCurrentLife() { return NULL; }		// Creature도 사용
