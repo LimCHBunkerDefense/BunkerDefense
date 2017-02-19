@@ -13,6 +13,8 @@ ShopScene::ShopScene()
 	RENDER->LoadImageFile(TEXT("MenuBT"), TEXT("Image/NPC/ItemMENU.png"));
 	RENDER->LoadImageFile(TEXT("ClickBT"), TEXT("Image/NPC/shopbt2.png"));
 	RENDER->LoadImageFile(TEXT("ClickedBT"), TEXT("Image/NPC/shopselectbt2.png"));
+	RENDER->LoadImageFile(TEXT("ListBar"), TEXT("Image/NPC/ItemListBar.png"));
+	RENDER->LoadImageFile(TEXT("ListBarBG"), TEXT("Image/NPC/ItemListBarBG.png"));
 
 	//무기 아이콘
 	RENDER->LoadImageFile(TEXT("PistolIcon"), TEXT("Image/Item/Shop_Icon/Pistol.png"));
@@ -30,6 +32,10 @@ ShopScene::ShopScene()
 	RENDER->LoadImageFile(TEXT("FireCapsuleIcon"), TEXT("Image/Item/Shop_Icon/FireCapsule.png"));
 	RENDER->LoadImageFile(TEXT("RepairIcon"), TEXT("Image/Item/Shop_Icon/Repair.png"));
 
+	// 사운드
+	SOUND->LoadFile("ShopBGM_0", "Sound/BGM/Shop/Shop_0.mp3", true);
+
+	// 샵 정보창의 아이콘 이미지 생성
 	m_pPistol = NEW_OBJECT(m_pPistol, Sprite(RENDER->GetImage(TEXT("PistolIcon")), 0.6f, 0.5f, 0.6f));
 	m_pShotGun = NEW_OBJECT(m_pShotGun, Sprite(RENDER->GetImage(TEXT("ShotGunIcon")), 0.6f, 0.5f, 0.6f));
 	m_pMachineGun = NEW_OBJECT(m_pMachineGun, Sprite(RENDER->GetImage(TEXT("MachineGunIcon")), 0.6f, 0.5f, 0.6f));
@@ -47,6 +53,7 @@ ShopScene::ShopScene()
 	IsBulletClicked = false;
 	IsUsingItemClicked = false;
 	IsCountClicked = false;
+
 }
 
 
@@ -68,10 +75,14 @@ void ShopScene::OnEnter()
 	NEW_OBJECT(m_pMenuBT, Sprite(RENDER->GetImage(TEXT("MenuBT")), 0.95f, 0, 0));
 	NEW_OBJECT(m_pClickBT, Sprite(RENDER->GetImage(TEXT("ClickBT")), 0.85f, 0, 0));
 	NEW_OBJECT(m_pClickBT2, Sprite(RENDER->GetImage(TEXT("ClickedBT")), 0.85f, 0, 0));
+	NEW_OBJECT(m_pListBar, Sprite(RENDER->GetImage(TEXT("ListBar")), 0.95, 0, 0));
+	NEW_OBJECT(m_pListBarBG, Sprite(RENDER->GetImage(TEXT("ListBarBG")), 0.95, 0, 0));
+
+	SOUND->Play("ShopBGM_0", 1.0f);
 
 	CreateBoxList();		// 리스트 생성
-	ShowCursor(true);		// 마우스 커서 보이게
-
+	ShowCursor(true);		// 마우스 커서 보이게.
+	
 	m_inputCount = 0;
 	m_inputOnOff = false;
 }
@@ -84,6 +95,8 @@ void ShopScene::OnUpdate(float deltaTime)
 
 void ShopScene::OnExit()
 {
+	SOUND->Stop("ShopBGM_0");
+
 	m_boxList.clear();				// 박스 리스트 소멸
 	m_selectedItem = NULL;			// 선택한 아이템 삭제
 	m_currentButton = BUTTON_NONE;	// 현재 선택한 버튼값 삭제
@@ -109,10 +122,18 @@ void ShopScene::OnDraw()
 	//RENDER->DrawT(TEXT("SHOP"), 600, 35, ColorF::BlanchedAlmond, 25);
 	pMainCamera->Draw(m_pShopTitleBG, Vector(VIEW_WIDTH * 0.45f, 20));
 
-	//아이템 매뉴
+	//중분류 메뉴
 	pMainCamera->Draw(m_pMenuBT, Vector(366, 160));
 	pMainCamera->Draw(m_pMenuBT, Vector(496, 160));
 	pMainCamera->Draw(m_pMenuBT, Vector(624, 160));
+
+	//소분류 메뉴
+	pMainCamera->Draw(m_pListBarBG, Vector(368, 346));
+	pMainCamera->Draw(m_pListBar, Vector(370, 344));
+	pMainCamera->Draw(m_pListBar, Vector(370, 404));
+	pMainCamera->Draw(m_pListBar, Vector(370, 464));
+	pMainCamera->Draw(m_pListBar, Vector(370, 524));
+
 
 
 	//버튼 이미지(테스트)

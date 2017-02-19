@@ -14,7 +14,7 @@ Bullet::Bullet(OBJ_TAG tag) : Object(tag)
 	m_z = 600 - OBJECT->GetSightHeight();	// 화면 상하 이동 시 뒷 배경의 height가 하상으로 움직이기때문에 최대높이 600에서 sightHeight를 빼주도록 함
 	m_addH = 0;
 
-	m_attack = 1000;//OBJECT->GetPlayer()->GetCurrentItem()->GetAttack();
+	m_attack = OBJECT->GetPlayer()->GetCurrentItem()->GetAttack();
 	m_moveSpeed = OBJECT->GetPlayer()->GetCurrentItem()->GetBulletSpeed();
 	m_moveDirection = Vector(Position() * -1 + m_startPos).Normalize();
 }
@@ -62,7 +62,7 @@ void Bullet::Draw(Camera* pCamera)
 
 void Bullet::IdleState(float deltaTime) 
 {
-	cout << "총알   " << Position().x << "   " << Position().y << "       " << m_t <<  "     "  << m_z << endl;	//총알 위치 디버깅용
+	//cout << "총알   " << Position().x << "   " << Position().y << "       " << m_t <<  "     "  << m_z << endl;	//총알 위치 디버깅용
 
 	Animation()->Play(BULLET_IDLE);
 	

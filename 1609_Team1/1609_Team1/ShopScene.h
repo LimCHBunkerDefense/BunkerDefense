@@ -3,6 +3,7 @@
 #include "RenderManager.h"
 #include "ObjectManager.h"
 #include "InputManager.h"
+#include "SoundManager.h"
 #include "Common.h"
 #include "Item.h"
 
@@ -21,6 +22,8 @@ class ShopScene :
 	Sprite* m_pClickBT;
 	Sprite* m_pClickBT2;
 	Sprite* m_pMenuBT;
+	Sprite* m_pListBarBG;
+	Sprite* m_pListBar;
 
 	Sprite* m_pPistol;
 	Sprite* m_pShotGun;

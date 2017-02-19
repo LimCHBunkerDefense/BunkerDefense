@@ -3,6 +3,7 @@
 #include "InputManager.h"
 #include "RenderManager.h"
 #include "ObjectManager.h"
+#include "SoundManager.h"
 #include "ProgressBar.h"
 #include "BulletBar.h"
 #include "CreatureDB.h"
