@@ -286,6 +286,7 @@ void Player::ShopState()
 						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(3001);
 					}
 					SCENE->GetScene(SCENE_SHOP)->SetIsCountClicked(true);
+					SCENE->GetScene(SCENE_SHOP)->SetInputOnOff(false);
 					break;
 
 				case BUTTON_SECOND:
@@ -302,6 +303,7 @@ void Player::ShopState()
 						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(3002);
 					}
 					SCENE->GetScene(SCENE_SHOP)->SetIsCountClicked(true);
+					SCENE->GetScene(SCENE_SHOP)->SetInputOnOff(false);
 					break;
 
 				case BUTTON_THIRD:
@@ -318,6 +320,7 @@ void Player::ShopState()
 						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(3003);
 					}
 					SCENE->GetScene(SCENE_SHOP)->SetIsCountClicked(true);
+					SCENE->GetScene(SCENE_SHOP)->SetInputOnOff(false);
 					break;
 
 				case BUTTON_FORTH:
@@ -334,6 +337,7 @@ void Player::ShopState()
 						SCENE->GetScene(SCENE_SHOP)->SetSelectedItem(3004);
 					}
 					SCENE->GetScene(SCENE_SHOP)->SetIsCountClicked(true);
+					SCENE->GetScene(SCENE_SHOP)->SetInputOnOff(false);
 					break;
 
 				case BUTTON_COUNT:		// 수량 버튼 선택시 숫자 입력칸 활성화
@@ -344,9 +348,12 @@ void Player::ShopState()
 					break;
 
 				case BUTTON_BUY:		// 샵씬에서 구매 선택하면 그 아이템이 아이템 가방에 저장됨
-					pItem = SCENE->GetScene(SCENE_SHOP)->GetSelectedItem();
-					AddItem(pItem);
-					check = m_itemBag;
+					if (SCENE->GetScene(SCENE_SHOP)->GetInputCount() != 0)
+					{
+						pItem = SCENE->GetScene(SCENE_SHOP)->GetSelectedItem();
+						AddItem(pItem);
+						SCENE->GetScene(SCENE_SHOP)->SetInputOnOff(false);
+					}
 					break;				
 
 				case BUTTON_EXIT:
