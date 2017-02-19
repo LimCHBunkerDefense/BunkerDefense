@@ -115,11 +115,14 @@ void Player::AttackState(float deltaTime)
 			}
 		}
 		else {
-			float sightHeightDefault = SIGHTHEIGHT_DEFAULT;
-			float rate = 1 + MATH->Clamp(OBJECT->GetSightHeight() - sightHeightDefault, sightHeightDefault / 2 * -1, 0.0f) / sightHeightDefault;
-			Vector pos = Vector::Up() * m_pItem->GetRange() * rate + OBJECT->GetPlayer()->Position();
-			OBJECT->CreateBullet(OBJ_BULLET, pos, m_pItem->GetTag());
-			SetShotAnimation();
+			if (m_pItem->GetTag() != ITEM_LASERGUN)		// 레이저건은 Press로 충전을 해야된다고 하여 예외처리함
+			{
+				float sightHeightDefault = SIGHTHEIGHT_DEFAULT;
+				float rate = 1 + MATH->Clamp(OBJECT->GetSightHeight() - sightHeightDefault, sightHeightDefault / 2 * -1, 0.0f) / sightHeightDefault;
+				Vector pos = Vector::Up() * m_pItem->GetRange() * rate + OBJECT->GetPlayer()->Position();
+				OBJECT->CreateBullet(OBJ_BULLET, pos, m_pItem->GetTag());
+				SetShotAnimation();
+			}
 		}
 	}
 
