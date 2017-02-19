@@ -29,6 +29,7 @@ Item::Item(int itemID)
 	m_maxCount = pData->maxCount;
 	m_name = pData->name;
 	m_info = pData->info;
+	m_gunState = GUN_IDLE;
 }
 
 void Item::Update(float deltaTime)

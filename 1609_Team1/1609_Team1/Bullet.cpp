@@ -11,7 +11,7 @@ Bullet::Bullet(OBJ_TAG tag) : Object(tag)
 	m_scale = 1.0f;
 	m_state = BULLET_IDLE;
 	m_t = 0.0F;
-	m_z = OBJECT->GetSightHeight();	// 화면 상하 이동 시 뒷 배경의 height가 하상으로 움직이기때문에 최대높이 600에서 sightHeight를 빼주도록 함
+	m_z = 600 - OBJECT->GetSightHeight();	// 화면 상하 이동 시 뒷 배경의 height가 하상으로 움직이기때문에 최대높이 600에서 sightHeight를 빼주도록 함
 	m_addH = 0;
 
 	m_attack = 1000;//OBJECT->GetPlayer()->GetCurrentItem()->GetAttack();
