@@ -43,6 +43,7 @@ Player::Player(OBJ_TAG tag) : Object(tag)
 	m_lasergunCharger = new UIProgressBar(Vector(VIEW_WIDTH*0.5 - 90, VIEW_HEIGHT - 15), Vector(240, 30), ColorF::Green, ColorF::Gray);
 	m_lasergunCharger->SetMinMaxColor(ColorF::Red, ColorF::Green);
 	m_lasergunCharger->SetValue(0.0f);
+	m_laserGunShot = false;
 
 	intBulletCount = 12;
 }
@@ -95,6 +96,7 @@ Vector Player::DrawPos()
 void Player::AttackState(float deltaTime)
 {
 	SetIdleAnimation();				// 총의 Shot 애니메이션 끝나면 그 총의 Idle 애니메이션으로 돌리는 함수
+	SetShotSound();					// 총 소리
 	Animation()->Play(ani_state);	// 현재 아이템에 대한 애니메이션 재생
 	LaserChargerUpdate(deltaTime);	// 레이저건 충전 막대 업데이트
 	
@@ -131,7 +133,6 @@ void Player::AttackState(float deltaTime)
 			}
 		}
 		else {
-			SetShotSound();
 			SetShotAnimation();
 			if (m_pItem->GetTag() != ITEM_LASERGUN)	//	레이저건은 3초 Press하고 쏘기 때문에 press쪽에 bullet 생성하는 거 넣어둠
 			{
@@ -150,12 +151,14 @@ void Player::AttackState(float deltaTime)
 		{
 			m_lagerChargerTime = MATH->Clamp(m_lagerChargerTime + deltaTime, 0.0f, 3.0f);
 
-			if (Animation()->Current()->GetCurrentIndex() == 15)
+			if (Animation()->Current()->GetCurrentIndex() == 15
+				&& !m_laserGunShot)
 			{
 				float sightHeightDefault = SIGHTHEIGHT_DEFAULT;
 				float rate = 1 + MATH->Clamp(OBJECT->GetSightHeight() - sightHeightDefault, sightHeightDefault / 2 * -1, 0.0f) / sightHeightDefault;
 				Vector pos = Vector::Up() * m_pItem->GetRange() * rate + OBJECT->GetPlayer()->Position();
 				OBJECT->CreateBullet(OBJ_BULLET, pos, m_pItem->GetTag());
+				m_laserGunShot = true;
 			}
 		}
 	}
@@ -167,6 +170,7 @@ void Player::AttackState(float deltaTime)
 		{
 			m_lagerChargerTime = 0.0f;
 			ani_state = IDLE_LASER;
+			m_laserGunShot = false;
 		}
 	}
 	
