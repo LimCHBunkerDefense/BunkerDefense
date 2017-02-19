@@ -26,7 +26,9 @@ class Player :
 	int m_money;
 	int m_score;
 
+	float m_lagerChargerTime;				// 레이저건 충전 시간
 	UIProgressBar* m_lasergunCharger;		//레이저건 충전 보여줄 막대.
+
 
 
 public:

@@ -348,7 +348,7 @@ void ShopScene::ShowText()
 			pMainCamera->DrawT(m_selectedItem->GetRangeStr(), 950, 440, ColorF::AntiqueWhite, 15);
 
 			// 구매비용
-			wsprintf(number, TEXT("Money : %d"), m_selectedItem->GetMoney());
+			swprintf_s(number, TEXT("Money : %d"), m_selectedItem->GetMoney());
 			pMainCamera->DrawT(number, 820, 465, ColorF::AntiqueWhite, 15);
 			break;
 

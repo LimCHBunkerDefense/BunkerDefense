@@ -74,6 +74,8 @@ class PlayScene : public IScene
 	int m_createdLavaCount;
 	int m_createdEntCount;
 	int m_createdDarkpriestCount;
+
+
 	
 public:
 	PlayScene();

@@ -31,6 +31,11 @@ Player::Player(OBJ_TAG tag) : Object(tag)
 	m_score = 0;
 
 	gre_state = GRENADE_NONE;
+
+	m_lagerChargerTime = 0;
+	// 레이저건 충전 나타낼 바
+	m_lasergunCharger = new UIProgressBar(Vector(VIEW_WIDTH*0.5 - 200, VIEW_HEIGHT - 50), Vector(400, 100), ColorF::Green, ColorF::YellowGreen);
+	m_lasergunCharger->SetMinMaxColor(ColorF::Red, ColorF::Green);
 }
 
 Player::~Player()
@@ -149,20 +154,6 @@ void Player::AttackState(float deltaTime)
 			ani_state = IDLE_LASER;
 		}
 	}
-
-	// 좌클릭 후 Press이면 레이저 충전 3초하고, 그거 지나면 레이저 발사하도록
-	if (INPUT->IsMousePress(MOUSE_LEFT))
-	{
-		if (m_pItem->GetTag() == ITEM_LASERGUN)		// 레이저건은 Press로 충전을 해야된다고 하여 예외처리함
-		{
-			float sightHeightDefault = SIGHTHEIGHT_DEFAULT;
-			float rate = 1 + MATH->Clamp(OBJECT->GetSightHeight() - sightHeightDefault, sightHeightDefault / 2 * -1, 0.0f) / sightHeightDefault;
-			Vector pos = Vector::Up() * m_pItem->GetRange() * rate + OBJECT->GetPlayer()->Position();
-			OBJECT->CreateBullet(OBJ_BULLET, pos, m_pItem->GetTag());
-			
-		}
-	}
-
 	
 	// 마우스 움직이면 모든 오브젝트들이 플레이어 중심으로 회전하는 처리 시작---------------------------------------------------
 	// 커서 화면 밖으로 나가지 않도록 보정. 이게 앞으로 마우스 이전좌표와 현재좌표를 가지고 계산하는 부분의 앞에 있어야 함.
