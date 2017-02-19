@@ -19,7 +19,7 @@ public:
 		}
 		return m_pInstance;
 	}
-}; 
+};  
 
 template <typename T>
 T* Singleton<T>::m_pInstance; 
