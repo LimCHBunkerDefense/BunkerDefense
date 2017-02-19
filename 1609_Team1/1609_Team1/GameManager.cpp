@@ -22,11 +22,13 @@ void GameManager::Init()
 
 	RENDER->Init(WINDOW->GetHandle(WND_MAIN));
 	INPUT->Init(WINDOW->GetHandle(WND_MAIN));
+	SOUND->Init();
 
 	// itemDB 생성
 	ITEM->Init();
 	// 크리쳐 데이터 생성
 	CREATURE->Init();
+
 
 	SCENE->Register(SCENE_PLAY, new PlayScene());
 	SCENE->Register(SCENE_SHOP, new ShopScene()); // *김윤중 추가
@@ -35,6 +37,7 @@ void GameManager::Init()
 
 void GameManager::Release()
 {
+	SOUND->Release();
 	INPUT->Release();
 	RENDER->Release();
 	WINDOW->Destroy(WND_MAIN);
@@ -50,6 +53,7 @@ void GameManager::Update()
 		m_prevTime = m_currentTime;
 
 		INPUT->Update();
+		SOUND->Update(deltaTime);
 		SCENE->Update(deltaTime);
 
 		InvalidateRect(WINDOW->GetHandle(WND_MAIN), NULL, false);

@@ -3,6 +3,7 @@
 #include "RenderManager.h"
 #include "ObjectManager.h"
 #include "InputManager.h"
+#include "SoundManager.h"
 #include "Common.h"
 #include "Item.h"
 
