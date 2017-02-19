@@ -456,6 +456,7 @@ void Player::SetItem()
 		if (m_itemBag.find(1001) != m_itemBag.end())
 		{
 			SaveBullet(item_state);
+			intBulletCount = bullet_pistol;
 			MaxBulletCount = PistolBullet;
 			FullBulletCount = 10;
 			m_pItem = m_itemBag[1001];
@@ -470,6 +471,7 @@ void Player::SetItem()
 		if (m_itemBag.find(1002) != m_itemBag.end())
 		{
 			SaveBullet(item_state);
+			intBulletCount = bullet_shot;
 			MaxBulletCount = ShotGunBullet;
 			FullBulletCount = 2;
 			m_pItem = m_itemBag[1002];
@@ -484,6 +486,7 @@ void Player::SetItem()
 		if (m_itemBag.find(1003) != m_itemBag.end())
 		{
 			SaveBullet(item_state);
+			intBulletCount = bullet_machine;
 			MaxBulletCount = MachineBullet;
 			FullBulletCount = 500;
 			m_pItem = m_itemBag[1003];
@@ -498,6 +501,7 @@ void Player::SetItem()
 		if (m_itemBag.find(1004) != m_itemBag.end())
 		{
 			SaveBullet(item_state);
+			intBulletCount = bullet_laser;
 			MaxBulletCount = LaserBullet;
 			FullBulletCount = 1000;
 			m_pItem = m_itemBag[1004];
@@ -548,6 +552,18 @@ void Player::SaveBullet(ITEM_TAG item_tag) {
 	case ITEM_PISTOL:
 		PistolBullet = MaxBulletCount;
 		bullet_pistol = intBulletCount;
+		break;
+	case ITEM_MACHINEGUN:
+		MachineBullet = MaxBulletCount;
+		bullet_machine = intBulletCount;
+		break;
+	case ITEM_LASERGUN:
+		LaserBullet = MaxBulletCount;
+		bullet_laser = intBulletCount;
+		break;
+	case ITEM_SHOTGUN:
+		ShotGunBullet = MaxBulletCount;
+		bullet_shot = intBulletCount;
 		break;
 	}
 }
