@@ -47,25 +47,25 @@ Player::Player(OBJ_TAG tag) : Object(tag)
 	m_laserGunShot = false;
 
 	//ÀüÃ¼ Åº¼ö
-	PistolBullet = 50;
-	ShotGunBullet = 0;
-	LaserBullet = 0;
-	MachineBullet = 0;
+	All_Bullet_Pistol = 50;
+	All_Bullet_Shot = 0;
+	All_Bullet_Laser = 0;
+	All_Bullet_Machine = 0;
 
 	//ÀåÀü µÅÀÖ´ø Åº¼ö
-	bullet_pistol = 0;
-	bullet_shot=0;
-	bullet_laser=0;
-	bullet_machine=0;
+	In_Bullet_Pistol = 0;
+	In_Bullet_Shot=0;
+	In_Bullet_Laser=0;
+	In_Bullet_Machine=0;
 
 	Count_Grenade=1;
 	Count_Radio=0;
 	Count_Napalm=0;
 	Count_Repair=0;
 
-	intBulletCount = 10;
-	FullBulletCount = 10;
-	MaxBulletCount = PistolBullet;
+	InBulletCount = 10;
+	AllBulletCount = 10;
+	MaxBulletCount = All_Bullet_Pistol;
 }
 
 Player::~Player()
@@ -144,7 +144,7 @@ void Player::AttackState(float deltaTime)
 
 	//ÁÂÅ¬¸¯½Ã ¹ß»ç ºÎºÐ ( Down ) 
 	if (INPUT->IsMouseDown(MOUSE_LEFT)) {
-		if (intBulletCount > 0) {
+		if (InBulletCount > 0) {
 			BulletUse();
 			if (gre_state != GRENADE_NONE) {
 				if (m_greCoolTime == 0.0f) {
@@ -260,17 +260,17 @@ void Player::AttackState(float deltaTime)
 
 void  Player::BulletReload() {
 	if (MaxBulletCount > 0) {
-		if (MaxBulletCount >= FullBulletCount) {
-			MaxBulletCount -= (FullBulletCount - intBulletCount);
-			intBulletCount = FullBulletCount;
+		if (MaxBulletCount >= AllBulletCount) {
+			MaxBulletCount -= (AllBulletCount - InBulletCount);
+			InBulletCount = AllBulletCount;
 		}
 		else {
-			if (MaxBulletCount + intBulletCount >= FullBulletCount) {
-				MaxBulletCount = MaxBulletCount + intBulletCount - FullBulletCount;
-				intBulletCount = FullBulletCount;	
+			if (MaxBulletCount + InBulletCount >= AllBulletCount) {
+				MaxBulletCount = MaxBulletCount + InBulletCount - AllBulletCount;
+				InBulletCount = AllBulletCount;	
 			}
 			else {
-				intBulletCount += MaxBulletCount;
+				InBulletCount += MaxBulletCount;
 				MaxBulletCount = 0;
 			}
 			
@@ -456,9 +456,9 @@ void Player::SetItem()
 		if (m_itemBag.find(1001) != m_itemBag.end())
 		{
 			SaveBullet(item_state);
-			intBulletCount = bullet_pistol;
-			MaxBulletCount = PistolBullet;
-			FullBulletCount = 10;
+			InBulletCount = In_Bullet_Pistol;
+			MaxBulletCount = All_Bullet_Pistol;
+			AllBulletCount = 10;
 			m_pItem = m_itemBag[1001];
 			item_state = ITEM_PISTOL;
 			ani_state = IDLE_PISTOL;
@@ -471,9 +471,9 @@ void Player::SetItem()
 		if (m_itemBag.find(1002) != m_itemBag.end())
 		{
 			SaveBullet(item_state);
-			intBulletCount = bullet_shot;
-			MaxBulletCount = ShotGunBullet;
-			FullBulletCount = 2;
+			InBulletCount = In_Bullet_Shot;
+			MaxBulletCount = All_Bullet_Shot;
+			AllBulletCount = 2;
 			m_pItem = m_itemBag[1002];
 			item_state = ITEM_SHOTGUN;
 			ani_state = IDLE_SHOT;
@@ -486,9 +486,9 @@ void Player::SetItem()
 		if (m_itemBag.find(1003) != m_itemBag.end())
 		{
 			SaveBullet(item_state);
-			intBulletCount = bullet_machine;
-			MaxBulletCount = MachineBullet;
-			FullBulletCount = 500;
+			InBulletCount = In_Bullet_Machine;
+			MaxBulletCount = All_Bullet_Machine;
+			AllBulletCount = 500;
 			m_pItem = m_itemBag[1003];
 			item_state = ITEM_MACHINEGUN;
 			ani_state = IDLE_MACHINE;
@@ -501,9 +501,9 @@ void Player::SetItem()
 		if (m_itemBag.find(1004) != m_itemBag.end())
 		{
 			SaveBullet(item_state);
-			intBulletCount = bullet_laser;
-			MaxBulletCount = LaserBullet;
-			FullBulletCount = 1000;
+			InBulletCount = In_Bullet_Laser;
+			MaxBulletCount = All_Bullet_Laser;
+			AllBulletCount = 1000;
 			m_pItem = m_itemBag[1004];
 			item_state = ITEM_LASERGUN;
 			ani_state = IDLE_LASER;
@@ -513,7 +513,10 @@ void Player::SetItem()
 	//¼ö·ùÅº ÀåÂø
 	if (INPUT->IsKeyDown(VK_Q))
 	{
-		intBulletCount = 5;
+		SaveBullet(item_state);
+		InBulletCount = Count_Grenade;
+		MaxBulletCount = 0;
+		AllBulletCount = 0;
 		if (gre_state == GRENADE_IDLE)	gre_state = GRENADE_NONE;
 		else 							gre_state = GRENADE_IDLE;
 	}
@@ -521,7 +524,10 @@ void Player::SetItem()
 	//¹«Àü±â ÀåÂø
 	if (INPUT->IsKeyDown(VK_W))
 	{
-		intBulletCount = 1;
+		SaveBullet(item_state);
+		InBulletCount = Count_Radio;
+		MaxBulletCount = 0;
+		AllBulletCount = 0;
 		if (gre_state == AIRBOMB_IDLE)	gre_state = GRENADE_NONE;
 		else 							gre_state = AIRBOMB_IDLE;
 	}
@@ -529,7 +535,10 @@ void Player::SetItem()
 	//È­¿°Åº ÀåÂø
 	if (INPUT->IsKeyDown(VK_E))
 	{
-		intBulletCount = 3;
+		SaveBullet(item_state);
+		InBulletCount = Count_Napalm;
+		MaxBulletCount = 0;
+		AllBulletCount = 0;
 		if (gre_state == FLAME_IDLE)	gre_state = GRENADE_NONE;
 		else 							gre_state = FLAME_IDLE;
 	}
@@ -547,23 +556,32 @@ void Player::SetItem()
 		BulletReload();
 	}
 }
-void Player::SaveBullet(ITEM_TAG item_tag) {
+void Player::SaveBullet(INT item_tag) {
 	switch (item_tag) {
 	case ITEM_PISTOL:
-		PistolBullet = MaxBulletCount;
-		bullet_pistol = intBulletCount;
+		All_Bullet_Pistol = MaxBulletCount;
+		In_Bullet_Pistol = InBulletCount;
 		break;
 	case ITEM_MACHINEGUN:
-		MachineBullet = MaxBulletCount;
-		bullet_machine = intBulletCount;
+		All_Bullet_Machine = MaxBulletCount;
+		In_Bullet_Machine = InBulletCount;
 		break;
 	case ITEM_LASERGUN:
-		LaserBullet = MaxBulletCount;
-		bullet_laser = intBulletCount;
+		All_Bullet_Laser = MaxBulletCount;
+		In_Bullet_Laser = InBulletCount;
 		break;
 	case ITEM_SHOTGUN:
-		ShotGunBullet = MaxBulletCount;
-		bullet_shot = intBulletCount;
+		All_Bullet_Shot = MaxBulletCount;
+		In_Bullet_Shot = InBulletCount;
+		break;
+	case GRENADE_IDLE:
+		Count_Grenade = InBulletCount;
+		break;
+	case AIRBOMB_IDLE:
+		Count_Radio = InBulletCount;
+		break;
+	case FLAME_IDLE:
+		Count_Napalm = InBulletCount;
 		break;
 	}
 }
