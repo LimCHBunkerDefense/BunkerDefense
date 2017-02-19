@@ -13,6 +13,7 @@ Player::Player(OBJ_TAG tag) : Object(tag)
 	SOUND->LoadFile("ShotGunShot", "Sound/Gun/ShotGun.mp3", false);
 	SOUND->LoadFile("MachineGunShot", "Sound/Gun/MachineGun.mp3", false);
 	SOUND->LoadFile("LaserGunShot", "Sound/Gun/LaserGun.mp3", false);
+	SOUND->LoadFile("LaserGunShot", "Sound/Gun/LaserGun.mp3", false);
 
 	ani_state = IDLE_PISTOL;
 	m_greCoolTime = 0.0f;//¼ö·ùÅº ÄðÅ¸ÀÓ
@@ -405,7 +406,7 @@ void Player::ShopState()
 		if (INPUT->IsKeyDown(VK_8)) num = 8;
 		if (INPUT->IsKeyDown(VK_9)) num = 9;
 
-		if(num != 0) SCENE->GetScene(SCENE_SHOP)->SetInputCount(num);
+		if (num != 0) SCENE->GetScene(SCENE_SHOP)->SetInputCount(num);
 	}	// InputCount BoolÇÔ¼ö END
 }
 
@@ -536,19 +537,19 @@ void Player::SetShotSound()
 	switch (m_pItem->GetTag())
 	{
 	case ITEM_PISTOL:
-		if (Animation()->Current()->GetCurrentIndex() == 0) SOUND->Play("PistolShot", 1.0f);
+		SOUND->Play("PistolShot", 1.0f);
 		break;
 
 	case ITEM_SHOTGUN:
-		if (Animation()->Current()->GetCurrentIndex() == 1) SOUND->Play("ShotGunShot", 1.0f);
+		SOUND->Play("ShotGunShot", 1.0f);
 		break;
 
 	case ITEM_MACHINEGUN:
-		if (Animation()->Current()->GetCurrentIndex() == 4) SOUND->Play("MachineGunShot", 1.0f);
+		SOUND->Play("MachineGunShot", 1.0f);
 		break;
 
 	case ITEM_LASERGUN:
-		if (Animation()->Current()->GetCurrentIndex() == 15) SOUND->Play("LaserGunShot", 1.0f);
+		SOUND->Play("LaserGunShot", 1.0f);
 		break;
 	}
 }
