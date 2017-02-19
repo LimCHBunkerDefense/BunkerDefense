@@ -2,6 +2,7 @@
 #include "Singleton.h"
 #include "RenderManager.h"
 #include "AnimationController.h"
+#include "ProgressBar.h"
 #include <list>
 #include "Common.h"
 using namespace std;

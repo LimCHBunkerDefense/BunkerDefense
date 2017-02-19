@@ -26,7 +26,7 @@ class Player :
 	int m_money;
 	int m_score;
 
-	float m_mousePressTime;					// Laser 총 쏠 떄 press 시간 측정 위한 변수.
+	UIProgressBar* m_lasergunCharger;		//레이저건 충전 보여줄 막대.
 
 
 public:

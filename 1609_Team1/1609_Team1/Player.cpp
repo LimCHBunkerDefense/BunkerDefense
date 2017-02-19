@@ -30,8 +30,6 @@ Player::Player(OBJ_TAG tag) : Object(tag)
 	m_money = 100000;
 	m_score = 0;
 
-	m_mousePressTime = 0;
-
 	gre_state = GRENADE_NONE;
 }
 
@@ -157,15 +155,11 @@ void Player::AttackState(float deltaTime)
 	{
 		if (m_pItem->GetTag() == ITEM_LASERGUN)		// 레이저건은 Press로 충전을 해야된다고 하여 예외처리함
 		{
-			m_mousePressTime += deltaTime;
-			if (m_mousePressTime >= 3.0f)
-			{
-				float sightHeightDefault = SIGHTHEIGHT_DEFAULT;
-				float rate = 1 + MATH->Clamp(OBJECT->GetSightHeight() - sightHeightDefault, sightHeightDefault / 2 * -1, 0.0f) / sightHeightDefault;
-				Vector pos = Vector::Up() * m_pItem->GetRange() * rate + OBJECT->GetPlayer()->Position();
-				OBJECT->CreateBullet(OBJ_BULLET, pos, m_pItem->GetTag());
-			}
-
+			float sightHeightDefault = SIGHTHEIGHT_DEFAULT;
+			float rate = 1 + MATH->Clamp(OBJECT->GetSightHeight() - sightHeightDefault, sightHeightDefault / 2 * -1, 0.0f) / sightHeightDefault;
+			Vector pos = Vector::Up() * m_pItem->GetRange() * rate + OBJECT->GetPlayer()->Position();
+			OBJECT->CreateBullet(OBJ_BULLET, pos, m_pItem->GetTag());
+			
 		}
 	}
 
