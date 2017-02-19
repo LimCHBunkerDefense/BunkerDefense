@@ -185,9 +185,9 @@ void PlayScene::OnEnter()
 	pUICamera->SetScreenRect(0, 0, VIEW_WIDTH, VIEW_HEIGHT);
 
 	// 테스트용 크리쳐 생성
-	OBJECT->CreateCreature(OBJ_ENT, Vector(120, 60));
+	//OBJECT->CreateCreature(OBJ_ENT, Vector(120, 60));
 	//OBJECT->CreateCreature(OBJ_LAVA, Vector(0, 180));
-	//OBJECT->CreateCreature(OBJ_DARKPRIEST, Vector(120, 240));
+	OBJECT->CreateCreature(OBJ_DARKPRIEST, Vector(120, 240));
 
 	// 마우스 커서 없애기
 	ShowCursor(false);
