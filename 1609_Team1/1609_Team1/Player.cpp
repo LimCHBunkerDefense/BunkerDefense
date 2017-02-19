@@ -34,7 +34,7 @@ Player::Player(OBJ_TAG tag) : Object(tag)
 	m_itemBag[startBullet->GetTag()] = startBullet;
 	startBullet->AddCurrentCount(60);
 
-	m_money = 100000;
+	m_money = 10000;
 	m_score = 0;
 
 	gre_state = GRENADE_NONE;
@@ -46,7 +46,9 @@ Player::Player(OBJ_TAG tag) : Object(tag)
 	m_lasergunCharger->SetValue(0.0f);
 	m_laserGunShot = false;
 
-	intBulletCount = 12;
+	intBulletCount = 10;
+	FullBulletCount = 10;
+	MaxBulletCount = 60;
 }
 
 Player::~Player()
@@ -125,23 +127,26 @@ void Player::AttackState(float deltaTime)
 
 	//좌클릭시 발사 부분 ( Down ) 
 	if (INPUT->IsMouseDown(MOUSE_LEFT)) {
-		if (gre_state != GRENADE_NONE) {
-			if (m_greCoolTime == 0.0f) {
-				Vector pos = MATH->ToDirection(90) * MINI_WIDTH * 0.5 + OBJECT->GetPlayer()->Position();
-				OBJECT->CreateGrenade(OBJ_GRENADE, pos, gre_state);
-				m_greCoolTime = 2.0f;
+		if (intBulletCount > 0) {
+			BulletUse();
+			if (gre_state != GRENADE_NONE) {
+				if (m_greCoolTime == 0.0f) {
+					Vector pos = MATH->ToDirection(90) * MINI_WIDTH * 0.5 + OBJECT->GetPlayer()->Position();
+					OBJECT->CreateGrenade(OBJ_GRENADE, pos, gre_state);
+					m_greCoolTime = 2.0f;
+				}
 			}
-		}
-		else {
-			SetShotSound();							// 총 소리
-			SetShotAnimation();
-			if (m_pItem->GetTag() != ITEM_LASERGUN)	//	레이저건은 3초 Press하고 쏘기 때문에 press쪽에 bullet 생성하는 거 넣어둠
-			{
-				float sightHeightDefault = SIGHTHEIGHT_DEFAULT;
-				float rate = 1 + MATH->Clamp(OBJECT->GetSightHeight() - sightHeightDefault, sightHeightDefault / 2 * -1, 0.0f) / sightHeightDefault;
-				Vector pos = Vector::Up() * m_pItem->GetRange() * rate + OBJECT->GetPlayer()->Position();
-				OBJECT->CreateBullet(OBJ_BULLET, pos, m_pItem->GetTag());
-			}			
+			else {
+				SetShotSound();
+				SetShotAnimation();
+				if (m_pItem->GetTag() != ITEM_LASERGUN)	//	레이저건은 3초 Press하고 쏘기 때문에 press쪽에 bullet 생성하는 거 넣어둠
+				{
+					float sightHeightDefault = SIGHTHEIGHT_DEFAULT;
+					float rate = 1 + MATH->Clamp(OBJECT->GetSightHeight() - sightHeightDefault, sightHeightDefault / 2 * -1, 0.0f) / sightHeightDefault;
+					Vector pos = Vector::Up() * m_pItem->GetRange() * rate + OBJECT->GetPlayer()->Position();
+					OBJECT->CreateBullet(OBJ_BULLET, pos, m_pItem->GetTag());
+				}
+			}
 		}
 	}
 
@@ -239,16 +244,24 @@ void Player::AttackState(float deltaTime)
 void  Player::BulletReload() {
 	switch (item_state) {
 	case ITEM_PISTOL:
-		intBulletCount = 12;
+		intBulletCount = 10;
+		FullBulletCount = 10;
+		MaxBulletCount = 60;
 		break;
 	case ITEM_SHOTGUN:
-		intBulletCount = 8;
+		intBulletCount = 2;
+		FullBulletCount = 2;
+		MaxBulletCount = 24;
 		break;
 	case ITEM_MACHINEGUN:
-		intBulletCount = 100;
+		intBulletCount = 500;
+		FullBulletCount = 500;
+		MaxBulletCount = 2000;
 		break;
 	case ITEM_LASERGUN:
-		intBulletCount = 200;
+		intBulletCount = 1000;
+		FullBulletCount = 1000;
+		MaxBulletCount = 2000;
 		break;
 	}
 }
@@ -385,8 +398,14 @@ void Player::ShopState()
 					if (SCENE->GetScene(SCENE_SHOP)->GetInputCount() != 0)
 					{
 						pItem = SCENE->GetScene(SCENE_SHOP)->GetSelectedItem();
-						AddItem(pItem);
-						SCENE->GetScene(SCENE_SHOP)->InputCountClear();
+						int	pItemMoney = pItem->GetItemMoney() * SCENE->GetScene(SCENE_SHOP)->GetInputCount();
+
+						if (OBJECT->GetPlayer()->GetMoney() >= pItemMoney)
+						{
+							AddItem(pItem);
+							OBJECT->GetPlayer()->AddMoney(-pItemMoney);
+							SCENE->GetScene(SCENE_SHOP)->InputCountClear();
+						}
 					}
 					break;				
 

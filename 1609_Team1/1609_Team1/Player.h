@@ -25,6 +25,8 @@ class Player :
 	//float m_sight;						// 시야 길이
 
 	INT intBulletCount;
+	INT MaxBulletCount;
+	INT FullBulletCount;
 	int m_money;
 	int m_score;
 
@@ -83,6 +85,8 @@ public:
 
 	//현재 탄약 리턴
 	INT getBulletCount() { return intBulletCount; }
+	INT getMaxBullet() { return MaxBulletCount; }
+	INT getFullBullet() { return FullBulletCount; }
 	void BulletUse() { intBulletCount-=1; }
 	void BulletReload();
 
