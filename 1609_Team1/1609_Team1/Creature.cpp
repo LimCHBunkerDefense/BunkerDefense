@@ -26,8 +26,8 @@ Creature::Creature(OBJ_TAG tag) : Object(tag)
 	m_money = pData->money;
 	m_score = pData->score;
 
-	m_lifeBar = new UIProgressBar(Vector(0, 0), Vector(100, 10), ColorF::Blue, ColorF::LightSlateGray);
-	m_lifeBar->SetMinMaxColor(ColorF::DarkRed, ColorF::DarkOliveGreen);
+	m_lifeBar = new UIProgressBar(Vector(0, 0), Vector(100, 10), ColorF::YellowGreen, ColorF::LightSlateGray);
+	m_lifeBar->SetMinMaxColor(ColorF::Red, ColorF::YellowGreen);
 
 	m_moveDirection = Vector(Position() * -1 + Vector(MINI_WIDTH * 0.5, MINI_HEIGHT)).Normalize();
 	
@@ -178,19 +178,18 @@ void Creature::ZUpdate()
 {
 	m_maxZ = 300 + 350 * m_t;
 	
-	float gap;
 	switch (Tag())
 	{
 	case OBJ_LAVA:
-		gap = 0.5;
+		m_minZ = 300 + 200 * m_t;
 		break;
 	case OBJ_ENT:
-		gap = 0.55;
+		m_minZ = 300 - 400 * m_t;
 		break;
 	case OBJ_DARKPRIEST:
-		gap = 0.6;
+		m_minZ = 300 - 250 * m_t;
 		break;
 	}
-	m_minZ = m_maxZ - (Animation()->Current()->GetSprite()->GetHeight() * gap);
+	
 
 }
