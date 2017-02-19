@@ -99,6 +99,7 @@ public:
 	void SetIsCountClicked(bool ON) { IsCountClicked = ON; }
 	int GetInputCount() { return m_inputCount; }
 	void SetInputCount(int addCount);
+	void InputCountClear();
 	bool GetInputOnOff() { return m_inputOnOff; }
 	void SetInputOnOff(bool ON) { m_inputOnOff = ON; }
 	

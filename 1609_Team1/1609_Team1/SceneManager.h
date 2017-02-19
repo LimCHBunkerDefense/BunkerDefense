@@ -45,6 +45,7 @@ public:
 	virtual void SetIsCountClicked(bool ON) {}
 	virtual int GetInputCount() { return NULL; }						
 	virtual void SetInputCount(int addCount) {}
+	virtual void InputCountClear() {}
 	virtual bool GetInputOnOff() { return NULL; }
 	virtual void SetInputOnOff(bool ON) {}
 
