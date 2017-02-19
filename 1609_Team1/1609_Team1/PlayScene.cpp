@@ -403,10 +403,10 @@ void PlayScene::OnDraw()
 	//pUICamera->DrawRect(Vector(298, VIEW_HEIGHT - 95), Vector(70, 70), ColorF::Red,1);
 
 	// 레이저건 충전 막대 출력
-	if (OBJECT->GetPlayer()->GetCurrentItem()->GetTag() == ITEM_LASERGUN)
-	{
-		pUICamera->DrawRect(m_lasergunCharger->GetLeftTop(), m_lasergunCharger->)
-	}
+//	if (OBJECT->GetPlayer()->GetCurrentItem()->GetTag() == ITEM_LASERGUN)
+//	{
+//		pUICamera->DrawRect(m_lasergunCharger->GetLeftTop(), m_lasergunCharger->)
+//	}
 }
 
 void PlayScene::SetCreature(float deltaTime)
