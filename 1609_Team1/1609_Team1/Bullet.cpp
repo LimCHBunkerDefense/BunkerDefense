@@ -62,7 +62,7 @@ void Bullet::Draw(Camera* pCamera)
 
 void Bullet::IdleState(float deltaTime) 
 {
-	cout << Position().x << "   " << Position().y << "       " << m_t <<  "     "  << m_z << endl;	//ÃÑ¾Ë À§Ä¡ µð¹ö±ë¿ë
+	cout << "ÃÑ¾Ë   " << Position().x << "   " << Position().y << "       " << m_t <<  "     "  << m_z << endl;	//ÃÑ¾Ë À§Ä¡ µð¹ö±ë¿ë
 
 	Animation()->Play(BULLET_IDLE);
 	
