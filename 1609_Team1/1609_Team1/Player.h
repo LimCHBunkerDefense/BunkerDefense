@@ -2,6 +2,7 @@
 #include "ObjectManager.h"
 #include "InputManager.h"
 #include "SceneManager.h"
+#include "SoundManager.h"
 #include "Item.h"
 #include "InputManager.h"
 #include "Math.h"
@@ -58,6 +59,9 @@ public:
 
 	// 총 쏠 때 애니메이션 변경해주는 함수
 	void SetShotAnimation();
+
+	// 총 쏠 때 소리 출력하는 함수
+	void SetShotSound();
 
 	// 레이저건 충전 막대 업데이트 해주는 함수
 	void LaserChargerUpdate(float deltaTime);

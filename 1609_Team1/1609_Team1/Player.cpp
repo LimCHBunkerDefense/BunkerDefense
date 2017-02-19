@@ -8,6 +8,12 @@ Player::Player()
 
 Player::Player(OBJ_TAG tag) : Object(tag)
 {
+	// 총기 사운드
+	SOUND->LoadFile("PistolShot", "Sound/Gun/Pistol.mp3", false);
+	SOUND->LoadFile("ShotGunShot", "Sound/Gun/ShotGun.mp3", false);
+	SOUND->LoadFile("MachineGunShot", "Sound/Gun/MachineGun.mp3", false);
+	SOUND->LoadFile("LaserGunShot", "Sound/Gun/LaserGun.mp3", false);
+
 	ani_state = IDLE_PISTOL;
 	m_greCoolTime = 0.0f;//수류탄 쿨타임
 	m_state = PLAYER_ATTACK;
@@ -125,6 +131,7 @@ void Player::AttackState(float deltaTime)
 			}
 		}
 		else {
+			SetShotSound();
 			SetShotAnimation();
 			if (m_pItem->GetTag() != ITEM_LASERGUN)	//	레이저건은 3초 Press하고 쏘기 때문에 press쪽에 bullet 생성하는 거 넣어둠
 			{
@@ -520,6 +527,28 @@ void Player::SetShotAnimation()
 		break;
 	case ITEM_LASERGUN:
 		ani_state = SHOT_LASER;
+		break;
+	}
+}
+
+void Player::SetShotSound()
+{
+	switch (m_pItem->GetTag())
+	{
+	case ITEM_PISTOL:
+		if (Animation()->Current()->GetCurrentIndex() == 0) SOUND->Play("PistolShot", 1.0f);
+		break;
+
+	case ITEM_SHOTGUN:
+		if (Animation()->Current()->GetCurrentIndex() == 1) SOUND->Play("ShotGunShot", 1.0f);
+		break;
+
+	case ITEM_MACHINEGUN:
+		if (Animation()->Current()->GetCurrentIndex() == 4) SOUND->Play("MachineGunShot", 1.0f);
+		break;
+
+	case ITEM_LASERGUN:
+		if (Animation()->Current()->GetCurrentIndex() == 15) SOUND->Play("LaserGunShot", 1.0f);
 		break;
 	}
 }
