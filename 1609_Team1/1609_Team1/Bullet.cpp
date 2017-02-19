@@ -55,8 +55,7 @@ void Bullet::Draw(Camera* pCamera)
 	SetScale((1 - m_t) *1.0f);
 	m_scale = (1 - m_t) *1.0f;
 
-	Vector gap = Vector(VIEW_WIDTH, VIEW_HEIGHT) - OBJECT->GetSightPos();
-	m_addH = m_z - OBJECT->GetSightHeight();
+	m_addH = (600 - m_z) - OBJECT->GetSightHeight();
 	pCamera->Draw3D(Animation()->Current()->GetSprite(), Vector(m_startPos.x, m_startPos.y), (1 - m_t), OBJECT->GetSightHeight(), m_state, m_addH );
 }
 

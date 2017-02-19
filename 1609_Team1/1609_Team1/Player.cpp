@@ -58,7 +58,7 @@ void Player::Draw(Camera* pCamera)
 
 void Player::AttackState(float deltaTime)
 {
-	Animation()->Play(IDLE_PISTOL);
+	Animation()->Play(ani_state);
 
 
 	// ¾À Ã¤ÀÎÁö
