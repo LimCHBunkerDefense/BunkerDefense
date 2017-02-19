@@ -21,6 +21,7 @@ Item::Item(int itemID)
 	m_money = pData->money;
 	m_attack = pData->attack;
 	m_range = pData->range;
+	m_rangeStr = pData->ragestr;
 	m_repair = pData->repair;
 	m_bulletSpeed = pData->bulletSpeed;
 	m_bunkerLife = pData->bunkerLife;

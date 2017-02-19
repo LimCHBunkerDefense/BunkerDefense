@@ -40,6 +40,7 @@ struct ItemData
 		this->maxBulletCount = maxBulletCount;
 		this->reloadBulletCount = reloadBulletCount;
 		this->maxCount = maxCount;
+		this->money = money;
 		this->name = name;
 		this->info = info;
 		this->ragestr = ragestr;

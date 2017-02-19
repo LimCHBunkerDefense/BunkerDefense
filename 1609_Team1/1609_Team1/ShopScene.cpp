@@ -335,26 +335,31 @@ void ShopScene::ShowText()
 	{
 		pMainCamera->DrawT(m_selectedItem->GetName(), 870, 330, ColorF::AntiqueWhite, 15);
 		pMainCamera->DrawT(m_selectedItem->GetInfo(), 810, 365, ColorF::AntiqueWhite, 15);
-		TCHAR number[50] = {};
+		TCHAR number[100] = {};
 
 		switch (m_selectedItem->GetItemTypeTag())
 		{
 		case ITEMTYPE_WEAPON:
 			// 공격력
-			swprintf_s(number, TEXT("ATK: %.1f"), m_selectedItem->GetAttack());
+			swprintf_s(number, TEXT("ATK : %.1f"), m_selectedItem->GetAttack());
 			pMainCamera->DrawT(number, 820, 440, ColorF::AntiqueWhite, 15);
 
 			// 사정거리
-			pMainCamera->DrawT(m_selectedItem->GetRangeStr(), 950, 440, ColorF::AntiqueWhite, 15);
+			wsprintf(number, TEXT("사정거리: %s"), m_selectedItem->GetRangeStr().c_str());
+			pMainCamera->DrawT(number, 950, 440, ColorF::AntiqueWhite, 15);
+
+			// 총알 보유가능량
+			// wsprintf(number, TEXT("보유할 수 있는 총알수: %s"), m_selectedItem->GetMaxBulletCount());
+			// pMainCamera->DrawT(number, 820, 465, ColorF::AntiqueWhite, 15);
 
 			// 구매비용
-			swprintf_s(number, TEXT("Money : %d"), m_selectedItem->GetMoney());
-			pMainCamera->DrawT(number, 820, 465, ColorF::AntiqueWhite, 15);
+			wsprintf(number, TEXT("Money : %dGold"), m_selectedItem->GetItemMoney());
+			pMainCamera->DrawT(number, 950, 465, ColorF::AntiqueWhite, 15);
 			break;
 
 		case ITEMTYPE_BULLET:
 			// 구매비용
-			wsprintf(number, TEXT("Money : %d"), m_selectedItem->GetMoney());
+			wsprintf(number, TEXT("Money : %dGold"), m_selectedItem->GetItemMoney());
 			pMainCamera->DrawT(number, 820, 440, ColorF::AntiqueWhite, 15);
 			break;
 
@@ -362,14 +367,15 @@ void ShopScene::ShowText()
 			if (m_selectedItem->GetTag() != ITEM_BUNKERREPAIR)
 			{
 				// 공격력
-				swprintf_s(number, TEXT("ATK: %.1f"), m_selectedItem->GetAttack());
+				swprintf_s(number, TEXT("ATK : %.1f"), m_selectedItem->GetAttack());
 				pMainCamera->DrawT(number, 820, 440, ColorF::AntiqueWhite, 15);
 
 				// 사정거리
-				pMainCamera->DrawT(m_selectedItem->GetRangeStr(), 950, 440, ColorF::AntiqueWhite, 15);
+				wsprintf(number, TEXT("사정거리: %s"), m_selectedItem->GetRangeStr().c_str());
+				pMainCamera->DrawT(number, 950, 440, ColorF::AntiqueWhite, 15);
 
 				// 구매비용
-				wsprintf(number, TEXT("Money : %d"), m_selectedItem->GetMoney());
+				wsprintf(number, TEXT("Money : %dGold"), m_selectedItem->GetItemMoney());
 				pMainCamera->DrawT(number, 820, 465, ColorF::AntiqueWhite, 15);
 				break;
 			}
@@ -378,6 +384,11 @@ void ShopScene::ShowText()
 				// 수리량
 				swprintf_s(number, TEXT("Repair: %.1f"), m_selectedItem->GetRepair());
 				pMainCamera->DrawT(number, 820, 440, ColorF::AntiqueWhite, 15);
+
+				// 구매비용
+				wsprintf(number, TEXT("Money : %dGold"), m_selectedItem->GetItemMoney());
+				pMainCamera->DrawT(number, 820, 465, ColorF::AntiqueWhite, 15);
+				break;
 			}
 			break;
 
