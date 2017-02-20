@@ -562,6 +562,7 @@ void Player::SetItem()
 	{
 		if (m_itemBag.find(3004) != m_itemBag.end()) {
 			OBJECT->GetBunker()->AddCurrentLife(200);
+			m_itemBag[ITEM_BUNKERREPAIR]->AddCurrentCount(-1);
 			//item_state = ITEM_BUNKERREPAIR;
 			/*if (gre_state == FLAME_IDLE)	gre_state = GRENADE_NONE;
 			else 							gre_state = FLAME_IDLE;*/
