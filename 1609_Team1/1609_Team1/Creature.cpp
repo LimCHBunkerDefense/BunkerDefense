@@ -82,8 +82,11 @@ void Creature::Draw(Camera* pCamera)
 	SetScale(OriginScale() * m_t * m_t * 3.0f);
 	m_scale = OriginScale() * m_t * m_t * 3.0f;
 
-	pCamera->Draw3D_lifeBar(m_lifeBar->GetFrame(), m_lifeBar->GetBar(), m_lifeBar->GetScale(), m_lifeBar->GetBGColor(), m_lifeBar->GetBarColor(), m_lifeBar->GetFrameColor()
-	, m_startPos, OBJECT->GetSightHeight(), m_t, m_state, Animation()->Current()->GetHeight() * -1);
+	if (m_currentLife < m_maxLife)
+	{
+		pCamera->Draw3D_lifeBar(m_lifeBar->GetFrame(), m_lifeBar->GetBar(), m_lifeBar->GetScale(), m_lifeBar->GetBGColor(), m_lifeBar->GetBarColor(), m_lifeBar->GetFrameColor()
+			, m_startPos, OBJECT->GetSightHeight(), m_t, m_state, Animation()->Current()->GetHeight() * -1);
+	}
 	pCamera->Draw3D(Animation()->Current()->GetSprite(), m_startPos, m_t, OBJECT->GetSightHeight(), m_state);
 }
 
