@@ -34,6 +34,10 @@ Player::Player(OBJ_TAG tag) : Object(tag)
 	m_itemBag[startBullet->GetTag()] = startBullet;
 	startBullet->AddCurrentCount(60);
 
+	Object* startGrenade = OBJECT->CreateItem(ITEM_GRENADE, 2001);
+	m_itemBag[startGrenade->GetTag()] = startGrenade;
+	startBullet->AddCurrentCount(1);
+
 	
 
 	m_money = 10000;
