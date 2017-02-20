@@ -34,7 +34,7 @@ Player::Player(OBJ_TAG tag) : Object(tag)
 	m_itemBag[startBullet->GetTag()] = startBullet;
 	startBullet->AddCurrentCount(60);
 
-	Object* startGrenade = OBJECT->CreateItem(ITEM_GRENADE, 2001);
+	Object* startGrenade = OBJECT->CreateItem(ITEM_GRENADE, 3001);
 	m_itemBag[startGrenade->GetTag()] = startGrenade;
 	startBullet->AddCurrentCount(1);
 
@@ -744,7 +744,7 @@ void Player::CheckBullet() {
 	else {
 		switch (gre_state) {
 		case GRENADE_IDLE:
-			AllBulletCount = m_itemBag[ITEM_SGBULLET]->GetCurrentCount() - InBulletCount;
+			AllBulletCount = m_itemBag[ITEM_GRENADE]->GetCurrentCount() - InBulletCount;
 			break;
 		case AIRBOMB_IDLE:
 			AllBulletCount = m_itemBag[ITEM_AIRBOMB]->GetCurrentCount() - InBulletCount;
