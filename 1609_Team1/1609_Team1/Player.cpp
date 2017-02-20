@@ -550,6 +550,7 @@ void Player::SetItem()
 	//¼ö¸® ÀåÂø
 	if (INPUT->IsKeyDown(VK_R))
 	{
+		OBJECT->GetBunker()->AddCurrentLife(200);
 		//item_state = ITEM_BUNKERREPAIR;
 		/*if (gre_state == FLAME_IDLE)	gre_state = GRENADE_NONE;
 		else 							gre_state = FLAME_IDLE;*/
