@@ -17,7 +17,7 @@ public:
 
 	float GetMaxLife() { return m_maxLife; }
 	float GetCurrentLife() { return m_currentLife; }
-	void AddCurrentLife(float addLife) { m_currentLife += addLife; }
+	void AddCurrentLife(float addLife) { m_currentLife = MATH->Clamp(m_currentLife + addLife, 0.0f, 1000.0f); }
 	void AddMaxLife(float addLife) { m_maxLife; }
 	float GetDefense() { return m_defense; }
 	void AddDefense(float addDefense) { m_defense += addDefense; }
